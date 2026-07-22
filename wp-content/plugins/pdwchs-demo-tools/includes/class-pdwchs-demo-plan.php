@@ -249,12 +249,17 @@ class PDWCHS_Demo_Plan {
 
 	private function build_loyal() {
 		$out = array();
-		foreach ( array( 38, 47 ) as $i => $last ) {
+		// Cadence tuned per twin so BOTH window 3 orders in 0-90 vs 4 in 90-180
+		// (25% decline => Low churn). A shared 22d cadence tips loyal_1 to 2v5
+		// (=> Medium 48): from day 47 its 3rd order lands on day 91, just past
+		// the 90d recency window. 20d keeps it at day 87 with margin.
+		foreach ( array( array( 38, 22 ), array( 47, 20 ) ) as $i => $pair ) {
+			list( $last, $cadence ) = $pair;
 			$orders = array();
 			$day    = $last;
 			for ( $k = 0; $k < 10; $k++ ) {
 				$orders[] = $this->order( $day, $this->rnd( 54, 66 ) );
-				$day     += 22; // tight 22d cadence keeps the 0-90 vs 90-180 windows near-balanced (3v4 => Low churn)
+				$day     += $cadence;
 			}
 			$visits = array_merge(
 				$this->order_visits( $orders ),
@@ -332,13 +337,15 @@ class PDWCHS_Demo_Plan {
 		$out = array();
 
 		// Two balanced-window Lows: 2 orders in 0-90 and 2 in 90-180 => decline 0.
-		foreach ( array( 0, 1 ) as $i ) {
-			$last   = 63 + ( $i * 9 );
+		// Offsets differ per twin so order #2 stays inside the 90d recent window:
+		// 63+23=86 is fine, but 72+23=95 tips na_1's windows to 1v3 (=> Medium 59).
+		foreach ( array( array( 63, 23, 49, 85 ), array( 72, 15, 43, 79 ) ) as $i => $s ) {
+			$last   = $s[0];
 			$orders = array(
 				$this->order( $last, $this->rnd( 62, 78 ) ),
-				$this->order( $last + 23, $this->rnd( 62, 78 ) ),
-				$this->order( $last + 49, $this->rnd( 62, 78 ) ),
-				$this->order( $last + 85, $this->rnd( 62, 78 ) ),
+				$this->order( $last + $s[1], $this->rnd( 62, 78 ) ),
+				$this->order( $last + $s[2], $this->rnd( 62, 78 ) ),
+				$this->order( $last + $s[3], $this->rnd( 62, 78 ) ),
 			);
 			$out[] = $this->customer( 'na_' . $i, 'needs_attention', $this->next_name(), $orders, array(), array(
 				'segment' => 'needs_attention', 'lifecycle' => 'Loyal Customer', 'churn_band' => 'low',

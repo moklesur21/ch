@@ -44,6 +44,10 @@ class PDWCHS_Demo_Recalc {
 				'orderby'      => 'none',
 			), 'ids' );
 			if ( empty( $due ) ) {
+				$kick = $this->maybe_kick_stats_import();
+				if ( $kick ) {
+					return $kick;
+				}
 				return "action scheduler drained ({$loops} batches)";
 			}
 			ActionScheduler_QueueRunner::instance()->run( 'pdwchs-demo-drain' );
@@ -53,6 +57,47 @@ class PDWCHS_Demo_Recalc {
 			}
 		}
 		return 'AS drain: loop cap reached (check `wp action-scheduler run`)';
+	}
+
+	/**
+	 * wc-admin never schedules its order-stats/lookup import for orders the
+	 * seeder inserts directly with backdates, so an empty queue can still leave
+	 * wc_order_stats missing every seeded order — which skews the store-average
+	 * inputs and trips the verifier's parity warn. Detect the gap, kick one full
+	 * ReportsSync regenerate, and keep draining until parity (or a 4-min cap,
+	 * after which the gap is left for verify to report).
+	 *
+	 * @return array|null Repeat instruction while converging, null when done.
+	 */
+	private function maybe_kick_stats_import() {
+		if ( ! class_exists( '\Automattic\WooCommerce\Admin\ReportsSync' ) ) {
+			return null;
+		}
+		global $wpdb;
+		$stats_table = $wpdb->prefix . 'wc_order_stats';
+		if ( ! $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $stats_table ) ) ) {
+			return null;
+		}
+		$order_count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}wc_orders WHERE type='shop_order' AND status IN ('wc-completed','wc-processing')" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$stats_count = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$stats_table} WHERE status IN ('wc-completed','wc-processing')" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		if ( $stats_count >= $order_count ) {
+			delete_transient( 'pdwchs_demo_stats_regen' );
+			return null;
+		}
+		$kicked_at = (int) get_transient( 'pdwchs_demo_stats_regen' );
+		if ( $kicked_at && ( time() - $kicked_at ) > 4 * MINUTE_IN_SECONDS ) {
+			return null; // not converging — surface via the verifier's parity warn instead of spinning
+		}
+		if ( ! $kicked_at ) {
+			set_transient( 'pdwchs_demo_stats_regen', time(), 10 * MINUTE_IN_SECONDS );
+			if ( ! \Automattic\WooCommerce\Admin\ReportsSync::is_importing() ) {
+				\Automattic\WooCommerce\Admin\ReportsSync::regenerate_report_data( null, false );
+			}
+			sleep( 2 ); // import batches self-schedule a few seconds out; don't spin the repeat guard
+			return array( 'repeat' => true, 'msg' => "wc-admin stats regenerate kicked ({$stats_count}/{$order_count})" );
+		}
+		sleep( 2 );
+		return array( 'repeat' => true, 'msg' => "wc-admin stats import running ({$stats_count}/{$order_count})" );
 	}
 
 	// ── the six calculators, cron order ─────────────────────────────────
