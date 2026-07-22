@@ -1,0 +1,33 @@
+/*
+Theme Name: Northline Supply Co.
+Theme URI: https://ch.puredevs.com
+Description: Brand storefront for the PureDevs Customer History demo store — a field-and-supply everyday-apparel shop. Child of Twenty Twenty-Five. Ships with the pdwchs demo tooling; not a customer product.
+Author: PureDevs (internal)
+Template: twentytwentyfive
+Version: 1.0.0
+Requires at least: 6.6
+Tested up to: 6.7
+Requires PHP: 7.4
+Text Domain: northline
+*/
+
+/* Styling lives in theme.json (global styles). This file carries the child-theme
+   header and a few surgical rules the block editor can't express cleanly. */
+
+/* Product cards: quiet by default, lift on hover — retail tactility. */
+.wc-block-grid__product,
+.woocommerce ul.products li.product,
+.wp-block-woocommerce-product-template li {
+	transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.woocommerce ul.products li.product:hover,
+.wp-block-woocommerce-product-template li:hover {
+	transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.woocommerce ul.products li.product,
+	.wp-block-woocommerce-product-template li { transition: none; }
+	.woocommerce ul.products li.product:hover,
+	.wp-block-woocommerce-product-template li:hover { transform: none; }
+}

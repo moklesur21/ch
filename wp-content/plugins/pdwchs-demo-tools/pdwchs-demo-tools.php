@@ -42,6 +42,7 @@ require_once PDWCHS_DEMO_TOOLS_DIR . 'includes/class-pdwchs-demo-runner.php';
 require_once PDWCHS_DEMO_TOOLS_DIR . 'includes/class-pdwchs-demo-rest.php';
 require_once PDWCHS_DEMO_TOOLS_DIR . 'includes/class-pdwchs-demo-admin.php';
 require_once PDWCHS_DEMO_TOOLS_DIR . 'includes/class-pdwchs-demo-lockdown.php';
+require_once PDWCHS_DEMO_TOOLS_DIR . 'includes/class-pdwchs-demo-storefront.php';
 
 add_action( 'rest_api_init', array( 'PDWCHS_Demo_REST', 'register_routes' ) );
 add_action( 'pdwchs_demo_run_tick', array( 'PDWCHS_Demo_Runner', 'tick' ) );

@@ -33,6 +33,11 @@
 /wp-content/mu-plugins/*
 !/wp-content/mu-plugins/auto_login_local.php
 
+# --- wp-content/themes: only our own brand child theme -------------
+!/wp-content/themes/
+/wp-content/themes/*
+!/wp-content/themes/northline/
+
 # --- Never track these, even inside whitelisted dirs ----------------
 .DS_Store
 Thumbs.db

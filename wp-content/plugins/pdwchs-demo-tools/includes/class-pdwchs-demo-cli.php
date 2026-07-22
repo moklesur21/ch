@@ -177,6 +177,25 @@ class PDWCHS_Demo_CLI {
 	}
 
 	/**
+	 * Brand the storefront: activate the Northline theme, give products real copy
+	 * and clean categories, set currency + store identity, create the About /
+	 * Contact pages and flat-rate + free shipping. Idempotent; safe to re-run.
+	 * Requires PDWCHS_DEMO_ALLOW.
+	 *
+	 * @subcommand setup-storefront
+	 */
+	public function setup_storefront( $args, $assoc ) {
+		$result = PDWCHS_Demo_Storefront::setup();
+		foreach ( $result['log'] as $line ) {
+			WP_CLI::log( '  ' . $line );
+		}
+		if ( empty( $result['ok'] ) ) {
+			WP_CLI::error( isset( $result['message'] ) ? $result['message'] : 'Storefront setup failed.' );
+		}
+		WP_CLI::success( 'Storefront ready — ' . PDWCHS_Demo_Storefront::STORE_NAME . '.' );
+	}
+
+	/**
 	 * Dev-time: export the current store's products to data/catalog.json and
 	 * copy their images into data/images/ so a fresh site can be bootstrapped
 	 * into an identical catalog.

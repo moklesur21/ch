@@ -1,0 +1,183 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": true,
+		"layout": {
+			"contentSize": "760px",
+			"wideSize": "1280px"
+		},
+		"useRootPaddingAwareAlignments": true,
+		"color": {
+			"defaultDuotone": false,
+			"defaultGradients": false,
+			"defaultPalette": false,
+			"palette": [
+				{ "color": "#ECEDE8", "name": "Paper", "slug": "base" },
+				{ "color": "#16191C", "name": "Ink", "slug": "contrast" },
+				{ "color": "#24544A", "name": "Spruce", "slug": "accent-1" },
+				{ "color": "#223F38", "name": "Spruce Dark", "slug": "accent-5" },
+				{ "color": "#CBB79C", "name": "Kraft", "slug": "accent-2" },
+				{ "color": "#5A636B", "name": "Steel", "slug": "accent-3" },
+				{ "color": "#FFFFFF", "name": "White", "slug": "accent-4" },
+				{ "color": "#DFE0DA", "name": "Panel", "slug": "accent-6" }
+			]
+		},
+		"typography": {
+			"defaultFontSizes": false,
+			"fluid": true,
+			"fontFamilies": [
+				{
+					"name": "Roboto Slab",
+					"slug": "roboto-slab",
+					"fontFamily": "\"Roboto Slab\", Georgia, serif",
+					"fontFace": [
+						{
+							"fontFamily": "Roboto Slab",
+							"fontWeight": "100 900",
+							"fontStyle": "normal",
+							"fontStretch": "normal",
+							"src": [ "file:./assets/fonts/roboto-slab/RobotoSlab-VariableFont_wght.woff2" ]
+						}
+					]
+				},
+				{
+					"name": "Fira Sans",
+					"slug": "fira-sans",
+					"fontFamily": "\"Fira Sans\", -apple-system, BlinkMacSystemFont, sans-serif",
+					"fontFace": [
+						{ "fontFamily": "Fira Sans", "fontWeight": "400", "fontStyle": "normal", "src": [ "file:./assets/fonts/fira-sans/FiraSans-Regular.woff2" ] },
+						{ "fontFamily": "Fira Sans", "fontWeight": "500", "fontStyle": "normal", "src": [ "file:./assets/fonts/fira-sans/FiraSans-Medium.woff2" ] },
+						{ "fontFamily": "Fira Sans", "fontWeight": "600", "fontStyle": "normal", "src": [ "file:./assets/fonts/fira-sans/FiraSans-SemiBold.woff2" ] },
+						{ "fontFamily": "Fira Sans", "fontWeight": "700", "fontStyle": "normal", "src": [ "file:./assets/fonts/fira-sans/FiraSans-Bold.woff2" ] }
+					]
+				},
+				{
+					"name": "Fira Code",
+					"slug": "fira-code",
+					"fontFamily": "\"Fira Code\", ui-monospace, monospace",
+					"fontFace": [
+						{
+							"fontFamily": "Fira Code",
+							"fontWeight": "300 700",
+							"fontStyle": "normal",
+							"src": [ "file:./assets/fonts/fira-code/FiraCode-VariableFont_wght.woff2" ]
+						}
+					]
+				}
+			],
+			"fontSizes": [
+				{ "name": "Small", "slug": "small", "size": "0.875rem" },
+				{ "name": "Medium", "slug": "medium", "size": "1rem" },
+				{ "name": "Large", "slug": "large", "size": "1.25rem", "fluid": { "min": "1.125rem", "max": "1.25rem" } },
+				{ "name": "X-Large", "slug": "x-large", "size": "2rem", "fluid": { "min": "1.625rem", "max": "2rem" } },
+				{ "name": "XX-Large", "slug": "xx-large", "size": "3rem", "fluid": { "min": "2.25rem", "max": "3rem" } },
+				{ "name": "Huge", "slug": "huge", "size": "4.5rem", "fluid": { "min": "2.75rem", "max": "4.5rem" } }
+			]
+		},
+		"spacing": {
+			"defaultSpacingSizes": false,
+			"spacingSizes": [
+				{ "name": "1", "slug": "20", "size": "0.75rem" },
+				{ "name": "2", "slug": "30", "size": "1.25rem" },
+				{ "name": "3", "slug": "40", "size": "2rem" },
+				{ "name": "4", "slug": "50", "size": "3.25rem" },
+				{ "name": "5", "slug": "60", "size": "5rem" },
+				{ "name": "6", "slug": "70", "size": "7.5rem" }
+			],
+			"units": [ "px", "em", "rem", "vh", "vw", "%" ]
+		},
+		"border": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var:preset|color|base",
+			"text": "var:preset|color|contrast"
+		},
+		"typography": {
+			"fontFamily": "var:preset|font-family|fira-sans",
+			"fontSize": "1.05rem",
+			"lineHeight": "1.65",
+			"fontWeight": "400"
+		},
+		"spacing": {
+			"blockGap": "1.25rem",
+			"padding": {
+				"left": "var:preset|spacing|30",
+				"right": "var:preset|spacing|30"
+			}
+		},
+		"elements": {
+			"heading": {
+				"typography": {
+					"fontFamily": "var:preset|font-family|roboto-slab",
+					"fontWeight": "700",
+					"lineHeight": "1.08",
+					"letterSpacing": "-0.02em"
+				}
+			},
+			"h1": { "typography": { "fontSize": "var:preset|font-size|huge" } },
+			"h2": { "typography": { "fontSize": "var:preset|font-size|xx-large" } },
+			"h3": { "typography": { "fontSize": "var:preset|font-size|x-large" } },
+			"link": {
+				"color": { "text": "var:preset|color|accent-1" },
+				"typography": { "textDecoration": "none" },
+				":hover": { "typography": { "textDecoration": "underline" } }
+			},
+			"button": {
+				"color": {
+					"background": "var:preset|color|accent-1",
+					"text": "var:preset|color|accent-4"
+				},
+				"border": { "radius": "2px" },
+				"spacing": {
+					"padding": {
+						"top": "0.9em", "bottom": "0.9em",
+						"left": "1.6em", "right": "1.6em"
+					}
+				},
+				"typography": {
+					"fontFamily": "var:preset|font-family|fira-code",
+					"fontWeight": "600",
+					"fontSize": "0.8rem",
+					"textTransform": "uppercase",
+					"letterSpacing": "0.08em"
+				},
+				":hover": { "color": { "background": "var:preset|color|accent-5" } },
+				":focus": { "color": { "background": "var:preset|color|accent-5" } }
+			}
+		},
+		"blocks": {
+			"core/site-title": {
+				"typography": {
+					"fontFamily": "var:preset|font-family|roboto-slab",
+					"fontWeight": "800",
+					"fontSize": "1.35rem",
+					"textTransform": "uppercase",
+					"letterSpacing": "0.02em"
+				},
+				"elements": { "link": { "color": { "text": "var:preset|color|contrast" } } }
+			},
+			"core/navigation": {
+				"typography": {
+					"fontFamily": "var:preset|font-family|fira-code",
+					"fontWeight": "500",
+					"fontSize": "0.78rem",
+					"textTransform": "uppercase",
+					"letterSpacing": "0.06em"
+				}
+			},
+			"core/post-terms": {
+				"typography": { "fontFamily": "var:preset|font-family|fira-code" }
+			},
+			"woocommerce/product-price": {
+				"typography": { "fontFamily": "var:preset|font-family|fira-code", "fontWeight": "500" }
+			}
+		}
+	}
+}

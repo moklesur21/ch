@@ -45,6 +45,11 @@ backups and `wp-config.php` are all ignored. Tracked:
   `includes/class-pdwchs-demo-lockdown.php`. Inert unless
   `PDWCHS_DEMO_LOCKDOWN` is defined true in `wp-config.php` (live only).
   Full guide + deploy checklist: `project_asset/docs/demo-site-lockdown.md`
+- Storefront branding: the shop is styled as **Northline Supply Co.** (apparel)
+  via the git-tracked child theme `wp-content/themes/northline/` (child of
+  Twenty Twenty-Five) plus `wp pdwchs-demo setup-storefront` (idempotent; sets
+  currency, product copy, categories, About/Contact, shipping). Guide:
+  `project_asset/docs/storefront-setup.md`
 - Build a migration plugin that pushes demo data to the live site (REST API or
   similar).
 - Next planned task: `project_asset/docs/update-01.txt`.
