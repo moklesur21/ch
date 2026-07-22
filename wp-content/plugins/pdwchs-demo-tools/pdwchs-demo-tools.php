@@ -41,10 +41,17 @@ require_once PDWCHS_DEMO_TOOLS_DIR . 'includes/class-pdwchs-demo-verifier.php';
 require_once PDWCHS_DEMO_TOOLS_DIR . 'includes/class-pdwchs-demo-runner.php';
 require_once PDWCHS_DEMO_TOOLS_DIR . 'includes/class-pdwchs-demo-rest.php';
 require_once PDWCHS_DEMO_TOOLS_DIR . 'includes/class-pdwchs-demo-admin.php';
+require_once PDWCHS_DEMO_TOOLS_DIR . 'includes/class-pdwchs-demo-lockdown.php';
 
 add_action( 'rest_api_init', array( 'PDWCHS_Demo_REST', 'register_routes' ) );
 add_action( 'pdwchs_demo_run_tick', array( 'PDWCHS_Demo_Runner', 'tick' ) );
 add_action( 'admin_menu', array( 'PDWCHS_Demo_Admin', 'register_page' ) );
+
+// Read-only demo lockdown. Dead unless the site opts in via wp-config.php.
+// NEVER define this on a real customer site.
+if ( defined( 'PDWCHS_DEMO_LOCKDOWN' ) && PDWCHS_DEMO_LOCKDOWN ) {
+	PDWCHS_Demo_Lockdown::init();
+}
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once PDWCHS_DEMO_TOOLS_DIR . 'includes/class-pdwchs-demo-cli.php';
