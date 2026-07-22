@@ -24,10 +24,20 @@ backups and `wp-config.php` are all ignored. Tracked:
 - `wp-content/mu-plugins/auto_login_local.php` — local-only auto-login helper
 - `project_asset/` — project docs and demo assets
 
+## Local environment
+
+- Site URL: `http://localhost/ch` (MAMP Apache). DB `ch`, prefix `pp09_`.
+- wp-cli needs MAMP's MySQL socket:
+  `php -d mysqli.default_socket=/Applications/MAMP/tmp/mysql/mysql.sock /opt/homebrew/bin/wp <command>`
+- The **free** plugin is the active one; pro is installed but inactive
+  (realistic upgrade flow for demos).
+- Auto-login helper (mu-plugin): `http://localhost/ch/?local_login=1&user_email=<email>`
+
 ## Roadmap / notes
 
-- Set up a Freemius sandbox checkout for purchase testing:
-  https://freemius.com/help/documentation/checkout/integration/testing/
+- Freemius sandbox checkout: wired up via the `WP_FS__<slug>_SECRET_KEY`
+  constant in `wp-config.php` — paste the product secret key there to enable.
+  Full guide: `project_asset/docs/freemius-sandbox.md`
 - Build a migration plugin that pushes demo data to the live site (REST API or
   similar).
 - Next planned task: `project_asset/docs/update-01.txt`.
