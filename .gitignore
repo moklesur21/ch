@@ -1,0 +1,45 @@
+# ============================================================
+# ch — PureDevs Customer History demo site
+# Whitelist strategy: ignore everything, then re-include only
+# project-owned code and assets. WordPress core, third-party
+# plugins/themes, uploads, backups and wp-config.php stay out.
+# ============================================================
+
+/*
+
+# --- Root files we track --------------------------------------------
+!/.gitignore
+!/CLAUDE.md
+!/README.md
+
+# --- Project assets (docs, demo material) ---------------------------
+!/project_asset/
+
+# --- Claude Code project config -------------------------------------
+!/.claude/
+/.claude/settings.local.json
+
+# --- wp-content: only our own plugins & mu-plugins ------------------
+!/wp-content/
+/wp-content/*
+
+!/wp-content/plugins/
+/wp-content/plugins/*
+!/wp-content/plugins/puredevs-customer-history-for-woocommerce-pro/
+!/wp-content/plugins/puredevs-customer-history-for-woocommerce/
+!/wp-content/plugins/pdwchs-demo-tools/
+
+!/wp-content/mu-plugins/
+/wp-content/mu-plugins/*
+!/wp-content/mu-plugins/auto_login_local.php
+
+# --- Never track these, even inside whitelisted dirs ----------------
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+node_modules/
+*.zip
+*.sql
+*.sql.gz

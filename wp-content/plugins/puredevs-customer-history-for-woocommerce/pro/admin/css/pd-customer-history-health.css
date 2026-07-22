@@ -1,0 +1,590 @@
+/**
+ * Customer Health Score Styles
+ *
+ * Styles for health score widgets, gauges, and components
+ *
+ * @package    PD_Customer_History
+ * @subpackage PD_Customer_History/admin/css
+ * @since      2.0.0
+ */
+
+/* ==========================================================================
+   Health Distribution Widget
+   ========================================================================== */
+
+.pdwchs-health-distribution-widget,
+.pdwchs-declining-health-widget,
+.pdwchs-health-score-card {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-radius: 4px;
+	padding: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.pdwchs-widget-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #e5e7eb;
+}
+
+.pdwchs-widget-header h3 {
+	margin: 0;
+	font-size: 18px;
+	font-weight: 600;
+	color: #1e293b;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.pdwchs-widget-subtitle {
+	font-size: 13px;
+	color: #64748b;
+	font-weight: normal;
+	margin: 5px 0 0 0;
+	display: block;
+}
+
+.pdwchs-refresh-health {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 5px;
+	color: #2271b1;
+	transition: color 0.2s;
+}
+
+.pdwchs-refresh-health:hover {
+	color: #135e96;
+}
+
+.pdwchs-widget-body {
+	padding: 0;
+}
+
+/* Health Average Score */
+.pdwchs-health-average {
+	font-size: 16px;
+	font-weight: 500;
+	margin-bottom: 20px;
+	color: #475569;
+}
+
+.pdwchs-avg-score {
+	color: #2271b1;
+	font-size: 24px;
+	font-weight: 700;
+	margin-left: 8px;
+}
+
+/* Health Distribution Bars */
+.pdwchs-health-bars {
+	margin-bottom: 15px;
+}
+
+.pdwchs-health-bar-row {
+	display: flex;
+	align-items: center;
+	margin-bottom: 15px;
+	cursor: pointer;
+	transition: background-color 0.2s;
+	padding: 8px;
+	border-radius: 4px;
+}
+
+.pdwchs-health-bar-row:hover {
+	background-color: #f8fafc;
+}
+
+.pdwchs-health-bar-label {
+	width: 160px;
+	font-weight: 500;
+	font-size: 14px;
+	color: #334155;
+	flex-shrink: 0;
+}
+
+.pdwchs-health-bar-container {
+	flex: 1;
+	height: 28px;
+	background: #f1f5f9;
+	border-radius: 4px;
+	overflow: hidden;
+	margin: 0 15px;
+	position: relative;
+}
+
+.pdwchs-health-bar {
+	height: 100%;
+	transition: width 0.6s ease-out;
+	border-radius: 4px;
+	min-width: 2px;
+}
+
+.pdwchs-health-bar-count {
+	width: 120px;
+	text-align: right;
+	font-weight: 600;
+	font-size: 14px;
+	color: #1e293b;
+	flex-shrink: 0;
+}
+
+/* Health Status Colors */
+.pdwchs-health-excellent {
+	background-color: #10b981 !important;
+}
+
+.pdwchs-health-good {
+	background-color: #84cc16 !important;
+}
+
+.pdwchs-health-fair {
+	background-color: #fbbf24 !important;
+}
+
+.pdwchs-health-poor {
+	background-color: #fb923c !important;
+}
+
+.pdwchs-health-critical {
+	background-color: #ef4444 !important;
+}
+
+/* Critical Alert */
+.pdwchs-health-critical-alert {
+	margin-top: 15px;
+}
+
+.pdwchs-alert {
+	padding: 12px 15px;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.pdwchs-alert-warning {
+	background-color: #fef3c7;
+	border-left: 4px solid #f59e0b;
+	color: #92400e;
+}
+
+.pdwchs-alert .dashicons {
+	color: #f59e0b;
+	flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Declining Health Widget
+   ========================================================================== */
+
+.pdwchs-declining-list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.pdwchs-declining-item {
+	padding: 15px;
+	border-left: 4px solid #fbbf24;
+	background: #fef3c7;
+	border-radius: 4px;
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.pdwchs-declining-item:hover {
+	transform: translateX(2px);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.pdwchs-declining-item.pdwchs-decline-severe {
+	border-left-color: #ef4444;
+	background: #fee2e2;
+}
+
+.pdwchs-declining-item.pdwchs-decline-high {
+	border-left-color: #fb923c;
+	background: #fed7aa;
+}
+
+.pdwchs-declining-item.pdwchs-decline-medium {
+	border-left-color: #fbbf24;
+	background: #fef3c7;
+}
+
+.pdwchs-declining-name {
+	font-weight: 600;
+	font-size: 15px;
+	margin-bottom: 8px;
+	color: #1e293b;
+}
+
+.pdwchs-declining-scores {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 8px;
+	font-size: 15px;
+	font-weight: 500;
+}
+
+.pdwchs-score-change {
+	color: #475569;
+}
+
+.pdwchs-decline-amount {
+	color: #dc2626;
+	font-weight: 700;
+}
+
+.pdwchs-declining-meta {
+	font-size: 13px;
+	color: #64748b;
+	margin-bottom: 12px;
+}
+
+/* ==========================================================================
+   Customer Health Card
+   ========================================================================== */
+
+.pdwchs-health-score-card {
+	max-width: 100%;
+}
+
+.pdwchs-health-trend {
+	font-size: 14px;
+	font-weight: 600;
+	padding: 6px 12px;
+	border-radius: 4px;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.pdwchs-trend-up {
+	background-color: #d1fae5;
+	color: #065f46;
+}
+
+.pdwchs-trend-down {
+	background-color: #fee2e2;
+	color: #991b1b;
+}
+
+.pdwchs-trend-stable {
+	background-color: #f1f5f9;
+	color: #475569;
+}
+
+/* Circular Gauge */
+.pdwchs-health-gauge-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 20px 0 30px 0;
+}
+
+.pdwchs-health-gauge {
+	display: block;
+	max-width: 200px;
+	height: auto;
+}
+
+.pdwchs-gauge-fill {
+	transition: stroke-dashoffset 1s ease-out;
+}
+
+/* Component Breakdown */
+.pdwchs-health-breakdown {
+	margin-top: 30px;
+}
+
+.pdwchs-health-breakdown h4 {
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 20px;
+	color: #1e293b;
+}
+
+.pdwchs-component-bar {
+	margin-bottom: 24px;
+}
+
+.pdwchs-component-label {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 8px;
+	font-size: 14px;
+}
+
+.pdwchs-component-label span:first-child {
+	font-weight: 500;
+	color: #475569;
+}
+
+.pdwchs-component-label span:last-child {
+	color: #1e293b;
+}
+
+.pdwchs-component-progress {
+	height: 10px;
+	background: #e5e7eb;
+	border-radius: 5px;
+	overflow: hidden;
+	position: relative;
+}
+
+.pdwchs-component-fill {
+	height: 100%;
+	border-radius: 5px;
+	transition: width 0.8s ease-out;
+	position: relative;
+}
+
+.pdwchs-component-description {
+	font-size: 13px;
+	color: #64748b;
+	margin-top: 6px;
+	font-style: italic;
+}
+
+/* Health Interpretation */
+.pdwchs-health-interpretation {
+	margin-top: 30px;
+	padding: 20px;
+	background: #f8fafc;
+	border-radius: 6px;
+	border: 1px solid #e2e8f0;
+}
+
+.pdwchs-health-interpretation h4 {
+	font-size: 15px;
+	font-weight: 600;
+	margin-bottom: 12px;
+	color: #1e293b;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.pdwchs-health-interpretation h4 .dashicons {
+	color: #f59e0b;
+}
+
+.pdwchs-health-interpretation p {
+	margin: 8px 0;
+	font-size: 14px;
+	line-height: 1.6;
+	color: #475569;
+}
+
+.pdwchs-health-interpretation p:first-of-type {
+	color: #1e293b;
+}
+
+/* Health Footer */
+.pdwchs-health-footer {
+	margin-top: 25px;
+	padding-top: 20px;
+	border-top: 1px solid #e5e7eb;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.pdwchs-last-calculated {
+	font-size: 13px;
+	color: #64748b;
+	margin: 0;
+}
+
+.pdwchs-recalculate-health {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.pdwchs-recalculate-health .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+}
+
+/* ==========================================================================
+   Customer List Health Column
+   ========================================================================== */
+
+.pdwchs-health-column {
+	text-align: center;
+	padding: 8px 12px;
+	border-radius: 4px;
+	font-weight: 600;
+	font-size: 13px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	min-width: 80px;
+}
+
+.pdwchs-health-81-100 {
+	background-color: #d1fae5;
+	color: #065f46;
+}
+
+.pdwchs-health-61-80 {
+	background-color: #ecfccb;
+	color: #365314;
+}
+
+.pdwchs-health-41-60 {
+	background-color: #fef3c7;
+	color: #78350f;
+}
+
+.pdwchs-health-21-40 {
+	background-color: #fed7aa;
+	color: #7c2d12;
+}
+
+.pdwchs-health-0-20 {
+	background-color: #fee2e2;
+	color: #991b1b;
+}
+
+/* Trend Arrows in Column */
+.pdwchs-trend-arrow {
+	font-size: 16px;
+	line-height: 1;
+}
+
+.pdwchs-trend-arrow.up {
+	color: #10b981;
+}
+
+.pdwchs-trend-arrow.down {
+	color: #ef4444;
+}
+
+.pdwchs-trend-arrow.stable {
+	color: #6b7280;
+}
+
+/* ==========================================================================
+   Loading States
+   ========================================================================== */
+
+.pdwchs-loading {
+	text-align: center;
+	padding: 40px 20px;
+	color: #64748b;
+}
+
+.pdwchs-loading .spinner {
+	float: none;
+	margin: 0 auto 10px auto;
+}
+
+.pdwchs-loading p {
+	margin: 0;
+	font-size: 14px;
+}
+
+.pdwchs-no-data,
+.pdwchs-error {
+	text-align: center;
+	padding: 30px 20px;
+	color: #64748b;
+	font-size: 14px;
+	font-style: italic;
+}
+
+.pdwchs-error {
+	color: #dc2626;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media screen and (max-width: 782px) {
+	.pdwchs-health-bar-row {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	.pdwchs-health-bar-label,
+	.pdwchs-health-bar-container,
+	.pdwchs-health-bar-count {
+		width: 100%;
+		margin: 0;
+	}
+
+	.pdwchs-health-bar-count {
+		text-align: left;
+	}
+
+	.pdwchs-widget-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
+
+	.pdwchs-health-footer {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.pdwchs-declining-scores {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.pdwchs-health-gauge {
+		max-width: 160px;
+	}
+
+	.pdwchs-health-distribution-widget,
+	.pdwchs-declining-health-widget,
+	.pdwchs-health-score-card {
+		padding: 15px;
+	}
+
+	.pdwchs-component-label {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+	}
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+	.pdwchs-refresh-health,
+	.pdwchs-recalculate-health {
+		display: none;
+	}
+
+	.pdwchs-health-distribution-widget,
+	.pdwchs-declining-health-widget,
+	.pdwchs-health-score-card {
+		border: 1px solid #ccc;
+		box-shadow: none;
+		page-break-inside: avoid;
+	}
+}

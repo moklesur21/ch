@@ -1,0 +1,420 @@
+/**
+ * Product Reports Styles
+ *
+ * Shared stylesheet for all Feature 1.4 product report pages.
+ * R1-27/R1-28 will append their own sections at the end.
+ *
+ * Color palette: primary #2271b1, text #1e293b, label #64748b, border #ccd0d4.
+ *
+ * @package    PD_Customer_History
+ * @subpackage PD_Customer_History/admin/css
+ * @since      2.2.0
+ */
+
+/* === R1-26: Product Revenue & Comparison ========== */
+
+.pdwchs-product-revenue-filters {
+    clear: both;
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.pdwchs-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.pdwchs-filter-group label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1e293b;
+}
+
+#pdwchs-product-select,
+.select2-container--default .select2-selection--multiple {
+    min-width: 200px;
+    font-size: 13px;
+}
+
+.pdwchs-date-range-input {
+    min-width: 220px;
+    padding: 6px 10px;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    font-size: 13px;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'%3E%3C/rect%3E%3Cline x1='16' y1='2' x2='16' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='2' x2='8' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='10' x2='21' y2='10'%3E%3C/line%3E%3C/svg%3E") no-repeat right 8px center;
+    background-size: 16px;
+    padding-right: 30px;
+    cursor: pointer;
+    color: #1e293b;
+}
+
+.pdwchs-date-range-input:focus {
+    outline: 2px solid #2271b1;
+    outline-offset: 1px;
+    border-color: #2271b1;
+}
+
+.pdwchs-granularity-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+}
+
+.pdwchs-granularity-group span {
+    font-size: 13px;
+    font-weight: 500;
+    color: #1e293b;
+}
+
+.pdwchs-granularity-group label {
+    font-weight: 400;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pdwchs-chart-container {
+    position: relative;
+    height: 300px;
+    margin-top: 24px;
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 16px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.pdwchs-product-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.pdwchs-product-summary-card {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 16px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.pdwchs-product-summary-card__name {
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: #1e293b;
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 8px;
+}
+
+.pdwchs-product-summary-metric {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.pdwchs-product-summary-metric__val {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.pdwchs-product-revenue-loading {
+    text-align: center;
+    padding: 32px;
+    color: #64748b;
+    font-size: 13px;
+}
+
+.pdwchs-product-revenue-loading .spinner {
+    float: none;
+    margin: 0 auto 8px;
+    display: block;
+}
+
+.pdwchs-product-revenue-error p,
+.pdwchs-product-revenue-empty p {
+    color: #64748b;
+    padding: 24px 0;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 782px) {
+    .pdwchs-product-revenue-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #pdwchs-product-select {
+        width: 100%;
+    }
+
+    .pdwchs-date-range-input {
+        width: 100%;
+    }
+}
+
+/* === R1-27: Frequently Bought Together ==================== */
+
+.pdwchs-correlations-filter-card {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 16px 20px;
+    margin-top: 16px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+}
+
+.pdwchs-correlations-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: flex-end;
+}
+
+.pdwchs-filter-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+}
+
+.pdwchs-filter-group--product {
+    flex: 1;
+    min-width: 220px;
+    max-width: 340px;
+}
+
+#pdwchs-anchor-product {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #1e293b;
+    background: #fff;
+    height: 34px;
+    box-sizing: border-box;
+}
+
+/* Button-toggle group (radio → styled buttons) */
+
+.pdwchs-btn-toggle-group {
+    display: inline-flex;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.pdwchs-btn-toggle-group input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+}
+
+.pdwchs-btn-toggle-group label {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #475569;
+    background: #fff;
+    border-right: 1px solid #ccd0d4;
+    cursor: pointer;
+    line-height: 1.4;
+    transition: background 0.12s, color 0.12s;
+    white-space: nowrap;
+    margin: 0;
+    user-select: none;
+}
+
+.pdwchs-btn-toggle-group label:last-child {
+    border-right: none;
+}
+
+.pdwchs-btn-toggle-group label:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+.pdwchs-btn-toggle-group input[type="radio"]:checked + label {
+    background: #2271b1;
+    color: #fff;
+    border-right-color: #2271b1;
+}
+
+.pdwchs-correlations-table {
+    margin-top: 0;
+}
+
+.pdwchs-correlations-loading {
+    text-align: center;
+    padding: 32px;
+}
+
+.pdwchs-correlations-empty p,
+.pdwchs-correlations-error p {
+    color: #64748b;
+    padding: 24px 0;
+    font-style: italic;
+}
+
+@media ( max-width: 782px ) {
+    .pdwchs-correlations-filter-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .pdwchs-filter-group--product {
+        max-width: 100%;
+    }
+    #pdwchs-anchor-product {
+        width: 100%;
+    }
+}
+
+/* === R1-28: Revenue Patterns ============================== */
+
+.pdwchs-patterns-view-toggle {
+    display: flex;
+    gap: 0;
+}
+
+.pdwchs-patterns-view-toggle .pdwchs-view-btn {
+    border-radius: 0;
+    border-right-width: 0;
+    font-size: 13px;
+}
+
+.pdwchs-patterns-view-toggle .pdwchs-view-btn:first-child {
+    border-radius: 3px 0 0 3px;
+}
+
+.pdwchs-patterns-view-toggle .pdwchs-view-btn:last-child {
+    border-radius: 0 3px 3px 0;
+    border-right-width: 1px;
+}
+
+.pdwchs-patterns-view-toggle .pdwchs-view-btn--active {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+}
+
+.pdwchs-patterns-chart-container {
+    position: relative;
+    height: 300px;
+    margin-top: 24px;
+}
+
+.pdwchs-patterns-heatmap-wrap {
+    overflow-x: auto;
+    margin-top: 24px;
+}
+
+.pdwchs-patterns-heatmap {
+    display: grid;
+    grid-template-columns: 72px repeat(24, 1fr);
+    gap: 2px;
+    min-width: 700px;
+}
+
+.pdwchs-patterns-heatmap-cell {
+    height: 28px;
+    border-radius: 2px;
+    cursor: default;
+}
+
+.pdwchs-patterns-heatmap-cell--label {
+    background: transparent;
+    color: #64748b;
+    font-weight: 500;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pdwchs-patterns-summary-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.pdwchs-patterns-summary-card {
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    padding: 16px;
+    min-width: 180px;
+}
+
+.pdwchs-patterns-summary-card__label {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 4px;
+}
+
+.pdwchs-patterns-summary-card__value {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.pdwchs-patterns-summary-card__sub {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.pdwchs-patterns-loading {
+    text-align: center;
+    padding: 32px;
+}
+
+.pdwchs-patterns-empty p,
+.pdwchs-patterns-error p {
+    color: #64748b;
+    padding: 24px 0;
+    font-style: italic;
+}
+
+.pdwchs-filter-group--apply {
+    justify-content: flex-end;
+}
+
+@media ( max-width: 782px ) {
+    .pdwchs-filter-group--apply {
+        width: 100%;
+    }
+    .pdwchs-filter-group--apply .button {
+        width: 100%;
+    }
+    .pdwchs-patterns-view-toggle {
+        flex-direction: column;
+    }
+    .pdwchs-patterns-view-toggle .pdwchs-view-btn,
+    .pdwchs-patterns-view-toggle .pdwchs-view-btn:first-child,
+    .pdwchs-patterns-view-toggle .pdwchs-view-btn:last-child {
+        border-radius: 3px;
+        border-right-width: 1px;
+    }
+}

@@ -1,0 +1,30 @@
+What exists now
+
+  1. The demo-tools plugin — docs/demo/pdwchs-demo-tools/ (13 files, all php -l clean). A deterministic anchored seeder plus recalc runner, acceptance verifier, ledger-driven teardown, one-time legacy wipe,
+  and the REST trigger from your revision: POST /wp-json/pdwchs-demo/v1/refresh runs as a resumable background step-runner (~18s self-chaining slices), authenticated via an X-PDWCHS-Demo-Token header checked
+  with hash_equals() against a wp-config constant, with all mutating paths additionally dead unless PDWCHS_DEMO_ALLOW is defined. The CLI (wp pdwchs-demo seed|refresh|verify|plan|status|…) runs the identical
+  steps synchronously. An optional mu-loader makes it deactivation-proof on the live box. data/catalog.json + 17 product images are already exported from your local store.
+
+  2. The one-line product fix — pro/Intelligence/Health.php:268 queried pdwchs_customer_history_sessions, a table that has never existed (the real one is pd_woo_customer_history_sessions; Churn.php uses the
+  correct name). Every customer's health Engagement sub-score was silently zero. Fixed and linted; it needs to ship in the next pro build for the health-average acceptance band to hold.
+
+  3. The runbook you asked for — docs/demo/DEMO-STORE-RUNBOOK.md: one-time local setup, the recording-morning loop (pinned anchors for byte-identical retakes across all 12 videos), live deployment for
+  ch.puredevs.com including the WAF check, and your "update the demo before showing prospects" answer as a saved 3-line curl script.
+
+  Verification results
+
+  - wp pdwchs-demo plan (dry-run, no writes) prints the census and it lands exactly on the recording guide's contract: 51 customers, ~229 orders, 7 at-risk rows across 3 levels, hero computing to churn 64 /
+  High, 51 days since last order, 19 days overdue — replicated through the product's actual Churn.php formulas.
+  - verify ran end-to-end read-only and correctly diagnosed the current local store as the "dead store" the guide complains about (health avg 17, Critical 75%, champions 0, newest order May 7).
+  - REST permission model confirmed: 403 with no token defined, 403 with a bad token.
+  - Build gate: a fresh ./build.sh pro zip contains zero demo-tools/docs entries — the tooling cannot ship to customers.
+
+  Two things you should know
+
+  - Your local Pro license is currently inactive — pdwchs_is_pro_active() returns false, so seeding will refuse at the recalc stage with a clear message until you activate the Freemius license locally (runbook
+  §2 step 3 covers it).
+  - The exported catalog is the WooCommerce sample set ("WordPress Pennant" etc.). Order math doesn't depend on product prices, but the names appear on camera — the runbook flags renaming them as a
+  founder's-call step before the final seed.
+
+  Your next move is runbook §2: add PDWCHS_DEMO_ALLOW to wp-config, activate the license, back up, wipe-legacy, then seed + verify — the seeding runs are yours by your scope choice, and the plugin is already
+  symlinked and active locally. Want me to commit these changes (the tooling, the runbook, and the Health.php fix — as one commit or separate ones)?

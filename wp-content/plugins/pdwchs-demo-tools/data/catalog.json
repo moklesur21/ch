@@ -1,0 +1,141 @@
+{
+    "exported_from": "http:\/\/localhost\/puredevs-customer-history",
+    "products": [
+        {
+            "name": "V-Neck T-Shirt",
+            "slug": "v-neck-t-shirt",
+            "sku": "woo-vneck-tee",
+            "price": 15,
+            "category": "Tshirts",
+            "image": "v-neck-t-shirt.jpg"
+        },
+        {
+            "name": "Hoodie",
+            "slug": "hoodie",
+            "sku": "woo-hoodie",
+            "price": 42,
+            "category": "Hoodies",
+            "image": "hoodie.jpg"
+        },
+        {
+            "name": "Hoodie with Logo",
+            "slug": "hoodie-with-logo",
+            "sku": "woo-hoodie-with-logo",
+            "price": 45,
+            "category": "Hoodies",
+            "image": "hoodie-with-logo.jpg"
+        },
+        {
+            "name": "T-Shirt",
+            "slug": "t-shirt",
+            "sku": "woo-tshirt",
+            "price": 18,
+            "category": "Tshirts",
+            "image": "t-shirt.jpg"
+        },
+        {
+            "name": "Belt",
+            "slug": "belt",
+            "sku": "woo-belt",
+            "price": 55,
+            "category": "Accessories",
+            "image": "belt.jpg"
+        },
+        {
+            "name": "Cap",
+            "slug": "cap",
+            "sku": "woo-cap",
+            "price": 16,
+            "category": "Accessories",
+            "image": "cap.jpg"
+        },
+        {
+            "name": "Sunglasses",
+            "slug": "sunglasses",
+            "sku": "woo-sunglasses",
+            "price": 90,
+            "category": "Accessories",
+            "image": "sunglasses.jpg"
+        },
+        {
+            "name": "Hoodie with Pocket",
+            "slug": "hoodie-with-pocket",
+            "sku": "woo-hoodie-with-pocket",
+            "price": 35,
+            "category": "Hoodies",
+            "image": "hoodie-with-pocket.jpg"
+        },
+        {
+            "name": "Hoodie with Zipper",
+            "slug": "hoodie-with-zipper",
+            "sku": "woo-hoodie-with-zipper",
+            "price": 45,
+            "category": "Hoodies",
+            "image": "hoodie-with-zipper.jpg"
+        },
+        {
+            "name": "Long Sleeve Tee",
+            "slug": "long-sleeve-tee",
+            "sku": "woo-long-sleeve-tee",
+            "price": 25,
+            "category": "Tshirts",
+            "image": "long-sleeve-tee.jpg"
+        },
+        {
+            "name": "Polo",
+            "slug": "polo",
+            "sku": "woo-polo",
+            "price": 20,
+            "category": "Tshirts",
+            "image": "polo.jpg"
+        },
+        {
+            "name": "Album",
+            "slug": "album",
+            "sku": "woo-album",
+            "price": 15,
+            "category": "Music",
+            "image": "album.jpg"
+        },
+        {
+            "name": "Single",
+            "slug": "single",
+            "sku": "woo-single",
+            "price": 2,
+            "category": "Music",
+            "image": "single.jpg"
+        },
+        {
+            "name": "T-Shirt with Logo",
+            "slug": "t-shirt-with-logo",
+            "sku": "Woo-tshirt-logo",
+            "price": 18,
+            "category": "Tshirts",
+            "image": "t-shirt-with-logo.jpg"
+        },
+        {
+            "name": "Beanie with Logo",
+            "slug": "beanie-with-logo",
+            "sku": "Woo-beanie-logo",
+            "price": 18,
+            "category": "Accessories",
+            "image": "beanie-with-logo.jpg"
+        },
+        {
+            "name": "Logo Collection",
+            "slug": "logo-collection",
+            "sku": "logo-collection",
+            "price": 18,
+            "category": "Clothing",
+            "image": "logo-collection.jpg"
+        },
+        {
+            "name": "WordPress Pennant",
+            "slug": "wordpress-pennant",
+            "sku": "wp-pennant",
+            "price": 11.05,
+            "category": "Decor",
+            "image": "wordpress-pennant.jpg"
+        }
+    ]
+}

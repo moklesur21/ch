@@ -1,0 +1,2 @@
+We need to make the demo website looks nice, at list functional and mimic of an actual ecomm website
+currently the demo website does not looks good

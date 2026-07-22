@@ -1,0 +1,95 @@
+/* PDWCHS Upsell UI — locked sections + dismissible banners */
+
+/* ── Locked section card ─────────────────────────────────────── */
+.pdwchs-locked-section {
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	overflow: hidden;
+	background: #fff;
+	margin-bottom: 20px;
+}
+
+.pdwchs-locked-preview {
+	position: relative;
+	overflow: hidden;
+	max-height: 220px;
+}
+
+.pdwchs-locked-preview img {
+	display: block;
+	width: 100%;
+	height: auto;
+	filter: blur(2px);
+	transform: scale(1.03);
+}
+
+.pdwchs-locked-overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.55);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.pdwchs-locked-overlay .dashicons {
+	font-size: 48px;
+	width: 48px;
+	height: 48px;
+	color: #fff;
+	opacity: 0.9;
+}
+
+.pdwchs-locked-body {
+	padding: 16px 18px;
+}
+
+.pdwchs-locked-body h3 {
+	margin: 0 0 6px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.pdwchs-locked-body p {
+	margin: 0 0 12px;
+	color: #646970;
+	font-size: 13px;
+}
+
+/* ── CTA button ──────────────────────────────────────────────── */
+.pdwchs-upsell-cta.button {
+	background: #2271b1;
+	border-color: #2271b1;
+	color: #fff;
+	font-weight: 500;
+}
+
+.pdwchs-upsell-cta.button:hover,
+.pdwchs-upsell-cta.button:focus {
+	background: #135e96;
+	border-color: #135e96;
+	color: #fff;
+}
+
+/* ── Dismissible banner ──────────────────────────────────────── */
+.pdwchs-upsell-banner {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.pdwchs-upsell-banner p {
+	margin: 4px 0;
+}
+
+.pdwchs-upsell-dismiss {
+	color: #646970;
+	font-size: 12px;
+	text-decoration: none;
+	vertical-align: middle;
+}
+
+.pdwchs-upsell-dismiss:hover {
+	color: #1d2327;
+	text-decoration: underline;
+}
