@@ -145,6 +145,7 @@ What a refresh guarantees: newest orders are from today/yesterday; revenue chart
 | `GET /status` | token | Run progress, ledger summary, last verify counts. |
 | `GET /verify?report=1` | token | Full checks (+ Phase-2 sheet). |
 | `POST /wipe-legacy` `{"confirm":"yes-really"}` | token + latch | One-time junk purge, background. |
+| `POST /setup-storefront` | token + latch | Northline branding pass (theme, copy, pages, shipping). Synchronous, idempotent — replaces the SSH `wp pdwchs-demo setup-storefront` on boxes without WP-CLI. |
 
 wp-admin: **Tools → PDWCHS Demo** shows the same status read-only (deliberately not under the Customer History menu — that sidebar is on camera).
 

@@ -35,6 +35,23 @@ class PDWCHS_Demo_Seeder {
 		if ( $intel ) {
 			remove_action( 'woocommerce_order_status_completed', array( $intel, 'pdwchs_on_order_completed' ) );
 		}
+
+		// The product's session tracker hooks woocommerce_new_order and would
+		// log an 'ACTION::new_order' row for EVERY seeded order when a run
+		// executes inside a web request (the REST path's WP-Cron slices) —
+		// phantom 127.0.0.1 "purchased" sessions that break the conversion
+		// funnel. The hook is registered by an inaccessible instance, so strip
+		// any PD_Customer_History_Public callback from the hook directly.
+		global $wp_filter;
+		if ( class_exists( 'PD_Customer_History_Public' ) && isset( $wp_filter['woocommerce_new_order'] ) ) {
+			foreach ( $wp_filter['woocommerce_new_order']->callbacks as $prio => $cbs ) {
+				foreach ( $cbs as $cb ) {
+					if ( is_array( $cb['function'] ) && is_object( $cb['function'][0] ) && $cb['function'][0] instanceof PD_Customer_History_Public ) {
+						remove_action( 'woocommerce_new_order', $cb['function'], $prio );
+					}
+				}
+			}
+		}
 	}
 
 	// ── step: store identity (recording-guide Phase 0) ──────────────────

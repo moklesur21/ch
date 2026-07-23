@@ -38,10 +38,31 @@ anchor you verified locally. One command: `scripts/live-refresh.sh`.
 This resolves the old roadmap item "build a migration plugin": the demo-tools
 REST API **is** the migration mechanism.
 
+## 0.5 What runs where (read this once)
+
+```
+YOUR MAC                                LIVE SERVER (ch.puredevs.com)
+────────────────────────                ─────────────────────────────
+scripts/demo-refresh.sh  ── local ──►   (never used here)
+scripts/live-refresh.sh  ── HTTPS ──►   WordPress + the two plugins + theme
+curl commands in this doc ─ HTTPS ──►   (files uploaded ONCE, then driven
+                                         remotely via the plugin's API)
+```
+
+- The **server** only ever receives files: the product plugin,
+  `pdwchs-demo-tools`, and the northline theme — uploaded via SFTP or the
+  hosting file manager.
+- The **scripts stay on your Mac**. `demo-refresh.sh` is for the local MAMP
+  site only. `live-refresh.sh` runs on your Mac and drives the live site over
+  the internet — you never copy it to the server.
+- **No SSH and no WP-CLI are needed on the server at any point.** Every
+  server-side action (wipe, seed, refresh, verify, storefront branding) is a
+  token-authenticated API call made from your Mac.
+
 ## 1. Prerequisites
 
-- SFTP/SSH access to the live box + the hosting/WAF control panel + live
-  wp-admin.
+- SFTP or hosting file-manager access to the live box + the hosting/WAF
+  control panel + live wp-admin (SSH optional, never required).
 - Local dataset verified: `scripts/demo-refresh.sh` ends **0 FAIL**.
 - An API token for the trigger: generate with `openssl rand -hex 24`, store it
   locally once:
@@ -93,8 +114,16 @@ REST API **is** the migration mechanism.
    `/wp-json/pdwchs-demo/v1/*` (or your IP) in the host/WAF panel.
 7. **License.** Activate the Freemius **production** license on live
    (product 7511) — recalc refuses to run without it.
-8. **Storefront branding.** Over SSH: `wp pdwchs-demo setup-storefront`
-   (idempotent — currency, product copy, categories, About/Contact, shipping).
+8. **Storefront branding.** From your Mac (idempotent — theme, currency,
+   product copy, categories, About/Contact, shipping; prints a log):
+
+   ```bash
+   curl -X POST -H "X-PDWCHS-Demo-Token: $(cat ~/.config/pdwchs/demo-token)" \
+        https://ch.puredevs.com/wp-json/pdwchs-demo/v1/setup-storefront
+   ```
+
+   (Equivalent, only if WP-CLI ever gets installed on the box:
+   `wp pdwchs-demo setup-storefront`.)
 9. **One-time junk purge.** Back up live first, then:
 
    ```bash
@@ -102,8 +131,6 @@ REST API **is** the migration mechanism.
         -H "Content-Type: application/json" -d '{"confirm":"yes-really"}' \
         https://ch.puredevs.com/wp-json/pdwchs-demo/v1/wipe-legacy
    ```
-
-   (or over SSH: `wp pdwchs-demo wipe-legacy --yes-really`).
 10. **First seed:** `scripts/live-refresh.sh` — POSTs `/refresh`, polls
     `/status` until done, then verifies. Must end **LIVE OK — 0 FAIL**.
 

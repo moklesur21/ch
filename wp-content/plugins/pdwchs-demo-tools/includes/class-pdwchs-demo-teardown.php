@@ -117,7 +117,15 @@ class PDWCHS_Demo_Teardown {
 		foreach ( array_chunk( array_map( 'absint', $ledger['cart_ids'] ), 500 ) as $chunk ) {
 			$wpdb->query( "DELETE FROM {$carts} WHERE id IN (" . implode( ',', $chunk ) . ')' ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		}
-		return 'sessions (' . count( $ledger['session_ids'] ) . ') + carts (' . count( $ledger['cart_ids'] ) . ') rows removed';
+
+		// Leaked tracker rows: before suppress_side_effects() stripped the
+		// woocommerce_new_order tracker hook, web-request-driven runs (REST /
+		// WP-Cron slices) logged an ACTION row per seeded order under loopback
+		// sessions. They are not ledger-tracked; sweep them here. Seeded rows
+		// always carry planned IPs (45.x+), never 127.0.0.1 / ::1.
+		$leaked = (int) $wpdb->query( "DELETE FROM {$sessions} WHERE ip IN ('127.0.0.1','::1') AND url LIKE 'ACTION::new\\_order::%'" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+
+		return 'sessions (' . count( $ledger['session_ids'] ) . ') + carts (' . count( $ledger['cart_ids'] ) . ') rows removed' . ( $leaked ? ", {$leaked} leaked tracker rows swept" : '' );
 	}
 
 	public static function step_users( $batch ) {

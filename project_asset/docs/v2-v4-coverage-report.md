@@ -46,11 +46,15 @@ store, plus two real gaps now seeded):
 - **A2 donut:** Champions 8, Loyal 3, Potential Loyalist ~35, New ~21,
   Needs Attention 3, At Risk 2, Cannot Lose 1, Hibernating ~10, Lost 1,
   Undefined ~4 (null bucket, minimal as required).
-- **A4 / J2 (Segments page):** confirmed in code — `Customer History →
-  Segments` renders the 10 named segments and each opens to a member list;
-  the Dashboard donut is clickable too ("Click any segment to view
-  customers"). Record whichever reads cleaner; take the screenshot for the
-  script-writer during pre-flight.
+- **A4 / J2 (Segments page) — layout differs from the donut, exactly the
+  case the run-sheet anticipated:** the dedicated `Customer History →
+  Segments` page is a **Saved Segments manager** (custom saved lists +
+  New Segment), NOT a 10-segment RFM browser. The 10-segment view lives on
+  the **Dashboard donut**, and clicking a segment opens **Customers & Users
+  pre-filtered by that segment** (`admin.php?page=pd-woo-customers&rfm_segment=champions`)
+  — a filterable customer table with RFM badges, health, lifecycle, tags and
+  spend per row. So CAP-2 = the donut, CAP-3 = the filtered Customers list.
+  Screenshots: `project_asset/demo/screenshots/` (02, 04, 05).
 - **J1:** seeded and machine-verified (`v2_*` checks in `verify`).
 
 ## V3 — Revenue / Data Verified (spec answers)

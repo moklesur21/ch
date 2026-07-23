@@ -39,6 +39,11 @@ class PDWCHS_Demo_REST {
 			'callback'            => array( __CLASS__, 'handle_wipe_legacy' ),
 			'permission_callback' => array( __CLASS__, 'permission_mutate' ),
 		) );
+		register_rest_route( self::NS, '/setup-storefront', array(
+			'methods'             => 'POST',
+			'callback'            => array( __CLASS__, 'handle_setup_storefront' ),
+			'permission_callback' => array( __CLASS__, 'permission_mutate' ),
+		) );
 	}
 
 	private static function token_ok( WP_REST_Request $request ) {
@@ -123,6 +128,24 @@ class PDWCHS_Demo_REST {
 			$result['report'] = $verifier->report();
 		}
 		return $result;
+	}
+
+	/**
+	 * Northline branding pass (theme, product copy, pages, shipping) —
+	 * synchronous and idempotent, so no runner/background handling needed.
+	 * Replaces the SSH `wp pdwchs-demo setup-storefront` step on boxes
+	 * without WP-CLI.
+	 */
+	public static function handle_setup_storefront() {
+		$result = PDWCHS_Demo_Storefront::setup();
+		if ( empty( $result['ok'] ) ) {
+			return new WP_Error(
+				'pdwchs_demo_storefront_failed',
+				isset( $result['message'] ) ? $result['message'] : 'Storefront setup failed.',
+				array( 'status' => 500, 'log' => $result['log'] )
+			);
+		}
+		return new WP_REST_Response( array( 'ok' => true, 'log' => $result['log'] ), 200 );
 	}
 
 	public static function handle_wipe_legacy( WP_REST_Request $request ) {
