@@ -96,6 +96,11 @@ curl commands in this doc ─ HTTPS ──►   (files uploaded ONCE, then drive
    define( 'PDWCHS_DEMO_ALLOW', true );            // enables seed/refresh here
    define( 'PDWCHS_DEMO_TOKEN', '<the token from §1>' );
    define( 'PDWCHS_DEMO_LOCKDOWN', true );         // read-only public viewer
+   // Sandbox checkout on the live demo — accepted decision (demo-site-lockdown.md):
+   // visitors test-purchase with test cards, never real charges.
+   define( 'WP_FS__puredevs-customer-history-for-woocommerce_SECRET_KEY', 'sk_…' );
+   // NEVER define WP_FS__DEV_MODE or WP_FS__SKIP_EMAIL_ACTIVATION here —
+   // dev-only (Freemius Debug menu / activation shortcut), not for a public site.
    ```
 
    plus the rest of the lockdown checklist in
@@ -186,8 +191,11 @@ re-verify before pointing prospects at it.
 - Never `wp db import` a local dump on live; never search-replace a local dump
   onto live. Regenerate instead (§0).
 - Files that must never leave this machine: `wp-config.php`,
-  `wp-content/mu-plugins/auto_login_local.php`, `backups/*.sql`, the Freemius
-  *sandbox* secret key.
+  `wp-content/mu-plugins/auto_login_local.php`, `backups/*.sql`.
+- The Freemius *sandbox* secret key is the accepted exception (see
+  demo-site-lockdown.md): it IS defined on the live demo so checkout stays in
+  sandbox (test cards, no real charges). What must never be defined on live:
+  `WP_FS__DEV_MODE` and `WP_FS__SKIP_EMAIL_ACTIVATION`.
 - The live box needs exactly: the two product plugins' builds, demo-tools,
   the northline theme, and the wp-config constants above — nothing else from
   this repo.

@@ -18,8 +18,13 @@ WordPress SDK has native sandbox support:
   token + `s_ctx_ts` timestamp to every checkout URL automatically.
 
 So **no plugin code changes are needed** — only a constant in
-`wp-config.php`, which is gitignored so the secret never reaches the repo
-or the live site.
+`wp-config.php`, which is gitignored so the secret never reaches the repo.
+On the **live demo** the same constant is deliberately present (accepted
+decision — see demo-site-lockdown.md's deploy checklist): it keeps every
+checkout on ch.puredevs.com in sandbox mode, so visitors can complete the
+upgrade flow with test cards and can never be really charged. The dev-only
+constants `WP_FS__DEV_MODE` / `WP_FS__SKIP_EMAIL_ACTIVATION` stay off the
+live box.
 
 ## One-time activation (requires the secret key)
 

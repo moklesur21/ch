@@ -70,7 +70,8 @@ And make sure:
   `debug.log`).
 - `WP_ENVIRONMENT_TYPE` is unset or `'production'` — never `'local'` (that would
   re-enable passwordless auto-login).
-- `WP_FS__DEV_MODE` is **never** defined.
+- `WP_FS__DEV_MODE` and `WP_FS__SKIP_EMAIL_ACTIVATION` are **never** defined
+  (dev-only: the Freemius Debug menu and the opt-in activation shortcut).
 - Self-registration is off: `users_can_register = 0` (self-registration is
   anonymous, so the role blocker can't stop it — this setting must).
 - `wp-content/mu-plugins/auto_login_local.php` is **absent** from the live box.
