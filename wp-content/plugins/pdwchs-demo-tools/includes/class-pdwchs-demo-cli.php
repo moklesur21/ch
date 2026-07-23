@@ -211,6 +211,29 @@ class PDWCHS_Demo_CLI {
 			WP_CLI::error( 'Cannot create data/images/.' );
 		}
 
+		// Round-trip guard: catalog.json carries hand-curated enrichment the
+		// store itself can't fully express (copy + featured for setup-storefront,
+		// brand for the Brand Loyal tag, the note). Re-exporting must never
+		// strip them — carry existing per-slug extras over, live values win
+		// only for the fields the exporter actually reads from the store.
+		$existing_note   = '';
+		$existing_extras = array();
+		$file            = PDWCHS_DEMO_TOOLS_DATA_DIR . 'catalog.json';
+		if ( file_exists( $file ) ) {
+			$old = json_decode( (string) file_get_contents( $file ), true );
+			if ( is_array( $old ) ) {
+				$existing_note = isset( $old['note'] ) ? (string) $old['note'] : '';
+				foreach ( (array) ( $old['products'] ?? array() ) as $entry ) {
+					if ( ! empty( $entry['slug'] ) ) {
+						$existing_extras[ $entry['slug'] ] = array_diff_key(
+							$entry,
+							array_flip( array( 'name', 'slug', 'sku', 'price', 'category', 'image' ) )
+						);
+					}
+				}
+			}
+		}
+
 		$entries = array();
 		$prices  = array();
 		foreach ( $products as $p ) {
@@ -226,7 +249,7 @@ class PDWCHS_Demo_CLI {
 			}
 			$price     = (float) $p->get_price();
 			$prices[]  = $price;
-			$entries[] = array(
+			$entry     = array(
 				'name'     => $p->get_name(),
 				'slug'     => $p->get_slug(),
 				'sku'      => $p->get_sku(),
@@ -234,11 +257,24 @@ class PDWCHS_Demo_CLI {
 				'category' => $cats ? $cats[0] : 'General',
 				'image'    => $image,
 			);
+			// Fresher live values for copy/featured; preserved extras (brand,
+			// anything else curated) fill whatever the store doesn't provide.
+			$live = array_filter( array(
+				'featured'          => $p->get_featured() ? true : null,
+				'short_description' => $p->get_short_description() ?: null,
+				'description'       => $p->get_description() ?: null,
+			), function ( $v ) { return null !== $v; } );
+			$extras    = isset( $existing_extras[ $entry['slug'] ] ) ? $existing_extras[ $entry['slug'] ] : array();
+			$entries[] = array_merge( $entry, $extras, $live );
 		}
 
+		$payload = array( 'exported_from' => home_url(), 'products' => $entries );
+		if ( '' !== $existing_note ) {
+			$payload = array( 'exported_from' => home_url(), 'note' => $existing_note, 'products' => $entries );
+		}
 		file_put_contents( // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
-			PDWCHS_DEMO_TOOLS_DATA_DIR . 'catalog.json',
-			wp_json_encode( array( 'exported_from' => home_url(), 'products' => $entries ), JSON_PRETTY_PRINT )
+			$file,
+			wp_json_encode( $payload, JSON_PRETTY_PRINT )
 		);
 
 		sort( $prices );
