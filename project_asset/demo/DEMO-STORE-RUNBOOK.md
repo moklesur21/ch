@@ -19,7 +19,10 @@ refresh = teardown (only seeded data, ledger-driven)
 
 ## 2. One-time local setup (MAMP)
 
-Uses the `wpc` helper from [`docs/WP-CLI-AND-PLUGIN-CHECK.md`](../WP-CLI-AND-PLUGIN-CHECK.md).
+Uses the checked-in wrapper `scripts/wpc` (injects MAMP's MySQL socket +
+`--path`; adds `--socket` for `db export`/`db import`). Run `scripts/wpc <command>`
+from the repo root, or `alias wpc='/Applications/MAMP/htdocs/ch/scripts/wpc'` —
+every `wpc …` command below then works verbatim.
 
 1. **wp-config.php** — add above `/* That's all */`:
    ```php
@@ -59,6 +62,10 @@ wpc pdwchs-demo refresh --anchor=$(date +%F)   # or a PINNED anchor, see below
 wpc pdwchs-demo verify --report
 ```
 
+Checked-in shortcut: `scripts/demo-refresh.sh [anchor] [--snapshot]` runs both
+commands, strips PHP deprecation noise, and prints a record / don't-record
+verdict (exit 0 = record).
+
 - `verify` must be **0 FAIL** before recording (warnings: read them, decide).
 - `--report` prints the **Phase-2 report-back sheet** values (hero health score/band/trend, churn % + label, exact days-since/overdue, primary indicator, totals, rank, both dropdown option lists) — fill the guide's Phase-2 table from it. Recording is blocked until that sheet is returned (guide rule).
 - **Pin the anchor across the 12-video series**: recording V1 on July 25 → `--anchor=2026-07-25`. Re-running with the same anchor + seed on any later day reproduces the **byte-identical dataset** (same names, same numbers), so retakes and videos 2–12 stay consistent with the patched narration. A pinned anchor N days in the past shifts "days since" by +N — verify accounts for it and warns; for on-camera number consistency always record within the anchor day, or re-pin and re-patch narration.
@@ -90,7 +97,11 @@ One-time (or per plugin release):
 
 ## 5. Keeping the demo fresh for prospects (the "time to time" update)
 
-Save these three lines on your machine (`~/bin/demo-refresh.sh`):
+This is checked in as `scripts/live-refresh.sh` (POST /refresh → poll /status
+with one auto-resume on stall → GET /verify, single command; token from
+`~/.config/pdwchs/demo-token`). Full deploy + day-to-day guide:
+[`../docs/live-migration.md`](../docs/live-migration.md). Raw curl equivalent
+for reference:
 
 ```bash
 TOKEN='<the wp-config token>'

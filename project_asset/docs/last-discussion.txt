@@ -1,0 +1,50 @@
+Here's the whole picture — why refresh exists, what it does, and the exact routine for every shoot day.
+
+  Why the data goes stale
+
+  Every number the plugin shows is computed relative to "now": "51 days since last order", "last 30 days revenue", the 0–90 vs 90–180 day frequency windows, etc. The seeder builds the dataset against an anchor date so that on that
+  day everything is perfect: newest orders are from today/yesterday, Daniel Mercer is exactly 51 days silent, his churn score is 64/High.
+
+  But the clock keeps moving and the data doesn't. Tomorrow he's 52 days silent, next week 58… within ~10–14 days his score drifts out of the High band, the revenue chart grows a flat tail, and the Declining Health widget empties.
+  The screen stops matching your narration.
+
+  What refresh --anchor=$(date +%F) does
+
+  One command, ~3 minutes, five stages (you saw it run yesterday):
+
+  1. Teardown — deletes only the seeded data (it's all ledger-tracked): the 51 customers, 229 orders, sessions, carts, scores. Products, settings, admin users untouched.
+  2. Re-seed anchored to today — rebuilds the identical dataset with all dates slid forward so "today" is day zero: newest order is from today, hero is exactly 51 days silent again.
+  3. Recalc — re-runs RFM, health, lifecycle, behavior, churn + the Woo Analytics sync (my fix).
+  4. Alerts — regenerated, so the hero's alert is back to New / Unassigned (undoes the LF-08 assignment you clicked in the previous shoot).
+  5. Verify — runs automatically; must end 0 FAIL.
+
+  Because the RNG seed is fixed (20260722), the dataset is deterministic: same names, same order counts, same totals, same scores every time. Refreshing with a new anchor changes only the calendar dates on screen — every number in
+  your narration (health 60, churn 64%, $931, 11 orders, rank #4) stays exactly the same.
+
+  Your routine: every morning you shoot
+
+  cd /Applications/MAMP/htdocs/ch
+  php -d mysqli.default_socket=/Applications/MAMP/tmp/mysql/mysql.sock /opt/homebrew/bin/wp pdwchs-demo refresh --anchor=$(date +%F)
+  php -d mysqli.default_socket=/Applications/MAMP/tmp/mysql/mysql.sock /opt/homebrew/bin/wp pdwchs-demo verify --report
+
+  - First command: fresh data, anchored to today.
+  - Second: must print 0 FAIL, and the report sheet at the bottom should show the same numbers as your patched narration. If it does → record. That's it.
+  - Record the same day you refresh — don't let it sit overnight.
+What "pin the anchor" means (the one subtlety)
+
+  That advice is for retakes of the same video. If you shoot part of V1 today and need a pixel-identical retake, re-running refresh --anchor=2026-07-22 (today's date) on a later day reproduces the byte-identical dataset — same order
+  dates — so footage cuts together. But the live-computed fields ("days since last order") would then read 51+N because real time moved on. So the practical rules are:
+
+  ┌───────────────────────────────────────────────────────────────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                               Situation                               │                                                                        What to do                                                                         │
+  ├───────────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Retakes on the same day                                               │ Nothing — just keep recording                                                                                                                             │
+  ├───────────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ New shoot day (next video, or full re-shoot of this one)              │ refresh --anchor=$(date +%F) that morning — numbers identical, dates fresh                                                                                │
+  ├───────────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ Cutting new footage into old footage of the same video on a later day │ Avoid it — either re-shoot the whole video after a fresh refresh, or restore V1-approved-dataset.sql and accept the "days since" fields will have drifted │
+  └───────────────────────────────────────────────────────────────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+  Different calendar dates across videos 2–12 is fine — a real store's dates move forward over weeks, and your narration never mentions specific dates, only the numbers (which never change).
+
+  If you'd like, I can also set up a tiny demo-refresh shell script (or the wpc alias the runbook references, which doesn't exist on this machine yet) so the morning routine is a single short command — just say so.

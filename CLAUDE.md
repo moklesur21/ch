@@ -23,12 +23,18 @@ backups and `wp-config.php` are all ignored. Tracked:
 - `wp-content/plugins/pdwchs-demo-tools` — demo data/tooling plugin (needs optimisation)
 - `wp-content/mu-plugins/auto_login_local.php` — local-only auto-login helper
 - `project_asset/` — project docs and demo assets
+- `scripts/` — helper scripts: `wpc` (wp-cli wrapper), `demo-refresh.sh`
+  (shoot-morning data refresh), `live-refresh.sh` (live-site refresh via REST)
 
 ## Local environment
 
 - Site URL: `http://localhost/ch` (MAMP Apache). DB `ch`, prefix `pp09_`.
 - wp-cli needs MAMP's MySQL socket:
   `php -d mysqli.default_socket=/Applications/MAMP/tmp/mysql/mysql.sock /opt/homebrew/bin/wp <command>`
+- Shorthand for the above: `scripts/wpc <command>` (injects socket + `--path`;
+  adds `--socket` for `db export`/`db import`). Shoot-morning routine:
+  `scripts/demo-refresh.sh` — refresh + verify + record/don't-record verdict
+  in one command.
 - The **free** plugin is the active one; pro is installed but inactive
   (realistic upgrade flow for demos).
 - Auto-login helper (mu-plugin): `http://localhost/ch/?local_login=1&user_email=<email>`
@@ -50,7 +56,8 @@ backups and `wp-config.php` are all ignored. Tracked:
   Twenty Twenty-Five) plus `wp pdwchs-demo setup-storefront` (idempotent; sets
   currency, product copy, categories, About/Contact, shipping). Guide:
   `project_asset/docs/storefront-setup.md`
-- Build a migration plugin that pushes demo data to the live site (REST API or
-  similar).
+- Live migration: solved — demo data is *regenerated* on the live box via the
+  demo-tools REST API (deterministic seeder), never copied. Guide:
+  `project_asset/docs/live-migration.md`; day-to-day: `scripts/live-refresh.sh`.
 - Next planned task: `project_asset/docs/update-01.txt`.
 - Git remote: https://github.com/moklesur21/ch.git

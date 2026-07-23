@@ -12,6 +12,9 @@
 !/CLAUDE.md
 !/README.md
 
+# --- Helper scripts (wpc, demo-refresh, live-refresh) ---------------
+!/scripts/
+
 # --- Project assets (docs, demo material) ---------------------------
 !/project_asset/
 

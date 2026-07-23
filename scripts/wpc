@@ -1,0 +1,34 @@
+#!/bin/bash
+# wpc — wp-cli wrapper for this MAMP site, runnable from any cwd.
+#
+#   - injects MAMP's MySQL socket into PHP (mysqli.default_socket)
+#   - resolves --path from this script's location (parent dir = site root)
+#   - `wp db export` / `wp db import` shell out to mysqldump/mysql, which
+#     IGNORE the PHP ini socket — for those two, append an explicit --socket
+#     (wp db passes unknown flags through to the underlying binary).
+#     Note: only sniffs "$1 $2", so `wpc --url=x db export` would miss the
+#     append. Extend the case below if `db query` / `db cli` are ever needed.
+#
+# Usage:  scripts/wpc <any wp-cli command>
+#   e.g.  scripts/wpc pdwchs-demo verify --report
+# Optional shell alias so runbook commands work verbatim from any terminal:
+#   alias wpc='/Applications/MAMP/htdocs/ch/scripts/wpc'
+
+SOCK="/Applications/MAMP/tmp/mysql/mysql.sock"
+WP="/opt/homebrew/bin/wp"
+SITE="$(cd "$(dirname "$0")/.." && pwd)"
+
+if [ ! -S "$SOCK" ]; then
+  printf 'wpc: warning: MAMP MySQL socket missing (%s) — start MAMP if this command needs the DB.\n' "$SOCK" >&2
+fi
+
+EXTRA=""
+case "${1-} ${2-}" in
+  "db export"|"db import") EXTRA="--socket=$SOCK" ;;
+esac
+
+# If MAMP's mysqldump ever clashes with a newer Homebrew client
+# (COLUMN_STATISTICS error), prepend /Applications/MAMP/Library/bin to PATH
+# inside the db branch above.
+
+exec php -d mysqli.default_socket="$SOCK" "$WP" --path="$SITE" "$@" ${EXTRA:+"$EXTRA"}
