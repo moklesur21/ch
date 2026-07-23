@@ -99,7 +99,20 @@ class PDWCHS_Demo_Teardown {
 				}
 			}
 		}
-		return "orphan order sweep: {$n} deleted";
+
+		// Orphaned wc_order_stats rows: wc-admin schedules stats cleanup when a
+		// shop_order is deleted, but NOT for its cascade-deleted shop_order_refund
+		// children — every refresh would otherwise leak the refund rows into
+		// WooCommerce Analytics as phantom Returns (+$118 per generation).
+		// Purge any stats row whose order no longer exists.
+		$stats_table = $wpdb->prefix . 'wc_order_stats';
+		$orders_table = $wpdb->prefix . 'wc_orders';
+		$stale = 0;
+		if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $stats_table ) ) ) {
+			$stale = (int) $wpdb->query( "DELETE s FROM {$stats_table} s LEFT JOIN {$orders_table} o ON o.id = s.order_id WHERE o.id IS NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		}
+
+		return "orphan order sweep: {$n} deleted" . ( $stale ? ", {$stale} stale stats rows purged" : '' );
 	}
 
 	public static function step_sessions_carts() {

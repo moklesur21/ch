@@ -1,174 +1,117 @@
 {
-  "exported_from": "https://ch.puredevs.com",
-  "note": "Northline Supply Co. apparel catalog. Categories consolidated to Hoodies/Tees/Accessories. Copy + featured flags consumed by setup-storefront. Order/analytics math is price-independent (line totals are plan-driven). Brands feed the product_brand taxonomy (Brand Loyal tag).",
-  "products": [
-    {
-      "name": "The Northline Hoodie",
-      "slug": "hoodie",
-      "sku": "woo-hoodie",
-      "price": 42,
-      "category": "Hoodies",
-      "image": "hoodie.jpg",
-      "featured": true,
-      "short_description": "Our heavyweight everyday hoodie — 380gsm brushed-back fleece that softens with every wash.",
-      "description": "The hoodie we built the whole line around. Dense 380gsm brushed-back fleece, a double-layer hood, and ribbing that keeps its shape after years of wear. Cut a touch longer in the body for grey mornings and long walks. Pre-shrunk, built to last, guaranteed.",
-      "brand": "North Line"
-    },
-    {
-      "name": "Northline Hoodie — Logo",
-      "slug": "hoodie-with-logo",
-      "sku": "woo-hoodie-with-logo",
-      "price": 45,
-      "category": "Hoodies",
-      "image": "hoodie-with-logo.jpg",
-      "featured": false,
-      "short_description": "The Northline Hoodie with a small tonal chest mark. Same fleece, same fit.",
-      "description": "Everything you like about the Northline Hoodie, finished with a small tonal North Line mark on the chest. 380gsm brushed-back fleece, double-layer hood, shape-keeping ribbing. Quiet branding for people who don't need a billboard.",
-      "brand": "North Line"
-    },
-    {
-      "name": "Zip-Pocket Hoodie",
-      "slug": "hoodie-with-pocket",
-      "sku": "woo-hoodie-with-pocket",
-      "price": 48,
-      "category": "Hoodies",
-      "image": "hoodie-with-pocket.jpg",
-      "featured": false,
-      "short_description": "A secured zip pocket on the classic fleece — for keys, cards and the trailhead.",
-      "description": "The everyday hoodie with a hidden zip pocket set into the front pouch, big enough for a phone and secure enough to trust on the trail. Same 380gsm fleece and long-body cut. The one you grab when your hands are full.",
-      "brand": "North Line"
-    },
-    {
-      "name": "Full-Zip Hoodie",
-      "slug": "hoodie-with-zipper",
-      "sku": "woo-hoodie-with-zipper",
-      "price": 52,
-      "category": "Hoodies",
-      "image": "hoodie-with-zipper.jpg",
-      "featured": true,
-      "short_description": "A full-zip layer in the same heavyweight fleece — easy on, easy off, all season.",
-      "description": "A full-length YKK zip turns the Northline fleece into your go-to mid-layer. Throw it over a tee on cool mornings, shed it by noon. Reinforced zip garage, dense 380gsm fleece, and the same long, keep-its-shape cut as the pullover.",
-      "brand": "North Line"
-    },
-    {
-      "name": "Everyday Tee",
-      "slug": "t-shirt",
-      "sku": "woo-tshirt",
-      "price": 24,
-      "category": "Tees",
-      "image": "t-shirt.jpg",
-      "featured": true,
-      "short_description": "A 220gsm cotton tee with structure — holds its shape wash after wash.",
-      "description": "Not a throwaway tee. Mid-weight 220gsm combed cotton with a clean set-in collar that won't stretch out, side-seamed so it hangs straight. The white tee you stop replacing because this one keeps going.",
-      "brand": "North Line"
-    },
-    {
-      "name": "Everyday Tee — Logo",
-      "slug": "t-shirt-with-logo",
-      "sku": "Woo-tshirt-logo",
-      "price": 26,
-      "category": "Tees",
-      "image": "t-shirt-with-logo.jpg",
-      "featured": false,
-      "short_description": "The Everyday Tee with a small North Line mark. 220gsm, keeps its shape.",
-      "description": "Our mid-weight 220gsm cotton tee with a small tonal North Line mark at the chest. Structured collar, straight hang, side-seamed construction. Understated branding on a tee that lasts.",
-      "brand": "North Line"
-    },
-    {
-      "name": "V-Neck Tee",
-      "slug": "v-neck-t-shirt",
-      "sku": "woo-vneck-tee",
-      "price": 24,
-      "category": "Tees",
-      "image": "v-neck-t-shirt.jpg",
-      "featured": false,
-      "short_description": "A clean V-neck in the same structured 220gsm cotton.",
-      "description": "The Everyday Tee in a tailored V-neck. Mid-weight 220gsm combed cotton, a V that sits right — not too deep — and a shape that survives the laundry. Layers under a shirt or stands on its own.",
-      "brand": "Camber Studio"
-    },
-    {
-      "name": "Long-Sleeve Tee",
-      "slug": "long-sleeve-tee",
-      "sku": "woo-long-sleeve-tee",
-      "price": 30,
-      "category": "Tees",
-      "image": "long-sleeve-tee.jpg",
-      "featured": true,
-      "short_description": "The shoulder-season staple — 240gsm cotton with rib cuffs.",
-      "description": "For the weeks between tee and hoodie. A slightly heavier 240gsm cotton long-sleeve with ribbed cuffs that stay put and a clean crew neck. Wears solo now, layers later.",
-      "brand": "Camber Studio"
-    },
-    {
-      "name": "Pique Polo",
-      "slug": "polo",
-      "sku": "woo-polo",
-      "price": 34,
-      "category": "Tees",
-      "image": "polo.jpg",
-      "featured": true,
-      "short_description": "A structured cotton-pique polo that dresses up or down.",
-      "description": "A polo with a bit of backbone. Breathable cotton pique, a collar with enough structure to stand on its own, and a trim-but-not-tight cut. Works over the weekend and holds up at the desk.",
-      "brand": "Camber Studio"
-    },
-    {
-      "name": "Watch Cap Beanie",
-      "slug": "beanie",
-      "sku": "woo-beanie",
-      "price": 22,
-      "category": "Accessories",
-      "image": "beanie-with-logo.jpg",
-      "featured": false,
-      "short_description": "A double-layer rib-knit watch cap for real cold.",
-      "description": "A proper watch cap. Double-layer rib knit in a soft acrylic-wool blend, snug without squeezing, with a fold that sits right above the ears. The one that lives in your coat pocket all winter.",
-      "brand": "Camber Studio"
-    },
-    {
-      "name": "Watch Cap — Logo",
-      "slug": "beanie-with-logo",
-      "sku": "Woo-beanie-logo",
-      "price": 24,
-      "category": "Accessories",
-      "image": "beanie-with-logo.jpg",
-      "featured": false,
-      "short_description": "The double-layer beanie with a woven North Line label.",
-      "description": "Our rib-knit watch cap finished with a small woven North Line label on the fold. Double-layer for warmth, acrylic-wool blend for softness, and a fit that stays put in the wind.",
-      "brand": "Camber Studio"
-    },
-    {
-      "name": "Field Cap",
-      "slug": "cap",
-      "sku": "woo-cap",
-      "price": 26,
-      "category": "Accessories",
-      "image": "cap.jpg",
-      "featured": true,
-      "short_description": "A six-panel cotton cap with a pre-curved brim and metal buckle.",
-      "description": "A cap that breaks in, not down. Washed cotton twill, a six-panel crown with a pre-curved brim, and an adjustable antique-metal buckle at the back. Structured enough to look sharp, soft enough to pack.",
-      "brand": "Camber Studio"
-    },
-    {
-      "name": "Leather Belt",
-      "slug": "belt",
-      "sku": "woo-belt",
-      "price": 38,
-      "category": "Accessories",
-      "image": "belt.jpg",
-      "featured": true,
-      "short_description": "Full-grain leather with a solid antique-brass buckle.",
-      "description": "A belt you'll re-buckle for a decade. Full-grain vegetable-tanned leather that patinas as it ages, stitched edges, and a solid antique-brass buckle. Cut wide enough for jeans, clean enough for chinos.",
-      "brand": "Field & Forge"
-    },
-    {
-      "name": "Field Sunglasses",
-      "slug": "sunglasses",
-      "sku": "woo-sunglasses",
-      "price": 58,
-      "category": "Accessories",
-      "image": "sunglasses.jpg",
-      "featured": true,
-      "short_description": "Polarized lenses in a lightweight acetate frame.",
-      "description": "Glare-cutting polarized lenses in a lightweight keyhole acetate frame with spring hinges that take a knock. UV400 protection, a slim profile that suits most faces, and a hard case to keep them trail-ready.",
-      "brand": "Field & Forge"
-    }
-  ]
+    "exported_from": "http:\/\/localhost\/ch",
+    "products": [
+        {
+            "name": "V-Neck Tee",
+            "slug": "v-neck-t-shirt",
+            "sku": "woo-vneck-tee",
+            "price": 15,
+            "category": "Tees",
+            "image": "v-neck-t-shirt.jpg"
+        },
+        {
+            "name": "The Northline Hoodie",
+            "slug": "hoodie",
+            "sku": "woo-hoodie",
+            "price": 45,
+            "category": "Hoodies",
+            "image": "hoodie.jpg"
+        },
+        {
+            "name": "Northline Hoodie \u2014 Logo",
+            "slug": "hoodie-with-logo",
+            "sku": "woo-hoodie-with-logo",
+            "price": 45,
+            "category": "Hoodies",
+            "image": "hoodie-with-logo.jpg"
+        },
+        {
+            "name": "Everyday Tee",
+            "slug": "t-shirt",
+            "sku": "woo-tshirt",
+            "price": 24,
+            "category": "Tees",
+            "image": "t-shirt.jpg"
+        },
+        {
+            "name": "Watch Cap Beanie",
+            "slug": "beanie",
+            "sku": "woo-beanie",
+            "price": 22,
+            "category": "Accessories",
+            "image": "beanie.jpg"
+        },
+        {
+            "name": "Leather Belt",
+            "slug": "belt",
+            "sku": "woo-belt",
+            "price": 38,
+            "category": "Accessories",
+            "image": "belt.jpg"
+        },
+        {
+            "name": "Field Cap",
+            "slug": "cap",
+            "sku": "woo-cap",
+            "price": 26,
+            "category": "Accessories",
+            "image": "cap.jpg"
+        },
+        {
+            "name": "Field Sunglasses",
+            "slug": "sunglasses",
+            "sku": "woo-sunglasses",
+            "price": 58,
+            "category": "Accessories",
+            "image": "sunglasses.jpg"
+        },
+        {
+            "name": "Zip-Pocket Hoodie",
+            "slug": "hoodie-with-pocket",
+            "sku": "woo-hoodie-with-pocket",
+            "price": 48,
+            "category": "Hoodies",
+            "image": "hoodie-with-pocket.jpg"
+        },
+        {
+            "name": "Full-Zip Hoodie",
+            "slug": "hoodie-with-zipper",
+            "sku": "woo-hoodie-with-zipper",
+            "price": 52,
+            "category": "Hoodies",
+            "image": "hoodie-with-zipper.jpg"
+        },
+        {
+            "name": "Long-Sleeve Tee",
+            "slug": "long-sleeve-tee",
+            "sku": "woo-long-sleeve-tee",
+            "price": 30,
+            "category": "Tees",
+            "image": "long-sleeve-tee.jpg"
+        },
+        {
+            "name": "Pique Polo",
+            "slug": "polo",
+            "sku": "woo-polo",
+            "price": 34,
+            "category": "Tees",
+            "image": "polo.jpg"
+        },
+        {
+            "name": "Everyday Tee \u2014 Logo",
+            "slug": "t-shirt-with-logo",
+            "sku": "Woo-tshirt-logo",
+            "price": 26,
+            "category": "Tees",
+            "image": "t-shirt-with-logo.jpg"
+        },
+        {
+            "name": "Watch Cap \u2014 Logo",
+            "slug": "beanie-with-logo",
+            "sku": "Woo-beanie-logo",
+            "price": 24,
+            "category": "Accessories",
+            "image": "beanie-with-logo.jpg"
+        }
+    ]
 }

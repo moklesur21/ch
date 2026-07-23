@@ -103,23 +103,25 @@ and on-hold order appear there permanently, even in the green state). Script
 wording should be "the check names the orders to look at", not "names the
 cause of the discrepancy".
 
-### E3 — matched-range comparison (Jun 24 – Jul 23)
-
-Computed from the seeded data (confirm on-screen during pre-flight, as the
-spec asks):
+### E3 — matched-range comparison (Jun 24 – Jul 23) — verified on both screens
 
 | | Net revenue | Orders |
 |---|---|---|
 | Customer History → Revenue | **$4,021** | 55 |
-| Analytics → Revenue (WooCommerce) | **~$3,903–4,021** (read from UI) | 55 |
+| Analytics → Revenue (WooCommerce) | **$4,021** (gross $4,139 − returns $118) | 55 |
+
+**They agree on matched ranges** — screenshots `09` and `10` in
+`project_asset/demo/screenshots/` show both screens on this exact range.
 
 **The real, honest mechanism (better than the fabricated-discrepancy risk in
 B3):** the plugin attributes refunds to the **parent order's date**;
 WooCommerce Analytics posts them on the **refund date**. Full matched ranges
 containing both dates agree; **single-month views legitimately disagree by
 exactly the $90 cross-month refund** — June: plugin $3,295 vs Woo $3,385;
-July: plugin $3,249 vs Woo ~$3,159. That's DP-13 on camera with nothing
-faked. Never cut together the two screens on different ranges (B3 stands).
+July: plugin $3,249 vs Woo $3,159. Woo's daily table even shows the red
+negative-revenue days (Jul 8: −$12 after the $90 return; Jul 17: −$28) —
+DP-13 on camera with nothing faked. Never cut together the two screens on
+different ranges (B3 stands).
 
 ### E4 / §11.1 — the win-back buttons (⚠️ flag for the founder)
 
