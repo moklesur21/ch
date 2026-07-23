@@ -1,50 +1,42 @@
-Here's the whole picture — why refresh exists, what it does, and the exact routine for every shoot day.
+Your new morning routine (one command)
 
-  Why the data goes stale
+  ./scripts/demo-refresh.sh
 
-  Every number the plugin shows is computed relative to "now": "51 days since last order", "last 30 days revenue", the 0–90 vs 90–180 day frequency windows, etc. The seeder builds the dataset against an anchor date so that on that
-  day everything is perfect: newest orders are from today/yesterday, Daniel Mercer is exactly 51 days silent, his churn score is 64/High.
+  Just ran it for real: 35 pass / 0 warn / 0 fail in 1m59s, report sheet matching your narration exactly — Daniel Mercer, health 60, churn 64% High, $931, 11 orders, rank #4, 51 days silent. It prints a green "0 FAIL — record today"
+  (exit 0) or a red "do NOT record" (exit 1). Variants:
 
-  But the clock keeps moving and the data doesn't. Tomorrow he's 52 days silent, next week 58… within ~10–14 days his score drifts out of the High band, the revenue chart grows a flat tail, and the Declining Health widget empties.
-  The screen stops matching your narration.
+  - ./scripts/demo-refresh.sh 2026-07-22 — pinned anchor for retakes (prints a retake-mode note)
+  - ./scripts/demo-refresh.sh --snapshot — timestamped DB dump into backups/ before the teardown
+  - It refuses to run if MAMP is stopped, and strips the PHP Deprecated: noise from the output
 
-  What refresh --anchor=$(date +%F) does
+  What was created
 
-  One command, ~3 minutes, five stages (you saw it run yesterday):
+  ┌──────────────────────────────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                 File                 │                                                                                        Purpose                                                                                        │
+  ├──────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ scripts/demo-refresh.sh              │ The shoot-morning command (refresh → verify → verdict)                                                                                                                                │
+  ├──────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ scripts/wpc                          │ wp-cli wrapper (socket + --path; auto-adds --socket for db export/import) — every wpc … command in the runbook now works verbatim; alias added to your ~/.zshrc (open a new terminal) │
+  ├──────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ scripts/live-refresh.sh              │ Live-site refresh via REST (for after the deploy)                                                                                                                                     │
+  ├──────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ project_asset/docs/live-migration.md │ The migration guideline                                                                                                                                                               │
+  └──────────────────────────────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
 
-  1. Teardown — deletes only the seeded data (it's all ledger-tracked): the 51 customers, 229 orders, sessions, carts, scores. Products, settings, admin users untouched.
-  2. Re-seed anchored to today — rebuilds the identical dataset with all dates slid forward so "today" is day zero: newest order is from today, hero is exactly 51 days silent again.
-  3. Recalc — re-runs RFM, health, lifecycle, behavior, churn + the Woo Analytics sync (my fix).
-  4. Alerts — regenerated, so the hero's alert is back to New / Unassigned (undoes the LF-08 assignment you clicked in the previous shoot).
-  5. Verify — runs automatically; must end 0 FAIL.
+  Plus wiring: .gitignore whitelists scripts/, CLAUDE.md and the runbook now point at the scripts. Nothing committed — say the word if you want a commit.
 
-  Because the RNG seed is fixed (20260722), the dataset is deterministic: same names, same order counts, same totals, same scores every time. Refreshing with a new anchor changes only the calendar dates on screen — every number in
-  your narration (health 60, churn 64%, $931, 11 orders, rank #4) stays exactly the same.
+  How data gets to the live site (short version)
 
-  Your routine: every morning you shoot
+  You never copy the database. The seeder is deterministic — same anchor + RNG seed 20260722 ⇒ identical numbers everywhere — so the same demo-tools plugin regenerates the dataset on the live box via its token-protected REST API.
+  Full ordered checklist is in live-migration.md; in brief:
 
-  cd /Applications/MAMP/htdocs/ch
-  php -d mysqli.default_socket=/Applications/MAMP/tmp/mysql/mysql.sock /opt/homebrew/bin/wp pdwchs-demo refresh --anchor=$(date +%F)
-  php -d mysqli.default_socket=/Applications/MAMP/tmp/mysql/mysql.sock /opt/homebrew/bin/wp pdwchs-demo verify --report
+  1. One-time deploy (SFTP/SSH): pro plugin build → pdwchs-demo-tools plugin (the catalog travels inside it) → northline theme → wp-config constants (PDWCHS_DEMO_ALLOW, PDWCHS_DEMO_TOKEN from openssl rand -hex 24, lockdown constants)
+  → Freemius production license → setup-storefront → one-time wipe-legacy.
+  2. Then and forever: ./scripts/live-refresh.sh — POSTs the refresh, polls until done (auto-resumes one stall), verifies, and confirms "LIVE OK — same numbers as local". Run it the morning of any prospect demo.
 
-  - First command: fresh data, anchored to today.
-  - Second: must print 0 FAIL, and the report sheet at the bottom should show the same numbers as your patched narration. If it does → record. That's it.
-  - Record the same day you refresh — don't let it sit overnight.
-What "pin the anchor" means (the one subtlety)
+  Bonus finding while testing: the live REST path currently returns a WordPress 404 (not the WAF 403 the runbook feared) — automated requests reach WordPress, so the deploy may not need a WAF exception at all.
 
-  That advice is for retakes of the same video. If you shoot part of V1 today and need a pixel-identical retake, re-running refresh --anchor=2026-07-22 (today's date) on a later day reproduces the byte-identical dataset — same order
-  dates — so footage cuts together. But the live-computed fields ("days since last order") would then read 51+N because real time moved on. So the practical rules are:
+About V2/V3/V4
 
-  ┌───────────────────────────────────────────────────────────────────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-  │                               Situation                               │                                                                        What to do                                                                         │
-  ├───────────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-  │ Retakes on the same day                                               │ Nothing — just keep recording                                                                                                                             │
-  ├───────────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-  │ New shoot day (next video, or full re-shoot of this one)              │ refresh --anchor=$(date +%F) that morning — numbers identical, dates fresh                                                                                │
-  ├───────────────────────────────────────────────────────────────────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┤
-  │ Cutting new footage into old footage of the same video on a later day │ Avoid it — either re-shoot the whole video after a fresh refresh, or restore V1-approved-dataset.sql and accept the "days since" fields will have drifted │
-  └───────────────────────────────────────────────────────────────────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
-
-  Different calendar dates across videos 2–12 is fine — a real store's dates move forward over weeks, and your narration never mentions specific dates, only the numbers (which never change).
-
-  If you'd like, I can also set up a tiny demo-refresh shell script (or the wpc alias the runbook references, which doesn't exist on this machine yet) so the morning routine is a single short command — just say so.
+  This tooling is video-agnostic — the deterministic seed means videos 2–4 show the same numbers as V1 with fresh dates each shoot morning. When your V2–V4 scripts and demo guideline are ready, drop them into project_asset/demo/ and
+  I'll do a coverage walk: check every screen/number each script narrates against the seeded dataset, and extend the seeder wherever a video needs data that doesn't exist yet.
