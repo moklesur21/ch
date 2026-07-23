@@ -91,7 +91,8 @@ One-time (or per plugin release):
    ```bash
    curl -X POST -H "X-PDWCHS-Demo-Token: $TOKEN" -H "Content-Type: application/json" \
         -d '{"confirm":"yes-really"}' https://ch.puredevs.com/wp-json/pdwchs-demo/v1/wipe-legacy
-   # or over SSH: wp pdwchs-demo wipe-legacy --yes-really
+   # (the live box has no WP-CLI — the curl above is the way; every server-side
+   #  action is a token-authenticated REST call, see docs/live-migration.md §0.5)
    ```
 7. First seed: `POST /refresh` (below) and poll `/status` until `done`, then `GET /verify`.
 

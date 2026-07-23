@@ -6,15 +6,21 @@ browsing (`update-01.txt`). Two reproducible layers:
 1. A git-tracked child theme — the look.
 2. A `setup-storefront` demo-tools command — the config + content.
 
-Run once per site (local or live), after WooCommerce and the demo-tools plugin are
-active:
+Run once per site, after WooCommerce and the demo-tools plugin are active:
 
-```
-wp pdwchs-demo setup-storefront
+```bash
+# LOCAL (MAMP) — via the wp-cli wrapper:
+scripts/wpc pdwchs-demo setup-storefront
+
+# LIVE (ch.puredevs.com) — from your Mac; the server needs no WP-CLI:
+curl -X POST -H "X-PDWCHS-Demo-Token: $(cat ~/.config/pdwchs/demo-token)" \
+     https://ch.puredevs.com/wp-json/pdwchs-demo/v1/setup-storefront
 ```
 
-Idempotent — safe to re-run. Mutating, so it needs `PDWCHS_DEMO_ALLOW` in wp-config
-like the seeder.
+Both run the same `PDWCHS_Demo_Storefront::setup()`. Idempotent — safe to
+re-run. Mutating, so it needs `PDWCHS_DEMO_ALLOW` in wp-config like the seeder
+(the REST route additionally needs `PDWCHS_DEMO_TOKEN`; see
+[`live-migration.md`](live-migration.md) §0.5 for the what-runs-where picture).
 
 ## The brand
 
@@ -61,8 +67,11 @@ Child of Twenty Twenty-Five (git-tracked; whitelisted in `.gitignore`). Provides
   (kept, not deleted, so historical order lines stay intact).
 - **Categories** — consolidates to **Hoodies · Tees · Accessories**; prunes the
   leftover sample categories (Clothing, Music, Decor, Tshirts).
-- **Brands** — clears the sample `product_brand` terms (Hype, Luxe Leather, Urban
-  Threads) — this is a single-brand store.
+- **Brands** — clears the leftover sample `product_brand` terms (Hype, Luxe
+  Leather, Urban Threads). The real brands come from `catalog.json` and are
+  assigned by the seeder's catalog step: **North Line / Camber Studio /
+  Field & Forge** — three house lines, which is what makes the product's
+  **Brand Loyal** behavioral tag fire (V2's hero profile).
 - **Pages** — creates/updates **About** and **Contact** (block content).
 - **Shipping** — flat rate $6 + free over $50 on the catch-all zone.
 - **Cleanup** — trashes the default Sample Page.
@@ -79,19 +88,26 @@ but four "logo" variants (Everyday Tee — Logo, Northline Hoodie — Logo, Watc
 Logo, V-Neck Tee) carry the WooCommerce smiley graphic. They're excluded from the
 homepage featured row but still appear in the shop grid and Woo's "New in store"
 widget. To upgrade: drop real product photos into the media library (or
-`pdwchs-demo-tools/data/images/` + re-run `wp pdwchs-demo export-catalog`).
+`pdwchs-demo-tools/data/images/` + re-run `scripts/wpc pdwchs-demo
+export-catalog` — the exporter round-trips the curated brand/copy fields, so
+re-exporting is safe).
 
 ## Live deploy (ch.puredevs.com)
 
-1. Deploy the theme (`wp-content/themes/northline/`) and the demo-tools plugin via git.
-2. `wp pdwchs-demo setup-storefront` once (needs `PDWCHS_DEMO_ALLOW`).
+The full ordered checklist lives in [`live-migration.md`](live-migration.md) §2 —
+no SSH or WP-CLI on the server at any point. The storefront-relevant steps:
+
+1. Deploy the theme (`wp-content/themes/northline/`) and the demo-tools plugin
+   (SFTP / file manager / git).
+2. Run the `setup-storefront` curl from your Mac (the LIVE command at the top
+   of this doc) once.
 3. `front-page.html` renders the homepage automatically — no manual page building.
-4. If the store isn't seeded yet, run the seeder first (`wp pdwchs-demo seed`), then
+4. If the store isn't seeded yet, seed first (`scripts/live-refresh.sh`), then
    setup-storefront to apply copy to the freshly created products.
 
 ## Verify
 
-`wp pdwchs-demo verify` now passes the currency (USD) and store-name checks. The
+`scripts/wpc pdwchs-demo verify` now passes the currency (USD) and store-name checks. The
 storefront changes don't touch the seeded data model — products are referenced by
 position and order totals are plan-driven, so renaming/re-describing/re-pricing
 products moves no acceptance band.
