@@ -134,7 +134,7 @@ class PDWCHS_Demo_CLI {
 		$e    = $data['expectations'];
 
 		WP_CLI::log( 'Anchor: ' . $data['anchor'] . '   RNG seed: ' . $data['rng_seed'] );
-		WP_CLI::log( 'Customers: ' . $e['customers'] . ' (target 45-70)   Orders: ~' . $e['orders'] . ' (target 200-350)   Carts: ' . count( $data['carts'] ) );
+		WP_CLI::log( 'Customers: ' . $e['customers'] . ' (target 70-110)   Orders: ~' . $e['orders'] . ' (target 220-400)   Carts: ' . count( $data['carts'] ) );
 		WP_CLI::log( 'Planned churn census: ' . wp_json_encode( $e['risk'] ) . ' → at-risk list rows: ' . $e['at_risk_rows'] . ' (target 6-8), alerts: ' . $e['alerts'] );
 		WP_CLI::log( 'Planned RFM: ' . wp_json_encode( $e['segments'] ) );
 		WP_CLI::log( 'Planned lifecycle: ' . wp_json_encode( $e['stages'] ) );

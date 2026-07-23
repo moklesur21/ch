@@ -147,14 +147,39 @@ class PDWCHS_Demo_Recalc {
 
 	public function step_churn() {
 		delete_option( 'pdwchs_churn_batch_offset' );
-		$churn = $this->intel()->pdwchs_get_churn_calculator();
+		$churn   = $this->intel()->pdwchs_get_churn_calculator();
+		$batches = 0;
 		for ( $i = 0; $i < 60; $i++ ) {
-			$res = $churn->pdwchs_batch_calculate_all();
+			$res     = $churn->pdwchs_batch_calculate_all();
+			$batches = $i + 1;
 			if ( empty( $res['processed'] ) || ! get_option( 'pdwchs_churn_batch_offset' ) ) {
-				return 'churn complete (' . ( $i + 1 ) . ' batches)';
+				break;
 			}
 		}
-		return 'churn: batch cap reached';
+
+		// Sweep: the product's batch query pages with OFFSET over a set that
+		// SHRINKS as processed customers leave the 24h dirty window, so with
+		// > 50 eligible customers the oldest ones are skipped every pass
+		// (self-heals only across daily crons). Score any ledgered customer
+		// with >= 2 counted orders and no score row directly.
+		global $wpdb;
+		$ledger = PDWCHS_Demo_Ledger::get();
+		$swept  = 0;
+		if ( $ledger ) {
+			foreach ( $ledger['user_map'] as $uid ) {
+				$uid = (int) $uid;
+				$has = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$wpdb->prefix}pdwchs_churn_scores WHERE customer_id = %d", $uid ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				if ( $has ) {
+					continue;
+				}
+				$n = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}wc_orders WHERE type='shop_order' AND status IN ('wc-completed','wc-processing') AND customer_id = %d", $uid ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				if ( $n >= 2 ) {
+					$churn->pdwchs_calculate_churn_score( $uid );
+					$swept++;
+				}
+			}
+		}
+		return "churn complete ({$batches} batches, {$swept} swept)";
 	}
 
 	// ── fixup 1: lifecycle stage-date backfill + history rewrite ────────

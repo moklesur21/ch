@@ -212,7 +212,7 @@ class PDWCHS_Demo_Runner {
 		for ( $i = 0; $i < $order_batches; $i++ ) {
 			$seed[] = 's_orders:' . $i;
 		}
-		$seed = array_merge( $seed, array( 's_as_drain', 's_sessions', 's_carts' ) );
+		$seed = array_merge( $seed, array( 's_refunds', 's_as_drain', 's_sessions', 's_carts' ) );
 
 		$recalc = array( 'r_store_avg', 'r_rfm', 'r_health', 'r_lifecycle', 'r_behavior', 'r_churn', 'f_lifecycle', 'f_health', 'r_alerts', 'r_finalize' );
 
@@ -278,6 +278,8 @@ class PDWCHS_Demo_Runner {
 				return $ctx['seeder']->step_users();
 			case 's_orders':
 				return $ctx['seeder']->step_orders( $idx );
+			case 's_refunds':
+				return $ctx['seeder']->step_refunds();
 			case 's_as_drain':
 				return $ctx['recalc']->step_as_drain();
 			case 's_sessions':

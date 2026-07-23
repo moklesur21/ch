@@ -122,7 +122,38 @@ class PDWCHS_Demo_Seeder {
 
 	public function step_catalog() {
 		$products = $this->catalog_products();
+		$this->assign_brands( $products );
 		return 'catalog ready: ' . count( $products ) . ' products';
+	}
+
+	/**
+	 * Brand terms from catalog.json (V2: feeds the product's "Brand Loyal"
+	 * behavioral tag, which needs >=40% of a customer's items in one brand).
+	 * Uses WooCommerce's core product_brand taxonomy; no-op if absent.
+	 */
+	private function assign_brands( $products ) {
+		if ( ! taxonomy_exists( 'product_brand' ) ) {
+			return;
+		}
+		$file = PDWCHS_DEMO_TOOLS_DATA_DIR . 'catalog.json';
+		if ( ! file_exists( $file ) ) {
+			return;
+		}
+		$decoded = json_decode( (string) file_get_contents( $file ), true );
+		if ( ! is_array( $decoded ) || empty( $decoded['products'] ) ) {
+			return;
+		}
+		$by_slug = array();
+		foreach ( $decoded['products'] as $entry ) {
+			if ( ! empty( $entry['slug'] ) && ! empty( $entry['brand'] ) ) {
+				$by_slug[ $entry['slug'] ] = $entry['brand'];
+			}
+		}
+		foreach ( $products as $p ) {
+			if ( isset( $by_slug[ $p['slug'] ] ) ) {
+				wp_set_object_terms( $p['id'], $by_slug[ $p['slug'] ], 'product_brand' );
+			}
+		}
 	}
 
 	private function find_product_by_slug( $slug ) {
@@ -350,7 +381,9 @@ class PDWCHS_Demo_Seeder {
 		$order->set_status( $spec['status'] );
 		$ts = $this->plan->gmt_ts( $spec['days'], $spec['hh'], $spec['mm'] );
 		$order->set_date_created( $ts );
-		$order->set_date_paid( $ts + 240 );
+		if ( 'on-hold' !== $spec['status'] ) {
+			$order->set_date_paid( $ts + 240 ); // on-hold = awaiting payment, must not carry a paid date
+		}
 		if ( 'completed' === $spec['status'] ) {
 			$order->set_date_completed( $ts + 2 * HOUR_IN_SECONDS );
 		}
@@ -358,6 +391,56 @@ class PDWCHS_Demo_Seeder {
 		$order->save();
 
 		return $order->get_id();
+	}
+
+	// ── step: refunds (V3) ───────────────────────────────────────────────
+
+	/**
+	 * Creates the planned partial refunds (plan['refunds']) once all orders
+	 * exist. Backdated to the planned refund date and tagged _pdwchs_demo so
+	 * the teardown orphan sweep would catch them even orphaned — though the
+	 * parent order's delete(true) already cascades to refund children in
+	 * both HPOS and legacy storage.
+	 */
+	public function step_refunds() {
+		if ( ! function_exists( 'wc_create_refund' ) ) {
+			return 'refunds skipped: wc_create_refund unavailable';
+		}
+		$plan   = $this->plan->build();
+		$ledger = PDWCHS_Demo_Ledger::get();
+		if ( ! isset( $ledger['refund_map'] ) ) {
+			$ledger['refund_map'] = array();
+		}
+		$made = 0;
+
+		foreach ( $plan['refunds'] as $i => $spec ) {
+			if ( isset( $ledger['refund_map'][ $i ] ) ) {
+				continue;
+			}
+			$order_id = isset( $ledger['order_map'][ $spec['customer'] ][ $spec['order_idx'] ] )
+				? (int) $ledger['order_map'][ $spec['customer'] ][ $spec['order_idx'] ]
+				: 0;
+			if ( ! $order_id ) {
+				continue; // parent order batch not done yet — runner re-enters
+			}
+			$refund = wc_create_refund( array(
+				'order_id'       => $order_id,
+				'amount'         => (float) $spec['amount'],
+				'reason'         => $spec['reason'],
+				'refund_payment' => false,
+				'restock_items'  => false,
+			) );
+			if ( is_wp_error( $refund ) ) {
+				continue;
+			}
+			$refund->set_date_created( $this->plan->gmt_ts( $spec['days'], 11, 20 + $i ) );
+			$refund->add_meta_data( '_pdwchs_demo', 1, true );
+			$refund->save();
+			$ledger['refund_map'][ $i ] = $refund->get_id();
+			$made++;
+		}
+		PDWCHS_Demo_Ledger::save( $ledger );
+		return "refunds ready: {$made} created, " . count( $ledger['refund_map'] ) . ' total';
 	}
 
 	/** Split a target total into 1-2 deterministic product lines (line totals overridden to hit the target exactly). */

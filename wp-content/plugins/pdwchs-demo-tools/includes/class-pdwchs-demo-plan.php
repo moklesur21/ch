@@ -55,6 +55,28 @@ class PDWCHS_Demo_Plan {
 		return $this->local_ts( $days_ago, $hh, $mm ) - (int) round( (float) get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
 	}
 
+	/**
+	 * Calendar-aware helper for the V4 monthly shaping: days-ago of a given
+	 * day-of-month, $months_back calendar months before the anchor's month
+	 * (0 = the anchor month itself). Clamped to the target month's length,
+	 * and inside the anchor month clamped to days that already exist.
+	 */
+	public function month_day( $months_back, $day_of_month ) {
+		$anchor_ts   = strtotime( $this->anchor . ' 00:00:00 UTC' );
+		$first_this  = strtotime( gmdate( 'Y-m-01', $anchor_ts ) . ' 00:00:00 UTC' );
+		$first_tgt   = strtotime( '-' . (int) $months_back . ' months', $first_this );
+		$dim         = (int) gmdate( 't', $first_tgt );
+		$day         = min( max( 1, (int) $day_of_month ), $dim );
+		$target      = $first_tgt + ( $day - 1 ) * DAY_IN_SECONDS;
+		$days_ago    = (int) floor( ( $anchor_ts - $target ) / DAY_IN_SECONDS );
+		return max( 0, $days_ago ); // anchor-month days beyond "today" clamp to day 0
+	}
+
+	/** Day-of-month of the anchor (the V4 flatness check needs >= ~18). */
+	public function anchor_day_of_month() {
+		return (int) gmdate( 'j', strtotime( $this->anchor . ' 00:00:00 UTC' ) );
+	}
+
 	public function build() {
 		if ( null !== $this->plan ) {
 			return $this->plan;
@@ -92,6 +114,28 @@ class PDWCHS_Demo_Plan {
 		// ADD recent orders, which keeps those customers' churn decline <= 0).
 		$this->fill_order_gaps( $customers, $guest_orders );
 
+		// Carts consume the tail of the primary RNG stream — build them BEFORE
+		// the V2-V4 extension so the entire V1 dataset stays byte-identical.
+		$carts = $this->build_carts( $customers );
+
+		// ── V2-V4 extension (separate RNG stream, appended cohorts only) ────
+		// Serves PureDevs_V2_Demo_Recording_RunSheet.md, V3_DEMO_RECORDING_SPEC.md
+		// and V4-RECORDING-BRIEF_For-Developer.md without touching any V1 draw:
+		// everything above ran on the primary stream exactly as before; the
+		// cohorts below run on seed+1000 and only APPEND customers/orders.
+		mt_srand( $this->rng_seed + 1000 );
+		$this->use_extra_names();
+		$this->extend_marcus( $customers );          // V2 hero: champ_0 -> 20 orders = RFM 5/5/5
+		$customers = array_merge(
+			$customers,
+			$this->build_champ2(),                   // V2: fill the Champions list
+			$this->build_loyal2(),                   // keeps segment "loyal" populated after migrations
+			$this->build_qreg(),                     // V4: fading-value restockers (returning decline)
+			$this->build_influx(),                   // V4: month-on-month new-customer growth
+			$this->build_refund_cases()              // V3: refund/on-hold case customers
+		);
+		$this->extend_guests( $guest_orders );       // V4: guest revenue steady every month
+
 		$plan = array(
 			'anchor'       => $this->anchor,
 			'rng_seed'     => $this->rng_seed,
@@ -102,7 +146,8 @@ class PDWCHS_Demo_Plan {
 			),
 			'customers'    => $customers,
 			'guest_orders' => $guest_orders,
-			'carts'        => $this->build_carts( $customers ),
+			'carts'        => $carts,
+			'refunds'      => $this->build_refund_specs(),
 			'hero_key'     => 'hero',
 			'decliners'    => array( 'hero', 'ar_a', 'loyal_1' ), // Declining-Health widget cast (2-4 incl hero)
 		);
@@ -584,6 +629,286 @@ class PDWCHS_Demo_Plan {
 				$last_covered = $d;
 			}
 		}
+	}
+
+	// ── V2-V4 extension builders (all run on the seed+1000 stream) ──────
+	//
+	// Monthly revenue ledger (plugin semantics: completed+processing net,
+	// refunds attributed to the PARENT order's month, "new" = first-ever
+	// order falls in that month, guest = customer_id 0). Targets per the
+	// V4 brief §4: total flat ~$3,265/month, returning -28%, new ~2.6x,
+	// guest boring. Months are calendar months back from the anchor month.
+	//
+	//   month(k)   : Mar(4)  Apr(3)  May(2)  Jun(1)  Jul(0)
+	//   returning  : 2666    2520    2378    2226    1911
+	//     existing : 1414    1674    1787    1893    1844
+	//     marcus   :   65       0     130       0       0
+	//     champ2   :  124     124     124     176       0
+	//     loyal2   :   63      84      84      42       0
+	//     rc_a/b   :    0       0       0      50      67   (orders net of refunds)
+	//     qreg     : 1000     638     253      65       0   (the tuning knob)
+	//   new        :  416     560     700     850    1105   (existing 416/192/363/299/262 + influx)
+	//   guest      :  183     185     187     189     249   (existing + extend_guests)
+	//   TOTAL      : 3265    3265    3265    3265    3265   (±~1%)
+	//
+	// V1 invariants preserved: hero untouched ($931, #4, 51 days), all new
+	// lifetime spends < $890 (cl) so the top-5 order is stable, and every
+	// new cohort is engineered churn-Low or unscored (<2 orders) so the
+	// At-Risk list stays at its 7 engineered rows.
+
+	/** Swap the name pool to data/names-extra.php for appended cohorts. */
+	private function use_extra_names() {
+		$names = require PDWCHS_DEMO_TOOLS_DATA_DIR . 'names-extra.php';
+		$this->name_pool   = array();
+		$this->name_cursor = 0;
+		foreach ( $names['first'] as $i => $first ) {
+			$this->name_pool[] = array( $first, $names['last'][ $i % count( $names['last'] ) ] );
+		}
+	}
+
+	/**
+	 * V2 hero: lift champ_0 (Marcus) from 12 to 20 orders => F=5, so his
+	 * profile reads R 5/5 · F 5/5 · M 5/5 with the Champion badge. Extra
+	 * orders sit in May/March and earlier, so July/June returning revenue
+	 * is untouched; values keep his spending trend flat-to-up and his
+	 * lifetime spend clearly #1.
+	 */
+	private function extend_marcus( &$customers ) {
+		foreach ( $customers as $i => $c ) {
+			if ( 'champ_0' !== $c['key'] ) {
+				continue;
+			}
+			// 10 extras -> 21 total orders (F=5 needs >= 20 via
+			// wc_get_customer_order_count, which counts by user_id only —
+			// the old "12" included a guest order matched by email).
+			$days = array( 55, 75, 135, 158, 168, 228, 258, 318, 338, 348 );
+			foreach ( $days as $d ) {
+				$order = $this->order( $d, $this->rnd( 58, 72 ) );
+				$customers[ $i ]['orders'][] = $order;
+				$idx = count( $customers[ $i ]['orders'] ) - 1;
+				if ( $d <= 120 ) {
+					$customers[ $i ]['visits'][] = $this->visit( $d, 'order', $idx, array( 'hh' => $order['hh'], 'mm' => max( 0, $order['mm'] - 9 ) ) );
+				}
+			}
+			return;
+		}
+	}
+
+	/**
+	 * V2: three additional clean Champions (R4/F4/M4 via 10 orders on a
+	 * ~40-45d cadence, last orders in June => nothing lands in the anchor
+	 * month's returning revenue). With the store average pulled down by the
+	 * influx cohort, Priya/Caleb (existing "loyal") also migrate into
+	 * Champions => the Champions list shows ~9 members.
+	 */
+	private function build_champ2() {
+		$out   = array();
+		$lasts = array( 27, 34, 41 );
+		foreach ( $lasts as $i => $last ) {
+			$orders = array();
+			$day    = $last;
+			for ( $k = 0; $k < 10; $k++ ) {
+				// Last (June) basket a touch smaller so June returning stays on budget.
+				$total    = ( 0 === $k ) ? $this->rnd( 52, 60 ) : $this->rnd( 56, 68 );
+				$orders[] = $this->order( $day, $total );
+				$day     += $this->rnd( 40, 46 );
+			}
+			$visits = array_merge(
+				$this->order_visits( $orders ),
+				$this->browse_visits( 3, 1, 28 ),
+				$this->browse_visits( 2, 32, 58 )
+			);
+			$out[] = $this->customer( 'champ2_' . $i, 'champion2', $this->next_name(), $orders, $visits, array(
+				'segment' => 'champions', 'lifecycle' => 'Loyal Customer', 'churn_band' => 'low',
+			) );
+		}
+		return $out;
+	}
+
+	/**
+	 * Two steady mid-value regulars that stay in segment "loyal" (R>=3,
+	 * F>=4, M<4) after Priya/Caleb migrate to Champions — keeps the RFM
+	 * donut's Loyal slice (and verify's champions>0 && loyal>0) alive.
+	 */
+	private function build_loyal2() {
+		$out = array();
+		// Cadence 34-38 keeps order #2 inside the 0-90d churn window (last+~36
+		// < 90) => 2v2 windows, decline 0, churn Low. A 38-42 cadence tips the
+		// second order past day 90 => 1v3 => Medium (the build_loyal trap).
+		foreach ( array( 45, 52 ) as $i => $last ) {
+			$orders = array();
+			$day    = $last;
+			for ( $k = 0; $k < 10; $k++ ) {
+				$orders[] = $this->order( $day, $this->rnd( 38, 46 ) );
+				$day     += $this->rnd( 34, 38 );
+			}
+			$visits = array_merge(
+				$this->order_visits( $orders ),
+				$this->browse_visits( 2, 2, 28 ),
+				$this->browse_visits( 1, 33, 58 )
+			);
+			$out[] = $this->customer( 'loyal2_' . $i, 'loyal2', $this->next_name(), $orders, $visits, array(
+				'segment' => 'loyal', 'lifecycle' => 'Loyal Customer', 'churn_band' => 'low',
+			) );
+		}
+		return $out;
+	}
+
+	/**
+	 * V4's returning-revenue decline: four "restock account" customers whose
+	 * order VALUES fade month over month while their cadence stays fresh —
+	 * recency and 90v90 order counts stay flat, so churn stays Low and the
+	 * At-Risk list keeps its engineered 7 rows. Value schedule per customer
+	 * (cal-month day, $): Mar ~250 -> Apr ~160 -> May ~63 -> Jun ~16, plus
+	 * two pre-window history orders so their window revenue is "returning".
+	 */
+	private function build_qreg() {
+		$out   = array();
+		$specs = array(
+			//               hist1(days,$)   hist2(days,$)   Mar(day,$)  Apr(day,$)  May(day,$)  Jun(day,$)
+			array( array( 305, 178 ), array( 218, 182 ), array( 8, 252 ), array( 10, 162 ), array( 16, 64 ), array( 24, 17 ) ),
+			array( array( 288, 175 ), array( 205, 180 ), array( 14, 250 ), array( 16, 160 ), array( 22, 63 ), array( 27, 16 ) ),
+			array( array( 322, 180 ), array( 232, 176 ), array( 20, 250 ), array( 21, 158 ), array( 27, 63 ), array( 29, 16 ) ),
+			array( array( 270, 174 ), array( 190, 178 ), array( 26, 248 ), array( 26, 158 ), array( 30, 63 ), array( 21, 16 ) ),
+		);
+		foreach ( $specs as $i => $s ) {
+			$orders   = array();
+			$orders[] = $this->order( $s[0][0], $s[0][1] );
+			$orders[] = $this->order( $s[1][0], $s[1][1] );
+			$orders[] = $this->order( $this->month_day( 4, $s[2][0] ), $s[2][1] );
+			$orders[] = $this->order( $this->month_day( 3, $s[3][0] ), $s[3][1] );
+			$orders[] = $this->order( $this->month_day( 2, $s[4][0] ), $s[4][1] );
+			$orders[] = $this->order( $this->month_day( 1, $s[5][0] ), $s[5][1] );
+			// Steady sparse browsing: engagement decline ~0 keeps the churn
+			// engagement component quiet despite the fading spend.
+			$visits = array_merge(
+				$this->order_visits( $orders ),
+				$this->browse_visits( 2, 2, 26 ),
+				$this->browse_visits( 2, 32, 58 )
+			);
+			$out[] = $this->customer( 'qreg_' . $i, 'qreg', $this->next_name(), $orders, $visits, array(
+				'segment' => 'potential_loyalist', 'lifecycle' => 'Loyal Customer', 'churn_band' => 'low',
+			) );
+		}
+		return $out;
+	}
+
+	/**
+	 * V4's new-customer growth: one-order customers per calendar month —
+	 * Apr 4, May 4, Jun 6, Jul 10 (March keeps its existing ~$416). Late
+	 * placements inside Apr keep their health in the Poor band (not
+	 * Critical); Jun/Jul members get browse sessions for engagement.
+	 */
+	private function build_influx() {
+		$out   = array();
+		$specs = array(
+			// months_back, count, day-of-month spread start/step, total range
+			array( 3, 4, 24, 2, 82, 102 ),
+			array( 2, 4, 12, 5, 74, 94 ),
+			array( 1, 6, 3, 5, 82, 102 ),
+			array( 0, 10, 2, 2, 76, 96 ),
+		);
+		foreach ( $specs as $s ) {
+			list( $mb, $count, $day0, $step, $tmin, $tmax ) = $s;
+			for ( $i = 0; $i < $count; $i++ ) {
+				$days   = $this->month_day( $mb, $day0 + $i * $step );
+				$orders = array( $this->order( $days, $this->rnd( $tmin, $tmax ) ) );
+				$visits = $this->order_visits( $orders );
+				if ( $mb <= 1 ) {
+					$visits = array_merge( $visits, $this->browse_visits( 2, 1, max( 2, min( 28, $days + 4 ) ) ) );
+				}
+				// Expected RFM by age: Jul/Jun => new_customer (R>=4,F=1);
+				// May (R3,F1,M1) falls to the Undefined bucket; Apr => hibernating.
+				$segment = ( $mb <= 1 ) ? 'new_customer' : ( 2 === $mb ? 'undefined' : 'hibernating' );
+				$stage   = ( $days <= 90 ) ? 'New Customer' : 'At Risk';
+				$out[]   = $this->customer( 'inf_m' . $mb . '_' . $i, 'influx', $this->next_name(), $orders, $visits, array(
+					'segment' => $segment, 'lifecycle' => $stage, 'churn_band' => null,
+				) );
+			}
+		}
+		return $out;
+	}
+
+	/**
+	 * V3 refund/on-hold cases (two dedicated customers so no existing
+	 * customer's numbers move):
+	 *  - rc_a: order late PREVIOUS month, PARTIALLY refunded early THIS
+	 *    month => the plugin (refunds on parent-order date) and WooCommerce
+	 *    Analytics (refunds on refund date) legitimately disagree in
+	 *    single-month views. The honest cross-month mechanism on camera.
+	 *  - rc_b: recent partial refund (diagnostics bucket) + an on-hold
+	 *    order (unusual-status bucket, excluded from all revenue math).
+	 */
+	private function build_refund_cases() {
+		$out = array();
+
+		$rc_a_orders = array(
+			$this->order( 163, 70 ),                             // history => window revenue is "returning"
+			$this->order( $this->month_day( 1, 26 ), 140 ),      // late previous month, gets the $90 refund
+		);
+		$out[] = $this->customer( 'rc_a', 'refund_case', $this->next_name(), $rc_a_orders,
+			$this->order_visits( $rc_a_orders ),
+			array( 'segment' => 'potential_loyalist', 'lifecycle' => 'Active Customer', 'churn_band' => null )
+		);
+
+		$rc_b_orders = array(
+			$this->order( 172, 60 ),
+			$this->order( 14, 95 ),                              // recent, gets the $28 partial refund
+			$this->order( 6, 180, 'on-hold' ),                   // unusual-status case, never paid
+		);
+		$out[] = $this->customer( 'rc_b', 'refund_case', $this->next_name(), $rc_b_orders,
+			$this->order_visits( $rc_b_orders ),
+			array( 'segment' => 'potential_loyalist', 'lifecycle' => 'Active Customer', 'churn_band' => null )
+		);
+
+		return $out;
+	}
+
+	/** Refund specs consumed by the seeder's s_refunds step. */
+	private function build_refund_specs() {
+		return array(
+			array(
+				'customer'  => 'rc_a',
+				'order_idx' => 1,
+				'days'      => $this->month_day( 0, 8 ),          // early anchor month
+				'amount'    => 90.00,
+				'reason'    => 'Two of three items returned — size exchange fell through',
+			),
+			array(
+				'customer'  => 'rc_b',
+				'order_idx' => 1,
+				'days'      => 6,
+				'amount'    => 28.00,
+				'reason'    => 'One item arrived damaged — partial refund',
+			),
+		);
+	}
+
+	/** V4: top up guest revenue so the Guest card reads steady every month. */
+	private function extend_guests( &$guest_orders ) {
+		$browse = $guest_orders['browse'];
+		unset( $guest_orders['browse'] );
+		$specs = array(
+			array( 4, 6, 64 ), array( 4, 19, 66 ),               // Mar +130
+			array( 3, 8, 95 ), array( 3, 22, 90 ),               // Apr +185
+			array( 2, 14, 90 ),                                  // May +90
+			array( 1, 9, 70 ), array( 1, 21, 70 ),               // Jun +140
+		);
+		foreach ( $specs as $s ) {
+			$name           = $this->next_name();
+			$guest_orders[] = array(
+				'days'   => $this->month_day( $s[0], $s[1] ),
+				'hh'     => $this->rnd( 9, 20 ),
+				'mm'     => $this->rnd( 0, 59 ),
+				'total'  => $s[2],
+				'status' => 'completed',
+				'first'  => $name[0],
+				'last'   => $name[1],
+				'email'  => strtolower( $name[0] . '.' . $name[1] ) . '@example.com',
+				'visits' => 1,
+			);
+		}
+		$guest_orders['browse'] = $browse;
 	}
 
 	// ── expectations / analytic pre-check ───────────────────────────────

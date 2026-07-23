@@ -51,6 +51,10 @@ backups and `wp-config.php` are all ignored. Tracked:
   `includes/class-pdwchs-demo-lockdown.php`. Inert unless
   `PDWCHS_DEMO_LOCKDOWN` is defined true in `wp-config.php` (live only).
   Full guide + deploy checklist: `project_asset/docs/demo-site-lockdown.md`
+- V2–V4 video coverage: the seeded dataset carries videos 1–4 (Champions/5-5-5
+  hero, refund + on-hold cases, five-month flat-total revenue shape) and
+  `wp pdwchs-demo verify` machine-checks all of it. Answers to the recording
+  docs' open questions: `project_asset/docs/v2-v4-coverage-report.md`.
 - Storefront branding: the shop is styled as **Northline Supply Co.** (apparel)
   via the git-tracked child theme `wp-content/themes/northline/` (child of
   Twenty Twenty-Five) plus `wp pdwchs-demo setup-storefront` (idempotent; sets

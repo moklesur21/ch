@@ -28,6 +28,7 @@ class PDWCHS_Demo_Ledger {
 			'user_map'        => array(), // plan key => user_id
 			'order_map'       => array(), // plan key => [order_idx => order_id]
 			'guest_order_ids' => array(), // guest spec idx => order_id
+			'refund_map'      => array(), // plan refund idx => refund_id (deletion cascades from the parent order)
 			'product_ids'     => array(), // products the seeder itself created
 			'session_ids'     => array(),
 			'cart_ids'        => array(),
