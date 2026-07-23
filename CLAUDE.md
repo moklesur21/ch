@@ -63,5 +63,10 @@ backups and `wp-config.php` are all ignored. Tracked:
 - Live migration: solved — demo data is *regenerated* on the live box via the
   demo-tools REST API (deterministic seeder), never copied. Guide:
   `project_asset/docs/live-migration.md`; day-to-day: `scripts/live-refresh.sh`.
+- **Live deploy completed 2026-07-23**: ch.puredevs.com seeded + verified
+  (48 pass / 0 fail, twin of local), lockdown viewer (`demo`/`demo1234`)
+  confirmed read-only. Known delta: Marcus's *Brand Loyal* tag is absent on
+  live (older WooCommerce lacks the `product_brand` taxonomy) — appears
+  after a Woo update + refresh. Recordings are always local, so no impact.
 - Next planned task: `project_asset/docs/update-01.txt`.
 - Git remote: https://github.com/moklesur21/ch.git
