@@ -136,6 +136,11 @@ class PDWCHS_Demo_Plan {
 		);
 		$this->extend_guests( $guest_orders );       // V4: guest revenue steady every month
 
+		// V4 shape: after every cohort exists, re-balance the qreg plug so the
+		// five-month total is flat and returning declines at THIS anchor day.
+		$refund_specs = $this->build_refund_specs();
+		$this->balance_v4_revenue( $customers, $guest_orders, $refund_specs );
+
 		$plan = array(
 			'anchor'       => $this->anchor,
 			'rng_seed'     => $this->rng_seed,
@@ -147,7 +152,7 @@ class PDWCHS_Demo_Plan {
 			'customers'    => $customers,
 			'guest_orders' => $guest_orders,
 			'carts'        => $carts,
-			'refunds'      => $this->build_refund_specs(),
+			'refunds'      => $refund_specs,
 			'hero_key'     => 'hero',
 			'decliners'    => array( 'hero', 'ar_a', 'loyal_1' ), // Declining-Health widget cast (2-4 incl hero)
 		);
@@ -605,6 +610,10 @@ class PDWCHS_Demo_Plan {
 
 		// Round-robin fillers over the recent-heavy pool (potentials/actives):
 		// an extra recent order only makes their decline more negative => still Low.
+		// Fillers are kept CHEAP (the V4 compensator re-plugs returning revenue to a
+		// flat target, so large fillers would just over-inflate the recent/anchor
+		// months and shrink the plug's headroom). data_gap only cares that a filler
+		// EXISTS on the day, not its value.
 		$pool = array();
 		foreach ( $customers as $idx => $c ) {
 			if ( in_array( $c['archetype'], array( 'potential', 'active' ), true ) ) {
@@ -621,7 +630,7 @@ class PDWCHS_Demo_Plan {
 			if ( ( $d - $last_covered ) >= 2 ) { // about to open a 3-day hole — plug it
 				$idx = $pool[ $p % count( $pool ) ];
 				$p++;
-				$filler           = $this->order( $d, $this->rnd( 55, 85 ) );
+				$filler           = $this->order( $d, $this->rnd( 15, 28 ) );
 				$filler['filler'] = true;
 				$customers[ $idx ]['orders'][] = $filler;
 				$customers[ $idx ]['visits'][] = $this->visit( $d, 'order', count( $customers[ $idx ]['orders'] ) - 1 );
@@ -633,28 +642,25 @@ class PDWCHS_Demo_Plan {
 
 	// ── V2-V4 extension builders (all run on the seed+1000 stream) ──────
 	//
-	// Monthly revenue ledger (plugin semantics: completed+processing net,
-	// refunds attributed to the PARENT order's month, "new" = first-ever
-	// order falls in that month, guest = customer_id 0). Targets per the
-	// V4 brief §4: total flat ~$3,265/month, returning -28%, new ~2.6x,
-	// guest boring. Months are calendar months back from the anchor month.
+	// Monthly revenue shape (plugin semantics: completed+processing net, refunds
+	// attributed to the PARENT order's month, "new" = first-ever order falls in
+	// that month, guest = customer_id 0). Target per the V4 brief §4: total flat
+	// ~$3,265/month, returning declining, new ~2.6x, guest boring.
 	//
-	//   month(k)   : Mar(4)  Apr(3)  May(2)  Jun(1)  Jul(0)
-	//   returning  : 2666    2520    2378    2226    1911
-	//     existing : 1414    1674    1787    1893    1844
-	//     marcus   :   65       0     130       0       0
-	//     champ2   :  124     124     124     176       0
-	//     loyal2   :   63      84      84      42       0
-	//     rc_a/b   :    0       0       0      50      67   (orders net of refunds)
-	//     qreg     : 1000     638     253      65       0   (the tuning knob)
-	//   new        :  416     560     700     850    1105   (existing 416/192/363/299/262 + influx)
-	//   guest      :  183     185     187     189     249   (existing + extend_guests)
-	//   TOTAL      : 3265    3265    3265    3265    3265   (±~1%)
+	// The shape is NOT hand-tuned to a fixed table any more (that only held at one
+	// calibration anchor — days-ago V1 orders slid across month boundaries when the
+	// anchor moved and broke v4_flat / v4_returning_decline). Instead:
+	//   • new     — build_influx(): calendar-anchored, month-on-month growing.
+	//   • guest   — extend_guests(): calendar-anchored, steady every month.
+	//   • returning — build_qreg() lays down the DATES; balance_v4_revenue() (called
+	//     at the end of build()) MEASURES every non-qreg month total and sets the
+	//     qreg order values so each month hits the flat target. Total flat + new
+	//     growing + guest flat ⇒ returning declines automatically, at ANY anchor.
 	//
-	// V1 invariants preserved: hero untouched ($931, #4, 51 days), all new
-	// lifetime spends < $890 (cl) so the top-5 order is stable, and every
-	// new cohort is engineered churn-Low or unscored (<2 orders) so the
-	// At-Risk list stays at its 7 engineered rows.
+	// V1 invariants preserved: hero untouched ($931, #4, 51 days), qreg lifetime is
+	// held < $890 (cl) so the top-5 order is stable, and every appended cohort is
+	// engineered churn-Low or unscored (<2 orders) so the At-Risk list stays at its
+	// 7 engineered rows.
 
 	/** Swap the name pool to data/names-extra.php for appended cohorts. */
 	private function use_extra_names() {
@@ -755,30 +761,50 @@ class PDWCHS_Demo_Plan {
 	}
 
 	/**
-	 * V4's returning-revenue decline: four "restock account" customers whose
-	 * order VALUES fade month over month while their cadence stays fresh —
-	 * recency and 90v90 order counts stay flat, so churn stays Low and the
-	 * At-Risk list keeps its engineered 7 rows. Value schedule per customer
-	 * (cal-month day, $): Mar ~250 -> Apr ~160 -> May ~63 -> Jun ~16, plus
-	 * two pre-window history orders so their window revenue is "returning".
+	 * V4's returning-revenue engine: four "restock account" customers used by
+	 * balance_v4_revenue() as a per-month PLUG. Their cadence stays fresh (recency
+	 * and 90v90 order counts flat, so churn stays Low and the At-Risk list keeps
+	 * its 7 engineered rows), but the in-window order VALUES are placeholders here
+	 * — balance_v4_revenue() overwrites them so the five-month total lands flat and
+	 * returning revenue declines at ANY anchor day (not just the calibration one).
+	 *
+	 * DATES: one order per window month via month_day() so each lands in a fixed
+	 * calendar month regardless of the anchor, INCLUDING the anchor month (Jul) so
+	 * the compensator can pull the current month to target too. Two pre-window
+	 * history orders keep each customer "returning" (first order well before the
+	 * window) and are kept cheap so lifetime stays under the $890 top-5 guard.
 	 */
 	private function build_qreg() {
 		$out   = array();
+		// Eight restock accounts: the flat target must sit at/above the anchor
+		// month's non-qreg base (the plug can only ADD), and that base GROWS as the
+		// current month fills in, so late-in-month the plug is large. Spreading it
+		// over eight customers keeps each lifetime ~$650-770 — under the ~$855 that
+		// keeps the Top-Customers list stable and the $860 compensator clamp — for
+		// every back-half anchor, so the line stays flat instead of scaled short.
+		// The anchor-month order is placed a FEW DAYS AGO (<=4) so it always lands
+		// in the anchor month (never spilling into the previous month early in a
+		// month) and keeps recency fresh (churn stays Low).
 		$specs = array(
-			//               hist1(days,$)   hist2(days,$)   Mar(day,$)  Apr(day,$)  May(day,$)  Jun(day,$)
-			array( array( 305, 178 ), array( 218, 182 ), array( 8, 252 ), array( 10, 162 ), array( 16, 64 ), array( 24, 17 ) ),
-			array( array( 288, 175 ), array( 205, 180 ), array( 14, 250 ), array( 16, 160 ), array( 22, 63 ), array( 27, 16 ) ),
-			array( array( 322, 180 ), array( 232, 176 ), array( 20, 250 ), array( 21, 158 ), array( 27, 63 ), array( 29, 16 ) ),
-			array( array( 270, 174 ), array( 190, 178 ), array( 26, 248 ), array( 26, 158 ), array( 30, 63 ), array( 21, 16 ) ),
+			//     hist1  hist2  Mar-day Apr-day May-day Jun-day  Jul(days-ago)
+			array( 305, 218, 8,  10, 16, 26, 3 ),
+			array( 288, 205, 14, 16, 22, 27, 4 ),
+			array( 322, 232, 20, 21, 27, 29, 2 ),
+			array( 270, 200, 26, 26, 30, 21, 1 ),
+			array( 298, 210, 11, 13, 19, 24, 3 ),
+			array( 315, 225, 23, 18, 25, 28, 4 ),
+			array( 279, 198, 5,  8,  14, 20, 2 ),
+			array( 331, 240, 29, 23, 12, 18, 1 ),
 		);
 		foreach ( $specs as $i => $s ) {
 			$orders   = array();
-			$orders[] = $this->order( $s[0][0], $s[0][1] );
-			$orders[] = $this->order( $s[1][0], $s[1][1] );
-			$orders[] = $this->order( $this->month_day( 4, $s[2][0] ), $s[2][1] );
-			$orders[] = $this->order( $this->month_day( 3, $s[3][0] ), $s[3][1] );
-			$orders[] = $this->order( $this->month_day( 2, $s[4][0] ), $s[4][1] );
-			$orders[] = $this->order( $this->month_day( 1, $s[5][0] ), $s[5][1] );
+			$orders[] = $this->order( $s[0], $this->rnd( 22, 34 ) );       // pre-window history (cheap)
+			$orders[] = $this->order( $s[1], $this->rnd( 22, 34 ) );
+			$orders[] = $this->order( $this->month_day( 4, $s[2] ), 0 );   // Mar  (placeholder $ -> compensator)
+			$orders[] = $this->order( $this->month_day( 3, $s[3] ), 0 );   // Apr
+			$orders[] = $this->order( $this->month_day( 2, $s[4] ), 0 );   // May
+			$orders[] = $this->order( $this->month_day( 1, $s[5] ), 0 );   // Jun
+			$orders[] = $this->order( $s[6], 0 );                          // Jul  (anchor month, ~2-5d ago)
 			// Steady sparse browsing: engagement decline ~0 keeps the churn
 			// engagement component quiet despite the fading spend.
 			$visits = array_merge(
@@ -791,6 +817,203 @@ class PDWCHS_Demo_Plan {
 			) );
 		}
 		return $out;
+	}
+
+	/**
+	 * V4 shape compensator — makes the five-month revenue chart flat and the
+	 * returning-revenue curve monotone-declining at ANY anchor day. The V4 targets
+	 * used to be hand-calibrated for one anchor; days-ago-placed V1 orders slid
+	 * across month boundaries when the anchor moved, breaking `v4_flat` and
+	 * `v4_returning_decline`. This runs after every cohort is built: it MEASURES the
+	 * fixed monthly revenue of all non-qreg orders (replicating the verifier's
+	 * monthly_split() semantics) and sets each qreg window order so that month's
+	 * total hits a flat target. Two cohorts are shaped by measure-and-fill:
+	 *   • NEW  — the influx cohort is set so new-customer revenue is monotone-rising
+	 *            (step 1b), so it can't dip at month-end anchors where the V1 "new"
+	 *            contribution would otherwise sag and lift returning that month.
+	 *   • RETURNING — the qreg cohort is set so each month's TOTAL hits the flat
+	 *            target (step 5). Flat total − rising new − steady guest ⇒ returning
+	 *            declines monotonically, at ANY anchor day.
+	 * Deterministic: no RNG, pure arithmetic on the in-memory plan.
+	 */
+	private function balance_v4_revenue( &$customers, &$guest_orders, $refund_specs ) {
+		// 1) Five window months oldest -> anchor month (matches monthly_split()).
+		$anchor_ts  = strtotime( $this->anchor . ' 00:00:00 UTC' );
+		$first_this = strtotime( gmdate( 'Y-m-01', $anchor_ts ) . ' 00:00:00 UTC' );
+		$months     = array();
+		for ( $k = 4; $k >= 0; $k-- ) {
+			$months[] = gmdate( 'Y-m', strtotime( "-{$k} months", $first_this ) );
+		}
+		$base    = array_fill_keys( $months, 0.0 );
+		$in_win  = function ( $days ) { return gmdate( 'Y-m', $this->gmt_ts( (int) $days ) ); };
+		$counted = array( 'completed', 'processing' );
+
+		// 1b) Shape NEW-customer revenue monotone-rising via the influx cohort. Each
+		//     influx customer places a single order (so its first-order month == that
+		//     order's month), which makes its value a direct handle on that month's
+		//     new revenue. We measure the new revenue we do NOT control (V1 first-time
+		//     buyers) and top it up with influx so `new` follows a rising target.
+		$first_m = array();
+		foreach ( $customers as $ci => $c ) {
+			$fm = null;
+			foreach ( $c['orders'] as $o ) {
+				if ( ! in_array( $o['status'], $counted, true ) ) {
+					continue;
+				}
+				$m = $in_win( $o['days'] );
+				if ( null === $fm || $m < $fm ) {
+					$fm = $m;
+				}
+			}
+			$first_m[ $ci ] = $fm;
+		}
+		$exist_new = array_fill_keys( $months, 0.0 );
+		foreach ( $customers as $ci => $c ) {
+			if ( in_array( $c['archetype'], array( 'influx', 'qreg' ), true ) ) {
+				continue;
+			}
+			foreach ( $c['orders'] as $o ) {
+				if ( ! in_array( $o['status'], $counted, true ) ) {
+					continue;
+				}
+				$m = $in_win( $o['days'] );
+				if ( isset( $exist_new[ $m ] ) && $m === $first_m[ $ci ] ) {
+					$exist_new[ $m ] += (float) $o['total'];
+				}
+			}
+		}
+		// Rising target keyed to the oldest month's (uncontrollable) new revenue: each
+		// month >= a growing multiple of that floor, >= what already exists, and >= the
+		// previous month (monotone). The oldest window month has no influx, so its new
+		// revenue is the floor and is left as-is.
+		$floor_new = $exist_new[ $months[0] ];
+		$mult      = array( 1.0, 1.22, 1.5, 1.85, 2.35 );
+		$prev_n    = 0.0;
+		foreach ( $months as $mi => $m ) {
+			$idxs = array();
+			foreach ( $customers as $ci => $c ) {
+				if ( 'influx' !== $c['archetype'] ) {
+					continue;
+				}
+				foreach ( $c['orders'] as $oi => $o ) {
+					if ( $in_win( $o['days'] ) === $m ) {
+						$idxs[] = array( $ci, $oi );
+					}
+				}
+			}
+			$n = count( $idxs );
+			if ( 0 === $n ) {
+				$prev_n = max( $prev_n, $exist_new[ $m ] );
+				continue;
+			}
+			$ntar = max( $floor_new * $mult[ $mi ], $exist_new[ $m ] + $n * 8, $prev_n );
+			$fill = $ntar - $exist_new[ $m ];
+			$per  = $fill / $n;
+			foreach ( $idxs as $k => $pair ) {
+				list( $ci, $oi ) = $pair;
+				$amt = ( $k === $n - 1 ) ? ( $fill - $per * ( $n - 1 ) ) : $per;
+				$customers[ $ci ]['orders'][ $oi ]['total'] = max( 8.0, round( $amt, 2 ) );
+			}
+			$prev_n = $ntar;
+		}
+
+		// 2) Sum every NON-qreg completed/processing order into its calendar month
+		//    (picks up the influx values just shaped in step 1b).
+		foreach ( $customers as $c ) {
+			if ( 'qreg' === $c['archetype'] ) {
+				continue;
+			}
+			foreach ( $c['orders'] as $o ) {
+				if ( ! in_array( $o['status'], $counted, true ) ) {
+					continue;
+				}
+				$m = $in_win( $o['days'] );
+				if ( isset( $base[ $m ] ) ) {
+					$base[ $m ] += (float) $o['total'];
+				}
+			}
+		}
+		foreach ( $guest_orders as $key => $g ) {
+			if ( 'browse' === $key ) {
+				continue;
+			}
+			$status = isset( $g['status'] ) ? $g['status'] : 'completed';
+			if ( ! in_array( $status, $counted, true ) ) {
+				continue;
+			}
+			$m = $in_win( $g['days'] );
+			if ( isset( $base[ $m ] ) ) {
+				$base[ $m ] += (float) $g['total'];
+			}
+		}
+
+		// 3) Subtract refunds at their PARENT order's month (the plugin convention).
+		foreach ( $refund_specs as $rf ) {
+			foreach ( $customers as $c ) {
+				if ( $c['key'] !== $rf['customer'] ) {
+					continue;
+				}
+				if ( isset( $c['orders'][ $rf['order_idx'] ] ) ) {
+					$m = $in_win( $c['orders'][ $rf['order_idx'] ]['days'] );
+					if ( isset( $base[ $m ] ) ) {
+						$base[ $m ] -= (float) $rf['amount'];
+					}
+				}
+				break;
+			}
+		}
+
+		// 4) Flat target T >= max base month (so every plug is >= 0), plus a tiny
+		//    deterministic jitter so the bars read organically flat. The jitter
+		//    spread (~28 on ~3300) is far below the monthly new+guest growth step,
+		//    so it can never break the returning-decline monotonicity.
+		$max_base = max( $base );
+		$t0       = max( 3265.0, ceil( ( $max_base + 40 ) / 10 ) * 10 );
+		$jitter   = array( 12, 4, 8, -8, -16 ); // sum 0, oldest -> anchor
+
+		// 5) qreg customers + per-month plug (split evenly, remainder on the last,
+		//    a small floor so no plug order is $0 — keeps qreg frequency/recency).
+		$qidx = array();
+		foreach ( $customers as $i => $c ) {
+			if ( 'qreg' === $c['archetype'] ) {
+				$qidx[] = $i;
+			}
+		}
+		$nq = max( 1, count( $qidx ) );
+		foreach ( $months as $mi => $m ) {
+			$target = $t0 + $jitter[ $mi ];
+			$need   = max( (float) ( 6 * $nq ), $target - $base[ $m ] );
+			$per    = $need / $nq;
+			foreach ( $qidx as $qn => $ci ) {
+				$amt = ( $qn === $nq - 1 ) ? ( $need - $per * ( $nq - 1 ) ) : $per;
+				$amt = max( 6.0, round( $amt, 2 ) );
+				foreach ( $customers[ $ci ]['orders'] as $oi => $o ) {
+					if ( $in_win( $o['days'] ) === $m ) {
+						$customers[ $ci ]['orders'][ $oi ]['total'] = $amt;
+						break;
+					}
+				}
+			}
+		}
+
+		// 6) Safety net: keep each qreg lifetime under the $890 top-5 guard so the
+		//    hero stays rank #4. With a substantial V1 base this never fires (plugs
+		//    total ~$550-650/customer); the clamp only exists to protect hero_rank
+		//    if a sparse base ever pushed the plug too high.
+		foreach ( $qidx as $ci ) {
+			$sum = 0.0;
+			foreach ( $customers[ $ci ]['orders'] as $o ) {
+				$sum += (float) $o['total'];
+			}
+			if ( $sum >= 860.0 ) {
+				$scale = 820.0 / $sum;
+				foreach ( $customers[ $ci ]['orders'] as $oi => $o ) {
+					if ( isset( $base[ $in_win( $o['days'] ) ] ) ) { // scale in-window plugs only
+						$customers[ $ci ]['orders'][ $oi ]['total'] = max( 6.0, round( $o['total'] * $scale, 2 ) );
+					}
+				}
+			}
+		}
 	}
 
 	/**

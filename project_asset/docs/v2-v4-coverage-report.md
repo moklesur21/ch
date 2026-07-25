@@ -38,14 +38,18 @@ store, plus two real gaps now seeded):
   profile — swap the placeholder tags for the five above. ("Brand Loyal" is
   real: the catalog now carries `product_brand` terms — North Line /
   Camber Studio / Field & Forge — and Marcus concentrates in North Line.)
-- **A1 volume:** store is now **86 customers / ~348 orders / ~$3.2-3.3k per
-  month**. The run-sheet's "few hundred customers" ideal was traded off
-  deliberately: growing further would destabilise the churn At-Risk list
-  that V1's footage depends on (exactly 7 rows). 86 customers with a full
-  10-segment donut reads as a real store on camera.
-- **A2 donut:** Champions 8, Loyal 3, Potential Loyalist ~35, New ~21,
+- **A1 volume:** store is now **90 customers / ~352 orders**, with a flat
+  five-month topline whose level tracks the anchor month (read the exact
+  figure off the `verify --report` sheet). The run-sheet's "few hundred
+  customers" ideal was traded off deliberately: growing further would
+  destabilise the churn At-Risk list that V1's footage depends on (exactly 7
+  rows). 90 customers with a full 10-segment donut reads as a real store on
+  camera. (The census rose from 86 to 90 when the V4 returning-revenue plug
+  moved to 8 restock accounts — see the recording-constraint note below.)
+- **A2 donut:** Champions ~9, Loyal 2, Potential Loyalist ~39, New ~21,
   Needs Attention 3, At Risk 2, Cannot Lose 1, Hibernating ~10, Lost 1,
-  Undefined ~4 (null bucket, minimal as required).
+  Undefined ~4 (null bucket, minimal as required). The four extra restock
+  accounts land in Potential Loyalist.
 - **A4 / J2 (Segments page) — layout differs from the donut, exactly the
   case the run-sheet anticipated:** the dedicated `Customer History →
   Segments` page is a **Saved Segments manager** (custom saved lists +
@@ -179,10 +183,16 @@ The five-month range (Mar 1 – Jul 23) shows a near-flat topline — the
   this screen — it's verified from code.
 - **§11.4 (guests):** steady $183–189/month with a small July uptick; never
   $0, never pulls focus.
-- **Recording constraint:** shoot V4 in the back half of a month (anchor day
-  ≥ 18), or pin the anchor (`scripts/demo-refresh.sh 2026-07-23`) — early in
-  a month the current-month card can't yet be "full" and verify flags the
-  V4 checks as warnings.
+- **Recording constraint:** the five-month shape now *self-balances* to the
+  anchor. `balance_v4_revenue()` (in `class-pdwchs-demo-plan.php`, run at the
+  end of `build()`) measures every non-plug order and sets the influx cohort
+  (new) to rise monotonically and eight qreg "restock" accounts (returning) to
+  fill each month up to a flat total — so a plain `demo-refresh.sh` at today's
+  anchor passes `v4_flat` + `v4_returning_decline` at **any** back-half anchor
+  (verified 07-18 → 08-22), no pinning needed. Early in a month (anchor day
+  < 18) the current-month card still can't be "full", so verify keeps the V4
+  checks at **WARN** severity there — shoot the back half (day ≥ 18) for a
+  clean 0-FAIL/0-WARN sheet.
 
 ## What changed under the hood (for the developer)
 
@@ -191,9 +201,19 @@ The five-month range (Mar 1 – Jul 23) shows a near-flat topline — the
   unchanged: Daniel Mercer, health 60↓, churn 64% High, 51 days, $931,
   11 orders, rank #4; At-Risk list back to exactly 7 rows; alerts 4.
 - New cohorts: Marcus +10 orders (F=5), 3 extra Champions, 2 loyal
-  regulars, 4 fading-value "restock" customers (the returning decline,
-  engineered churn-Low), 24 new-customer influx across Apr–Jul, 7 guest
-  orders, 2 refund-case customers; catalog gained `product_brand` terms.
+  regulars, 8 "restock" customers whose in-window order values are set by
+  `balance_v4_revenue()` to plug each month's total to the flat target (the
+  returning decline; engineered churn-Low), 24 new-customer influx across
+  Apr–Jul (values shaped by the same pass so new revenue rises monotonically),
+  7 guest orders, 2 refund-case customers; catalog gained `product_brand` terms.
+- **V4 shape is now anchor-robust:** `balance_v4_revenue()` runs at the end of
+  `PDWCHS_Demo_Plan::build()` and re-derives the five-month shape from the
+  actual per-month order totals, so `v4_flat` / `v4_returning_decline` pass at
+  any back-half anchor instead of only the one they were hand-tuned for. It's
+  deterministic (no RNG) and holds qreg lifetimes < ~$855 so the hero keeps
+  Top-5 #4. To validate other anchors, build the plan and replicate the
+  verifier's `monthly_split()` in-memory — do **not** seed a future anchor
+  (that makes `data_fresh` / hero-days / champions fail against real `now()`).
 - `verify` gained 12 checks (`v2_*`, `v3_*`, `v4_*`) and widened three V1
   bands to the new census (customers 70–110, orders 220–400, health avg
   55–70); `--report` prints the V2 hero block, refund cases and month table.
