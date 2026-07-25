@@ -352,23 +352,38 @@ class PDWCHS_Sessions_List_Table extends WP_List_Table {
 	 */
 	public function pdwchs_get_user( $user_id ) {
 		$user = null;
+
 		if ( $user_id != 999999999999999 ) {
 			$user = get_user_by( 'id', $user_id );
 		} elseif ( $user_id > 0 ) {
 			$user = 'bot';
 		}
 
-		if ( null === $user ) {
+		// Handle guest (no user found)
+		if ( ! $user ) {
 			return '<span class="dashicons dashicons-businessman mr-5"></span> Guest';
 		}
+
+		// Handle bot
 		if ( 'bot' === $user ) {
 			return '<span class="dashicons dashicons-businessman mr-5"></span> Bot';
 		}
 
-		$user_name = ( '' !== $user->first_name || '' !== $user->last_name )
-			? esc_html( $user->first_name . ' ' . $user->last_name )
-			: esc_html( $user->display_name );
+		// At this point $user should be a WP_User object
+		if ( $user instanceof WP_User ) {
+			$first_name = ! empty( $user->first_name ) ? $user->first_name : '';
+			$last_name  = ! empty( $user->last_name ) ? $user->last_name : '';
 
-		return '<span class="dashicons dashicons-admin-users mr-5"></span><a href="admin.php?page=pd-woo-customer&user_id=' . esc_html( $user->ID ) . '">' . $user_name . '</a>';
+			$user_name = ( $first_name || $last_name )
+				? esc_html( trim( $first_name . ' ' . $last_name ) )
+				: esc_html( $user->display_name );
+
+			return '<span class="dashicons dashicons-admin-users mr-5"></span><a href="admin.php?page=pd-woo-customer&user_id=' 
+				. esc_html( $user->ID ) . '">' . $user_name . '</a>';
+		}
+
+		// Fallback if something unexpected slips through
+		return '<span class="dashicons dashicons-businessman mr-5"></span> Unknown';
 	}
+
 }

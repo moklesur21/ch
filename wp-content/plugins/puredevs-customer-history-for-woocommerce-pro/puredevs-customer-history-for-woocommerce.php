@@ -9,7 +9,7 @@
  * Plugin Name: PureDevs Customer History for WooCommerce Pro
  * Plugin URI:        https://puredevs.com/plugin/puredevs-customer-history-for-woocommerce/
  * Description:       Customer intelligence for WooCommerce: customer profiles, order history, session & search tracking, segments, and a customer-first dashboard.
- * Version:           3.0.0
+ * Version:           3.0.1
  * Update URI: https://api.freemius.com
  * Requires at least: 6.0
  * Requires PHP:      7.4
@@ -140,7 +140,7 @@ if ( function_exists( 'pchfwv_fs' ) ) {
      * Start at version 1.0.0 and use SemVer - https://semver.org
      * Rename this for your plugin and update it as you release new versions.
      */
-    define( 'PDWCHS_CUSTOMER_HISTORY_VERSION', '3.0.0' );
+    define( 'PDWCHS_CUSTOMER_HISTORY_VERSION', '3.0.1' );
     define( 'PDWCHS_CUSTOMER_HISTORY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
     define( 'PDWCHS_CUSTOMER_HISTORY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
     define( 'PDWCHS_CUSTOMER_HISTORY_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );

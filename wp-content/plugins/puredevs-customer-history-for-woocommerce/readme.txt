@@ -4,7 +4,7 @@ Tags: customer history, woocommerce customer analytics, customer search tracking
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 Requires Plugins: woocommerce
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -150,6 +150,10 @@ This plugin bundles the following third-party JavaScript libraries:
 
 == Changelog ==
 
+= 3.0.1 =
+- Update freemius SDK.
+- Compatibility check with WP and WooCommerce latest version.
+
 = 3.0.0 =
 - NEW: Customer Intelligence Dashboard — overview cards (total, new, and active customers) plus widgets for top customers by lifetime value, latest orders, top-selling products, top searches, top categories, recent searches, and most-viewed products, with a date-range picker and period-over-period comparison.
 - NEW: Search &amp; Discovery Analytics page — top search terms, recent searches, most-viewed products with view counts, and top viewed categories.
@@ -179,3 +183,88 @@ This plugin bundles the following third-party JavaScript libraries:
 = 2.1.7 =
 - Fix errors related to validations, sanitizations and escaping.
 - Compatibility check with WP and WooCommerce latest version.
+
+= 2.1.6 =
+- NEW: Customer Health Score system (0-100) based on purchase patterns, engagement, and spending behavior.
+- NEW: Health score trend tracking (improving, stable, declining) for proactive customer management.
+- NEW: Customer Lifecycle Stages tracking (Prospect, New Customer, Active Customer, Loyal Customer, At Risk, Churned).
+- NEW: Automatic lifecycle stage assignment based on customer behavior and purchase history.
+- NEW: Lifecycle funnel visualization widget on dashboard.
+- NEW: At-risk customer alerts widget to identify customers needing immediate attention.
+- NEW: Filter customers by health score range (Excellent, Good, Fair, Poor, Critical).
+- NEW: Filter customers by lifecycle stage and days in stage for targeted marketing.
+- NEW: Visual health score badges and trend indicators on customer list.
+- NEW: Comprehensive customer intelligence cards on customer detail pages.
+- Enhanced customer intelligence dashboard with all metrics in one place.
+- Improved customer list table with RFM, Health Score, and Lifecycle columns.
+- Compatibility check with WP and WooCommerce latest version.
+
+= 2.1.5 =
+- Advanced RFM (Recency, Frequency, Monetary) customer segmentation system.
+- Intelligent customer scoring with 11 predefined segments (Champions, Loyal, Potential Loyalist, etc.).
+- Visual RFM dashboard widget with segment distribution charts.
+- Actionable business insights and recommendations for each customer segment.
+- Enhanced customer intelligence for targeted marketing campaigns.
+- Filter(search) Customers & Users by purchased product.
+- Compatibility check with WP and WooCommerce latest version
+
+= 2.1.4 =
+- Fixed product brand view issue.
+- Compatibility check with WP and WooCommerce latest version
+
+= 2.1.3 =
+- Direct customer email communication system with personalized templates.
+- Customer referral system with unique codes and point-based rewards.
+- Referral tracking with cookie attribution and sharing capabilities.
+- Enhanced customer engagement and retention features.
+- Compatibility check with WP and WooCommerce latest version
+
+= 2.1.2 =
+- Conversion Funnel Visualization.
+- Compatibility check with WP and WooCommerce latest version
+
+= 2.1.1 =
+- Top selling products by month.
+- Compatibility check with WP and WooCommerce latest version
+
+= 2.1.0 =
+- Categorized customers based on earning points ( points will be earned by placing order and spending money on this store ).
+- Create and send coupons to customers based on customer category.
+- Compatibility check with WP and WooCommerce latest version
+
+= 1.0.9 =
+- Generate weekly report for orders, top customers, searches, most viewed products, most viewed categories and send it to admin email or an entered email address from the settings area via email.
+- Compatibility check with WP and WooCommerce latest version
+
+= 1.0.8 =
+- Generate weekly orders report
+- Generate weekly searches report
+- Generate weekly most viewed products report
+- Product View vs Purchase Ratio
+- Compatibility check with WP and WooCommerce latest version
+
+= 1.0.7 =
+- Most viewed products list for individual customer
+- Compatibility check with WP and WooCommerce latest version
+
+= 1.0.6 =
+- Download Customers & Users Order Informations to CSV
+
+= 1.0.5 =
+- Compatible with High Performance Order Storage
+
+= 1.0.4 =
+- Add no order message
+- Compatibility check with WP and WooCommerce latest version
+
+= 1.0.3 =
+- Compatibility check with WP and WooCommerce latest version
+
+= 1.0.2 =
+- Compatibility check with WP and WooCommerce latest version
+
+= 1.0.1 =
+- Compatibility check with WP latest version
+
+= 1.0.0 =
+- Version 1.0.0 Initial Release

@@ -265,7 +265,7 @@ class PD_Customer_History_Health {
 	 */
 	private function pdwchs_calculate_engagement_score( $user_id ) {
 		global $wpdb;
-		$sessions_table = $wpdb->prefix . 'pdwchs_customer_history_sessions';
+		$sessions_table = $wpdb->prefix . 'pd_woo_customer_history_sessions';
 
 		// Check if sessions table exists
 		if ( $wpdb->get_var( "SHOW TABLES LIKE '{$sessions_table}'" ) != $sessions_table ) {
