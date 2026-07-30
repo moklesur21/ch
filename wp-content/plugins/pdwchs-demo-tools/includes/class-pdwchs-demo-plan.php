@@ -140,6 +140,7 @@ class PDWCHS_Demo_Plan {
 		// five-month total is flat and returning declines at THIS anchor day.
 		$refund_specs = $this->build_refund_specs();
 		$this->balance_v4_revenue( $customers, $guest_orders, $refund_specs );
+		$this->balance_champions_segment( $customers );
 
 		$plan = array(
 			'anchor'       => $this->anchor,
@@ -1013,6 +1014,108 @@ class PDWCHS_Demo_Plan {
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * Champions-segment self-correction — keeps the RFM Champions list in the
+	 * 8-14 band at ANY anchor day, the same way balance_v4_revenue() keeps the
+	 * revenue shape anchor-robust. Champions requires R>=4, F>=4 and M>=4
+	 * (pro/Intelligence/RFM.php), where M>=4 needs lifetime completed+processing
+	 * spend >= 2.0x the store average. build_champ2() and build_loyal() were
+	 * designed for 5 of their customers to migrate into Champions once the
+	 * store average is low enough — but that average drifts with the anchor
+	 * (more accumulated orders/customers over time), and those 5 sit right at
+	 * the boundary by design, so on some anchors they fall just short and
+	 * Champions thins out to the 3-4 "core" champions only.
+	 *
+	 * Runs AFTER balance_v4_revenue() so the store average is measured from the
+	 * FINAL order set (qreg's placeholder $0 orders are already plugged to
+	 * their real values by then) — matching exactly what a live
+	 * pdwchs_get_store_average_spend() call computes post-seed.
+	 *
+	 * Tops up each borderline customer's OLDEST order only (confirmed outside
+	 * balance_v4_revenue()'s 5-month tracked window for both cohorts: champ2's
+	 * oldest order is 400+ days out, loyal's is 227-236), so this can never
+	 * move the five-month revenue shape, Health's recent-order spending trend,
+	 * or Churn's 90/180-day monetary-decline windows — all of which only look
+	 * at recent orders. Deterministic, no RNG.
+	 */
+	private function balance_champions_segment( &$customers ) {
+		$counted = array( 'completed', 'processing' );
+
+		// Store average exactly as RFM.php's pdwchs_get_store_average_spend()
+		// computes it live: mean lifetime completed+processing spend across
+		// every customer with at least one such order.
+		$totals = array();
+		foreach ( $customers as $ci => $c ) {
+			$sum = 0.0;
+			foreach ( $c['orders'] as $o ) {
+				if ( in_array( $o['status'], $counted, true ) ) {
+					$sum += (float) $o['total'];
+				}
+			}
+			if ( $sum > 0 ) {
+				$totals[ $ci ] = $sum;
+			}
+		}
+		if ( empty( $totals ) ) {
+			return;
+		}
+		$avg = array_sum( $totals ) / count( $totals );
+		if ( $avg <= 0 ) {
+			return;
+		}
+
+		// The 5 customers build_champ2()/build_loyal() designed to migrate into
+		// Champions once the store average is low enough. A 2.25x bar (vs the
+		// bare 2.0x M4 cutoff) buys headroom against day-to-day average drift;
+		// the 820 ceiling matches balance_v4_revenue()'s own top-5-rank guard,
+		// so these customers can never overtake cl ($890) or the hero (~$931).
+		$targets = array( 'champ2_0', 'champ2_1', 'champ2_2', 'loyal_0', 'loyal_1' );
+		$bar     = 2.25;
+		$ceiling = 820.0;
+
+		// Same 5 tracked calendar months balance_v4_revenue() uses — never touch
+		// an order inside this range.
+		$anchor_ts  = strtotime( $this->anchor . ' 00:00:00 UTC' );
+		$first_this = strtotime( gmdate( 'Y-m-01', $anchor_ts ) . ' 00:00:00 UTC' );
+		$window     = array();
+		for ( $k = 4; $k >= 0; $k-- ) {
+			$window[ gmdate( 'Y-m', strtotime( "-{$k} months", $first_this ) ) ] = true;
+		}
+		$in_win = function ( $days ) use ( $window ) {
+			return isset( $window[ gmdate( 'Y-m', $this->gmt_ts( (int) $days ) ) ] );
+		};
+
+		foreach ( $customers as $ci => $c ) {
+			if ( ! in_array( $c['key'], $targets, true ) ) {
+				continue;
+			}
+			$current = isset( $totals[ $ci ] ) ? $totals[ $ci ] : 0.0;
+			$need    = ( $bar * $avg ) - $current;
+			if ( $need <= 0 ) {
+				continue;
+			}
+
+			// Oldest order first (built last => highest index for these
+			// cohorts), guarded with in_win() rather than assumed.
+			$oi = null;
+			for ( $j = count( $c['orders'] ) - 1; $j >= 0; $j-- ) {
+				if ( ! $in_win( $c['orders'][ $j ]['days'] ) ) {
+					$oi = $j;
+					break;
+				}
+			}
+			if ( null === $oi ) {
+				continue; // defensive: skip rather than risk the V4 shape
+			}
+
+			$new_total = min( $ceiling, $current + $need );
+			$customers[ $ci ]['orders'][ $oi ]['total'] = round(
+				$customers[ $ci ]['orders'][ $oi ]['total'] + ( $new_total - $current ),
+				2
+			);
 		}
 	}
 
