@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-22 10:29+0000\n"
+"POT-Creation-Date: 2026-07-27 06:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: puredevs-customer-history-for-woocommerce\n"
@@ -30,8 +30,14 @@ msgstr ""
 msgid "%1$d total orders (%2$s)"
 msgstr ""
 
+#. 1: Formatted date and time, 2: Raw Unix timestamp
+#: includes/class-pdwchs-telemetry.php:100
+#, php-format
+msgid "%1$s (timestamp %2$s)"
+msgstr ""
+
 #. %1$s is lifecycle stage name, %2$d is number of days
-#: includes/class-pd-customer-history-customers.php:553
+#: includes/class-pd-customer-history-customers.php:555
 #, php-format
 msgid "%1$s - %2$d days in stage"
 msgstr ""
@@ -70,12 +76,12 @@ msgid "%d days ago"
 msgstr ""
 
 #. %d: Days overdue
-#: pro/Intelligence/templates/customer-churn-card.php:233
+#: pro/Intelligence/templates/customer-churn-card.php:241
 msgid "%d days overdue for purchase"
 msgstr ""
 
 #. %d: Days since last order
-#: pro/Intelligence/templates/customer-churn-card.php:218
+#: pro/Intelligence/templates/customer-churn-card.php:226
 msgid "%d days since last order"
 msgstr ""
 
@@ -115,12 +121,12 @@ msgid ""
 "who's at risk of churning — and why."
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:373
+#: pro/Intelligence/templates/churn-prediction.php:370
 #, php-format
 msgid "%s days"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:375
+#: pro/Intelligence/templates/churn-prediction.php:372
 #, php-format
 msgid "%s hrs"
 msgstr ""
@@ -137,7 +143,7 @@ msgstr ""
 msgid "+ New Segment"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:617
+#: includes/class-pd-customer-history-customers.php:619
 msgid "0-30 days"
 msgstr ""
 
@@ -176,7 +182,7 @@ msgstr ""
 msgid "3+ orders, active relationship"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:618
+#: includes/class-pd-customer-history-customers.php:620
 msgid "31-60 days"
 msgstr ""
 
@@ -189,11 +195,11 @@ msgstr ""
 msgid "50"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:619
+#: includes/class-pd-customer-history-customers.php:621
 msgid "61-90 days"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:620
+#: includes/class-pd-customer-history-customers.php:622
 msgid "90+ days"
 msgstr ""
 
@@ -201,7 +207,7 @@ msgstr ""
 msgid "<span id=\"pd-abandoned-carts-menu\">Abandoned Carts</span>"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:506
+#: pro/Intelligence/Intelligence.php:507
 msgid "<span id=\"pd-churn-prediction-menu\">Churn Prediction</span>"
 msgstr ""
 
@@ -306,9 +312,13 @@ msgstr ""
 msgid "Active Alerts"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:1095
+#: includes/class-pd-customer-history-customers.php:906
 #: pro/Intelligence/Lifecycle.php:708
 msgid "Active Customer"
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:117
+msgid "Active tier"
 msgstr ""
 
 #: pro/Analytics/Funnel/Funnel-Ajax.php:124
@@ -321,7 +331,7 @@ msgstr ""
 msgid "Add to cart"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:489
+#: pro/Intelligence/templates/churn-prediction.php:486
 msgid ""
 "Adjust the weight of each factor in churn score calculation. Weights must "
 "total 100."
@@ -339,44 +349,44 @@ msgstr ""
 msgid "Aggregate Conversion Funnel"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:306
+#: pro/Intelligence/templates/churn-prediction.php:303
 #: pro/Intelligence/templates/customer-lifecycle-card.php:130
 msgid "ago"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:250
+#: pro/Intelligence/templates/churn-prediction.php:247
 msgid "Alert"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1244
+#: pro/Intelligence/Intelligence.php:1241
 msgid "Alert assigned successfully"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:569
+#: pro/Intelligence/templates/churn-prediction.php:566
 msgid "Alert Email Recipient"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:563
+#: pro/Intelligence/templates/churn-prediction.php:560
 msgid "Alert for Critical Risk customers"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:558
+#: pro/Intelligence/templates/churn-prediction.php:555
 msgid "Alert for High Risk customers"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:541
+#: pro/Intelligence/templates/churn-prediction.php:538
 msgid "Alert Settings"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:358
+#: pro/Intelligence/templates/churn-prediction.php:355
 msgid "Alert Statistics (30 Days)"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1212
+#: pro/Intelligence/Intelligence.php:1209
 msgid "Alert status updated"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:554
+#: pro/Intelligence/templates/churn-prediction.php:551
 msgid "Alert Triggers"
 msgstr ""
 
@@ -384,15 +394,15 @@ msgstr ""
 msgid "Alerts"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:740
+#: pro/Intelligence/Intelligence.php:737
 msgid "All Behaviors"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:616
+#: includes/class-pd-customer-history-customers.php:618
 msgid "All Days in Stage"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:607
+#: includes/class-pd-customer-history-customers.php:609
 msgid "All Lifecycle Stages"
 msgstr ""
 
@@ -400,11 +410,11 @@ msgstr ""
 msgid "All Risk Levels"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:701
+#: pro/Intelligence/Intelligence.php:698
 msgid "All Scores"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:685
+#: pro/Intelligence/Intelligence.php:682
 msgid "All Segments"
 msgstr ""
 
@@ -416,7 +426,7 @@ msgstr ""
 msgid "All Statuses"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:726
+#: pro/Intelligence/Intelligence.php:723
 msgid "All Trends"
 msgstr ""
 
@@ -425,7 +435,7 @@ msgid "Amount"
 msgstr ""
 
 #: admin/class-pd-customer-history-admin.php:176
-#: pro/Intelligence/Intelligence.php:652
+#: pro/Intelligence/Intelligence.php:653
 msgid "An error occurred. Please try again."
 msgstr ""
 
@@ -456,23 +466,15 @@ msgstr ""
 msgid "Are you sure? This cannot be undone."
 msgstr ""
 
-#. %s: Discount percentage
-#: pro/Intelligence/Intelligence.php:1355
-#, php-format
-msgid ""
-"As a special thank you for being a valued customer, here's an exclusive %s%% "
-"discount just for you:"
-msgstr ""
-
 #: pro/Intelligence/Lifecycle.php:729 pro/Intelligence/Segments-Labels.php:45
 msgid "Ask for referrals to similar customers"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:254
+#: pro/Intelligence/templates/churn-prediction.php:251
 msgid "Assigned To"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:1097
+#: includes/class-pd-customer-history-customers.php:908
 #: pro/Intelligence/Lifecycle.php:734 pro/Intelligence/Segments-Labels.php:120
 msgid "At Risk"
 msgstr ""
@@ -495,7 +497,7 @@ msgid "At-Risk Customers"
 msgstr ""
 
 #: includes/class-pdwchs-upsell.php:44
-msgid "Automatic badges like VIP, Window Shopper, and Bargain Hunter."
+msgid "Automatic badges like Bargain Hunter, Cart Abandoner, and Brand Loyal."
 msgstr ""
 
 #: pro/Intelligence/RFM.php:670
@@ -518,7 +520,7 @@ msgstr ""
 msgid "Avg Order Value"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:379
+#: pro/Intelligence/templates/churn-prediction.php:376
 msgid "Avg Resolution"
 msgstr ""
 
@@ -555,11 +557,11 @@ msgstr ""
 msgid "Bargain Hunter"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:948
+#: pro/Intelligence/Intelligence.php:945
 msgid "Batch calculation started in background"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:738
+#: pro/Intelligence/Intelligence.php:735
 msgid "Behavior :"
 msgstr ""
 
@@ -611,7 +613,7 @@ msgstr ""
 msgid "Bulk Buyer"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:596 pro/Intelligence/Intelligence.php:610
+#: pro/Intelligence/Intelligence.php:597 pro/Intelligence/Intelligence.php:611
 msgid "Calculating..."
 msgstr ""
 
@@ -706,20 +708,20 @@ msgstr ""
 msgid "Checkout Started"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:227
+#: pro/Intelligence/templates/churn-prediction.php:224
 msgid "Churn Alerts"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:324
+#: pro/Intelligence/templates/churn-prediction.php:321
 msgid "Churn Analytics"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:505
+#: pro/Intelligence/Intelligence.php:506
 #: pro/Intelligence/templates/churn-prediction.php:70
 msgid "Churn Prediction"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:438
+#: pro/Intelligence/templates/churn-prediction.php:435
 msgid "Churn Prediction Settings"
 msgstr ""
 
@@ -736,11 +738,11 @@ msgstr ""
 msgid "Churn Risk Overview"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1164
+#: pro/Intelligence/Intelligence.php:1161
 msgid "Churn score updated successfully"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:1098
+#: includes/class-pd-customer-history-customers.php:909
 #: pro/Intelligence/Lifecycle.php:747
 msgid "Churned"
 msgstr ""
@@ -852,8 +854,8 @@ msgid "Could not load integrity check."
 msgstr ""
 
 #: pro/Stats/Taxonomy-Stats-List-Table.php:43
-#: admin/partials/templates/search-analytics.php:43
-#: admin/partials/templates/search-analytics.php:159
+#: admin/partials/templates/search-analytics.php:44
+#: admin/partials/templates/search-analytics.php:160
 #: admin/partials/templates/dashboard/top-searches.php:31
 #: admin/partials/templates/dashboard/top-taxonomy.php:41
 msgid "Count"
@@ -868,29 +870,12 @@ msgstr ""
 msgid "Country :"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:654
-msgid "Coupon Code"
-msgstr ""
-
-#: pro/Intelligence/Intelligence.php:655
-msgid "Coupon Sent"
-msgstr ""
-
 #: pro/Intelligence/templates/customer-behavioral-card.php:148
 msgid "Coupon Usage:"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:653
-msgid "Create a 20% discount coupon and email it to this customer?"
-msgstr ""
-
-#: pro/Intelligence/templates/churn-prediction.php:207
-#: pro/Intelligence/templates/customer-churn-card.php:311
-msgid "Create Coupon"
-msgstr ""
-
 #: admin/class-pdwchs-segments-list-table.php:22
-#: pro/Intelligence/templates/churn-prediction.php:255
+#: pro/Intelligence/templates/churn-prediction.php:252
 msgid "Created"
 msgstr ""
 
@@ -905,11 +890,11 @@ msgstr ""
 #: pro/Intelligence/Health.php:701
 #: pro/Intelligence/templates/churn-dashboard-widget.php:58
 #: pro/Intelligence/templates/churn-prediction.php:131
-#: pro/Intelligence/templates/churn-prediction.php:405
+#: pro/Intelligence/templates/churn-prediction.php:402
 msgid "Critical"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:708
+#: pro/Intelligence/Intelligence.php:705
 msgid "Critical (0-20)"
 msgstr ""
 
@@ -917,7 +902,7 @@ msgstr ""
 msgid "Critical Risk"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:351
+#: pro/Intelligence/templates/churn-prediction.php:348
 msgid "Critical: %d"
 msgstr ""
 
@@ -931,11 +916,11 @@ msgid ""
 "new arrivals."
 msgstr ""
 
-#: includes/class-pd-customer-history.php:782
+#: includes/class-pd-customer-history.php:785
 msgid "CSV File Error!"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:777
+#: includes/class-pd-customer-history.php:780
 msgid "CSV file imported successfully."
 msgstr ""
 
@@ -964,7 +949,7 @@ msgstr ""
 #: pro/Carts/templates/cart-detail.php:57
 #: pro/Intelligence/templates/churn-dashboard-widget.php:81
 #: pro/Intelligence/templates/churn-prediction.php:147
-#: pro/Intelligence/templates/churn-prediction.php:249
+#: pro/Intelligence/templates/churn-prediction.php:246
 #: admin/partials/templates/dashboard/top-customers.php:28
 msgid "Customer"
 msgstr ""
@@ -1029,17 +1014,13 @@ msgstr ""
 msgid "Customer Name"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1490
-msgid "Customer not found or has no email"
-msgstr ""
-
 #. %s: Action taken
 #: pro/Intelligence/Churn-Alerts.php:794
 #, php-format
 msgid "Customer recovered. Action: %s"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:397
+#: pro/Intelligence/templates/churn-prediction.php:394
 msgid "Customer Risk Summary"
 msgstr ""
 
@@ -1056,7 +1037,7 @@ msgstr ""
 msgid "Customer Segments (RFM Analysis)"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:894
+#: includes/class-pd-customer-history.php:897
 msgid "Customer support"
 msgstr ""
 
@@ -1079,7 +1060,7 @@ msgstr ""
 msgid "Customers & Users"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:616
+#: pro/Intelligence/Intelligence.php:617
 msgid "customers in Critical range"
 msgstr ""
 
@@ -1121,15 +1102,15 @@ msgstr ""
 msgid "Data Verified ✓"
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-manager.php:247
+#: includes/segments/class-pdwchs-segments-manager.php:249
 msgid "Database error while deleting segment."
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-manager.php:107
+#: includes/segments/class-pdwchs-segments-manager.php:109
 msgid "Database error while saving segment."
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-manager.php:211
+#: includes/segments/class-pdwchs-segments-manager.php:213
 msgid "Database error while updating segment."
 msgstr ""
 
@@ -1137,7 +1118,7 @@ msgstr ""
 #: pro/Stats/Sessions-List-Table.php:143 pro/Stats/Sessions-List-Table.php:172
 #: pro/Stats/Sessions-List-Table.php:231
 #: admin/partials/templates/customer-details.php:55
-#: admin/partials/templates/search-analytics.php:73
+#: admin/partials/templates/search-analytics.php:74
 #: pro/Analytics/Revenue/Revenue-Pro.php:110
 #: pro/Analytics/templates/data-integrity-indicator.php:37
 #: pro/Analytics/templates/data-integrity-indicator.php:50
@@ -1177,7 +1158,7 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:619
+#: pro/Intelligence/Intelligence.php:620
 msgid "days ago"
 msgstr ""
 
@@ -1185,11 +1166,11 @@ msgstr ""
 msgid "Declining Health Alert"
 msgstr ""
 
-#: pro/Intelligence/Churn.php:980
+#: pro/Intelligence/Churn.php:1028
 msgid "Declining purchase frequency"
 msgstr ""
 
-#: pro/Intelligence/Churn.php:981
+#: pro/Intelligence/Churn.php:1029
 msgid "Declining spending"
 msgstr ""
 
@@ -1197,15 +1178,15 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-manager.php:239
+#: includes/segments/class-pdwchs-segments-manager.php:241
 msgid "Default segments cannot be deleted."
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-manager.php:168
+#: includes/segments/class-pdwchs-segments-manager.php:170
 msgid "Default segments cannot have their name or criteria changed."
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:447
+#: pro/Intelligence/templates/churn-prediction.php:444
 msgid "Define the score ranges for each risk level (0-100 scale)."
 msgstr ""
 
@@ -1239,15 +1220,15 @@ msgstr ""
 msgid "Detail view coming soon."
 msgstr ""
 
-#: includes/class-pdwchs-upsell.php:148 pro/Trial-Gate.php:111
+#: includes/class-pdwchs-upsell.php:150 pro/Trial-Gate.php:111
 msgid "Dismiss"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:291
+#: pro/Intelligence/templates/churn-prediction.php:288
 msgid "Dismissed"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:893
+#: includes/class-pd-customer-history.php:896
 msgid "Docs"
 msgstr ""
 
@@ -1278,7 +1259,7 @@ msgstr ""
 msgid "Edit this user"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:318
+#: includes/class-pd-customer-history-customers.php:320
 #: includes/segments/class-pdwchs-segments-export.php:107
 #: admin/partials/templates/customer-details.php:265
 #: admin/partials/templates/customer-email.php:138
@@ -1302,11 +1283,15 @@ msgstr ""
 msgid "Email subject is required."
 msgstr ""
 
+#: pro/Intelligence/templates/customer-churn-card.php:333
+msgid "Email this customer"
+msgstr ""
+
 #: admin/partials/templates/plugin-settings.php:186
 msgid "Empty Tables"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:545
+#: pro/Intelligence/templates/churn-prediction.php:542
 msgid "Enable Alerts"
 msgstr ""
 
@@ -1314,7 +1299,7 @@ msgstr ""
 msgid "Enable cart tracking :"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:549
+#: pro/Intelligence/templates/churn-prediction.php:546
 msgid "Enable churn alerts and email notifications"
 msgstr ""
 
@@ -1343,7 +1328,7 @@ msgstr ""
 msgid "Engagement Issues"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:524
+#: pro/Intelligence/templates/churn-prediction.php:521
 msgid "Engagement Weight"
 msgstr ""
 
@@ -1382,7 +1367,7 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:611
+#: pro/Intelligence/Intelligence.php:612
 #: pro/Analytics/Funnel/Funnel-Ajax.php:121
 #: pro/Analytics/Products/Product-Reports-Ajax.php:301
 #: pro/Analytics/Products/Product-Reports-Ajax.php:324
@@ -1410,7 +1395,7 @@ msgstr ""
 msgid "Excellent"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:704
+#: pro/Intelligence/Intelligence.php:701
 msgid "Excellent (81-100)"
 msgstr ""
 
@@ -1427,7 +1412,7 @@ msgstr ""
 msgid "Export CSV"
 msgstr ""
 
-#: pro/Intelligence/Churn.php:979
+#: pro/Intelligence/Churn.php:1027
 msgid "Extended absence"
 msgstr ""
 
@@ -1435,21 +1420,17 @@ msgstr ""
 msgid "Extremely inactive customers with very low recovery chance"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1248
+#: pro/Intelligence/Intelligence.php:1245
 msgid "Failed to assign alert"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1314
-msgid "Failed to create coupon"
-msgstr ""
-
-#: includes/class-pd-customer-history.php:822
-#: includes/class-pd-customer-history.php:869
+#: includes/class-pd-customer-history.php:825
+#: includes/class-pd-customer-history.php:872
 msgid "Failed to delete sessions!"
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-manager.php:71
-#: includes/segments/class-pdwchs-segments-manager.php:198
+#: includes/segments/class-pdwchs-segments-manager.php:200
 msgid "Failed to encode segment criteria."
 msgstr ""
 
@@ -1461,15 +1442,11 @@ msgstr ""
 msgid "Failed to load RFM data. Please try again."
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1532
-msgid "Failed to send email"
-msgstr ""
-
 #: admin/partials/templates/customer-email.php:32
 msgid "Failed to send email. Please try again."
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1216
+#: pro/Intelligence/Intelligence.php:1213
 msgid "Failed to update alert status"
 msgstr ""
 
@@ -1477,7 +1454,7 @@ msgstr ""
 msgid "Fair"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:706
+#: pro/Intelligence/Intelligence.php:703
 msgid "Fair (41-60)"
 msgstr ""
 
@@ -1485,13 +1462,21 @@ msgstr ""
 msgid "Fairly recent"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:623
+#: includes/class-pd-customer-history-customers.php:625
 #: pro/Carts/Abandoned-Carts-List-Table.php:466
 msgid "Filter"
 msgstr ""
 
 #: admin/partials/templates/customer-details.php:101
 msgid "Financial Summary"
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:123
+msgid "First activated"
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:127
+msgid "First free-tier limit reached"
 msgstr ""
 
 #: pro/Intelligence/Lifecycle.php:139
@@ -1506,7 +1491,15 @@ msgstr ""
 msgid "First-time buyers in critical retention window"
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-manager.php:89
+#: pro/Intelligence/templates/customer-churn-card.php:326
+msgid "Follow Up"
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:120
+msgid "Free"
+msgstr ""
+
+#: includes/segments/class-pdwchs-segments-manager.php:91
 msgid ""
 "Free plan is limited to 1 custom segment. Upgrade to Pro for unlimited "
 "segments."
@@ -1517,7 +1510,7 @@ msgstr ""
 msgid "Frequency"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:504
+#: pro/Intelligence/templates/churn-prediction.php:501
 msgid "Frequency Weight"
 msgstr ""
 
@@ -1558,7 +1551,7 @@ msgid "Funnel trend chart"
 msgstr ""
 
 #: admin/partials/templates/plugin-settings.php:72
-#: pro/Intelligence/templates/churn-prediction.php:584
+#: pro/Intelligence/templates/churn-prediction.php:581
 msgid "General Settings"
 msgstr ""
 
@@ -1574,7 +1567,7 @@ msgstr ""
 msgid "Good"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:705
+#: pro/Intelligence/Intelligence.php:702
 msgid "Good (61-80)"
 msgstr ""
 
@@ -1600,7 +1593,7 @@ msgstr ""
 msgid "Guest Orders"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:31
+#: admin/partials/templates/search-analytics.php:32
 msgid ""
 "Heads up: your own administrator activity isn’t recorded by default, so this "
 "page stays empty while you browse the store as an admin. To see searches and "
@@ -1616,15 +1609,15 @@ msgstr ""
 msgid "Health Score"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:699
+#: pro/Intelligence/Intelligence.php:696
 msgid "Health Score :"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1015
+#: pro/Intelligence/Intelligence.php:1012
 msgid "Health score updated successfully"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:724
+#: pro/Intelligence/Intelligence.php:721
 msgid "Health Trend :"
 msgstr ""
 
@@ -1640,26 +1633,6 @@ msgstr ""
 msgid "Heatmap"
 msgstr ""
 
-#. 1: Customer name, 2: Site name
-#: pro/Intelligence/Intelligence.php:1505
-#, php-format
-msgid ""
-"Hi %1$s,\n"
-"\n"
-"We noticed you haven't visited %2$s in a while. We'd love to have you back!\n"
-"\n"
-"Check out our latest products and offers.\n"
-"\n"
-"Best regards,\n"
-"The %2$s Team"
-msgstr ""
-
-#. %s: Customer name
-#: pro/Intelligence/Intelligence.php:1345
-#, php-format
-msgid "Hi %s, we miss you!"
-msgstr ""
-
 #: includes/class-pdwchs-upsell.php:79 pro/Intelligence/Segments-Labels.php:148
 msgid "Hibernating"
 msgstr ""
@@ -1673,7 +1646,7 @@ msgid "Hide users with no orders :"
 msgstr ""
 
 #: pro/Intelligence/templates/churn-prediction.php:132
-#: pro/Intelligence/templates/churn-prediction.php:404
+#: pro/Intelligence/templates/churn-prediction.php:401
 msgid "High"
 msgstr ""
 
@@ -1686,7 +1659,7 @@ msgstr ""
 msgid "High Risk"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:474
+#: pro/Intelligence/templates/churn-prediction.php:471
 msgid "High Risk Maximum"
 msgstr ""
 
@@ -1707,7 +1680,7 @@ msgstr ""
 msgid "High-value customers at risk of churning"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:347
+#: pro/Intelligence/templates/churn-prediction.php:344
 msgid "High: %d"
 msgstr ""
 
@@ -1777,8 +1750,8 @@ msgstr ""
 msgid "Impulse Buyer"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:235
-#: pro/Intelligence/templates/churn-prediction.php:289
+#: pro/Intelligence/templates/churn-prediction.php:232
+#: pro/Intelligence/templates/churn-prediction.php:286
 msgid "In Progress"
 msgstr ""
 
@@ -1800,23 +1773,21 @@ msgid "Insufficient order history for prediction"
 msgstr ""
 
 #: pro/Intelligence/Behavioral.php:1603 pro/Intelligence/Behavioral.php:1666
-#: pro/Intelligence/Behavioral.php:1721 pro/Intelligence/Intelligence.php:897
-#: pro/Intelligence/Intelligence.php:913 pro/Intelligence/Intelligence.php:938
-#: pro/Intelligence/Intelligence.php:971 pro/Intelligence/Intelligence.php:987
-#: pro/Intelligence/Intelligence.php:1004
-#: pro/Intelligence/Intelligence.php:1039
-#: pro/Intelligence/Intelligence.php:1055
-#: pro/Intelligence/Intelligence.php:1072
-#: pro/Intelligence/Intelligence.php:1137
-#: pro/Intelligence/Intelligence.php:1153
-#: pro/Intelligence/Intelligence.php:1178
-#: pro/Intelligence/Intelligence.php:1197
-#: pro/Intelligence/Intelligence.php:1230
-#: pro/Intelligence/Intelligence.php:1262
-#: pro/Intelligence/Intelligence.php:1385
-#: pro/Intelligence/Intelligence.php:1477
-#: pro/Intelligence/Intelligence.php:1546
-#: pro/Intelligence/Intelligence.php:1618
+#: pro/Intelligence/Behavioral.php:1721 pro/Intelligence/Intelligence.php:894
+#: pro/Intelligence/Intelligence.php:910 pro/Intelligence/Intelligence.php:935
+#: pro/Intelligence/Intelligence.php:968 pro/Intelligence/Intelligence.php:984
+#: pro/Intelligence/Intelligence.php:1001
+#: pro/Intelligence/Intelligence.php:1036
+#: pro/Intelligence/Intelligence.php:1052
+#: pro/Intelligence/Intelligence.php:1069
+#: pro/Intelligence/Intelligence.php:1134
+#: pro/Intelligence/Intelligence.php:1150
+#: pro/Intelligence/Intelligence.php:1175
+#: pro/Intelligence/Intelligence.php:1194
+#: pro/Intelligence/Intelligence.php:1227
+#: pro/Intelligence/Intelligence.php:1259
+#: pro/Intelligence/Intelligence.php:1351
+#: pro/Intelligence/Intelligence.php:1423
 #: pro/Analytics/Revenue/Revenue-Pro.php:137
 #: pro/Analytics/Revenue/Revenue-Pro.php:158
 #: pro/Analytics/Revenue/Revenue-Pro.php:185
@@ -1836,7 +1807,7 @@ msgstr ""
 msgid "Insufficient permissions."
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1237
+#: pro/Intelligence/Intelligence.php:1234
 msgid "Invalid alert ID"
 msgstr ""
 
@@ -1865,7 +1836,7 @@ msgstr ""
 msgid "Invalid granularity."
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1205
+#: pro/Intelligence/Intelligence.php:1202
 msgid "Invalid parameters"
 msgstr ""
 
@@ -1878,8 +1849,8 @@ msgid "Invalid segment criteria."
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-ajax.php:153
-#: includes/segments/class-pdwchs-segments-manager.php:159
-#: includes/segments/class-pdwchs-segments-manager.php:230
+#: includes/segments/class-pdwchs-segments-manager.php:161
+#: includes/segments/class-pdwchs-segments-manager.php:232
 msgid "Invalid segment ID."
 msgstr ""
 
@@ -1887,12 +1858,10 @@ msgstr ""
 msgid "Invalid segment."
 msgstr ""
 
-#: pro/Intelligence/Behavioral.php:1608 pro/Intelligence/Intelligence.php:919
-#: pro/Intelligence/Intelligence.php:1010
-#: pro/Intelligence/Intelligence.php:1078
-#: pro/Intelligence/Intelligence.php:1159
-#: pro/Intelligence/Intelligence.php:1268
-#: pro/Intelligence/Intelligence.php:1485
+#: pro/Intelligence/Behavioral.php:1608 pro/Intelligence/Intelligence.php:916
+#: pro/Intelligence/Intelligence.php:1007
+#: pro/Intelligence/Intelligence.php:1075
+#: pro/Intelligence/Intelligence.php:1156
 msgid "Invalid user ID"
 msgstr ""
 
@@ -1910,13 +1879,6 @@ msgstr ""
 
 #: pro/Carts/templates/cart-detail.php:82
 msgid "IP:"
-msgstr ""
-
-#. %s: Store name
-#: pro/Intelligence/Intelligence.php:1350
-#, php-format
-msgid ""
-"It's been a while since your last visit to %s. We'd love to see you again!"
 msgstr ""
 
 #: pro/Carts/Abandoned-Carts-List-Table.php:248
@@ -1944,12 +1906,12 @@ msgstr ""
 msgid "Key concerns:"
 msgstr ""
 
-#: pro/Intelligence/templates/customer-churn-card.php:209
+#: pro/Intelligence/templates/customer-churn-card.php:217
 msgid "Key Indicators"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:42
-#: admin/partials/templates/search-analytics.php:72
+#: admin/partials/templates/search-analytics.php:43
+#: admin/partials/templates/search-analytics.php:73
 #: admin/partials/templates/dashboard/last-searches.php:20
 #: admin/partials/templates/dashboard/top-searches.php:30
 msgid "Keyword"
@@ -1996,7 +1958,7 @@ msgid "Last calculated: %s"
 msgstr ""
 
 #. %s: Time since calculation
-#: pro/Intelligence/templates/customer-churn-card.php:323
+#: pro/Intelligence/templates/customer-churn-card.php:345
 #: pro/Intelligence/templates/customer-health-card.php:230
 #: pro/Intelligence/templates/customer-rfm-card.php:120
 #, php-format
@@ -2029,7 +1991,7 @@ msgstr ""
 msgid "Last Order Date"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:618
+#: pro/Intelligence/Intelligence.php:619
 msgid "Last order:"
 msgstr ""
 
@@ -2037,7 +1999,7 @@ msgstr ""
 msgid "Last Orders"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:68
+#: admin/partials/templates/search-analytics.php:69
 msgid "Last Searches"
 msgstr ""
 
@@ -2073,7 +2035,7 @@ msgstr ""
 msgid "Launch Urgency Campaign"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:576
+#: pro/Intelligence/templates/churn-prediction.php:573
 msgid "Leave empty to use the site admin email."
 msgstr ""
 
@@ -2088,7 +2050,7 @@ msgstr ""
 msgid "Lifecycle Stage"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1083
+#: pro/Intelligence/Intelligence.php:1080
 msgid "Lifecycle stage updated successfully"
 msgstr ""
 
@@ -2182,6 +2144,12 @@ msgstr ""
 msgid "Loading…"
 msgstr ""
 
+#: includes/class-pdwchs-telemetry.php:110
+msgid ""
+"Local, non-identifying counters used to understand free-tier usage. This "
+"information stays on your server."
+msgstr ""
+
 #: pro/Intelligence/Segments-Labels.php:153
 msgid "Long inactive customers with low historical value"
 msgstr ""
@@ -2198,7 +2166,7 @@ msgstr ""
 msgid "Lost"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:402
+#: pro/Intelligence/templates/churn-prediction.php:399
 msgid "Low"
 msgstr ""
 
@@ -2206,11 +2174,11 @@ msgstr ""
 msgid "Low engagement, needs attention"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:452
+#: pro/Intelligence/templates/churn-prediction.php:449
 msgid "Low Risk Maximum"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:339
+#: pro/Intelligence/templates/churn-prediction.php:336
 msgid "Low: %d"
 msgstr ""
 
@@ -2226,7 +2194,7 @@ msgstr ""
 msgid "Loyal Champions"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:1096
+#: includes/class-pd-customer-history-customers.php:907
 #: pro/Intelligence/Lifecycle.php:721
 msgid "Loyal Customer"
 msgstr ""
@@ -2245,7 +2213,7 @@ msgstr ""
 
 #: pro/Intelligence/templates/churn-dashboard-widget.php:66
 #: pro/Intelligence/templates/churn-prediction.php:133
-#: pro/Intelligence/templates/churn-prediction.php:403
+#: pro/Intelligence/templates/churn-prediction.php:400
 msgid "Medium"
 msgstr ""
 
@@ -2253,11 +2221,11 @@ msgstr ""
 msgid "Medium Risk"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:463
+#: pro/Intelligence/templates/churn-prediction.php:460
 msgid "Medium Risk Maximum"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:343
+#: pro/Intelligence/templates/churn-prediction.php:340
 msgid "Medium: %d"
 msgstr ""
 
@@ -2273,12 +2241,12 @@ msgstr ""
 msgid "Minimize investment in this segment"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:595
+#: pro/Intelligence/templates/churn-prediction.php:592
 msgid ""
 "Minimum number of orders required before churn prediction is calculated."
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:589
+#: pro/Intelligence/templates/churn-prediction.php:586
 msgid "Minimum Orders"
 msgstr ""
 
@@ -2299,7 +2267,7 @@ msgstr ""
 msgid "Monetary"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:514
+#: pro/Intelligence/templates/churn-prediction.php:511
 msgid "Monetary Weight"
 msgstr ""
 
@@ -2326,7 +2294,7 @@ msgstr ""
 msgid "Most viewed categories"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:98
+#: admin/partials/templates/search-analytics.php:99
 msgid "Most Viewed Products"
 msgstr ""
 
@@ -2358,12 +2326,12 @@ msgstr ""
 msgid "Net revenue over time"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:231
-#: pro/Intelligence/templates/churn-prediction.php:287
+#: pro/Intelligence/templates/churn-prediction.php:228
+#: pro/Intelligence/templates/churn-prediction.php:284
 msgid "New"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:1094
+#: includes/class-pd-customer-history-customers.php:905
 #: pro/Intelligence/Lifecycle.php:695 pro/Intelligence/Segments-Labels.php:78
 msgid "New Customer"
 msgstr ""
@@ -2392,7 +2360,7 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:315
+#: pro/Intelligence/templates/churn-prediction.php:312
 msgid ""
 "No active alerts. Churn alerts will appear here when customers are at risk."
 msgstr ""
@@ -2401,7 +2369,7 @@ msgstr ""
 msgid "No activity in last 30 days"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:218
+#: pro/Intelligence/templates/churn-prediction.php:215
 msgid "No at-risk customers detected. Your customers are healthy!"
 msgstr ""
 
@@ -2427,17 +2395,17 @@ msgid ""
 "come in."
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:595
+#: pro/Intelligence/Intelligence.php:596
 msgid ""
 "No customer data available yet. RFM analysis will appear once customers "
 "start making purchases."
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:614
+#: pro/Intelligence/Intelligence.php:615
 msgid "No customer health data available yet."
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:615
+#: pro/Intelligence/Intelligence.php:616
 msgid "No customers with declining health at this time."
 msgstr ""
 
@@ -2506,7 +2474,7 @@ msgid ""
 "page to create your first segment."
 msgstr ""
 
-#: pro/Intelligence/templates/customer-churn-card.php:275
+#: pro/Intelligence/templates/customer-churn-card.php:301
 msgid "No site visits in 30 days"
 msgstr ""
 
@@ -2516,6 +2484,10 @@ msgstr ""
 
 #: admin/partials/templates/customers.php:35
 msgid "No. of orders :"
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:128
+msgid "None reached yet"
 msgstr ""
 
 #: pro/Intelligence/templates/customer-behavioral-card.php:163
@@ -2530,6 +2502,10 @@ msgstr ""
 msgid ""
 "Not enough data to generate behavioral insights. Run a behavioral analysis "
 "first."
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:105
+msgid "Not recorded yet"
 msgstr ""
 
 #: pro/Intelligence/Behavioral-Insights.php:225
@@ -2621,7 +2597,7 @@ msgstr ""
 msgid "Or ignore completely to save costs"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:32
+#: admin/partials/templates/search-analytics.php:33
 msgid "Or set “Save ‘admin’ sessions” to Yes under Settings."
 msgstr ""
 
@@ -2760,11 +2736,15 @@ msgstr ""
 msgid "Personal outreach if high-value"
 msgstr ""
 
+#: includes/class-pdwchs-telemetry.php:113
+msgid "Plugin version"
+msgstr ""
+
 #: includes/segments/class-pdwchs-segments-ajax.php:123
 msgid "Plus ready-made intelligence segments:"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:617
+#: pro/Intelligence/Intelligence.php:618
 msgid "points"
 msgstr ""
 
@@ -2772,12 +2752,18 @@ msgstr ""
 msgid "Poor"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:707
+#: pro/Intelligence/Intelligence.php:704
 msgid "Poor (21-40)"
 msgstr ""
 
 #: pro/Intelligence/Segments-Labels.php:64
 msgid "Potential Loyalist"
+msgstr ""
+
+#. %s: Predicted date of this customer's next order
+#: pro/Intelligence/templates/customer-churn-card.php:259
+#, php-format
+msgid "Predicted next order: ~ %s"
 msgstr ""
 
 #: pro/Intelligence/templates/customer-lifecycle-card.php:99
@@ -2793,7 +2779,7 @@ msgid "Price Range:"
 msgstr ""
 
 #. %s: Primary indicator
-#: pro/Intelligence/templates/customer-churn-card.php:287
+#: pro/Intelligence/templates/customer-churn-card.php:313
 #, php-format
 msgid "Primary concern: %s"
 msgstr ""
@@ -2802,8 +2788,12 @@ msgstr ""
 msgid "Primary Indicator"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:248
+#: pro/Intelligence/templates/churn-prediction.php:245
 msgid "Priority"
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:119
+msgid "Pro"
 msgstr ""
 
 #: admin/partials/templates/segments-list.php:75
@@ -2812,7 +2802,7 @@ msgid ""
 "scoring — no setup required."
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:112
+#: admin/partials/templates/search-analytics.php:113
 #: pro/Analytics/templates/product-correlations.php:101
 #: pro/Carts/templates/cart-detail.php:116
 msgid "Product"
@@ -2883,7 +2873,7 @@ msgid ""
 "convenience."
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:1093
+#: includes/class-pd-customer-history-customers.php:904
 #: pro/Intelligence/Lifecycle.php:682
 msgid "Prospect"
 msgstr ""
@@ -2938,7 +2928,7 @@ msgid "Purchase frequency declined by %s%%"
 msgstr ""
 
 #. %s: Decline percentage
-#: pro/Intelligence/templates/customer-churn-card.php:248
+#: pro/Intelligence/templates/customer-churn-card.php:274
 #, php-format
 msgid "Purchase frequency down %s%%"
 msgstr ""
@@ -2960,7 +2950,7 @@ msgstr ""
 msgid "PureDevs Cart History"
 msgstr ""
 
-#: pro/Trial-Gate.php:106
+#: includes/class-pdwchs-telemetry.php:109 pro/Trial-Gate.php:106
 msgid "PureDevs Customer History"
 msgstr ""
 
@@ -2968,11 +2958,11 @@ msgstr ""
 msgid "PureDevs Customer History for WooCommerce"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:893
+#: includes/class-pd-customer-history.php:896
 msgid "PureDevs Customer History for WooCommerce Documentation"
 msgstr ""
 
-#: puredevs-customer-history-for-woocommerce.php:128
+#: puredevs-customer-history-for-woocommerce.php:229
 msgid ""
 "PureDevs Customer History for WooCommerce is enabled but not effective. In "
 "order to work it requires WooCommerce."
@@ -3013,7 +3003,7 @@ msgstr ""
 msgid "Recency"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:494
+#: pro/Intelligence/templates/churn-prediction.php:491
 msgid "Recency Weight"
 msgstr ""
 
@@ -3033,10 +3023,6 @@ msgstr ""
 msgid "Recent buyers showing promise for loyalty"
 msgstr ""
 
-#: pro/Intelligence/templates/customer-churn-card.php:300
-msgid "Recommended Actions"
-msgstr ""
-
 #: pro/Intelligence/templates/customer-lifecycle-card.php:114
 #: pro/Intelligence/templates/customer-rfm-card.php:105
 msgid "Recommended Actions:"
@@ -3048,12 +3034,8 @@ msgstr ""
 msgid "Recovered"
 msgstr ""
 
-#: pro/Intelligence/Churn.php:982
+#: pro/Intelligence/Churn.php:1030
 msgid "Reduced engagement"
-msgstr ""
-
-#: includes/class-pd-customer-history.php:1178
-msgid "Refer Friends & Earn Points"
 msgstr ""
 
 #: pro/Stats/Sessions-List-Table.php:230
@@ -3125,13 +3107,13 @@ msgstr ""
 msgid "Researcher"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:390
+#: pro/Intelligence/templates/churn-prediction.php:387
 msgid "Resolution Rate"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:239
-#: pro/Intelligence/templates/churn-prediction.php:290
-#: pro/Intelligence/templates/churn-prediction.php:366
+#: pro/Intelligence/templates/churn-prediction.php:236
+#: pro/Intelligence/templates/churn-prediction.php:287
+#: pro/Intelligence/templates/churn-prediction.php:363
 msgid "Resolved"
 msgstr ""
 
@@ -3141,22 +3123,6 @@ msgstr ""
 
 #: admin/partials/templates/plugin-settings.php:76
 msgid "Results per page :"
-msgstr ""
-
-#: pro/Intelligence/Intelligence.php:1306
-msgid "Retention coupon created and emailed to customer successfully"
-msgstr ""
-
-#: pro/Intelligence/Intelligence.php:1307
-msgid "Retention coupon created but email could not be sent"
-msgstr ""
-
-#: pro/Intelligence/Intelligence.php:1528
-msgid "Retention email sent successfully"
-msgstr ""
-
-#: pro/Intelligence/Intelligence.php:657
-msgid "Retention email sent successfully."
 msgstr ""
 
 #: pro/Analytics/templates/revenue-dashboard-widget.php:139
@@ -3221,7 +3187,7 @@ msgstr ""
 msgid "RFM Analysis"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:924
+#: pro/Intelligence/Intelligence.php:921
 msgid "RFM scores updated successfully"
 msgstr ""
 
@@ -3231,12 +3197,12 @@ msgstr ""
 msgid "RFM Segment"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:683
+#: pro/Intelligence/Intelligence.php:680
 msgid "RFM Segment :"
 msgstr ""
 
 #: pro/Intelligence/templates/churn-dashboard-widget.php:82
-#: pro/Intelligence/templates/churn-prediction.php:251
+#: pro/Intelligence/templates/churn-prediction.php:248
 msgid "Risk"
 msgstr ""
 
@@ -3244,7 +3210,7 @@ msgstr ""
 msgid "Risk Components"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:330
+#: pro/Intelligence/templates/churn-prediction.php:327
 msgid "Risk Distribution"
 msgstr ""
 
@@ -3252,7 +3218,7 @@ msgstr ""
 msgid "Risk Level"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:446
+#: pro/Intelligence/templates/churn-prediction.php:443
 msgid "Risk Level Thresholds"
 msgstr ""
 
@@ -3300,7 +3266,7 @@ msgstr ""
 msgid "Save Segment"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:603
+#: pro/Intelligence/templates/churn-prediction.php:600
 msgid "Save Settings"
 msgstr ""
 
@@ -3323,20 +3289,20 @@ msgstr ""
 msgid "Score Breakdown:"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:458
+#: pro/Intelligence/templates/churn-prediction.php:455
 msgid "Scores 0 to this value are Low Risk."
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:469
+#: pro/Intelligence/templates/churn-prediction.php:466
 msgid "Scores above Low to this value are Medium Risk."
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:480
+#: pro/Intelligence/templates/churn-prediction.php:477
 msgid ""
 "Scores above Medium to this value are High Risk. Above this is Critical."
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:488
+#: pro/Intelligence/templates/churn-prediction.php:485
 msgid "Scoring Weights"
 msgstr ""
 
@@ -3403,10 +3369,10 @@ msgstr ""
 msgid "Seasonal Shopper"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:682
-#: includes/class-pd-customer-history.php:740
-#: includes/class-pd-customer-history.php:810
-#: includes/class-pd-customer-history.php:855
+#: includes/class-pd-customer-history.php:685
+#: includes/class-pd-customer-history.php:743
+#: includes/class-pd-customer-history.php:813
+#: includes/class-pd-customer-history.php:858
 #: admin/partials/templates/live-searches.php:12
 #: admin/partials/templates/live-sessions.php:13
 #: admin/partials/templates/plugin-settings.php:23
@@ -3420,7 +3386,7 @@ msgid ""
 "See at a glance whether this customer is a Champion, Loyal, At Risk, or Lost."
 msgstr ""
 
-#: includes/class-pdwchs-upsell.php:144
+#: includes/class-pdwchs-upsell.php:146
 msgid "See what Pro adds"
 msgstr ""
 
@@ -3429,7 +3395,7 @@ msgid "Segment"
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-manager.php:66
-#: includes/segments/class-pdwchs-segments-manager.php:194
+#: includes/segments/class-pdwchs-segments-manager.php:196
 msgid "Segment criteria must contain at least one valid filter."
 msgstr ""
 
@@ -3443,19 +3409,19 @@ msgstr ""
 
 #: admin/class-pd-customer-history-admin.php:173
 #: includes/segments/class-pdwchs-segments-manager.php:56
-#: includes/segments/class-pdwchs-segments-manager.php:177
+#: includes/segments/class-pdwchs-segments-manager.php:179
 msgid "Segment name cannot be empty."
 msgstr ""
 
 #: admin/class-pd-customer-history-admin.php:174
 #: includes/segments/class-pdwchs-segments-manager.php:59
-#: includes/segments/class-pdwchs-segments-manager.php:180
+#: includes/segments/class-pdwchs-segments-manager.php:182
 msgid "Segment name cannot exceed 191 characters."
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-export.php:66
-#: includes/segments/class-pdwchs-segments-manager.php:164
-#: includes/segments/class-pdwchs-segments-manager.php:235
+#: includes/segments/class-pdwchs-segments-manager.php:166
+#: includes/segments/class-pdwchs-segments-manager.php:237
 msgid "Segment not found."
 msgstr ""
 
@@ -3607,10 +3573,6 @@ msgstr ""
 msgid "Send weekly reports to :"
 msgstr ""
 
-#: pro/Intelligence/templates/customer-churn-card.php:307
-msgid "Send Win-Back Email"
-msgstr ""
-
 #: pro/Intelligence/Churn-Alerts.php:369
 msgid "Send win-back offer"
 msgstr ""
@@ -3619,8 +3581,8 @@ msgstr ""
 msgid "Sessions"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:818
-#: includes/class-pd-customer-history.php:865
+#: includes/class-pd-customer-history.php:821
+#: includes/class-pd-customer-history.php:868
 msgid "Sessions deleted successfully."
 msgstr ""
 
@@ -3629,7 +3591,7 @@ msgid "Sessions History"
 msgstr ""
 
 #: admin/class-pd-customer-history-admin.php:281
-#: includes/class-pd-customer-history.php:914
+#: includes/class-pd-customer-history.php:917
 #: admin/partials/templates/plugin-settings.php:13
 #: admin/partials/templates/top-nav.php:40
 #: pro/Intelligence/templates/churn-prediction.php:117
@@ -3640,34 +3602,20 @@ msgstr ""
 msgid "Settings Saved"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1463
+#: pro/Intelligence/Intelligence.php:1337
 msgid "Settings saved successfully"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:656
+#: pro/Intelligence/Intelligence.php:654
 msgid "Settings saved successfully."
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1394
+#: pro/Intelligence/Intelligence.php:1268
 msgid "Settings table not found"
 msgstr ""
 
 #: pro/Intelligence/Churn-Alerts.php:397
 msgid "Share new arrivals or recommendations based on past purchases"
-msgstr ""
-
-#: includes/class-pd-customer-history.php:1181
-msgid "Share this link:"
-msgstr ""
-
-#: includes/class-pd-customer-history.php:1183
-msgid ""
-"Share your referral link with friends. You earn points when they sign up and "
-"make their first purchase!"
-msgstr ""
-
-#: pro/Intelligence/Intelligence.php:1364
-msgid "Shop Now"
 msgstr ""
 
 #: pro/Intelligence/templates/customer-behavioral-card.php:99
@@ -3725,8 +3673,8 @@ msgstr ""
 msgid "Some time ago"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:827
-#: includes/class-pd-customer-history.php:874
+#: includes/class-pd-customer-history.php:830
+#: includes/class-pd-customer-history.php:877
 msgid "Sorry, you don't have permission to access this page."
 msgstr ""
 
@@ -3741,7 +3689,7 @@ msgid "Spending declined by %s%%"
 msgstr ""
 
 #. %s: Decline percentage
-#: pro/Intelligence/templates/customer-churn-card.php:263
+#: pro/Intelligence/templates/customer-churn-card.php:289
 #, php-format
 msgid "Spending down %s%%"
 msgstr ""
@@ -3785,7 +3733,7 @@ msgstr ""
 #: pro/Carts/Abandoned-Carts-List-Table.php:250 pro/Carts/Cart-Tracker.php:273
 #: pro/Analytics/Revenue/Revenue-Pro.php:108
 #: pro/Analytics/templates/data-integrity-indicator.php:35
-#: pro/Intelligence/templates/churn-prediction.php:253
+#: pro/Intelligence/templates/churn-prediction.php:250
 #: admin/partials/templates/dashboard/last-orders.php:26
 msgid "Status"
 msgstr ""
@@ -3846,8 +3794,8 @@ msgid ""
 "total. Customer History Pro includes every customer."
 msgstr ""
 
-#: admin/partials/templates/dashboard.php:42
-#: admin/partials/templates/search-analytics.php:23
+#: admin/partials/templates/dashboard.php:43
+#: admin/partials/templates/search-analytics.php:24
 msgid ""
 "The free version includes your most recent 90 days of activity. Customer "
 "History Pro includes your full history — your older data is already "
@@ -3928,12 +3876,6 @@ msgid ""
 "before purchasing."
 msgstr ""
 
-#. %s: Expiry date
-#: pro/Intelligence/Intelligence.php:1368
-#, php-format
-msgid "This offer expires on %s. Single use only."
-msgstr ""
-
 #: pro/Analytics/Products/Product-Reports-Ajax.php:367
 msgid "Thursday"
 msgstr ""
@@ -3951,7 +3893,7 @@ msgid "To:"
 msgstr ""
 
 #. %s is the taxonomy name
-#: admin/partials/templates/search-analytics.php:153
+#: admin/partials/templates/search-analytics.php:154
 #, php-format
 msgid "Top %s Views"
 msgstr ""
@@ -3972,7 +3914,7 @@ msgstr ""
 msgid "Top customers"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:38
+#: admin/partials/templates/search-analytics.php:39
 msgid "Top Keyword Searches"
 msgstr ""
 
@@ -4000,7 +3942,7 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:362
+#: pro/Intelligence/templates/churn-prediction.php:359
 msgid "Total Alerts"
 msgstr ""
 
@@ -4022,10 +3964,6 @@ msgstr ""
 #: pro/Analytics/templates/revenue-dashboard-widget.php:62
 #: admin/partials/templates/dashboard/top-customers.php:30
 msgid "Total Orders"
-msgstr ""
-
-#: includes/class-pd-customer-history.php:1180
-msgid "Total Referrals:"
 msgstr ""
 
 #: includes/class-pd-customer-history-customers.php:63
@@ -4054,7 +3992,7 @@ msgstr ""
 msgid "Total spent: %1$s (%2$sx store average - %3$s)"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:531
+#: pro/Intelligence/templates/churn-prediction.php:528
 #: pro/Intelligence/templates/lifecycle-funnel-widget.php:50
 msgid "Total:"
 msgstr ""
@@ -4087,7 +4025,7 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:296
+#: pro/Intelligence/templates/churn-prediction.php:293
 msgid "Unassigned"
 msgstr ""
 
@@ -4114,6 +4052,7 @@ msgstr ""
 msgid "Unit Price"
 msgstr ""
 
+#: includes/class-pdwchs-telemetry.php:114
 #: pro/Intelligence/Segments-Labels.php:219
 msgid "Unknown"
 msgstr ""
@@ -4122,7 +4061,7 @@ msgstr ""
 msgid "Unlock unlimited segments with Pro"
 msgstr ""
 
-#: includes/class-pdwchs-upsell.php:122
+#: includes/class-pdwchs-upsell.php:124
 #: admin/partials/templates/segments-list.php:70
 #: admin/partials/templates/segments-list.php:95
 msgid "Unlock with Pro"
@@ -4199,7 +4138,7 @@ msgid "Users"
 msgstr ""
 
 #: pro/Intelligence/templates/churn-dashboard-widget.php:83
-#: pro/Intelligence/templates/churn-prediction.php:252
+#: pro/Intelligence/templates/churn-prediction.php:249
 msgid "Value"
 msgstr ""
 
@@ -4216,7 +4155,7 @@ msgstr ""
 msgid "Very recent"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:318
+#: includes/class-pd-customer-history-customers.php:320
 #: admin/partials/templates/customer-details.php:81
 #: pro/Analytics/templates/revenue-patterns.php:27
 msgid "View"
@@ -4245,7 +4184,7 @@ msgid "View All At-Risk Customers"
 msgstr ""
 
 #: pro/Stats/Stats-List-Table.php:180
-#: admin/partials/templates/search-analytics.php:113
+#: admin/partials/templates/search-analytics.php:114
 msgid "View Count"
 msgstr ""
 
@@ -4271,7 +4210,7 @@ msgstr ""
 msgid "View Details"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:620
+#: pro/Intelligence/Intelligence.php:621
 #: pro/Intelligence/templates/churn-dashboard-widget.php:104
 #: pro/Intelligence/templates/churn-prediction.php:201
 msgid "View Profile"
@@ -4281,7 +4220,7 @@ msgstr ""
 msgid "View vs Purchase Ratio"
 msgstr ""
 
-#: pro/Intelligence/templates/churn-prediction.php:288
+#: pro/Intelligence/templates/churn-prediction.php:285
 msgid "Viewed"
 msgstr ""
 
@@ -4289,7 +4228,7 @@ msgstr ""
 msgid "Viewed vs Purchased Ratio"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:894
+#: includes/class-pd-customer-history.php:897
 msgid "Visit customer support"
 msgstr ""
 
@@ -4307,18 +4246,6 @@ msgstr ""
 msgid ""
 "We hope you are enjoying your recent purchase. Please let us know if you "
 "have any questions or feedback."
-msgstr ""
-
-#. %s: Site name
-#: pro/Intelligence/Intelligence.php:1497
-#, php-format
-msgid "We miss you at %s!"
-msgstr ""
-
-#. %1$s: Discount amount, %2$s: Store name
-#: pro/Intelligence/Intelligence.php:1337
-#, php-format
-msgid "We miss you! Here's %1$s%% off at %2$s"
 msgstr ""
 
 #: admin/partials/templates/customer-details.php:292
@@ -4372,12 +4299,6 @@ msgstr ""
 msgid "Win-back campaigns, investigate issues"
 msgstr ""
 
-#. %s: Customer name
-#: pro/Intelligence/Intelligence.php:1287
-#, php-format
-msgid "Win-back coupon for %s"
-msgstr ""
-
 #: pro/Analytics/templates/product-correlations.php:41
 msgid "Window"
 msgstr ""
@@ -4416,16 +4337,8 @@ msgstr ""
 msgid "Your best customers - recent, frequent, high-value buyers"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:1359
-msgid "Your coupon code:"
-msgstr ""
-
 #: includes/class-pdwchs-upsell.php:72
 msgid "Your most frequent, highest-value repeat buyers."
-msgstr ""
-
-#: includes/class-pd-customer-history.php:1179
-msgid "Your Referral Code:"
 msgstr ""
 
 #: pro/Stats/templates/live-sessions.php:35
@@ -4463,14 +4376,14 @@ msgstr ""
 msgid "— Select a product —"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:728
+#: pro/Intelligence/Intelligence.php:725
 msgid "→ Stable"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:727
+#: pro/Intelligence/Intelligence.php:724
 msgid "↗ Improving"
 msgstr ""
 
-#: pro/Intelligence/Intelligence.php:729
+#: pro/Intelligence/Intelligence.php:726
 msgid "↘ Declining"
 msgstr ""

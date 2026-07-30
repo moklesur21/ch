@@ -18,6 +18,7 @@ $pdwchs_search = ! empty( $_GET['search_session'] ) ? sanitize_text_field( wp_un
 
 		<?php
 		if ( ! pdwchs_is_pro_active() && PDWCHS_Data_Window::pdwchs_was_clamped() ) {
+			pdwchs_record_first_cap_hit( 'data_window' );
 			PDWCHS_Upsell::pdwchs_render_banner(
 				'data-window-90d',
 				esc_html__( 'The free version includes your most recent 90 days of activity. Customer History Pro includes your full history — your older data is already collected and waiting.', 'puredevs-customer-history-for-woocommerce' )

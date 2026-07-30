@@ -8,7 +8,7 @@
  * Plugin Name:       PureDevs Customer History for WooCommerce
  * Plugin URI:        https://puredevs.com/plugin/puredevs-customer-history-for-woocommerce/
  * Description:       Customer intelligence for WooCommerce: customer profiles, order history, session & search tracking, segments, and a customer-first dashboard.
- * Version:           3.0.1
+ * Version:           3.0.2
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            PureDevs
@@ -19,7 +19,7 @@
  * Domain Path:       /languages
  * Requires Plugins:  woocommerce
  * WC requires at least: 7.0
- * WC tested up to:   9.8
+ * WC tested up to:   10.7
  */
 if ( ! defined( 'WPINC' ) ) {
     die;
@@ -94,10 +94,24 @@ if ( ! function_exists( 'pchfwv_fs' ) ) {
 pchfwv_fs()->add_action( 'after_uninstall', 'pchfwv_fs_uninstall_cleanup' );
 if ( ! function_exists( 'pchfwv_fs_uninstall_cleanup' ) ) {
     /**
-     * Uninstall cleanup for FREE-owned options and tables only.
-     * Pro tables/options are cleaned by the Pro add-on's own uninstall hook.
+     * Uninstall cleanup.
+     *
+     * The premium half of this routine is stripped from the FREE build by
+     * build.sh / build.ps1, so the wp.org build touches only the data the free
+     * feature set creates (plus 2.x-era residue that any install may still hold).
+     *
+     * Known consequence: a site that ran the premium build and later downgraded
+     * to the free build keeps its premium-era option rows and tables, because the
+     * build performing the uninstall no longer knows their names. Full removal in
+     * that case requires uninstalling while the premium build is still installed.
+     *
+     * This function must NEVER `require` anything from `pro/` — the free build
+     * ships no `pro/` folder (CLAUDE.md rule 12). All table/option/cron names
+     * are inlined here as literals instead.
      */
     function pchfwv_fs_uninstall_cleanup() {
+        global $wpdb;
+
         $options = array(
             'pd-woo-results_per_page',
             'pd-woo-default_save_admin_session',
@@ -105,11 +119,26 @@ if ( ! function_exists( 'pchfwv_fs_uninstall_cleanup' ) ) {
             'pd-woo-show_bot_sessions',
             'pd-woo-generate_weekly_report',
             'pd-woo-send_weekly_report_to',
+            'pdwchs_db_version',
+            'pdwchs_version',
+            // Free-tier decision telemetry (3.0.2, local only).
+            'pdwchs_first_activated_at',
+            'pdwchs_first_cap_hit',
+            // Legacy referral/points settings. The feature was removed in 2.1.8 and the
+            // orphaned code in 3.0.2, but 2.x-era installs may still hold these rows.
+            'pdwchs_referral_codes_generated',
+            'pd-woo-referral_enabled',
+            'pd-woo-referral_signup_points',
+            'pd-woo-referral_purchase_points',
+            'pd-woo-referee_signup_bonus',
+            'pd-woo-referee_first_purchase_bonus',
         );
+
+
         foreach ( $options as $option_name ) {
             delete_option( $option_name );
         }
-        global $wpdb;
+        delete_site_option( 'pdwchs_db_version' );
         $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}pd_woo_customer_history_sessions" );
         $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}pdwchs_segments" );
     }
@@ -124,6 +153,24 @@ if ( ! function_exists( 'pchfwv_fs_uninstall_cleanup' ) ) {
 if ( ! function_exists( 'pdwchs_is_pro_active' ) ) {
     function pdwchs_is_pro_active() {
         return (bool) apply_filters( 'pdwchs_is_pro_active', false );
+    }
+}
+
+if ( ! function_exists( 'pdwchs_record_first_cap_hit' ) ) {
+    /**
+     * Load-order-proof wrapper for the free-tier cap telemetry (see
+     * includes/class-pdwchs-telemetry.php). Defined here so the cap seams can call it
+     * unconditionally; it is a silent no-op if the telemetry class is not loaded yet.
+     * Records locally only — nothing is transmitted anywhere.
+     *
+     * @since 3.0.2
+     * @param string $cap One of PDWCHS_Telemetry::CAPS.
+     * @return void
+     */
+    function pdwchs_record_first_cap_hit( string $cap ) {
+        if ( class_exists( 'PDWCHS_Telemetry' ) ) {
+            PDWCHS_Telemetry::pdwchs_record_first_cap_hit( $cap );
+        }
     }
 }
 if ( !function_exists( 'pdwchs_woo_customer_history_admin_notice' ) ) {
@@ -149,7 +196,7 @@ add_action( 'plugins_loaded', 'pdwchs_woo_customer_history_install', 12 );
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PDWCHS_CUSTOMER_HISTORY_VERSION', '3.0.1' );
+define( 'PDWCHS_CUSTOMER_HISTORY_VERSION', '3.0.2' );
 define( 'PDWCHS_CUSTOMER_HISTORY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PDWCHS_CUSTOMER_HISTORY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'PDWCHS_CUSTOMER_HISTORY_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );

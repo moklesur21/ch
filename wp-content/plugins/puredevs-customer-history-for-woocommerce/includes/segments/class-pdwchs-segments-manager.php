@@ -84,6 +84,8 @@ class PDWCHS_Segments_Manager {
 				)
 			);
 			if ( $existing >= $cap ) {
+				// Free-tier wall actually reached — record it once (local only).
+				pdwchs_record_first_cap_hit( 'segment_cap' );
 				return new WP_Error(
 					'pdwchs_segment_cap_reached',
 					__( 'Free plan is limited to 1 custom segment. Upgrade to Pro for unlimited segments.', 'puredevs-customer-history-for-woocommerce' )

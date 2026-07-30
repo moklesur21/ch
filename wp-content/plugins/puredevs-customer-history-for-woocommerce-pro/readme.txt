@@ -2,10 +2,12 @@
 Contributors: puredevs, ympervej86
 Tags: customer history, woocommerce customer analytics, customer search tracking, woocommerce customer insights, woocommerce reports
 Requires at least: 6.0
-Tested up to: 7.0.2
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 Requires Plugins: woocommerce
+WC requires at least: 7.0
+WC tested up to: 10.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +26,17 @@ WooCommerce tells you what your store did. Customer History tells you who your c
 <p>Watch a full walkthrough of the dashboard, customer profiles, and search analytics — and how to use them to identify your most valuable customers:</p>
 
 https://www.youtube.com/watch?v=anFJa63GnfI
+
+<h4>TRY THE LIVE DEMO</h4>
+
+<p>Explore the full plugin — including all Pro intelligence features — on our live demo store. No installation needed:</p>
+
+<ul>
+<li>Demo: <a href="https://ch.puredevs.com/wp-admin">https://ch.puredevs.com/wp-admin</a></li>
+<li>Username: <code>demo</code> &nbsp;|&nbsp; Password: <code>demo1234</code></li>
+</ul>
+
+<p>The demo account is read-only — you can browse every screen, but nothing can be added or changed.</p>
 
 <h4>WHAT CUSTOMER HISTORY SHOWS YOU</h4>
 
@@ -63,7 +76,7 @@ https://www.youtube.com/watch?v=anFJa63GnfI
 <li><strong>RFM Segments</strong> — instantly see whether a customer is a Champion, Loyal, At Risk, or Lost, based on Recency, Frequency, and Monetary scoring.</li>
 <li><strong>Customer Health Score</strong> — a 0–100 score blending recency, frequency, spending, and engagement, with trend tracking.</li>
 <li><strong>Churn Risk &amp; Prediction</strong> — identify customers who are about to stop buying, with at-risk alerts.</li>
-<li><strong>Behavioral Tags</strong> — automatic badges such as VIP, Window Shopper, and Bargain Hunter.</li>
+<li><strong>Behavioral Tags</strong> — automatic badges such as Bargain Hunter, Cart Abandoner, and Brand Loyal.</li>
 <li><strong>Lifecycle Stages</strong> — see where each customer sits in their journey: New, Active, Loyal, or Lapsed.</li>
 <li><strong>Full Session History</strong> — every visit, page view, and search a customer has made, beyond the free 90-day window.</li>
 <li><strong>Abandoned Cart Tracking</strong> — observe carts and detect abandonment and recovery, with an admin list and dashboard widget. (Tracking and insight only — no recovery emails are sent.)</li>
@@ -72,12 +85,14 @@ https://www.youtube.com/watch?v=anFJa63GnfI
 <li><strong>Aggregate Conversion Funnel</strong> — a store-wide funnel view from sessions to purchase.</li>
 <li><strong>Revenue Data Integrity</strong> — a diagnostic that validates the accuracy of your revenue figures.</li>
 <li><strong>Stats pages</strong> — product-view stats, search-keyword stats, taxonomy/category stats, top-selling products, total customer spend, and live sessions.</li>
-<li><strong>Advanced customer table</strong> — extra columns (RFM segment, health score, lifecycle stage, behavioral tags) and filters by country, role, lifecycle stage, and behavior.</li>
+<li><strong>Advanced customer table</strong> — extra columns (RFM segment, health score, lifecycle stage, behavioral tags) and filters by country, RFM segment, health score, health trend, lifecycle stage, and behavior.</li>
 <li><strong>Advanced order-history filters</strong> — filter orders by payment method and order total.</li>
 <li><strong>Session data tools</strong> — export and import session data (CSV), delete data by date range, and exclude bot/admin sessions from tracking.</li>
 <li><strong>Ready-made segments</strong> — pre-built Pro segments out of the box (High Value At Risk, Loyal Champions, Needs Attention, Hibernating, High Health Declining).</li>
 <li><strong>No limits</strong> — unlimited customers, full historical data, and unlimited saved segments.</li>
 </ul>
+
+<p><strong>See Pro in action first:</strong> log in to the <a href="https://ch.puredevs.com/wp-admin">live demo</a> (username <code>demo</code>, password <code>demo1234</code>) and browse every Pro screen — RFM segments, health scores, abandoned carts, revenue analytics — before you buy.</p>
 
 <p>Learn more at <a href="https://puredevs.com/pricing">https://puredevs.com/pricing</a>.</p>
 
@@ -102,6 +117,9 @@ A. All data is stored in your own WordPress database. The plugin never sends cus
 <strong>Q. Is there a video walkthrough?</strong><br>
 A. Yes. You can watch a full walkthrough of the dashboard, customer profiles, and search analytics here: https://www.youtube.com/watch?v=anFJa63GnfI
 
+<strong>Q. Is there a live demo I can try?</strong><br>
+A. Yes. Log in to https://ch.puredevs.com/wp-admin with username <code>demo</code> and password <code>demo1234</code>. The demo runs the Pro version, so you can explore every feature. The account is view-only — you can browse all screens but cannot add or edit anything.
+
 <strong>Q. Is the plugin compatible with WooCommerce High-Performance Order Storage (HPOS)?</strong><br>
 A. Yes. The plugin uses WooCommerce CRUD methods and declares HPOS compatibility. It does not query the posts table directly for orders.
 
@@ -116,6 +134,9 @@ A. The plugin never sends automated, bulk, or marketing emails to your customers
 
 <strong>Q. Does the plugin modify orders, products, or WooCommerce settings?</strong><br>
 A. No. The plugin is observational where your store data is concerned. It never modifies orders, creates coupons, changes product data, or alters any WooCommerce setting.
+
+<strong>Q. Is the plugin affected by the reported Freemius SDK vulnerabilities?</strong><br>
+A. No. The plugin bundles Freemius WordPress SDK version 2.13.4. The two publicly reported Freemius SDK vulnerabilities were fixed in SDK versions 1.0.1 and 1.0.2, long before the version shipped here, so this plugin is not affected.
 
 <strong>Q. What does the free version include?</strong><br>
 A. The free version shows up to 100 customers in the customer list and the most recent 90 days of analytics, with the full Customer Intelligence Dashboard, customer profiles, Search Analytics, view tracking, a Revenue dashboard, an Order History page with date/status/keyword filters, one saved segment, the weekly digest, a manual one-to-one customer email tool, and CSV export. All data is captured from day one; upgrading to Pro unlocks the full customer list, full history, and the advanced intelligence features.
@@ -150,9 +171,15 @@ This plugin bundles the following third-party JavaScript libraries:
 
 == Changelog ==
 
-= 3.0.1 =
-- Update freemius SDK.
-- Compatibility check with WP and WooCommerce latest version.
+= 3.0.2 =
+- REMOVED: the churn screen's "Create Coupon" action and the automated win-back email. The plugin now creates no WooCommerce coupons and sends no marketing email to customers, matching its observe-and-report design. The manual, admin-composed one-to-one customer email tool is unchanged and still available from a customer's profile.
+- IMPROVED: the churn card on a customer profile now shows a predicted next-order date alongside the existing "days overdue" figure. It is derived from data already collected, so it needs no new tracking.
+- FIXED: the RFM component of the churn prediction model never matched a customer's stored RFM segment, so it always contributed a flat neutral score. Segment and recency/frequency/monetary lookups now read the correct stored values. This component is not yet wired into the scores shown on screen, so existing churn scores are unchanged and no recalculation is needed.
+- FIXED: Pro feature descriptions listed behavioral badges the plugin does not produce, and overstated the customer-table filters. Both now match the actual features.
+- REMOVED: unused legacy referral and points code left behind by the 2.1.8 feature removal, plus a group of unreachable helper methods in the customer-list class. No change in behaviour.
+- IMPROVED: uninstall now also clears legacy referral settings left by 2.x installs.
+- COMPATIBILITY: tested against WooCommerce 10.7. Added a FAQ entry confirming the bundled Freemius SDK (2.13.4) is not affected by the reported Freemius SDK vulnerabilities, which were fixed in SDK 1.0.1/1.0.2.
+- Also includes the 3.0.1 changes, which shipped without a changelog entry: hardened guest, bot, and registered-user handling in the sessions list, and live demo details added to the plugin listing.
 
 = 3.0.0 =
 - NEW: Customer Intelligence Dashboard — overview cards (total, new, and active customers) plus widgets for top customers by lifetime value, latest orders, top-selling products, top searches, top categories, recent searches, and most-viewed products, with a date-range picker and period-over-period comparison.
@@ -183,88 +210,3 @@ This plugin bundles the following third-party JavaScript libraries:
 = 2.1.7 =
 - Fix errors related to validations, sanitizations and escaping.
 - Compatibility check with WP and WooCommerce latest version.
-
-= 2.1.6 =
-- NEW: Customer Health Score system (0-100) based on purchase patterns, engagement, and spending behavior.
-- NEW: Health score trend tracking (improving, stable, declining) for proactive customer management.
-- NEW: Customer Lifecycle Stages tracking (Prospect, New Customer, Active Customer, Loyal Customer, At Risk, Churned).
-- NEW: Automatic lifecycle stage assignment based on customer behavior and purchase history.
-- NEW: Lifecycle funnel visualization widget on dashboard.
-- NEW: At-risk customer alerts widget to identify customers needing immediate attention.
-- NEW: Filter customers by health score range (Excellent, Good, Fair, Poor, Critical).
-- NEW: Filter customers by lifecycle stage and days in stage for targeted marketing.
-- NEW: Visual health score badges and trend indicators on customer list.
-- NEW: Comprehensive customer intelligence cards on customer detail pages.
-- Enhanced customer intelligence dashboard with all metrics in one place.
-- Improved customer list table with RFM, Health Score, and Lifecycle columns.
-- Compatibility check with WP and WooCommerce latest version.
-
-= 2.1.5 =
-- Advanced RFM (Recency, Frequency, Monetary) customer segmentation system.
-- Intelligent customer scoring with 11 predefined segments (Champions, Loyal, Potential Loyalist, etc.).
-- Visual RFM dashboard widget with segment distribution charts.
-- Actionable business insights and recommendations for each customer segment.
-- Enhanced customer intelligence for targeted marketing campaigns.
-- Filter(search) Customers & Users by purchased product.
-- Compatibility check with WP and WooCommerce latest version
-
-= 2.1.4 =
-- Fixed product brand view issue.
-- Compatibility check with WP and WooCommerce latest version
-
-= 2.1.3 =
-- Direct customer email communication system with personalized templates.
-- Customer referral system with unique codes and point-based rewards.
-- Referral tracking with cookie attribution and sharing capabilities.
-- Enhanced customer engagement and retention features.
-- Compatibility check with WP and WooCommerce latest version
-
-= 2.1.2 =
-- Conversion Funnel Visualization.
-- Compatibility check with WP and WooCommerce latest version
-
-= 2.1.1 =
-- Top selling products by month.
-- Compatibility check with WP and WooCommerce latest version
-
-= 2.1.0 =
-- Categorized customers based on earning points ( points will be earned by placing order and spending money on this store ).
-- Create and send coupons to customers based on customer category.
-- Compatibility check with WP and WooCommerce latest version
-
-= 1.0.9 =
-- Generate weekly report for orders, top customers, searches, most viewed products, most viewed categories and send it to admin email or an entered email address from the settings area via email.
-- Compatibility check with WP and WooCommerce latest version
-
-= 1.0.8 =
-- Generate weekly orders report
-- Generate weekly searches report
-- Generate weekly most viewed products report
-- Product View vs Purchase Ratio
-- Compatibility check with WP and WooCommerce latest version
-
-= 1.0.7 =
-- Most viewed products list for individual customer
-- Compatibility check with WP and WooCommerce latest version
-
-= 1.0.6 =
-- Download Customers & Users Order Informations to CSV
-
-= 1.0.5 =
-- Compatible with High Performance Order Storage
-
-= 1.0.4 =
-- Add no order message
-- Compatibility check with WP and WooCommerce latest version
-
-= 1.0.3 =
-- Compatibility check with WP and WooCommerce latest version
-
-= 1.0.2 =
-- Compatibility check with WP and WooCommerce latest version
-
-= 1.0.1 =
-- Compatibility check with WP latest version
-
-= 1.0.0 =
-- Version 1.0.0 Initial Release

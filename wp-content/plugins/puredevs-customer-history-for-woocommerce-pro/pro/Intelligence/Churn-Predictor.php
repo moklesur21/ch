@@ -287,28 +287,40 @@ class PD_Customer_History_Churn_Predictor {
 			return array( 'score' => 50, 'factors' => array( 'message' => 'No RFM data available' ) );
 		}
 
-		// Map RFM segments to churn risk
+		/*
+		 * Map RFM segments to churn risk. Keys must be the canonical lowercase slugs
+		 * returned by PD_Customer_History_RFM::pdwchs_determine_segment() and stored in the
+		 * rfm_segment column — see pro/Intelligence/Segments-Labels.php for the
+		 * authoritative list. (Before 3.0.2 these keys were Title Case, so no lookup
+		 * ever matched and every customer scored a flat 50 from this model.)
+		 */
 		$segment_risk_map = array(
-			'Champions'            => 5,
-			'Loyal Customers'      => 10,
-			'Potential Loyalist'   => 20,
-			'New Customers'        => 30,
-			'Promising'            => 35,
-			'Need Attention'       => 50,
-			'About To Sleep'       => 65,
-			'At Risk'              => 75,
-			'Can\'t Lose Them'     => 80,
-			'Hibernating'          => 85,
-			'Lost'                 => 95,
+			'champions'          => 5,
+			'loyal'              => 10,
+			'potential_loyalist' => 20,
+			'new_customer'       => 30,
+			'promising'          => 35,
+			'needs_attention'    => 50,
+			'at_risk'            => 75,
+			'cannot_lose'        => 80,
+			'hibernating'        => 85,
+			'lost'               => 95,
+			'undefined'          => 50,
 		);
 
-		$segment = isset( $rfm_data['segment'] ) ? $rfm_data['segment'] : '';
+		/*
+		 * pdwchs_get_customer_rfm() returns a raw `SELECT *` row, whose columns are
+		 * prefixed (rfm_segment, rfm_recency, …). A freshly calculated array from
+		 * PDWCHS_RFM uses the unprefixed keys instead. Accept either shape so this
+		 * model works on both paths.
+		 */
+		$segment = $rfm_data['rfm_segment'] ?? $rfm_data['segment'] ?? '';
 		$score   = isset( $segment_risk_map[ $segment ] ) ? $segment_risk_map[ $segment ] : 50;
 
 		// Adjust based on individual RFM scores (1-5 scale)
-		$r_score = isset( $rfm_data['recency'] ) ? intval( $rfm_data['recency'] ) : 3;
-		$f_score = isset( $rfm_data['frequency'] ) ? intval( $rfm_data['frequency'] ) : 3;
-		$m_score = isset( $rfm_data['monetary'] ) ? intval( $rfm_data['monetary'] ) : 3;
+		$r_score = intval( $rfm_data['rfm_recency'] ?? $rfm_data['recency'] ?? 3 );
+		$f_score = intval( $rfm_data['rfm_frequency'] ?? $rfm_data['frequency'] ?? 3 );
+		$m_score = intval( $rfm_data['rfm_monetary'] ?? $rfm_data['monetary'] ?? 3 );
 
 		// Low RFM scores (1-2) increase churn risk
 		if ( $r_score <= 2 ) {

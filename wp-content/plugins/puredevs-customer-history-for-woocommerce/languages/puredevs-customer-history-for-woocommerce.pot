@@ -11,16 +11,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-22 11:51+0000\n"
+"POT-Creation-Date: 2026-07-27 11:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: puredevs-customer-history-for-woocommerce\n"
-"\n"
 "Language: \n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;"
 
+#. 1: Formatted date and time, 2: Raw Unix timestamp
+#: includes/class-pdwchs-telemetry.php:100
+#, php-format
+msgid "%1$s (timestamp %2$s)"
+msgstr ""
+
 #. %1$s is lifecycle stage name, %2$d is number of days
-#: includes/class-pd-customer-history-customers.php:553
+#: includes/class-pd-customer-history-customers.php:555
 #, php-format
 msgid "%1$s - %2$d days in stage"
 msgstr ""
@@ -37,7 +42,7 @@ msgstr ""
 msgid "+ New Segment"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:617
+#: includes/class-pd-customer-history-customers.php:619
 msgid "0-30 days"
 msgstr ""
 
@@ -62,7 +67,7 @@ msgstr ""
 msgid "20"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:618
+#: includes/class-pd-customer-history-customers.php:620
 msgid "31-60 days"
 msgstr ""
 
@@ -73,11 +78,11 @@ msgstr ""
 msgid "50"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:619
+#: includes/class-pd-customer-history-customers.php:621
 msgid "61-90 days"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:620
+#: includes/class-pd-customer-history-customers.php:622
 msgid "90+ days"
 msgstr ""
 
@@ -115,8 +120,12 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:1095
+#: includes/class-pd-customer-history-customers.php:906
 msgid "Active Customer"
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:117
+msgid "Active tier"
 msgstr ""
 
 #: includes/helper/class-pdwchs-helper.php:285
@@ -131,11 +140,11 @@ msgstr ""
 msgid "Advance Search:"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:616
+#: includes/class-pd-customer-history-customers.php:618
 msgid "All Days in Stage"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:607
+#: includes/class-pd-customer-history-customers.php:609
 msgid "All Lifecycle Stages"
 msgstr ""
 
@@ -155,12 +164,12 @@ msgstr ""
 msgid "Are you sure you want to delete this segment? This cannot be undone."
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:1097
+#: includes/class-pd-customer-history-customers.php:908
 msgid "At Risk"
 msgstr ""
 
 #: includes/class-pdwchs-upsell.php:44
-msgid "Automatic badges like VIP, Window Shopper, and Bargain Hunter."
+msgid "Automatic badges like Bargain Hunter, Cart Abandoner, and Brand Loyal."
 msgstr ""
 
 #: admin/partials/templates/revenue.php:77
@@ -217,7 +226,7 @@ msgstr ""
 msgid "Churn Risk"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:1098
+#: includes/class-pd-customer-history-customers.php:909
 msgid "Churned"
 msgstr ""
 
@@ -236,8 +245,8 @@ msgstr ""
 msgid "Could not delete segment. Please try again."
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:43
-#: admin/partials/templates/search-analytics.php:159
+#: admin/partials/templates/search-analytics.php:44
+#: admin/partials/templates/search-analytics.php:160
 #: admin/partials/templates/dashboard/top-searches.php:31
 #: admin/partials/templates/dashboard/top-taxonomy.php:41
 msgid "Count"
@@ -260,11 +269,11 @@ msgstr ""
 msgid "Created By"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:782
+#: includes/class-pd-customer-history.php:785
 msgid "CSV File Error!"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:777
+#: includes/class-pd-customer-history.php:780
 msgid "CSV file imported successfully."
 msgstr ""
 
@@ -326,7 +335,7 @@ msgstr ""
 msgid "Customer Segments"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:894
+#: includes/class-pd-customer-history.php:897
 msgid "Customer support"
 msgstr ""
 
@@ -345,21 +354,21 @@ msgstr ""
 msgid "Dashboard"
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-manager.php:247
+#: includes/segments/class-pdwchs-segments-manager.php:249
 msgid "Database error while deleting segment."
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-manager.php:107
+#: includes/segments/class-pdwchs-segments-manager.php:109
 msgid "Database error while saving segment."
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-manager.php:211
+#: includes/segments/class-pdwchs-segments-manager.php:213
 msgid "Database error while updating segment."
 msgstr ""
 
 #: includes/class-pd-customer-order-history.php:45
 #: admin/partials/templates/customer-details.php:55
-#: admin/partials/templates/search-analytics.php:73
+#: admin/partials/templates/search-analytics.php:74
 #: admin/partials/templates/dashboard/last-orders.php:22
 #: admin/partials/templates/dashboard/last-searches.php:21
 msgid "Date"
@@ -373,11 +382,11 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-manager.php:239
+#: includes/segments/class-pdwchs-segments-manager.php:241
 msgid "Default segments cannot be deleted."
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-manager.php:168
+#: includes/segments/class-pdwchs-segments-manager.php:170
 msgid "Default segments cannot have their name or criteria changed."
 msgstr ""
 
@@ -398,11 +407,11 @@ msgstr ""
 msgid "Description (optional)"
 msgstr ""
 
-#: includes/class-pdwchs-upsell.php:148
+#: includes/class-pdwchs-upsell.php:150
 msgid "Dismiss"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:893
+#: includes/class-pd-customer-history.php:896
 msgid "Docs"
 msgstr ""
 
@@ -425,7 +434,7 @@ msgstr ""
 msgid "Edit this user"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:318
+#: includes/class-pd-customer-history-customers.php:320
 #: includes/segments/class-pdwchs-segments-export.php:107
 #: admin/partials/templates/customer-details.php:265
 #: admin/partials/templates/customer-email.php:138
@@ -488,13 +497,13 @@ msgstr ""
 msgid "Export CSV"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:822
-#: includes/class-pd-customer-history.php:869
+#: includes/class-pd-customer-history.php:825
+#: includes/class-pd-customer-history.php:872
 msgid "Failed to delete sessions!"
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-manager.php:71
-#: includes/segments/class-pdwchs-segments-manager.php:198
+#: includes/segments/class-pdwchs-segments-manager.php:200
 msgid "Failed to encode segment criteria."
 msgstr ""
 
@@ -502,7 +511,7 @@ msgstr ""
 msgid "Failed to send email. Please try again."
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:623
+#: includes/class-pd-customer-history-customers.php:625
 msgid "Filter"
 msgstr ""
 
@@ -510,7 +519,19 @@ msgstr ""
 msgid "Financial Summary"
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-manager.php:89
+#: includes/class-pdwchs-telemetry.php:123
+msgid "First activated"
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:127
+msgid "First free-tier limit reached"
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:120
+msgid "Free"
+msgstr ""
+
+#: includes/segments/class-pdwchs-segments-manager.php:91
 msgid ""
 "Free plan is limited to 1 custom segment. Upgrade to Pro for unlimited "
 "segments."
@@ -538,7 +559,7 @@ msgstr ""
 msgid "Greater then"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:31
+#: admin/partials/templates/search-analytics.php:32
 msgid ""
 "Heads up: your own administrator activity isn’t recorded by default, so this "
 "page stays empty while you browse the store as an admin. To see searches and "
@@ -611,8 +632,8 @@ msgid "Invalid segment criteria."
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-ajax.php:153
-#: includes/segments/class-pdwchs-segments-manager.php:159
-#: includes/segments/class-pdwchs-segments-manager.php:230
+#: includes/segments/class-pdwchs-segments-manager.php:161
+#: includes/segments/class-pdwchs-segments-manager.php:232
 msgid "Invalid segment ID."
 msgstr ""
 
@@ -632,8 +653,8 @@ msgstr ""
 msgid "Items & Qty"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:42
-#: admin/partials/templates/search-analytics.php:72
+#: admin/partials/templates/search-analytics.php:43
+#: admin/partials/templates/search-analytics.php:73
 #: admin/partials/templates/dashboard/last-searches.php:20
 #: admin/partials/templates/dashboard/top-searches.php:30
 msgid "Keyword"
@@ -657,7 +678,7 @@ msgstr ""
 msgid "Last Orders"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:68
+#: admin/partials/templates/search-analytics.php:69
 msgid "Last Searches"
 msgstr ""
 
@@ -698,6 +719,12 @@ msgstr ""
 msgid "Load"
 msgstr ""
 
+#: includes/class-pdwchs-telemetry.php:110
+msgid ""
+"Local, non-identifying counters used to understand free-tier usage. This "
+"information stays on your server."
+msgstr ""
+
 #: includes/class-pdwchs-upsell.php:80
 msgid "Long-inactive customers worth a re-engagement push."
 msgstr ""
@@ -706,7 +733,7 @@ msgstr ""
 msgid "Loyal Champions"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:1096
+#: includes/class-pd-customer-history-customers.php:907
 msgid "Loyal Customer"
 msgstr ""
 
@@ -728,7 +755,7 @@ msgstr ""
 msgid "Most viewed categories"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:98
+#: admin/partials/templates/search-analytics.php:99
 msgid "Most Viewed Products"
 msgstr ""
 
@@ -759,7 +786,7 @@ msgstr ""
 msgid "Net revenue over time"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:1094
+#: includes/class-pd-customer-history-customers.php:905
 msgid "New Customer"
 msgstr ""
 
@@ -797,6 +824,14 @@ msgstr ""
 msgid "No. of orders :"
 msgstr ""
 
+#: includes/class-pdwchs-telemetry.php:128
+msgid "None reached yet"
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:105
+msgid "Not recorded yet"
+msgstr ""
+
 #: includes/class-pd-customer-history.php:134
 msgid "Once Weekly"
 msgstr ""
@@ -805,7 +840,7 @@ msgstr ""
 msgid "Once-active customers starting to slip toward lapse."
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:32
+#: admin/partials/templates/search-analytics.php:33
 msgid "Or set “Save ‘admin’ sessions” to Yes under Settings."
 msgstr ""
 
@@ -877,8 +912,16 @@ msgstr ""
 msgid "Personal Information"
 msgstr ""
 
+#: includes/class-pdwchs-telemetry.php:113
+msgid "Plugin version"
+msgstr ""
+
 #: includes/segments/class-pdwchs-segments-ajax.php:123
 msgid "Plus ready-made intelligence segments:"
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:119
+msgid "Pro"
 msgstr ""
 
 #: admin/partials/templates/segments-list.php:75
@@ -887,7 +930,7 @@ msgid ""
 "scoring — no setup required."
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:112
+#: admin/partials/templates/search-analytics.php:113
 msgid "Product"
 msgstr ""
 
@@ -900,7 +943,7 @@ msgstr ""
 msgid "Product Purchased :"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:1093
+#: includes/class-pd-customer-history-customers.php:904
 msgid "Prospect"
 msgstr ""
 
@@ -912,15 +955,19 @@ msgstr ""
 msgid "PureDevs"
 msgstr ""
 
+#: includes/class-pdwchs-telemetry.php:109
+msgid "PureDevs Customer History"
+msgstr ""
+
 #. Name of the plugin
 msgid "PureDevs Customer History for WooCommerce"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:893
+#: includes/class-pd-customer-history.php:896
 msgid "PureDevs Customer History for WooCommerce Documentation"
 msgstr ""
 
-#: puredevs-customer-history-for-woocommerce.php:139
+#: puredevs-customer-history-for-woocommerce.php:186
 msgid ""
 "PureDevs Customer History for WooCommerce is enabled but not effective. In "
 "order to work it requires WooCommerce."
@@ -928,10 +975,6 @@ msgstr ""
 
 #: admin/partials/templates/segments-list.php:66
 msgid "Ready-made Pro segments"
-msgstr ""
-
-#: includes/class-pd-customer-history.php:1178
-msgid "Refer Friends & Earn Points"
 msgstr ""
 
 #: includes/class-pd-customer-history-customers.php:61
@@ -1026,10 +1069,10 @@ msgstr ""
 msgid "Search Sessions"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:682
-#: includes/class-pd-customer-history.php:740
-#: includes/class-pd-customer-history.php:810
-#: includes/class-pd-customer-history.php:855
+#: includes/class-pd-customer-history.php:685
+#: includes/class-pd-customer-history.php:743
+#: includes/class-pd-customer-history.php:813
+#: includes/class-pd-customer-history.php:858
 #: admin/partials/templates/live-searches.php:12
 #: admin/partials/templates/live-sessions.php:13
 #: admin/partials/templates/plugin-settings.php:23
@@ -1042,7 +1085,7 @@ msgid ""
 "See at a glance whether this customer is a Champion, Loyal, At Risk, or Lost."
 msgstr ""
 
-#: includes/class-pdwchs-upsell.php:144
+#: includes/class-pdwchs-upsell.php:146
 msgid "See what Pro adds"
 msgstr ""
 
@@ -1051,7 +1094,7 @@ msgid "Segment"
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-manager.php:66
-#: includes/segments/class-pdwchs-segments-manager.php:194
+#: includes/segments/class-pdwchs-segments-manager.php:196
 msgid "Segment criteria must contain at least one valid filter."
 msgstr ""
 
@@ -1065,19 +1108,19 @@ msgstr ""
 
 #: admin/class-pd-customer-history-admin.php:173
 #: includes/segments/class-pdwchs-segments-manager.php:56
-#: includes/segments/class-pdwchs-segments-manager.php:177
+#: includes/segments/class-pdwchs-segments-manager.php:179
 msgid "Segment name cannot be empty."
 msgstr ""
 
 #: admin/class-pd-customer-history-admin.php:174
 #: includes/segments/class-pdwchs-segments-manager.php:59
-#: includes/segments/class-pdwchs-segments-manager.php:180
+#: includes/segments/class-pdwchs-segments-manager.php:182
 msgid "Segment name cannot exceed 191 characters."
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-export.php:66
-#: includes/segments/class-pdwchs-segments-manager.php:164
-#: includes/segments/class-pdwchs-segments-manager.php:235
+#: includes/segments/class-pdwchs-segments-manager.php:166
+#: includes/segments/class-pdwchs-segments-manager.php:237
 msgid "Segment not found."
 msgstr ""
 
@@ -1117,13 +1160,13 @@ msgstr ""
 msgid "Sessions"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:818
-#: includes/class-pd-customer-history.php:865
+#: includes/class-pd-customer-history.php:821
+#: includes/class-pd-customer-history.php:868
 msgid "Sessions deleted successfully."
 msgstr ""
 
 #: admin/class-pd-customer-history-admin.php:281
-#: includes/class-pd-customer-history.php:914
+#: includes/class-pd-customer-history.php:917
 #: admin/partials/templates/plugin-settings.php:13
 #: admin/partials/templates/top-nav.php:40
 msgid "Settings"
@@ -1131,16 +1174,6 @@ msgstr ""
 
 #: admin/partials/templates/plugin-settings.php:57
 msgid "Settings Saved"
-msgstr ""
-
-#: includes/class-pd-customer-history.php:1181
-msgid "Share this link:"
-msgstr ""
-
-#: includes/class-pd-customer-history.php:1183
-msgid ""
-"Share your referral link with friends. You earn points when they sign up and "
-"make their first purchase!"
 msgstr ""
 
 #: admin/partials/templates/customers.php:160
@@ -1154,8 +1187,8 @@ msgstr ""
 msgid "Show BOT sessions :"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:827
-#: includes/class-pd-customer-history.php:874
+#: includes/class-pd-customer-history.php:830
+#: includes/class-pd-customer-history.php:877
 msgid "Sorry, you don't have permission to access this page."
 msgstr ""
 
@@ -1204,8 +1237,8 @@ msgid ""
 "total. Customer History Pro includes every customer."
 msgstr ""
 
-#: admin/partials/templates/dashboard.php:42
-#: admin/partials/templates/search-analytics.php:23
+#: admin/partials/templates/dashboard.php:43
+#: admin/partials/templates/search-analytics.php:24
 msgid ""
 "The free version includes your most recent 90 days of activity. Customer "
 "History Pro includes your full history — your older data is already "
@@ -1221,7 +1254,7 @@ msgid "To:"
 msgstr ""
 
 #. %s is the taxonomy name
-#: admin/partials/templates/search-analytics.php:153
+#: admin/partials/templates/search-analytics.php:154
 #, php-format
 msgid "Top %s Views"
 msgstr ""
@@ -1234,7 +1267,7 @@ msgstr ""
 msgid "Top customers"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:38
+#: admin/partials/templates/search-analytics.php:39
 msgid "Top Keyword Searches"
 msgstr ""
 
@@ -1265,10 +1298,6 @@ msgstr ""
 msgid "Total Orders"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:1180
-msgid "Total Referrals:"
-msgstr ""
-
 #: includes/class-pd-customer-history-customers.php:63
 msgid "Total Spending"
 msgstr ""
@@ -1292,11 +1321,15 @@ msgstr ""
 msgid "Unauthorized."
 msgstr ""
 
+#: includes/class-pdwchs-telemetry.php:114
+msgid "Unknown"
+msgstr ""
+
 #: includes/segments/class-pdwchs-segments-ajax.php:122
 msgid "Unlock unlimited segments with Pro"
 msgstr ""
 
-#: includes/class-pdwchs-upsell.php:122
+#: includes/class-pdwchs-upsell.php:124
 #: admin/partials/templates/segments-list.php:70
 #: admin/partials/templates/segments-list.php:95
 msgid "Unlock with Pro"
@@ -1324,7 +1357,7 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:318
+#: includes/class-pd-customer-history-customers.php:320
 #: admin/partials/templates/customer-details.php:81
 msgid "View"
 msgstr ""
@@ -1339,7 +1372,7 @@ msgstr ""
 msgid "View All"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:113
+#: admin/partials/templates/search-analytics.php:114
 msgid "View Count"
 msgstr ""
 
@@ -1351,7 +1384,7 @@ msgstr ""
 msgid "View Customer Details"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:894
+#: includes/class-pd-customer-history.php:897
 msgid "Visit customer support"
 msgstr ""
 
@@ -1409,10 +1442,6 @@ msgstr ""
 
 #: includes/class-pdwchs-upsell.php:72
 msgid "Your most frequent, highest-value repeat buyers."
-msgstr ""
-
-#: includes/class-pd-customer-history.php:1179
-msgid "Your Referral Code:"
 msgstr ""
 
 #. %s is a link to the trash page

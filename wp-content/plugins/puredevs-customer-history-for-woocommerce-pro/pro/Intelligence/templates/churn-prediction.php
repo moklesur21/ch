@@ -204,9 +204,6 @@ include PDWCHS_CUSTOMER_HISTORY_ADMIN_TEMPLATE_DIR . '/top-nav.php';
 							<a href="<?php echo esc_url( $email_url ); ?>" class="button button-small" title="<?php esc_attr_e( 'Send Email', 'puredevs-customer-history-for-woocommerce' ); ?>">
 								<span class="dashicons dashicons-email"></span>
 							</a>
-							<button type="button" class="button button-small pdwchs-create-coupon" data-user-id="<?php echo esc_attr( $customer->customer_id ); ?>" title="<?php esc_attr_e( 'Create Coupon', 'puredevs-customer-history-for-woocommerce' ); ?>">
-								<span class="dashicons dashicons-tickets-alt"></span>
-							</button>
 						</td>
 					</tr>
 					<?php endforeach; ?>

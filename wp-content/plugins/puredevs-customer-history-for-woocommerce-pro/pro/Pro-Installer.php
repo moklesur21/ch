@@ -255,6 +255,9 @@ class PDWCHS_Pro_Installer {
 		$charset_collate = $wpdb->get_charset_collate();
 
 		// Churn Scores Table - Primary storage for customer churn risk data
+		// Note: the retention_campaign_sent column is deprecated as of 3.0.2 (the retention
+		// coupon/win-back email actions were removed). Retained because dropping it needs a
+		// DB migration; nothing reads or writes it any more.
 		$churn_scores_table = $wpdb->prefix . 'pdwchs_churn_scores';
 		$churn_scores_sql = "CREATE TABLE IF NOT EXISTS {$churn_scores_table} (
 			id BIGINT(20) UNSIGNED AUTO_INCREMENT PRIMARY KEY,

@@ -216,11 +216,9 @@ class PD_Customer_History_Intelligence {
 		add_action( 'wp_ajax_pdwchs_refresh_churn_widget', array( $this, 'pdwchs_ajax_refresh_churn_widget' ) );
 		add_action( 'wp_ajax_pdwchs_update_alert_status', array( $this, 'pdwchs_ajax_update_alert_status' ) );
 		add_action( 'wp_ajax_pdwchs_assign_alert', array( $this, 'pdwchs_ajax_assign_alert' ) );
-		add_action( 'wp_ajax_pdwchs_create_retention_coupon', array( $this, 'pdwchs_ajax_create_retention_coupon' ) );
 
 		// Churn Prediction Page AJAX hooks
 		add_action( 'wp_ajax_pdwchs_save_churn_settings', array( $this, 'pdwchs_ajax_save_churn_settings' ) );
-		add_action( 'wp_ajax_pdwchs_send_retention_email', array( $this, 'pdwchs_ajax_send_retention_email' ) );
 		add_action( 'wp_ajax_pdwchs_get_at_risk_customers', array( $this, 'pdwchs_ajax_get_at_risk_customers' ) );
 		add_action( 'wp_ajax_pdwchs_get_churn_alerts', array( $this, 'pdwchs_ajax_get_churn_alerts' ) );
 
@@ -350,6 +348,9 @@ class PD_Customer_History_Intelligence {
 		) {$charset_collate};" );
 
 		// pdwchs_churn_scores
+		// Note: the retention_campaign_sent column is deprecated as of 3.0.2 (the retention
+		// coupon/win-back email actions were removed). Retained because dropping it needs a
+		// DB migration; nothing reads or writes it any more.
 		$churn_scores_table = $wpdb->prefix . 'pdwchs_churn_scores';
 		dbDelta( "CREATE TABLE IF NOT EXISTS {$churn_scores_table} (
 			id BIGINT(20) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -650,11 +651,7 @@ class PD_Customer_History_Intelligence {
 				'nonce'                 => wp_create_nonce( 'pdwchs_churn_nonce' ),
 				'ajaxurl'               => admin_url( 'admin-ajax.php' ),
 				'error_text'            => __( 'An error occurred. Please try again.', 'puredevs-customer-history-for-woocommerce' ),
-				'create_coupon_confirm' => __( 'Create a 20% discount coupon and email it to this customer?', 'puredevs-customer-history-for-woocommerce' ),
-				'coupon_code_label'     => __( 'Coupon Code', 'puredevs-customer-history-for-woocommerce' ),
-				'coupon_sent_label'     => __( 'Coupon Sent', 'puredevs-customer-history-for-woocommerce' ),
 				'settings_saved_text'   => __( 'Settings saved successfully.', 'puredevs-customer-history-for-woocommerce' ),
-				'email_sent_text'       => __( 'Retention email sent successfully.', 'puredevs-customer-history-for-woocommerce' ),
 				'is_prediction_page'    => ( 'pd-woo-churn-prediction' === $page ),
 			) );
 		}
@@ -1251,129 +1248,6 @@ class PD_Customer_History_Intelligence {
 	}
 
 	/**
-	 * AJAX: Create retention coupon for customer
-	 *
-	 * @since    4.0.0
-	 */
-	public function pdwchs_ajax_create_retention_coupon() {
-		check_ajax_referer( 'pdwchs_churn_nonce', 'nonce' );
-
-		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'puredevs-customer-history-for-woocommerce' ) ) );
-		}
-
-		$user_id = isset( $_POST['user_id'] ) ? intval( $_POST['user_id'] ) : 0;
-
-		if ( ! $user_id ) {
-			wp_send_json_error( array( 'message' => __( 'Invalid user ID', 'puredevs-customer-history-for-woocommerce' ) ) );
-		}
-
-		// Generate unique coupon code
-		$user = get_user_by( 'ID', $user_id );
-		$coupon_code = 'WINBACK-' . strtoupper( substr( md5( $user_id . time() ), 0, 8 ) );
-
-		// Create coupon
-		$coupon = new WC_Coupon();
-		$coupon->set_code( $coupon_code );
-		$coupon->set_discount_type( 'percent' );
-		$coupon->set_amount( 20 ); // 20% discount
-		$coupon->set_individual_use( true );
-		$coupon->set_usage_limit( 1 );
-		$coupon->set_usage_limit_per_user( 1 );
-		$coupon->set_date_expires( strtotime( '+30 days' ) );
-		$coupon->set_email_restrictions( array( $user->user_email ) );
-		$coupon->set_description( sprintf(
-			/* translators: %s: Customer name */
-			__( 'Win-back coupon for %s', 'puredevs-customer-history-for-woocommerce' ),
-			$user->display_name
-		) );
-		$coupon->save();
-
-		if ( $coupon->get_id() ) {
-			// Mark retention campaign sent
-			global $wpdb;
-			$wpdb->update(
-				$wpdb->prefix . 'pdwchs_churn_scores',
-				array( 'retention_campaign_sent' => 1 ),
-				array( 'customer_id' => $user_id )
-			);
-
-			// Send coupon to customer via email
-			$email_sent = $this->pdwchs_send_retention_coupon_email( $user, $coupon_code, $coupon );
-
-			wp_send_json_success( array(
-				'message'     => $email_sent
-					? __( 'Retention coupon created and emailed to customer successfully', 'puredevs-customer-history-for-woocommerce' )
-					: __( 'Retention coupon created but email could not be sent', 'puredevs-customer-history-for-woocommerce' ),
-				'coupon_code' => $coupon_code,
-				'coupon_id'   => $coupon->get_id(),
-				'email_sent'  => $email_sent,
-			) );
-		} else {
-			wp_send_json_error( array(
-				'message' => __( 'Failed to create coupon', 'puredevs-customer-history-for-woocommerce' ),
-			) );
-		}
-	}
-
-	/**
-	 * Send retention coupon email to customer
-	 *
-	 * @since    4.0.0
-	 * @param    WP_User    $user         Customer user object
-	 * @param    string     $coupon_code  The coupon code
-	 * @param    WC_Coupon  $coupon       The WooCommerce coupon object
-	 * @return   bool       True if email sent successfully
-	 */
-	private function pdwchs_send_retention_coupon_email( $user, $coupon_code, $coupon ) {
-		$store_name   = get_bloginfo( 'name' );
-		$shop_url     = wc_get_page_permalink( 'shop' );
-		$discount     = $coupon->get_amount();
-		$expiry_date  = wp_date( get_option( 'date_format' ), $coupon->get_date_expires()->getTimestamp() );
-		$customer_name = $user->first_name ? $user->first_name : $user->display_name;
-
-		$subject = sprintf(
-			/* translators: %1$s: Discount amount, %2$s: Store name */
-			__( 'We miss you! Here\'s %1$s%% off at %2$s', 'puredevs-customer-history-for-woocommerce' ),
-			$discount,
-			$store_name
-		);
-
-		$message = '<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; color: #333;">';
-		$message .= '<h2 style="color: #7f54b3;">' . sprintf(
-			/* translators: %s: Customer name */
-			esc_html__( 'Hi %s, we miss you!', 'puredevs-customer-history-for-woocommerce' ),
-			esc_html( $customer_name )
-		) . '</h2>';
-		$message .= '<p>' . sprintf(
-			/* translators: %s: Store name */
-			esc_html__( 'It\'s been a while since your last visit to %s. We\'d love to see you again!', 'puredevs-customer-history-for-woocommerce' ),
-			esc_html( $store_name )
-		) . '</p>';
-		$message .= '<p>' . sprintf(
-			/* translators: %s: Discount percentage */
-			esc_html__( 'As a special thank you for being a valued customer, here\'s an exclusive %s%% discount just for you:', 'puredevs-customer-history-for-woocommerce' ),
-			esc_html( $discount )
-		) . '</p>';
-		$message .= '<div style="text-align: center; margin: 25px 0; padding: 20px; background: #f8f4fc; border-radius: 8px;">';
-		$message .= '<p style="margin: 0 0 5px; font-size: 14px; color: #666;">' . esc_html__( 'Your coupon code:', 'puredevs-customer-history-for-woocommerce' ) . '</p>';
-		$message .= '<p style="margin: 0; font-size: 24px; font-weight: bold; color: #7f54b3; letter-spacing: 2px;">' . esc_html( $coupon_code ) . '</p>';
-		$message .= '</div>';
-		$message .= '<p style="text-align: center;">';
-		$message .= '<a href="' . esc_url( $shop_url ) . '" style="display: inline-block; padding: 12px 30px; background: #7f54b3; color: #fff; text-decoration: none; border-radius: 5px; font-weight: bold;">';
-		$message .= esc_html__( 'Shop Now', 'puredevs-customer-history-for-woocommerce' );
-		$message .= '</a></p>';
-		$message .= '<p style="font-size: 13px; color: #888;">' . sprintf(
-			/* translators: %s: Expiry date */
-			esc_html__( 'This offer expires on %s. Single use only.', 'puredevs-customer-history-for-woocommerce' ),
-			esc_html( $expiry_date )
-		) . '</p>';
-		$message .= '</div>';
-
-		return PD_Customer_History_Email::pdwchs_send_customer_email( $user->ID, $subject, $message );
-	}
-
-	/**
 	 * AJAX: Save churn prediction settings
 	 *
 	 * @since    4.0.0
@@ -1463,75 +1337,6 @@ class PD_Customer_History_Intelligence {
 			'message' => __( 'Settings saved successfully', 'puredevs-customer-history-for-woocommerce' ),
 			'saved'   => $saved,
 		) );
-	}
-
-	/**
-	 * AJAX: Send retention email to at-risk customer
-	 *
-	 * @since    4.0.0
-	 */
-	public function pdwchs_ajax_send_retention_email() {
-		check_ajax_referer( 'pdwchs_churn_nonce', 'nonce' );
-
-		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Insufficient permissions', 'puredevs-customer-history-for-woocommerce' ) ) );
-		}
-
-		$user_id = isset( $_POST['user_id'] ) ? intval( $_POST['user_id'] ) : 0;
-		$subject = isset( $_POST['email_subject'] ) ? sanitize_text_field( $_POST['email_subject'] ) : '';
-		$message = isset( $_POST['email_message'] ) ? wp_kses_post( $_POST['email_message'] ) : '';
-
-		if ( ! $user_id ) {
-			wp_send_json_error( array( 'message' => __( 'Invalid user ID', 'puredevs-customer-history-for-woocommerce' ) ) );
-		}
-
-		$user = get_user_by( 'ID', $user_id );
-		if ( ! $user || ! $user->user_email ) {
-			wp_send_json_error( array( 'message' => __( 'Customer not found or has no email', 'puredevs-customer-history-for-woocommerce' ) ) );
-		}
-
-		// Use default subject/message if not provided
-		if ( empty( $subject ) ) {
-			$subject = sprintf(
-				/* translators: %s: Site name */
-				__( 'We miss you at %s!', 'puredevs-customer-history-for-woocommerce' ),
-				get_bloginfo( 'name' )
-			);
-		}
-
-		if ( empty( $message ) ) {
-			$message = sprintf(
-				/* translators: 1: Customer name, 2: Site name */
-				__( "Hi %1\$s,\n\nWe noticed you haven't visited %2\$s in a while. We'd love to have you back!\n\nCheck out our latest products and offers.\n\nBest regards,\nThe %2\$s Team", 'puredevs-customer-history-for-woocommerce' ),
-				$user->display_name,
-				get_bloginfo( 'name' )
-			);
-		}
-
-		$headers = array(
-			'Content-Type: text/html; charset=UTF-8',
-			'From: ' . get_bloginfo( 'name' ) . ' <' . get_option( 'admin_email' ) . '>',
-		);
-
-		$sent = wp_mail( $user->user_email, $subject, nl2br( $message ), $headers );
-
-		if ( $sent ) {
-			// Mark retention campaign sent
-			global $wpdb;
-			$wpdb->update(
-				$wpdb->prefix . 'pdwchs_churn_scores',
-				array( 'retention_campaign_sent' => 1 ),
-				array( 'customer_id' => $user_id )
-			);
-
-			wp_send_json_success( array(
-				'message' => __( 'Retention email sent successfully', 'puredevs-customer-history-for-woocommerce' ),
-			) );
-		} else {
-			wp_send_json_error( array(
-				'message' => __( 'Failed to send email', 'puredevs-customer-history-for-woocommerce' ),
-			) );
-		}
 	}
 
 	/**

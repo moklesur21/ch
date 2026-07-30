@@ -385,5 +385,4 @@ class PDWCHS_Sessions_List_Table extends WP_List_Table {
 		// Fallback if something unexpected slips through
 		return '<span class="dashicons dashicons-businessman mr-5"></span> Unknown';
 	}
-
 }

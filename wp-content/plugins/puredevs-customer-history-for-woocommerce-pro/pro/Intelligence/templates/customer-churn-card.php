@@ -204,6 +204,14 @@ $score_color = $risk_info['color'];
 			</div>
 		</div>
 
+		<?php
+		// Predicted next-order date. Derivation and its guards live on the churn
+		// calculator so the 1.5 order-screen panel can reuse them.
+		$pdwchs_predicted_ts = method_exists( $churn_calculator, 'pdwchs_get_predicted_next_order_ts' )
+			? $churn_calculator->pdwchs_get_predicted_next_order_ts( $churn_data )
+			: null;
+		?>
+
 		<!-- Key Indicators -->
 		<div class="pdwchs-churn-indicators">
 			<h4><?php esc_html_e( 'Key Indicators', 'puredevs-customer-history-for-woocommerce' ); ?></h4>
@@ -232,6 +240,24 @@ $score_color = $risk_info['color'];
 							/* translators: %d: Days overdue */
 							esc_html__( '%d days overdue for purchase', 'puredevs-customer-history-for-woocommerce' ),
 							intval( $churn_data->days_overdue )
+						);
+						?>
+					</span>
+				</li>
+				<?php endif; ?>
+
+				<?php
+				if ( $pdwchs_predicted_ts ) :
+					$pdwchs_predicted_overdue = ( $pdwchs_predicted_ts < time() );
+					?>
+				<li class="<?php echo esc_attr( $pdwchs_predicted_overdue ? 'pdwchs-indicator-warning' : '' ); ?>">
+					<span class="pdwchs-indicator-icon dashicons dashicons-clock"></span>
+					<span class="pdwchs-indicator-text">
+						<?php
+						printf(
+							/* translators: %s: Predicted date of this customer's next order */
+							esc_html__( 'Predicted next order: ~ %s', 'puredevs-customer-history-for-woocommerce' ),
+							esc_html( wp_date( get_option( 'date_format' ), $pdwchs_predicted_ts ) )
 						);
 						?>
 					</span>
@@ -295,21 +321,17 @@ $score_color = $risk_info['color'];
 		</div>
 
 		<?php if ( $risk_level === 'high' || $risk_level === 'critical' ) : ?>
-		<!-- Retention Actions -->
+		<!-- Follow Up -->
 		<div class="pdwchs-churn-actions">
-			<h4><?php esc_html_e( 'Recommended Actions', 'puredevs-customer-history-for-woocommerce' ); ?></h4>
+			<h4><?php esc_html_e( 'Follow Up', 'puredevs-customer-history-for-woocommerce' ); ?></h4>
 			<div class="pdwchs-action-buttons">
 				<?php
 				$email_url = admin_url( 'admin.php?page=pd-woo-customer-email&user_id=' . $user_id );
 				?>
 				<a href="<?php echo esc_url( $email_url ); ?>" class="button pdwchs-retention-btn">
 					<span class="dashicons dashicons-email"></span>
-					<?php esc_html_e( 'Send Win-Back Email', 'puredevs-customer-history-for-woocommerce' ); ?>
+					<?php esc_html_e( 'Email this customer', 'puredevs-customer-history-for-woocommerce' ); ?>
 				</a>
-				<button type="button" class="button pdwchs-retention-btn pdwchs-create-coupon" data-user-id="<?php echo esc_attr( $user_id ); ?>">
-					<span class="dashicons dashicons-tickets-alt"></span>
-					<?php esc_html_e( 'Create Coupon', 'puredevs-customer-history-for-woocommerce' ); ?>
-				</button>
 			</div>
 		</div>
 		<?php endif; ?>

@@ -41,7 +41,7 @@ class PDWCHS_Upsell {
 			),
 			'behavioral' => array(
 				'title' => __( 'Behavioral Tags', 'puredevs-customer-history-for-woocommerce' ),
-				'desc'  => __( 'Automatic badges like VIP, Window Shopper, and Bargain Hunter.', 'puredevs-customer-history-for-woocommerce' ),
+				'desc'  => __( 'Automatic badges like Bargain Hunter, Cart Abandoner, and Brand Loyal.', 'puredevs-customer-history-for-woocommerce' ),
 				'img'   => 'behavioral.png',
 			),
 			'lifecycle'  => array(
@@ -101,6 +101,8 @@ class PDWCHS_Upsell {
 		if ( ! isset( $features[ $feature_key ] ) ) {
 			return;
 		}
+		// A free user is looking at a locked Pro preview — record it once (local only).
+		pdwchs_record_first_cap_hit( 'locked_feature' );
 		$feature  = $features[ $feature_key ];
 		$img_path = PDWCHS_CUSTOMER_HISTORY_PLUGIN_DIR . 'admin/img/pro-previews/' . $feature['img'];
 		$img_url  = plugins_url( '../admin/img/pro-previews/' . $feature['img'], __FILE__ );

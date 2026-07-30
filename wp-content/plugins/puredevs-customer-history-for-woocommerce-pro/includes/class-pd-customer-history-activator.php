@@ -93,6 +93,18 @@ class PD_Customer_History_Activator {
 		$installed_version = get_option( 'pdwchs_version', '1.0' );
 		$current_version = defined( 'PDWCHS_CUSTOMER_HISTORY_VERSION' ) ? PDWCHS_CUSTOMER_HISTORY_VERSION : '2.0';
 
+		/*
+		 * Stamp the first-ever activation time (set-once, never overwritten).
+		 * This lives here rather than in pdwchs_activate() on purpose:
+		 * register_activation_hook() does not fire on plugin update, and does not
+		 * complete at all when WooCommerce is absent at activation time, so sites
+		 * that upgraded into this feature would otherwise never get the option.
+		 * This method runs on every load (main file, plugins_loaded priority 12).
+		 */
+		if ( ! get_option( 'pdwchs_first_activated_at' ) ) {
+			add_option( 'pdwchs_first_activated_at', time() );
+		}
+
 		// Check database version separately to handle upgrades properly
 		$db_version = get_option( 'pdwchs_db_version', '1.0' );
 

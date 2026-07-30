@@ -830,6 +830,54 @@ class PD_Customer_History_Churn {
 	}
 
 	/**
+	 * Derive the predicted next-order timestamp from churn data.
+	 *
+	 * Costs no extra query — it reconstructs the date from figures already present:
+	 * the last order was days_since_last_order ago, and the customer is expected to
+	 * buy again expected_next_purchase_days after that. The result is in the past for
+	 * an overdue customer and in the future for one still on schedule.
+	 *
+	 * Accepts either shape the churn data arrives in:
+	 *  - the {$prefix}pdwchs_churn_scores row, which has `expected_next_purchase_days`;
+	 *  - the array from pdwchs_calculate_churn_score(), which has `expected_next_purchase`
+	 *    (pdwchs_save_churn_score() bridges the two names).
+	 *
+	 * Guards against the zero-order case: pdwchs_get_customer_data() returns a
+	 * days_since_last_order sentinel of 999 for a customer with no completed orders,
+	 * which would otherwise yield a date years in the past. The `has_sufficient_data`
+	 * flag cannot be relied on here — it exists only on the freshly-calculated array,
+	 * never on a stored row — so total_orders is the check that works for both.
+	 *
+	 * @since    3.0.2
+	 * @param    object|array    $churn_data    Churn data row or array.
+	 * @return   int|null                       UTC timestamp, or null when not derivable.
+	 */
+	public function pdwchs_get_predicted_next_order_ts( $churn_data ) {
+		$data = is_object( $churn_data ) ? get_object_vars( $churn_data ) : (array) $churn_data;
+
+		if ( empty( $data['total_orders'] ) || ! isset( $data['days_since_last_order'] ) ) {
+			return null;
+		}
+
+		$expected = 0;
+		if ( isset( $data['expected_next_purchase_days'] ) ) {
+			$expected = intval( $data['expected_next_purchase_days'] );
+		} elseif ( isset( $data['expected_next_purchase'] ) ) {
+			$expected = intval( $data['expected_next_purchase'] );
+		}
+
+		if ( $expected <= 0 ) {
+			return null;
+		}
+
+		$days_since = intval( $data['days_since_last_order'] );
+
+		// days_since - expected is the overdue amount (negative when still on schedule),
+		// so one expression covers both directions. Returns a UTC timestamp for wp_date().
+		return time() - ( ( $days_since - $expected ) * DAY_IN_SECONDS );
+	}
+
+	/**
 	 * Batch calculate churn scores for all customers
 	 *
 	 * @since    4.0.0

@@ -43,9 +43,6 @@
 			// Alert assignment
 			$(document).on('change', '.pdwchs-alert-assign-select', this.assignAlert);
 
-			// Create coupon button
-			$(document).on('click', '.pdwchs-create-coupon', this.createRetentionCoupon);
-
 			// Settings form submission
 			$(document).on('submit', '#pdwchs-churn-settings-form', this.saveSettings);
 
@@ -205,58 +202,6 @@
 				},
 				error: function() {
 					PDWCHSChurn.showNotice('error', pdwchs_churn_vars.error_text);
-				}
-			});
-		},
-
-		/**
-		 * Create retention coupon
-		 */
-		createRetentionCoupon: function(e) {
-			e.preventDefault();
-
-			var $btn = $(this);
-			var userId = $btn.data('user-id');
-
-			if (!userId) {
-				return;
-			}
-
-			// Show confirmation
-			if (!confirm(pdwchs_churn_vars.create_coupon_confirm || 'Create a retention coupon for this customer?')) {
-				return;
-			}
-
-			$btn.prop('disabled', true).addClass('updating-message');
-
-			$.ajax({
-				url: pdwchs_churn_vars.ajaxurl,
-				type: 'POST',
-				data: {
-					action: 'pdwchs_create_retention_coupon',
-					nonce: pdwchs_churn_vars.nonce,
-					user_id: userId
-				},
-				success: function(response) {
-					if (response.success) {
-						var noticeType = response.data.email_sent ? 'success' : 'warning';
-						var message = response.data.message;
-						if (response.data.coupon_code) {
-							message += ' (' + pdwchs_churn_vars.coupon_code_label + ': ' + response.data.coupon_code + ')';
-						}
-						PDWCHSChurn.showNotice(noticeType, message);
-
-						// Disable button to prevent duplicate coupons
-						$btn.prop('disabled', true).attr('title', pdwchs_churn_vars.coupon_sent_label || 'Coupon Sent');
-					} else {
-						PDWCHSChurn.showNotice('error', response.data.message);
-					}
-				},
-				error: function() {
-					PDWCHSChurn.showNotice('error', pdwchs_churn_vars.error_text);
-				},
-				complete: function() {
-					$btn.prop('disabled', false).removeClass('updating-message');
 				}
 			});
 		},
