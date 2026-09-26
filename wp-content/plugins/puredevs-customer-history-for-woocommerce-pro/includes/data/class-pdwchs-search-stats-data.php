@@ -279,6 +279,54 @@ class PDWCHS_Search_Stats_Data {
 
 		return $wpdb->get_results( $sql );
 	}
+
+	/**
+	 * Return search terms that returned zero results, with counts and last-searched date.
+	 *
+	 * @param array $args {
+	 *     @type string $search Keyword substring filter (optional).
+	 *     @type int    $limit  Max rows; 0 = unlimited (default 20).
+	 * }
+	 * @return object[] Rows with `qta` (count), `url` (raw ACTION::search::keyword), `last_searched`.
+	 * @since 3.1.0
+	 */
+	public static function pdwchs_get_zero_result_terms( $args = array() ) {
+		global $wpdb;
+		$search = isset( $args['search'] ) ? sanitize_text_field( $args['search'] ) : '';
+		$limit  = isset( $args['limit'] )  ? absint( $args['limit'] )               : 20;
+
+		$cache_key = 'pdwchs_zero_results_'
+			. md5( wp_json_encode( array( $search, $limit ) ) )
+			. '_w' . PDWCHS_Data_Window::pdwchs_days();
+
+		$cached = get_transient( $cache_key );
+		if ( false !== $cached ) {
+			return $cached;
+		}
+
+		$where = "1=1 AND del='0' AND url LIKE '%:search:%' AND results_count = 0";
+		if ( ! empty( $search ) ) {
+			$where .= $wpdb->prepare( ' AND url LIKE %s', '%' . $wpdb->esc_like( $search ) . '%' );
+		}
+		$min_start = PDWCHS_Data_Window::pdwchs_min_start();
+		if ( '' !== $min_start ) {
+			$where .= $wpdb->prepare( ' AND reg_date >= %s', $min_start . ' 00:00:00' );
+		}
+
+		$sql = "SELECT COUNT(id) AS qta, url, MAX(reg_date) AS last_searched
+			FROM {$wpdb->prefix}pd_woo_customer_history_sessions
+			WHERE {$where} GROUP BY url";
+		if ( $limit > 0 ) {
+			$sql .= $wpdb->prepare( ' ORDER BY qta DESC LIMIT %d', $limit );
+		}
+
+		$rows = $wpdb->get_results( $sql );
+		$rows = is_array( $rows ) ? $rows : array();
+
+		set_transient( $cache_key, $rows, 30 * MINUTE_IN_SECONDS );
+
+		return $rows;
+	}
 }
 
 // phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching

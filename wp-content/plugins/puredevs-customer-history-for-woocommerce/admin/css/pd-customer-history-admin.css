@@ -534,31 +534,8 @@
 .pd-viewed-count tr th {
   padding: 10px 0 !important;
 }
-.vip_tags_container,
-.weekly_reports_container,
-.general_tags_container,
-.cart_tracking_container {
-  padding: 15px 10px !important;
-  /*margin:10px 0 !important;*/
-  margin-bottom: 40px !important;
-  border: 1px solid #d0cece;
-  width: 100%;
-}
-.vip_tags_container th,
-.weekly_reports_container th,
-.general_tags_container th,
-.cart_tracking_container th {
-  width: 50%;
-}
-.weekly_reports_container td label {
-  cursor: pointer;
-}
-.general_tags_heading,
-.weekly_reports_heading,
-.cart_tracking_heading {
-  background-color: #e1dede;
-}
-#pd-customer-history #settings .cart-settings-form {
+#pd-customer-history #settings .cart-settings-form,
+#pd-customer-history #settings .digest-segment-settings-form {
   margin-top: 40px;
 }
 .admin_page_pd-woo-conversion-funnel-stats .dashicons-no {
@@ -602,12 +579,6 @@
   }
   .pd-woo-panel table td {
     display: table-cell !important;
-  }
-  .vip_tags_container th,
-  .weekly_reports_container th,
-  .general_tags_container th,
-  .cart_tracking_container th {
-    width: 100%;
   }
 }
 
@@ -1160,4 +1131,186 @@
 	.customer-history_page_pd-woo-customers .wp-list-table .column-actions a.button {
 		flex: 1;
 	}
+}
+
+/* === Settings cards ===
+   Shared by the free General Settings / Reports sections and by the Pro sections
+   that hook pdwchs_settings_extra_sections (Abandoned Cart Tracking, Digest
+   Segment Sheet). Replaces the old nested-table look
+   (.general_tags_container / .weekly_reports_container / .cart_tracking_container). */
+
+/* A Pro section is one form that IS the card, so the .settings-form chrome is
+   dropped and each card region owns its own padding. */
+#pd-customer-history #settings .settings-form.pdwchs-settings-card {
+  padding: 0;
+}
+
+/* The free form holds two cards plus a save bar, so it is a transparent stack. */
+#pd-customer-history #settings .settings-form.pdwchs-settings-stack {
+  padding: 0;
+  background: transparent;
+}
+
+.pdwchs-settings-card {
+  margin-bottom: 24px;
+  background: #fff;
+  border: 1px solid #dcdcde;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.pdwchs-settings-card:last-child {
+  margin-bottom: 0;
+}
+
+.pdwchs-settings-card__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px 24px;
+  background: #f6f7f7;
+  border-bottom: 1px solid #dcdcde;
+}
+
+.pdwchs-settings-card__head .dashicons {
+  flex: none;
+  margin-top: 2px;
+  color: #2271b1;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.pdwchs-settings-card__head h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #1d2327;
+}
+
+.pdwchs-settings-card__head p {
+  margin: 3px 0 0;
+  color: #646970;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.pdwchs-settings-card__body {
+  padding: 20px 24px 4px;
+}
+
+.pdwchs-settings-card__foot {
+  padding: 16px 24px;
+  background: #f6f7f7;
+  border-top: 1px solid #dcdcde;
+}
+
+/* Save bar for the free form, which spans both of its cards. */
+.pdwchs-settings-actions {
+  padding: 16px 24px;
+  background: #fff;
+  border: 1px solid #dcdcde;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.pdwchs-settings-note {
+  margin: 0 0 14px;
+  max-width: 42em;
+  color: #50575e;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.pdwchs-settings-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 8px;
+  padding: 10px 14px;
+  max-width: 42em;
+  background: #fcf9e8;
+  border-left: 4px solid #dba617;
+  border-radius: 0 4px 4px 0;
+  color: #50575e;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.pdwchs-settings-warning .dashicons {
+  flex: none;
+  margin-top: 1px;
+  color: #dba617;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.pdwchs-field {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  padding: 16px 0;
+  border-top: 1px solid #f0f0f1;
+}
+
+.pdwchs-field:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.pdwchs-field__label {
+  flex: 0 0 220px;
+  padding-top: 3px;
+}
+
+.pdwchs-field__label label {
+  font-weight: 600;
+  color: #1d2327;
+}
+
+.pdwchs-field__control {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.pdwchs-field__control select {
+  min-width: 260px;
+  max-width: 100%;
+}
+
+.pdwchs-field__control .description {
+  margin: 6px 0 0;
+  color: #646970;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* One checkbox or radio and its own label, on a single clickable line. */
+.pdwchs-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 0 0 8px;
+  cursor: pointer;
+  color: #1d2327;
+  line-height: 1.5;
+}
+
+.pdwchs-check:last-child {
+  margin-bottom: 0;
+}
+
+.pdwchs-check input[type="checkbox"] {
+  flex: none;
+  margin: 2px 0 0;
+}
+
+@media screen and (max-width: 782px) {
+  .pdwchs-field__label {
+    flex: 1 1 100%;
+    padding-top: 0;
+  }
 }

@@ -321,7 +321,22 @@ class PDWCHS_Segments_Manager {
 		if ( ! is_array( $criteria ) ) {
 			return array();
 		}
-		return array_intersect_key( $criteria, array_flip( self::$allowed_criteria_keys ) );
+
+		/**
+		 * Filter the criteria keys a segment is allowed to store and apply.
+		 *
+		 * Listeners may append keys; the returned list is still intersected against
+		 * the submitted criteria, so a listener can widen the whitelist but can never
+		 * bypass it or inject a value. Removing a key is honoured too: a saved segment
+		 * whose criteria contain a key that is no longer allowed simply has that key
+		 * stripped here, which is what makes a lapsed licence degrade rather than fatal.
+		 *
+		 * @since 3.1.1
+		 * @param array $keys Allowed criteria keys. Default: self::$allowed_criteria_keys.
+		 */
+		$allowed = apply_filters( 'pdwchs_segment_criteria_keys', self::$allowed_criteria_keys );
+
+		return array_intersect_key( $criteria, array_flip( $allowed ) );
 	}
 
 	/**
@@ -472,6 +487,30 @@ class PDWCHS_Segments_Manager {
 		}
 
 		$customers = $this->pdwchs_apply_intelligence_filters( $customers, $criteria );
+
+		/**
+		 * Filter the customer set by criteria this free build does not know about.
+		 *
+		 * Fires once per pdwchs_apply_criteria_filters() run, which covers both heavy
+		 * callers — the saved-segment count and the CSV export. It is deliberately NOT
+		 * inside pdwchs_apply_intelligence_filters(), because that method is also called
+		 * directly by pdwchs_filter_customers_by_intelligence() for the customers list;
+		 * hooking it there would apply a listener twice on that path.
+		 *
+		 * Listeners must sanitise whatever they read out of $criteria. Here it is an
+		 * already-whitelisted array, but the same filter is applied on the customers list
+		 * with a raw $_GET superset, so a listener cannot assume either shape.
+		 *
+		 * $customers arrives mid-pipeline, after blocks that unset() without re-indexing,
+		 * so its keys are not contiguous. Do not assume $customers[0] exists or that
+		 * count() matches the last index. Returning the array re-indexed or not is fine —
+		 * free code re-indexes on the next line.
+		 *
+		 * @since 3.1.1
+		 * @param array $customers WP_User objects, keys not guaranteed contiguous.
+		 * @param array $criteria  Whitelisted criteria array.
+		 */
+		$customers = apply_filters( 'pdwchs_segment_apply_extra_criteria', $customers, $criteria );
 
 		$customers = array_values( $customers );
 

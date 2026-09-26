@@ -1,0 +1,213 @@
+/**
+ * Retention Metrics Panel Styles
+ *
+ * Styles for the retention panel on the Pro dashboard: the header, the two
+ * metric cards, the "registered customers only" note and the churn series
+ * table. Everything is scoped under .pdwchs-retention so the eight sibling
+ * widgets sharing this page are never touched.
+ *
+ * The shared shell (.pd-woo-panel, and the table rules that reach every
+ * descendant table) comes from custom-style, which is declared as this
+ * stylesheet's dependency.
+ *
+ * @package    PD_Customer_History
+ * @subpackage PD_Customer_History/pro/admin/css
+ * @since      3.1.0
+ */
+
+/* ==========================================================================
+   Panel shell
+   ========================================================================== */
+
+.pdwchs-retention-widget {
+    margin-bottom: 20px;
+}
+
+/* .pd-woo-panel-header has no base rule anywhere; every widget supplies its own. */
+.pdwchs-retention-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.pdwchs-retention-title-row h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.pdwchs-retention-body {
+    display: block;
+    transition: opacity 0.15s ease-in-out;
+}
+
+/* Busy is a dim, not a blank: the panel arrives populated and stays readable
+   while a preset switch is in flight. */
+.pdwchs-retention-body.pdwchs-retention-is-busy {
+    opacity: 0.45;
+}
+
+/* ==========================================================================
+   Preset selector
+   ========================================================================== */
+
+.pdwchs-retention-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pdwchs-retention-preset {
+    min-width: 140px;
+    padding: 4px 8px;
+    border: 1px solid #ccd0d4;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #1e293b;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.pdwchs-retention-preset:focus {
+    outline: 2px solid #2271b1;
+    outline-offset: 1px;
+    border-color: #2271b1;
+}
+
+.pdwchs-retention-preset:disabled {
+    cursor: default;
+    opacity: 0.6;
+}
+
+/* ==========================================================================
+   Chart
+   ========================================================================== */
+
+/* Chart.js needs a sized parent when maintainAspectRatio is false. */
+.pdwchs-retention-chart-wrap {
+    position: relative;
+    height: 260px;
+    margin-bottom: 16px;
+}
+
+/* ==========================================================================
+   Error state
+   ========================================================================== */
+
+.pdwchs-retention-error {
+    margin-bottom: 12px;
+}
+
+.pdwchs-retention-error p {
+    margin: 0;
+    padding: 8px 12px;
+    border-left: 4px solid #d63638;
+    border-radius: 2px;
+    font-size: 13px;
+    color: #1e293b;
+    background: #fcf0f1;
+}
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+
+.pdwchs-retention-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 8px;
+}
+
+.pdwchs-retention-card {
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: #f8fafc;
+}
+
+.pdwchs-retention-card-label {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.pdwchs-retention-card-value {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #1e293b;
+}
+
+.pdwchs-retention-undefined {
+    color: #94a3b8;
+    cursor: help;
+}
+
+/* ==========================================================================
+   Note and empty state
+   ========================================================================== */
+
+.pdwchs-retention-note {
+    margin: 0 0 12px;
+    font-size: 11px;
+    font-style: italic;
+    color: #666;
+}
+
+.pdwchs-retention-empty {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* ==========================================================================
+   Series table
+   ========================================================================== */
+
+/* table-layout is fixed by the shared .pd-woo-panel table rule, so the four
+   column widths are declared rather than left to the content. */
+.pdwchs-retention-series-table .pdwchs-retention-col-period {
+    width: 46%;
+}
+
+.pdwchs-retention-series-table .pdwchs-retention-col-num {
+    width: 18%;
+    text-align: right;
+}
+
+.pdwchs-retention-series-table .pdwchs-retention-cell-period {
+    font-variant-numeric: tabular-nums;
+}
+
+.pdwchs-retention-series-table .pdwchs-retention-cell-num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+@media screen and (max-width: 782px) {
+    .pdwchs-retention-card {
+        min-width: 100%;
+    }
+
+    .pdwchs-retention-chart-wrap {
+        height: 200px;
+    }
+
+    .pdwchs-retention-series-table .pdwchs-retention-col-period {
+        width: 40%;
+    }
+
+    .pdwchs-retention-series-table .pdwchs-retention-col-num {
+        width: 20%;
+    }
+}

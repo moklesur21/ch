@@ -1,0 +1,207 @@
+/* Customer Activity Timeline — profile panel internals.
+   The .pd-ch-panel shell itself is owned by custom-style. */
+
+/* Scroll container: a 25-event page must not push the rest of the page down. */
+.pdwchs-timeline-panel #section-timeline {
+	max-height: 480px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+/* The vertical rail.
+   The left margin is what the icons hang into: they are pulled left of the rail
+   with a negative margin, and the scroll container above has to clip horizontally
+   (overflow-y: auto forces overflow-x to compute to a scrolling value), so without
+   this gutter the left half of every glyph is cut off. */
+.pdwchs-timeline-list {
+	margin: 8px 0 4px 14px;
+	padding: 0 0 0 20px;
+	list-style: none;
+	border-left: 2px solid #e2e4e7;
+}
+
+/* Rows */
+.pdwchs-timeline-item {
+	position: relative;
+	display: flex;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0;
+	padding: 8px 4px 8px 0;
+	border-bottom: 1px solid #f1f1f1;
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+.pdwchs-timeline-item:last-child {
+	border-bottom: none;
+}
+
+/* Icon sitting on the rail.
+   -29px centres the 20px box on the 2px border: the content edge is 20px right of
+   the rail, so the glyph overhangs it by 9px and still clears the 14px gutter. */
+.pdwchs-timeline-icon {
+	flex: 0 0 auto;
+	margin-left: -29px;
+	width: 20px;
+	height: 20px;
+	font-size: 16px;
+	line-height: 20px;
+	text-align: center;
+	border-radius: 50%;
+	background-color: #fff;
+	color: #7f8c8d;
+	overflow: visible;
+}
+
+/* Icon colour per event type */
+.pdwchs-timeline-searched .pdwchs-timeline-icon {
+	color: #5d6d7e;
+}
+
+.pdwchs-timeline-viewed .pdwchs-timeline-icon {
+	color: #1a6a8c;
+}
+
+.pdwchs-timeline-added_to_cart .pdwchs-timeline-icon {
+	color: #b7770d;
+}
+
+.pdwchs-timeline-ordered .pdwchs-timeline-icon {
+	color: #1e8449;
+}
+
+.pdwchs-timeline-cart_abandoned .pdwchs-timeline-icon {
+	color: #c0392b;
+}
+
+.pdwchs-timeline-cart_recovered .pdwchs-timeline-icon {
+	color: #1e8449;
+}
+
+/* Label — takes the free space, wraps rather than scrolling sideways */
+.pdwchs-timeline-label {
+	flex: 1 1 260px;
+	min-width: 0;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	word-break: break-word;
+}
+
+.pdwchs-timeline-label a {
+	text-decoration: none;
+}
+
+/* Timestamp */
+.pdwchs-timeline-time {
+	flex: 0 0 auto;
+	margin-left: auto;
+	color: #7f8c8d;
+	font-size: 12px;
+	white-space: nowrap;
+}
+
+/* Order status badge — colours keyed by class, never from data */
+.pdwchs-timeline-status {
+	display: inline-block;
+	padding: 1px 7px;
+	border-radius: 10px;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	background-color: #eaecee;
+	color: #5d6d7e;
+}
+
+.pdwchs-timeline-status.pdwchs-status-completed {
+	background-color: #d5f5e3;
+	color: #1e8449;
+}
+
+.pdwchs-timeline-status.pdwchs-status-processing {
+	background-color: #d4e6f1;
+	color: #1a6a8c;
+}
+
+.pdwchs-timeline-status.pdwchs-status-on-hold,
+.pdwchs-timeline-status.pdwchs-status-pending {
+	background-color: #fdebd0;
+	color: #b7770d;
+}
+
+.pdwchs-timeline-status.pdwchs-status-cancelled,
+.pdwchs-timeline-status.pdwchs-status-failed,
+.pdwchs-timeline-status.pdwchs-status-refunded {
+	background-color: #fadbd8;
+	color: #c0392b;
+}
+
+/* Empty state */
+.pdwchs-timeline-empty {
+	margin: 10px 4px;
+	color: #5d6d7e;
+}
+
+.pdwchs-timeline-empty .description {
+	font-size: 12px;
+	font-style: italic;
+}
+
+/* --- R15-11B: filter bar, footer and loading state --------------------------- */
+
+/* Filter bar. Wraps on a narrow screen rather than pushing the panel sideways —
+   #section-timeline clips horizontally, so an overflowing row would be unreachable. */
+.pdwchs-timeline-panel .pdwchs-timeline-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 10px 4px 4px;
+}
+
+.pdwchs-timeline-panel .pdwchs-timeline-filter {
+	font-size: 12px;
+	line-height: 2;
+	height: auto;
+	padding: 0 10px;
+}
+
+/* Selected state: background AND weight, never colour alone — a colour-only cue is
+   invisible to a red/green-blind reader and to a high-contrast forced palette. */
+.pdwchs-timeline-panel .pdwchs-timeline-filter.is-active {
+	background-color: #2271b1;
+	border-color: #2271b1;
+	color: #fff;
+	font-weight: 600;
+}
+
+.pdwchs-timeline-panel .pdwchs-timeline-filter.is-active:hover,
+.pdwchs-timeline-panel .pdwchs-timeline-filter.is-active:focus {
+	background-color: #135e96;
+	border-color: #135e96;
+	color: #fff;
+}
+
+/* Footer: the "Load older" button and the aria-live status line beside it. */
+.pdwchs-timeline-panel .pdwchs-timeline-footer {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 10px 4px 4px;
+}
+
+.pdwchs-timeline-panel .pdwchs-timeline-status-msg {
+	color: #5d6d7e;
+	font-size: 12px;
+	font-style: italic;
+}
+
+/* In-flight treatment. Applied to the panel, read on the list and the controls, so a
+   request always has a visible state and never looks like a dead click. */
+.pdwchs-timeline-panel.is-loading .pdwchs-timeline-list,
+.pdwchs-timeline-panel.is-loading .pdwchs-timeline-filters,
+.pdwchs-timeline-panel.is-loading .pdwchs-timeline-more {
+	opacity: 0.5;
+	cursor: wait;
+}

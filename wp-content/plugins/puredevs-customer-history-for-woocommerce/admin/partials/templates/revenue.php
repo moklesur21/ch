@@ -25,6 +25,7 @@ $pdwchs_min_start = PDWCHS_Data_Window::pdwchs_min_start();
 
 $pdwchs_overview = $pdwchs_rev->pdwchs_get_revenue_overview( $pdwchs_rev_start, $pdwchs_rev_end );
 $pdwchs_series   = $pdwchs_rev->pdwchs_get_revenue_over_time( $pdwchs_rev_start, $pdwchs_rev_end, 'daily' );
+$pdwchs_repeat   = $pdwchs_rev->pdwchs_get_repeat_purchase_rate( $pdwchs_rev_start, $pdwchs_rev_end );
 
 $pdwchs_labels = array();
 $pdwchs_values = array();
@@ -82,6 +83,22 @@ $pdwchs_change = function ( $val ) {
 			<div style="color:#666;font-size:13px;"><?php echo esc_html__( 'Customers', 'puredevs-customer-history-for-woocommerce' ); ?></div>
 			<div style="font-size:22px;font-weight:600;"><?php echo esc_html( number_format_i18n( $pdwchs_overview['total_customers'] ) ); ?></div>
 			<?php echo wp_kses_post( $pdwchs_change( $pdwchs_overview['comparison']['total_customers_change'] ) ); ?>
+		</div>
+		<div class="pd-woo-panel" style="flex:1;min-width:180px;padding:16px;">
+			<div style="color:#666;font-size:13px;"><?php echo esc_html__( 'Repeat Purchase Rate', 'puredevs-customer-history-for-woocommerce' ); ?></div>
+			<div style="font-size:22px;font-weight:600;">
+				<?php
+				echo esc_html(
+					sprintf(
+						/* translators: %s: repeat purchase rate, already formatted to one decimal place (e.g. "42.1"). */
+						__( '%s%%', 'puredevs-customer-history-for-woocommerce' ),
+						number_format_i18n( $pdwchs_repeat['rate'], 1 )
+					)
+				);
+				?>
+			</div>
+			<?php echo wp_kses_post( $pdwchs_change( $pdwchs_repeat['change'] ) ); ?>
+			<div style="color:#666;font-size:11px;margin-top:4px;"><?php echo esc_html__( 'Registered customers only', 'puredevs-customer-history-for-woocommerce' ); ?></div>
 		</div>
 	</div>
 

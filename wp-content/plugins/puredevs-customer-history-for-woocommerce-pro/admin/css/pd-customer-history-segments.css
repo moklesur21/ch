@@ -91,6 +91,54 @@
 	font-size: 12px;
 }
 
+/* R15-27B: Export preset selector */
+.pdwchs-export-preset {
+	margin-right: 4px;
+	font-size: 12px;
+	max-width: 140px;
+	vertical-align: middle;
+}
+
+/* R15-27B: the actions cell holds up to four controls once a second preset is registered.
+   Inline-block staggered them — the select is wider than the buttons, so each item dropped
+   to its own line at its own indent. Flex puts them on one baseline with even spacing.
+
+   The flex container is the inner .pdwchs-segment-actions wrapper, never the <td>: a cell
+   set to display:flex is no longer a table cell, so the fixed table layout stops sizing it
+   and the last button paints outside the table's right edge. For the same reason the column
+   is given `width`, not `min-width` — in a fixed layout a min-width larger than the column's
+   share widens the whole table past its container instead of being absorbed.
+
+   Below 783px core stacks every cell into its own block and prefixes it with the column
+   name; the wrapper's flex still applies there and wraps within that block. */
+.pdwchs-segment-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+}
+
+/* The per-item margins are what the gap replaces; both together double-space the controls. */
+.pdwchs-segment-actions .button,
+.pdwchs-segment-actions .pdwchs-export-preset {
+	margin: 0;
+}
+
+@media screen and (min-width: 783px) {
+
+	#segments .wp-list-table .column-actions {
+		width: 280px;
+	}
+
+	.pdwchs-segment-actions .pdwchs-export-preset {
+		min-width: 120px;
+		height: 30px;
+		line-height: 28px;
+		padding-top: 0;
+		padding-bottom: 0;
+	}
+}
+
 .pdwchs-delete-segment {
 	color: #b32d2e;
 	border-color: #b32d2e;

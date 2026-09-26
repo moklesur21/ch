@@ -136,106 +136,108 @@ class PDWCHS_Abandoned_Carts_List_Table extends WP_List_Table {
 			return;
 		}
 		?>
-		<form action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>" method="post" class="settings-form cart-settings-form">
+		<form action="<?php echo esc_url( admin_url( 'options.php' ) ); ?>" method="post" class="settings-form pdwchs-settings-card cart-settings-form">
 			<?php settings_fields( 'pdwchs_cart_settings' ); ?>
-			<table class="form-table">
-				<tbody>
-					<tr class="cart_tracking_section">
-						<table class="cart_tracking_container">
-							<tr class="cart_tracking_heading">
-								<th colspan="2">
-									<h2><?php echo esc_html__( 'Abandoned Cart Tracking', 'puredevs-customer-history-for-woocommerce' ); ?></h2>
-								</th>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<p><?php echo esc_html__( 'Configure how WooCommerce cart activity is observed and stored. This feature records cart snapshots for reporting only — no recovery emails are sent and no coupons are generated. Recovery actions belong in the Automation Add-on.', 'puredevs-customer-history-for-woocommerce' ); ?></p>
-								</td>
-							</tr>
-							<tr><td><br></td></tr>
-							<tr>
-								<th scope="row">
-									<label for="pdwchs_cart_tracking_enabled">
-										<?php echo esc_html__( 'Enable cart tracking :', 'puredevs-customer-history-for-woocommerce' ); ?>
-									</label>
-								</th>
-								<td>
-									<input type="checkbox"
-									       id="pdwchs_cart_tracking_enabled"
-									       name="pdwchs_cart_tracking_enabled"
-									       value="1"
-									       <?php checked( 1, get_option( 'pdwchs_cart_tracking_enabled', 1 ) ); ?>>
-									<span class="description">
-										<?php echo esc_html__( 'When unchecked, no cart rows are written or updated.', 'puredevs-customer-history-for-woocommerce' ); ?>
-									</span>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">
-									<label for="pdwchs_cart_email_capture_enabled">
-										<?php echo esc_html__( 'Enable email early capture :', 'puredevs-customer-history-for-woocommerce' ); ?>
-									</label>
-								</th>
-								<td>
-									<input type="checkbox"
-									       id="pdwchs_cart_email_capture_enabled"
-									       name="pdwchs_cart_email_capture_enabled"
-									       value="1"
-									       <?php checked( 1, get_option( 'pdwchs_cart_email_capture_enabled', 1 ) ); ?>>
-									<span class="description">
-										<?php echo esc_html__( 'Capture the billing email on the checkout page before the order is placed.', 'puredevs-customer-history-for-woocommerce' ); ?>
-									</span>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">
-									<label for="pdwchs_cart_abandonment_timeout_minutes">
-										<?php echo esc_html__( 'Abandonment timeout (minutes) :', 'puredevs-customer-history-for-woocommerce' ); ?>
-									</label>
-								</th>
-								<td>
-									<input type="number"
-									       id="pdwchs_cart_abandonment_timeout_minutes"
-									       name="pdwchs_cart_abandonment_timeout_minutes"
-									       class="small-text"
-									       min="5"
-									       value="<?php echo esc_attr( get_option( 'pdwchs_cart_abandonment_timeout_minutes', 60 ) ); ?>">
-									<span class="description">
-										<?php echo esc_html__( 'Minutes of inactivity before a cart is marked abandoned. Minimum 5.', 'puredevs-customer-history-for-woocommerce' ); ?>
-									</span>
-								</td>
-							</tr>
-							<tr>
-								<th scope="row">
-									<label for="pdwchs_cart_cleanup_days">
-										<?php echo esc_html__( 'Data retention (days) :', 'puredevs-customer-history-for-woocommerce' ); ?>
-									</label>
-								</th>
-								<td>
-									<input type="number"
-									       id="pdwchs_cart_cleanup_days"
-									       name="pdwchs_cart_cleanup_days"
-									       class="small-text"
-									       min="7"
-									       value="<?php echo esc_attr( get_option( 'pdwchs_cart_cleanup_days', 90 ) ); ?>">
-									<span class="description">
-										<?php echo esc_html__( 'Cart rows older than this many days are deleted by the cleanup cron. Minimum 7.', 'puredevs-customer-history-for-woocommerce' ); ?>
-									</span>
-								</td>
-							</tr>
-							<tr><td><br></td></tr>
-						</table>
-					</tr>
-					<tr>
-						<th scope="row">
-							<input type="submit"
-							       value="<?php echo esc_attr__( 'Save Cart Settings', 'puredevs-customer-history-for-woocommerce' ); ?>"
-							       class="button button-primary button-large">
-						</th>
-						<td></td>
-					</tr>
-				</tbody>
-			</table>
+
+			<div class="pdwchs-settings-card__head">
+				<span class="dashicons dashicons-cart" aria-hidden="true"></span>
+				<div class="pdwchs-settings-card__head-text">
+					<h2><?php echo esc_html__( 'Abandoned Cart Tracking', 'puredevs-customer-history-for-woocommerce' ); ?></h2>
+					<p><?php echo esc_html__( 'Observe and store WooCommerce cart activity for reporting.', 'puredevs-customer-history-for-woocommerce' ); ?></p>
+				</div>
+			</div>
+
+			<div class="pdwchs-settings-card__body">
+				<p class="pdwchs-settings-note">
+					<?php echo esc_html__( 'Configure how WooCommerce cart activity is observed and stored. This feature records cart snapshots for reporting only — no recovery emails are sent and no coupons are generated. Recovery actions belong in the Automation Add-on.', 'puredevs-customer-history-for-woocommerce' ); ?>
+				</p>
+
+				<div class="pdwchs-field">
+					<div class="pdwchs-field__label">
+						<label for="pdwchs_cart_tracking_enabled">
+							<?php echo esc_html__( 'Cart tracking', 'puredevs-customer-history-for-woocommerce' ); ?>
+						</label>
+					</div>
+					<div class="pdwchs-field__control">
+						<label class="pdwchs-check" for="pdwchs_cart_tracking_enabled">
+							<input type="checkbox"
+							       id="pdwchs_cart_tracking_enabled"
+							       name="pdwchs_cart_tracking_enabled"
+							       value="1"
+							       <?php checked( 1, get_option( 'pdwchs_cart_tracking_enabled', 1 ) ); ?>>
+							<span><?php echo esc_html__( 'Record cart snapshots', 'puredevs-customer-history-for-woocommerce' ); ?></span>
+						</label>
+						<p class="description">
+							<?php echo esc_html__( 'When unchecked, no cart rows are written or updated.', 'puredevs-customer-history-for-woocommerce' ); ?>
+						</p>
+					</div>
+				</div>
+
+				<div class="pdwchs-field">
+					<div class="pdwchs-field__label">
+						<label for="pdwchs_cart_email_capture_enabled">
+							<?php echo esc_html__( 'Email early capture', 'puredevs-customer-history-for-woocommerce' ); ?>
+						</label>
+					</div>
+					<div class="pdwchs-field__control">
+						<label class="pdwchs-check" for="pdwchs_cart_email_capture_enabled">
+							<input type="checkbox"
+							       id="pdwchs_cart_email_capture_enabled"
+							       name="pdwchs_cart_email_capture_enabled"
+							       value="1"
+							       <?php checked( 1, get_option( 'pdwchs_cart_email_capture_enabled', 1 ) ); ?>>
+							<span><?php echo esc_html__( 'Capture the billing email at checkout', 'puredevs-customer-history-for-woocommerce' ); ?></span>
+						</label>
+						<p class="description">
+							<?php echo esc_html__( 'Capture the billing email on the checkout page before the order is placed.', 'puredevs-customer-history-for-woocommerce' ); ?>
+						</p>
+					</div>
+				</div>
+
+				<div class="pdwchs-field">
+					<div class="pdwchs-field__label">
+						<label for="pdwchs_cart_abandonment_timeout_minutes">
+							<?php echo esc_html__( 'Abandonment timeout (minutes)', 'puredevs-customer-history-for-woocommerce' ); ?>
+						</label>
+					</div>
+					<div class="pdwchs-field__control">
+						<input type="number"
+						       id="pdwchs_cart_abandonment_timeout_minutes"
+						       name="pdwchs_cart_abandonment_timeout_minutes"
+						       class="small-text"
+						       min="5"
+						       value="<?php echo esc_attr( get_option( 'pdwchs_cart_abandonment_timeout_minutes', 60 ) ); ?>">
+						<p class="description">
+							<?php echo esc_html__( 'Minutes of inactivity before a cart is marked abandoned. Minimum 5.', 'puredevs-customer-history-for-woocommerce' ); ?>
+						</p>
+					</div>
+				</div>
+
+				<div class="pdwchs-field">
+					<div class="pdwchs-field__label">
+						<label for="pdwchs_cart_cleanup_days">
+							<?php echo esc_html__( 'Data retention (days)', 'puredevs-customer-history-for-woocommerce' ); ?>
+						</label>
+					</div>
+					<div class="pdwchs-field__control">
+						<input type="number"
+						       id="pdwchs_cart_cleanup_days"
+						       name="pdwchs_cart_cleanup_days"
+						       class="small-text"
+						       min="7"
+						       value="<?php echo esc_attr( get_option( 'pdwchs_cart_cleanup_days', 90 ) ); ?>">
+						<p class="description">
+							<?php echo esc_html__( 'Cart rows older than this many days are deleted by the cleanup cron. Minimum 7.', 'puredevs-customer-history-for-woocommerce' ); ?>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="pdwchs-settings-card__foot">
+				<input type="submit"
+				       value="<?php echo esc_attr__( 'Save Cart Settings', 'puredevs-customer-history-for-woocommerce' ); ?>"
+				       class="button button-primary button-large">
+			</div>
 		</form>
 		<?php
 	}

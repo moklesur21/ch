@@ -22,6 +22,11 @@ $pdwchs_current_page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash(
 		</a> |
 	</li>
 	<li>
+		<a href="admin.php?page=pd-woo-zero-result-searches" class="<?php echo $pdwchs_current_page === 'pd-woo-zero-result-searches' ? 'current' : ''; ?>">
+			<?php echo esc_html__( 'Zero-Result Searches', 'puredevs-customer-history-for-woocommerce' ); ?>
+		</a> |
+	</li>
+	<li>
 		<a href="admin.php?page=pd-woo-product-view-stats" class="<?php echo $pdwchs_current_page === 'pd-woo-product-view-stats' ? 'current' : ''; ?>">
 			<?php echo esc_html__( 'Viewed vs Purchased Ratio', 'puredevs-customer-history-for-woocommerce' ); ?>
 		</a> |
@@ -42,8 +47,18 @@ $pdwchs_current_page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash(
 		</a> |
 	</li>
 	<li>
+		<a href="admin.php?page=pd-woo-cohorts" class="<?php echo $pdwchs_current_page === 'pd-woo-cohorts' ? 'current' : ''; ?>">
+			<?php echo esc_html__( 'Cohort Retention', 'puredevs-customer-history-for-woocommerce' ); ?>
+		</a> |
+	</li>
+	<li>
 		<a href="admin.php?page=pd-woo-product-correlations" class="<?php echo $pdwchs_current_page === 'pd-woo-product-correlations' ? 'current' : ''; ?>">
 			<?php echo esc_html__( 'Frequently Bought Together', 'puredevs-customer-history-for-woocommerce' ); ?>
+		</a> |
+	</li>
+	<li>
+		<a href="admin.php?page=pd-woo-geographic" class="<?php echo $pdwchs_current_page === 'pd-woo-geographic' ? 'current' : ''; ?>">
+			<?php echo esc_html__( 'Geographic Performance', 'puredevs-customer-history-for-woocommerce' ); ?>
 		</a> |
 	</li>
 	<?php

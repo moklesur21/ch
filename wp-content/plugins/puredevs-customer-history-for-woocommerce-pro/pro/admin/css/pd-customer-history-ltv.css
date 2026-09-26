@@ -1,0 +1,175 @@
+/**
+ * LTV Distribution Panel Styles
+ *
+ * Page-scoped: enqueued only on admin.php?page=pd-woo-dashboard. Everything is scoped under
+ * .pdwchs-ltv so the eight sibling widgets sharing this page are never touched.
+ *
+ * The shared shell (.pd-woo-panel, and the table rules that reach every descendant table) comes from
+ * custom-style, which is declared as this stylesheet's dependency. No !important anywhere — the rules
+ * below only ever extend that shell, never fight it.
+ *
+ * @package    PD_Customer_History
+ * @subpackage PD_Customer_History/pro/admin/css
+ * @since      3.1.1
+ */
+
+/* ==========================================================================
+   Panel shell
+   ========================================================================== */
+
+.pdwchs-ltv-widget {
+    margin-bottom: 20px;
+}
+
+/* .pd-woo-panel-header has no base rule anywhere; every widget supplies its own. */
+
+.pdwchs-ltv-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.pdwchs-ltv-header h2 {
+    margin: 0;
+    font-size: 15px;
+}
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+
+.pdwchs-ltv-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.pdwchs-ltv-card {
+    display: flex;
+    flex: 1 1 180px;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 180px;
+    padding: 12px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: #f8fafc;
+}
+
+.pdwchs-ltv-card-label {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.pdwchs-ltv-card-value {
+    color: #1e293b;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+/* Pairs with the title= hint: an em-dash the reader can interrogate. */
+
+.pdwchs-ltv-undefined {
+    color: #94a3b8;
+    cursor: help;
+}
+
+/* ==========================================================================
+   Customer total
+   ========================================================================== */
+
+.pdwchs-ltv-total {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px;
+    margin: 14px 0 4px;
+}
+
+.pdwchs-ltv-total-value {
+    color: #1e293b;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.pdwchs-ltv-total-label {
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   Empty state
+   ========================================================================== */
+
+.pdwchs-ltv-empty {
+    margin: 0;
+    color: #64748b;
+}
+
+/* ==========================================================================
+   Histogram
+   ========================================================================== */
+
+/* Chart.js needs a sized parent when maintainAspectRatio is false. */
+
+.pdwchs-ltv-chart-wrap {
+    position: relative;
+    height: 260px;
+    margin-top: 14px;
+}
+
+/* So the canvas never overflows the panel on a narrow screen. */
+
+.pdwchs-ltv-chart-wrap canvas {
+    max-width: 100%;
+}
+
+/* ==========================================================================
+   Bracket table
+
+   table-layout is fixed by the shared .pd-woo-panel table rule, so the three
+   column widths are declared rather than left to the content.
+   ========================================================================== */
+
+.pdwchs-ltv-bracket-table {
+    margin-top: 12px;
+}
+
+.pdwchs-ltv-bracket-table .pdwchs-ltv-col-bracket {
+    width: 56%;
+}
+
+.pdwchs-ltv-bracket-table .pdwchs-ltv-col-num {
+    width: 22%;
+    text-align: right;
+}
+
+.pdwchs-ltv-bracket-table .pdwchs-ltv-cell-bracket {
+    font-variant-numeric: tabular-nums;
+}
+
+.pdwchs-ltv-bracket-table .pdwchs-ltv-cell-num {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+/* ==========================================================================
+   Narrow screens
+   ========================================================================== */
+
+@media screen and (max-width: 782px) {
+
+    .pdwchs-ltv-card {
+        min-width: 100%;
+    }
+
+    .pdwchs-ltv-bracket-table .pdwchs-ltv-col-bracket {
+        width: 46%;
+    }
+
+    .pdwchs-ltv-bracket-table .pdwchs-ltv-col-num {
+        width: 27%;
+    }
+}

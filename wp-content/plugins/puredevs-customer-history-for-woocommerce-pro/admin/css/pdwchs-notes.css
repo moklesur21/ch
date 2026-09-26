@@ -1,0 +1,103 @@
+/**
+ * Customer notes panel (R15-05).
+ *
+ * Internals only — the .pd-ch-panel shell is styled by
+ * admin/css/pd-customer-history-admin.css.
+ */
+
+.pdwchs-notes-panel .pdwchs-notes-count {
+	display: inline-block;
+	min-width: 1.5em;
+	margin-left: 0.5em;
+	padding: 0 0.5em;
+	border-radius: 1rem;
+	background-color: #f0f0f1;
+	color: #50575e;
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 1.8;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.pdwchs-notes-panel .pdwchs-notes-add {
+	margin: 0 1rem 1.5rem 0;
+}
+
+.pdwchs-notes-panel .pdwchs-note-input {
+	display: block;
+	width: 100%;
+	min-height: 70px;
+	margin-bottom: 8px;
+	padding: 8px;
+	border: 1px solid #dcdcde;
+	border-radius: 0.3rem;
+	box-sizing: border-box;
+	resize: vertical;
+}
+
+.pdwchs-notes-panel .pdwchs-crm-error {
+	margin-top: 8px;
+	padding: 8px 10px;
+	border-left: 4px solid #d63638;
+	background-color: #fcf0f1;
+	color: #8a1f22;
+	font-size: 13px;
+}
+
+.pdwchs-notes-panel .pdwchs-notes-list {
+	margin: 0 1rem 1.5rem 0;
+	padding: 0;
+	list-style: none;
+}
+
+.pdwchs-notes-panel .pdwchs-note-row {
+	margin: 0 0 10px;
+	padding: 10px 12px;
+	border: 1px solid #dcdcde;
+	border-radius: 0.3rem;
+	background-color: #fbfbfc;
+}
+
+.pdwchs-notes-panel .pdwchs-note-meta {
+	display: flex;
+	align-items: center;
+	margin-bottom: 6px;
+	font-size: 12px;
+	color: #646970;
+}
+
+.pdwchs-notes-panel .pdwchs-note-author {
+	font-weight: bold;
+}
+
+.pdwchs-notes-panel .pdwchs-note-date {
+	margin-left: 8px;
+}
+
+.pdwchs-notes-panel .pdwchs-note-delete {
+	margin-left: auto;
+	padding: 0 4px;
+	border: 0;
+	background: none;
+	color: #b32d2e;
+	font-size: 16px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.pdwchs-notes-panel .pdwchs-note-delete:hover,
+.pdwchs-notes-panel .pdwchs-note-delete:focus {
+	color: #8a1f22;
+}
+
+.pdwchs-notes-panel .pdwchs-note-body {
+	word-wrap: break-word;
+	line-height: 1.5;
+}
+
+.pdwchs-notes-panel .pdwchs-notes-empty {
+	margin: 0 1rem 1.5rem 0;
+	color: #646970;
+	font-style: italic;
+}

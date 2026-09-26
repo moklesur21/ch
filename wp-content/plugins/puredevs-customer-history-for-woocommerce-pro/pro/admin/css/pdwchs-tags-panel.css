@@ -1,0 +1,102 @@
+/**
+ * Manual Tags — customer profile panel internals.
+ *
+ * The .pd-ch-panel shell itself is owned by custom-style; everything here is
+ * scoped under .pdwchs-tags so a stray selector cannot reach the Notes panel
+ * or the five intelligence cards sharing this page.
+ *
+ * @package    PD_Customer_History
+ * @subpackage Pro/CRM
+ * @since      3.1.1
+ */
+
+/* ==========================================================================
+   Hint line — what separates these from the automatic Behavioral Tags card
+   ========================================================================== */
+
+.pdwchs-tags-hint {
+	margin: -4px 0 12px;
+	color: #646970;
+	font-size: 12px;
+	font-style: italic;
+}
+
+/* ==========================================================================
+   Add row
+   ========================================================================== */
+
+.pdwchs-tags-add {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.pdwchs-tags-add .pdwchs-tag-input {
+	flex: 1 1 220px;
+	min-width: 160px;
+	max-width: 360px;
+}
+
+/* The error div is full width so a message never squeezes the input. */
+.pdwchs-tags-add .pdwchs-crm-error {
+	flex: 1 0 100%;
+}
+
+/* ==========================================================================
+   Chips
+   ========================================================================== */
+
+.pdwchs-tags-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.pdwchs-tag-chip {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin: 0;
+	padding: 3px 6px 3px 10px;
+	border: 1px solid #dcdcde;
+	border-radius: 12px;
+	background: #f6f7f7;
+	font-size: 12px;
+	line-height: 1.6;
+}
+
+.pdwchs-tag-chip .pdwchs-tag-name {
+	word-break: break-word;
+}
+
+/* Reset the chip's × out of the admin button styling it would otherwise
+   inherit; it is an affordance on the chip, not a button in its own right. */
+.pdwchs-tag-remove {
+	padding: 0;
+	border: 0;
+	background: none;
+	color: #787c82;
+	font-size: 15px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.pdwchs-tag-remove:hover,
+.pdwchs-tag-remove:focus {
+	color: #d63638;
+}
+
+/* ==========================================================================
+   Empty state
+   ========================================================================== */
+
+.pdwchs-tags-empty {
+	margin: 4px 0 0;
+	color: #646970;
+	font-style: italic;
+}

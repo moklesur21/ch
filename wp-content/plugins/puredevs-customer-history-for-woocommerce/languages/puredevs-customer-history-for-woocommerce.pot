@@ -3,7 +3,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PureDevs Customer History for WooCommerce 2.2.0\n"
+"Project-Id-Version: PureDevs Customer History for WooCommerce 3.1.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/puredevs-customer-"
 "history-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
@@ -11,12 +11,23 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-07-27 11:10+0000\n"
+"POT-Creation-Date: 2026-08-20 10:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: Loco https://localise.biz/\n"
 "X-Domain: puredevs-customer-history-for-woocommerce\n"
 "Language: \n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;"
+
+#: pro/Stats/Stats-List-Table.php:91 pro/Stats/Stats-List-Table.php:92
+#: pro/Stats/templates/stats-tax-view.php:19
+msgid " View"
+msgstr ""
+
+#. %1$d: total orders, %2$s: frequency description
+#: pro/Intelligence/RFM.php:646
+#, php-format
+msgid "%1$d total orders (%2$s)"
+msgstr ""
 
 #. 1: Formatted date and time, 2: Raw Unix timestamp
 #: includes/class-pdwchs-telemetry.php:100
@@ -25,9 +36,110 @@ msgid "%1$s (timestamp %2$s)"
 msgstr ""
 
 #. %1$s is lifecycle stage name, %2$d is number of days
-#: includes/class-pd-customer-history-customers.php:555
+#: includes/class-pd-customer-history-customers.php:619
 #, php-format
 msgid "%1$s - %2$d days in stage"
+msgstr ""
+
+#. 1: Customer name, 2: Churn score
+#: pro/Intelligence/Churn-Alerts.php:318
+#, php-format
+msgid "%1$s has a churn risk score of %2$d/100."
+msgstr ""
+
+#. 1: Risk level, 2: Customer name
+#: pro/Intelligence/Churn-Alerts.php:271
+#, php-format
+msgid "%1$s Risk Alert: %2$s"
+msgstr ""
+
+#. 1: lower bound of a spend bracket, 2: upper bound.
+#. 1: range start date, 2: range end date.
+#: pro/Analytics/Revenue/LTV-Panel.php:222
+#: pro/Analytics/Geographic/templates/geographic-report.php:108
+#, php-format
+msgid "%1$s to %2$s"
+msgstr ""
+
+#. 1: recency band description, 2: frequency band description, 3: number of customers.
+#: pro/Intelligence/templates/rfm-matrix-widget.php:124
+#, php-format
+msgid "%1$s · %2$s — %3$s customers"
+msgstr ""
+
+#: pro/Intelligence/Behavioral.php:1702
+msgid "%d customers are most active during night hours"
+msgstr ""
+
+#: pro/Intelligence/Behavioral.php:1693
+msgid "%d customers need cart recovery emails"
+msgstr ""
+
+#: pro/Intelligence/Behavioral.php:1696
+msgid "%d customers respond well to discount offers"
+msgstr ""
+
+#: pro/Intelligence/Behavioral.php:1699
+msgid "%d customers shop primarily on weekends"
+msgstr ""
+
+#. %d: Number of days
+#: pro/Intelligence/templates/churn-prediction.php:196
+msgid "%d days ago"
+msgstr ""
+
+#. %d: Days overdue
+#: pro/Intelligence/templates/customer-churn-card.php:241
+msgid "%d days overdue for purchase"
+msgstr ""
+
+#. %d: Days since last order
+#: pro/Intelligence/templates/customer-churn-card.php:226
+msgid "%d days since last order"
+msgstr ""
+
+#. %d: Number of orders
+#: pro/Intelligence/templates/churn-prediction.php:189
+msgid "%d orders"
+msgstr ""
+
+#: pro/Intelligence/Health.php:823
+msgid "%d orders in last year"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:123 pro/Intelligence/Lifecycle.php:131
+msgid "%d orders, active"
+msgstr ""
+
+#: pro/Intelligence/Health.php:850
+msgid "%d sessions, %d searches (30 days)"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:39
+msgid "%d tag"
+msgid_plural "%d tags"
+msgstr[0] ""
+msgstr[1] ""
+
+#. %s: human-readable time difference, e.g. "3 hours".
+#: pro/Carts/Abandoned-Carts-List-Table.php:392
+#: pro/Timeline/Timeline-Panel.php:101
+#, php-format
+msgid "%s ago"
+msgstr ""
+
+#. %s: lower bound of the top spend bracket, e.g. "$2,500".
+#: pro/Analytics/Revenue/LTV-Panel.php:213
+#, php-format
+msgid "%s and above"
+msgstr ""
+
+#. %s: number of customers with no recency or frequency band.
+#: pro/Intelligence/templates/rfm-matrix-widget.php:146
+#, php-format
+msgid ""
+"%s customers are not yet scored — a customer with no completed order has no "
+"recency or frequency band."
 msgstr ""
 
 #. %s: number of customers
@@ -38,11 +150,56 @@ msgid ""
 "who's at risk of churning — and why."
 msgstr ""
 
+#. %s: number of days between orders.
+#: pro/Intelligence/Order-Gap-Column.php:160
+#, php-format
+msgid "%s day"
+msgid_plural "%s days"
+msgstr[0] ""
+msgstr[1] ""
+
+#. %s: number of days since the customer's last session.
+#: pro/Intelligence/templates/order-panel.php:126
+#, php-format
+msgid "%s day ago"
+msgid_plural "%s days ago"
+msgstr[0] ""
+msgstr[1] ""
+
+#: pro/Intelligence/templates/churn-prediction.php:370
+#, php-format
+msgid "%s days"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:372
+#, php-format
+msgid "%s hrs"
+msgstr ""
+
+#. %s: repeat purchase rate, already formatted to one decimal place (e.g. "42.1").
+#. %s: share of customers, already formatted to one decimal place (e.g. "12.4").
+#. %s: churn rate, already formatted to one decimal place (e.g. "12.4").
+#: admin/partials/templates/revenue.php:94
+#: pro/Analytics/templates/ltv-distribution.php:139
+#: pro/Analytics/templates/retention-metrics.php:113
+#: pro/Analytics/templates/retention-metrics.php:181
+#, php-format
+msgid "%s%%"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:72
+msgid "(account deleted)"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:138
+msgid "(Product deleted)"
+msgstr ""
+
 #: admin/partials/templates/segments-list.php:20
 msgid "+ New Segment"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:619
+#: includes/class-pd-customer-history-customers.php:694
 msgid "0-30 days"
 msgstr ""
 
@@ -50,6 +207,8 @@ msgstr ""
 #: admin/partials/templates/live-searches.php:78
 #: admin/partials/templates/live-sessions.php:79
 #: admin/partials/templates/order-history.php:105
+#: pro/Stats/templates/stats-pages.php:31
+#: pro/Stats/templates/stats-spent.php:21
 msgid "10"
 msgstr ""
 
@@ -57,70 +216,207 @@ msgstr ""
 #: admin/partials/templates/live-searches.php:81
 #: admin/partials/templates/live-sessions.php:82
 #: admin/partials/templates/order-history.php:108
+#: pro/Stats/templates/stats-pages.php:34
+#: pro/Stats/templates/stats-spent.php:24
 msgid "100"
+msgstr ""
+
+#: pro/Analytics/Revenue/Retention-Panel.php:82
+msgid "12-month"
+msgstr ""
+
+#: pro/Analytics/Revenue/Retention-Panel.php:76
+msgid "15-day"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:712
+msgid "2 orders, active in last 90 days"
 msgstr ""
 
 #: admin/partials/templates/customers.php:164
 #: admin/partials/templates/live-searches.php:79
 #: admin/partials/templates/live-sessions.php:80
 #: admin/partials/templates/order-history.php:106
+#: pro/Stats/templates/stats-pages.php:32
+#: pro/Stats/templates/stats-spent.php:22
 msgid "20"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:620
+#: pro/Analytics/Revenue/Retention-Panel.php:83
+msgid "24-month"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:725
+msgid "3+ orders, active relationship"
+msgstr ""
+
+#: pro/Analytics/Revenue/Retention-Panel.php:77
+msgid "30-day"
+msgstr ""
+
+#: includes/class-pd-customer-history-customers.php:695
 msgid "31-60 days"
+msgstr ""
+
+#: pro/Analytics/Revenue/Retention-Panel.php:80
+msgid "4-month"
 msgstr ""
 
 #: admin/partials/templates/customers.php:165
 #: admin/partials/templates/live-searches.php:80
 #: admin/partials/templates/live-sessions.php:81
 #: admin/partials/templates/order-history.php:107
+#: pro/Stats/templates/stats-pages.php:33
+#: pro/Stats/templates/stats-spent.php:23
 msgid "50"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:621
+#: pro/Analytics/Revenue/Retention-Panel.php:81
+msgid "6-month"
+msgstr ""
+
+#: pro/Analytics/Revenue/Retention-Panel.php:78
+msgid "60-day"
+msgstr ""
+
+#: includes/class-pd-customer-history-customers.php:696
 msgid "61-90 days"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:622
+#: includes/class-pd-customer-history-customers.php:697
 msgid "90+ days"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:233
+#: pro/Analytics/Revenue/Retention-Panel.php:79
+msgid "90-day"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:39
+msgid "<span id=\"pd-abandoned-carts-menu\">Abandoned Carts</span>"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:507
+msgid "<span id=\"pd-churn-prediction-menu\">Churn Prediction</span>"
+msgstr ""
+
+#: pro/Analytics/Cohorts/Cohort-Page.php:46
+msgid "<span id=\"pd-cohorts-menu\">Cohorts</span>"
+msgstr ""
+
+#: admin/class-pd-customer-history-admin.php:246
 msgid "<span id=\"pd-customers-menu\">Customers & Users</span>"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:228
+#: admin/class-pd-customer-history-admin.php:241
 msgid "<span id=\"pd-dashboard-menu\">Dashboard</span>"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:254
+#: pro/Stats/Stats-List-Table.php:58
+msgid "<span id=\"pd-keyword-stats-menu\">Statistics</span>"
+msgstr ""
+
+#: admin/class-pd-customer-history-admin.php:267
 msgid "<span id=\"pd-order-history-menu\">Order History</span>"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:262
+#: admin/class-pd-customer-history-admin.php:275
 msgid "<span id=\"pd-revenue-menu\">Revenue</span>"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:272
+#: admin/class-pd-customer-history-admin.php:285
 msgid "<span id=\"pd-search-analytics-menu\">Search Analytics</span>"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:249
+#: admin/class-pd-customer-history-admin.php:262
 msgid "<span id=\"pd-segments-menu\">Segments</span>"
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:58
+msgid "<span id=\"pd-sessions-menu\">Sessions</span>"
+msgstr ""
+
+#. 1: Site name, 2: Alert title
+#: pro/Intelligence/Churn-Alerts.php:525
+#, php-format
+msgid "[%1$s] Churn Alert: %2$s"
 msgstr ""
 
 #: includes/class-pdwchs-upsell.php:34
 msgid "A 0–100 score combining recency, frequency, spending, and engagement."
 msgstr ""
 
+#. %s: the existing tag's display name.
+#: pro/CRM/Tags-Admin-Page.php:157
+#, php-format
+msgid "A tag named %s already exists."
+msgstr ""
+
+#: pro/CRM/Tags.php:143
+msgid "A tag with that name already exists."
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:377
+#: pro/Carts/Abandoned-Carts-List-Table.php:433
+msgid "Abandoned"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:145
+msgid "Abandoned Cart Tracking"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:38
+#: pro/Carts/templates/abandoned-carts-list.php:9
+#: pro/Carts/templates/abandoned-carts-list.php:21
+msgid "Abandoned Carts"
+msgstr ""
+
+#: pro/Carts/templates/cart-dashboard-widget.php:15
+msgid "Abandoned Carts (Last 7 Days)"
+msgstr ""
+
+#: pro/Carts/templates/cart-dashboard-widget.php:18
+msgid "abandoned carts worth"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:200
+msgid "Abandonment timeout (minutes)"
+msgstr ""
+
+#: pro/Intelligence/RFM.php:668 pro/Intelligence/RFM.php:669
+msgid "Above average"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-dashboard-widget.php:84
+msgid "Action"
+msgstr ""
+
+#: pro/Intelligence/templates/behavioral-dashboard-widget.php:50
+msgid "Actionable Insights"
+msgstr ""
+
 #: admin/class-pdwchs-segments-list-table.php:23
 #: includes/class-pd-customer-history-customers.php:64
+#: pro/Carts/Abandoned-Carts-List-Table.php:254
+#: pro/Stats/Sessions-List-Table.php:231
 #: admin/partials/templates/customer-details.php:58
+#: pro/CRM/templates/tag-management.php:32
+#: pro/Intelligence/templates/churn-prediction.php:154
 msgid "Actions"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:906
+#: pro/Carts/Abandoned-Carts-List-Table.php:376
+#: pro/Carts/Abandoned-Carts-List-Table.php:432
+msgid "Active"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-dashboard-widget.php:70
+#: pro/Intelligence/templates/churn-dashboard-widget.php:123
+#: pro/Intelligence/templates/churn-prediction.php:89
+msgid "Active Alerts"
+msgstr ""
+
+#: includes/class-pd-customer-history-customers.php:981
+#: pro/Intelligence/Lifecycle.php:708
 msgid "Active Customer"
 msgstr ""
 
@@ -128,8 +424,56 @@ msgstr ""
 msgid "Active tier"
 msgstr ""
 
+#: pro/Timeline/templates/timeline.php:55
+msgid ""
+"Activity is recorded from the date this plugin was activated — earlier "
+"visits and orders are not shown here."
+msgstr ""
+
+#: pro/Timeline/templates/timeline.php:40
+msgid "Activity Timeline"
+msgstr ""
+
+#: pro/CRM/templates/customer-tags-panel.php:33
+msgid "Add"
+msgstr ""
+
+#: includes/crm/templates/customer-notes-panel.php:22
+msgid "Add a note about this customer..."
+msgstr ""
+
+#: includes/crm/templates/customer-notes-panel.php:23
+msgid "Add Note"
+msgstr ""
+
+#: pro/CRM/templates/customer-tags-panel.php:27
+msgid "Add or pick a tag..."
+msgstr ""
+
+#: pro/CRM/templates/tag-management.php:21
+msgid "Add Tag"
+msgstr ""
+
+#: pro/Analytics/Funnel/Funnel-Ajax.php:124
+msgid "Add to Cart"
+msgstr ""
+
 #: includes/helper/class-pdwchs-helper.php:285
+#: pro/Helpers/class-pd-customer-history-helper.php:282
+#: pro/Stats/Sessions-List-Table.php:186
 msgid "Add to cart"
+msgstr ""
+
+#. %s: product name, or #id when the product is gone.
+#: pro/Timeline/Timeline-Panel.php:153
+#, php-format
+msgid "Added to cart: %s"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:486
+msgid ""
+"Adjust the weight of each factor in churn score calculation. Weights must "
+"total 100."
 msgstr ""
 
 #: admin/partials/templates/customers.php:24
@@ -140,44 +484,253 @@ msgstr ""
 msgid "Advance Search:"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:618
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:16
+msgid "Aggregate Conversion Funnel"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:303
+#: pro/Intelligence/templates/customer-lifecycle-card.php:130
+msgid "ago"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:247
+msgid "Alert"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:1241
+msgid "Alert assigned successfully"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:566
+msgid "Alert Email Recipient"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:560
+msgid "Alert for Critical Risk customers"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:555
+msgid "Alert for High Risk customers"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:538
+msgid "Alert Settings"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:355
+msgid "Alert Statistics (30 Days)"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:1209
+msgid "Alert status updated"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:551
+msgid "Alert Triggers"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:104
+msgid "Alerts"
+msgstr ""
+
+#: pro/Timeline/templates/timeline.php:31
+msgid "All"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:737
+msgid "All Behaviors"
+msgstr ""
+
+#: includes/class-pd-customer-history-customers.php:693
 msgid "All Days in Stage"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:609
+#: includes/class-pd-customer-history-customers.php:684
 msgid "All Lifecycle Stages"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:130
+msgid "All Risk Levels"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:698
+msgid "All Scores"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:682
+msgid "All Segments"
+msgstr ""
+
+#: pro/Timeline/templates/timeline.php:44
+msgid "All Sessions"
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:163
+msgid "All Sessions History"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:429
+msgid "All Statuses"
+msgstr ""
+
+#: pro/CRM/Tags-Filter.php:84
+msgid "All Tags"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:723
+msgid "All Trends"
 msgstr ""
 
 #: admin/partials/templates/dashboard/last-orders.php:25
 msgid "Amount"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:176
+#: admin/class-pd-customer-history-admin.php:189
+#: pro/Intelligence/Intelligence.php:653
 msgid "An error occurred. Please try again."
 msgstr ""
 
-#: admin/partials/templates/revenue.php:62
+#: pro/Intelligence/templates/churn-prediction.php:112
+msgid "Analytics"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:190
+msgid "Analyze Customer"
+msgstr ""
+
+#: pro/Analytics/templates/product-correlations.php:19
+msgid "Anchor Product"
+msgstr ""
+
+#: admin/partials/templates/revenue.php:63
+#: pro/Analytics/templates/product-revenue-chart.php:48
+#: pro/Analytics/templates/revenue-patterns.php:46
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:36
+#: pro/Analytics/Geographic/templates/geographic-report.php:74
 msgid "Apply"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:197
+#: admin/class-pd-customer-history-admin.php:210
 msgid "Are you sure you want to delete this segment? This cannot be undone."
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:908
+#: pro/Carts/Abandoned-Carts-List-Table.php:91
+msgid "Are you sure? This cannot be undone."
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:729 pro/Intelligence/Segments-Labels.php:45
+msgid "Ask for referrals to similar customers"
+msgstr ""
+
+#: pro/CRM/Tags.php:403
+msgid "Assigned date"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:251
+msgid "Assigned To"
+msgstr ""
+
+#: includes/class-pd-customer-history-customers.php:983
+#: pro/Intelligence/Lifecycle.php:734 pro/Intelligence/Segments-Labels.php:120
 msgid "At Risk"
+msgstr ""
+
+#: pro/Intelligence/templates/at-risk-alert-widget.php:18
+msgid "At Risk Customers (30+ Days)"
+msgstr ""
+
+#: pro/Intelligence/Health.php:705
+msgid "At risk of churning, urgent action needed"
+msgstr ""
+
+#: pro/Intelligence/templates/lifecycle-funnel-widget.php:36
+msgid "At Risk:"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:99
+#: pro/Intelligence/templates/churn-prediction.php:127
+msgid "At-Risk Customers"
+msgstr ""
+
+#: pro/Digest/Segment-Sheet.php:160
+msgid "Attach a segment CSV"
+msgstr ""
+
+#: pro/Digest/Segment-Sheet.php:142
+msgid "Attach a segment's member list to your report digest as a CSV file."
+msgstr ""
+
+#: pro/Digest/Segment-Sheet.php:170
+msgid "Attach the sheet to every digest"
+msgstr ""
+
+#: includes/crm/class-pdwchs-notes.php:356
+msgid "Author name"
 msgstr ""
 
 #: includes/class-pdwchs-upsell.php:44
 msgid "Automatic badges like Bargain Hunter, Cart Abandoner, and Brand Loyal."
 msgstr ""
 
-#: admin/partials/templates/revenue.php:77
+#: pro/Intelligence/RFM.php:670
+msgid "Average"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:111
+msgid "Average customers showing signs of decline"
+msgstr ""
+
+#: pro/Intelligence/Health.php:687
+msgid "Average engagement, room for improvement"
+msgstr ""
+
+#: pro/Analytics/templates/ltv-distribution.php:54
+msgid "Average lifetime value"
+msgstr ""
+
+#: pro/Analytics/Cohorts/Cohort-Page.php:123
+msgid "Average retention"
+msgstr ""
+
+#: pro/Analytics/Cohorts/Cohort-Page.php:122
+#: pro/Analytics/Cohorts/templates/cohort-table.php:80
+msgid "Average retention by month since first order"
+msgstr ""
+
+#: pro/Intelligence/templates/health-dashboard-widget.php:33
+msgid "Average Score:"
+msgstr ""
+
+#: pro/Intelligence/Order-Gap-Column.php:75
+msgid "Avg Order Gap"
+msgstr ""
+
+#: admin/partials/templates/revenue.php:78
 msgid "Avg Order Value"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:376
+msgid "Avg Resolution"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:141
+msgid "Avg. Items/Order:"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-dashboard-widget.php:70
+msgid "Avg. Order Value"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:117
+msgid "Avg. Price:"
 msgstr ""
 
 #: admin/partials/templates/customer-details.php:335
 msgid "Back"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:39
+msgid "Back to Abandoned Carts"
 msgstr ""
 
 #: admin/partials/templates/customer-email.php:99
@@ -189,6 +742,30 @@ msgstr ""
 msgid "Back to Customer List"
 msgstr ""
 
+#: pro/Intelligence/Behavioral-Insights.php:43
+msgid "Bargain Hunter"
+msgstr ""
+
+#: pro/Analytics/templates/retention-metrics.php:153
+msgid "Base"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:945
+msgid "Batch calculation started in background"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:735
+msgid "Behavior :"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:33
+msgid "Behavioral Profile"
+msgstr ""
+
+#: pro/Intelligence/templates/behavioral-dashboard-widget.php:28
+msgid "Behavioral Segments"
+msgstr ""
+
 #: includes/class-pdwchs-upsell.php:43
 msgid "Behavioral Tags"
 msgstr ""
@@ -197,16 +774,121 @@ msgstr ""
 msgid "Behaviors"
 msgstr ""
 
+#: pro/Intelligence/RFM.php:671
+msgid "Below average"
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:360
+msgid "Best"
+msgstr ""
+
 #: includes/class-pdwchs-upsell.php:68
 msgid "Big spenders who have gone quiet — win them back before they churn."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:57
+msgid "Brand Loyal"
 msgstr ""
 
 #: admin/partials/templates/customers.php:137
 msgid "Brief description of this segment"
 msgstr ""
 
-#: admin/partials/templates/customers.php:142
+#: pro/Intelligence/Segments-Labels.php:101
+msgid "Build premium relationship"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:74
+msgid "Build relationship through engagement"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:113
+msgid "Bulk Buyer"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:597 pro/Intelligence/Intelligence.php:611
+msgid "Calculating..."
+msgstr ""
+
+#: pro/CRM/Tags-Admin-Page.php:161 admin/partials/templates/customers.php:142
 msgid "Cancel"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:134
+msgid "Cannot Lose"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:189
+msgid "Capture the billing email at checkout"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:192
+msgid ""
+"Capture the billing email on the checkout page before the order is placed."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:85
+msgid "Cart Abandoner"
+msgstr ""
+
+#: pro/Carts/Cart-Tracker.php:281 pro/Carts/templates/cart-detail.php:109
+msgid "Cart Contents"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:195
+msgid "Cart created"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:102
+msgid "Cart created:"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:44
+msgid "Cart Detail"
+msgstr ""
+
+#: pro/Carts/Cart-Tracker.php:273
+msgid "Cart History"
+msgstr ""
+
+#: pro/Carts/Cart-Tracker.php:276
+msgid "Cart ID"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:24
+msgid "Cart not found."
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:230
+msgid ""
+"Cart rows older than this many days are deleted by the cleanup cron. Minimum "
+"7."
+msgstr ""
+
+#: pro/Carts/Cart-Tracker.php:278 pro/Carts/templates/cart-detail.php:175
+msgid "Cart Total"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:158
+msgid "Cart tracking"
+msgstr ""
+
+#: pro/Carts/templates/abandoned-carts-list.php:13
+msgid ""
+"Cart tracking is currently disabled. Enable it in Settings → Abandoned Cart "
+"Tracking."
+msgstr ""
+
+#: pro/Timeline/templates/timeline.php:34
+msgid "Carted"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:106
+msgid "Category Specialist"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:36
+msgid "Champions"
 msgstr ""
 
 #: admin/partials/templates/dashboard/most-viewed-products.php:36
@@ -219,15 +901,86 @@ msgstr ""
 
 #: admin/partials/templates/live-searches.php:49
 #: admin/partials/templates/live-sessions.php:50
+#: pro/Stats/templates/live-sessions.php:72
 msgid "Check for new Sessions"
 msgstr ""
 
+#: pro/Carts/templates/cart-detail.php:199
+msgid "Checkout completed"
+msgstr ""
+
+#: pro/Analytics/Funnel/Funnel-Ajax.php:125
+msgid "Checkout Started"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:224
+msgid "Churn Alerts"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:321
+msgid "Churn Analytics"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:506
+#: pro/Intelligence/templates/churn-prediction.php:70
+msgid "Churn Prediction"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:435
+msgid "Churn Prediction Settings"
+msgstr ""
+
+#: pro/Analytics/templates/retention-metrics.php:105
+msgid "Churn rate"
+msgstr ""
+
+#: pro/Analytics/templates/retention-metrics.php:134
+msgid "Churn rate over the selected window, one point per period."
+msgstr ""
+
 #: includes/class-pdwchs-upsell.php:38
+#: pro/Intelligence/templates/customer-churn-card.php:66
 msgid "Churn Risk"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:909
+#: pro/Intelligence/templates/customer-churn-card.php:98
+msgid "Churn Risk Analysis"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-dashboard-widget.php:48
+msgid "Churn Risk Overview"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:1161
+msgid "Churn score updated successfully"
+msgstr ""
+
+#: includes/class-pd-customer-history-customers.php:984
+#: pro/Intelligence/Lifecycle.php:747
+#: pro/Analytics/templates/retention-metrics.php:156
 msgid "Churned"
+msgstr ""
+
+#: pro/Intelligence/templates/lifecycle-funnel-widget.php:41
+msgid "Churned:"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:172
+msgid "Clean up from active email lists"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:192
+msgid ""
+"Click \"Refresh Analysis\" to analyze this customer's behavior patterns."
+msgstr ""
+
+#: pro/Intelligence/templates/rfm-dashboard-widget.php:54
+msgid "Click any segment to view customers"
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:137 pro/Stats/Sessions-List-Table.php:166
+#: pro/Timeline/templates/timeline.php:47
+msgid "Click to Expand"
 msgstr ""
 
 #: admin/partials/templates/customer-details.php:50
@@ -241,15 +994,144 @@ msgstr ""
 msgid "Click to Expend"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:198
+#: pro/Analytics/templates/product-correlations.php:104
+msgid "Co-occurrences"
+msgstr ""
+
+#: pro/Analytics/Cohorts/Cohort-Export.php:70
+#: pro/Analytics/Cohorts/templates/cohort-table.php:88
+msgid "Cohort"
+msgstr ""
+
+#: pro/Analytics/Cohorts/templates/cohort-table.php:26
+msgid "Cohort data has not been generated yet."
+msgstr ""
+
+#: pro/Analytics/Cohorts/Cohort-Page.php:45
+#: pro/Stats/templates/top-sub-nav-stats.php:46
+#: pro/Analytics/Cohorts/templates/cohort-table.php:18
+msgid "Cohort Retention"
+msgstr ""
+
+#: pro/Analytics/Cohorts/templates/cohort-table.php:39
+msgid "Cohorts appear once the store has completed or processing orders."
+msgstr ""
+
+#: pro/Analytics/Cohorts/templates/cohort-table.php:29
+msgid ""
+"Cohorts are calculated once a day. The first calculation runs within a few "
+"minutes of activation — check back shortly."
+msgstr ""
+
+#: pro/Analytics/Cohorts/templates/cohort-table.php:143
+msgid ""
+"Cohorts count registered customers by account and guest checkouts by billing "
+"email. A shopper who checked out as a guest and later registered appears in "
+"both. These totals will not match the new-vs-returning split on the Revenue "
+"dashboard, which counts guests separately."
+msgstr ""
+
+#: pro/Analytics/Geographic/templates/geographic-report.php:159
+msgid "Compare countries"
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:134
+msgid "Complete History"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:379
+#: pro/Carts/Abandoned-Carts-List-Table.php:435
+msgid "Completed"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:795
+msgid "Completed purchase"
+msgstr ""
+
+#: pro/Analytics/templates/product-correlations.php:107
+msgid "Confidence"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:145
+msgid "Confidence:"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:152
+msgid ""
+"Configure how WooCommerce cart activity is observed and stored. This feature "
+"records cart snapshots for reporting only — no recovery emails are sent and "
+"no coupons are generated. Recovery actions belong in the Automation Add-on."
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:185
+msgid "Consider manual categorization"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:157
+msgid "Consider removing from active marketing"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:756
+msgid "Consider removing from active marketing lists"
+msgstr ""
+
+#: pro/Intelligence/Health.php:679
+msgid "Continue nurturing, occasional incentives"
+msgstr ""
+
+#: pro/Analytics/Funnel/Funnel-Session-List-Table.php:35
+msgid "Conversion"
+msgstr ""
+
+#: pro/Analytics/Funnel/Funnel-Ajax.php:63
+#: pro/Analytics/Funnel/Funnel-Ajax.php:64
+#: pro/Stats/templates/top-sub-nav-stats.php:41
+msgid "Conversion Funnel"
+msgstr ""
+
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:55
+msgid "Conversion funnel chart"
+msgstr ""
+
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:75
+msgid "Conversion Funnel Visualization (Last %d days)"
+msgstr ""
+
+#: admin/class-pd-customer-history-admin.php:211
 msgid "Could not delete segment. Please try again."
 msgstr ""
 
+#: pro/Analytics/Revenue/Revenue-Pro.php:106
+msgid "Could not load integrity check."
+msgstr ""
+
+#: pro/Timeline/Timeline-Panel.php:276
+msgid "Could not load more activity. Please try again."
+msgstr ""
+
+#: pro/Analytics/Revenue/Retention-Panel.php:199
+#: pro/Analytics/templates/retention-metrics.php:139
+msgid "Could not load retention data. Please try again."
+msgstr ""
+
+#: pro/Analytics/Geographic/Geographic-Page.php:213
+msgid "Could not load the comparison. Please try again."
+msgstr ""
+
+#: pro/Stats/Taxonomy-Stats-List-Table.php:43
 #: admin/partials/templates/search-analytics.php:44
-#: admin/partials/templates/search-analytics.php:160
+#: admin/partials/templates/search-analytics.php:212
 #: admin/partials/templates/dashboard/top-searches.php:31
 #: admin/partials/templates/dashboard/top-taxonomy.php:41
 msgid "Count"
+msgstr ""
+
+#: pro/Analytics/Geographic/templates/geographic-report.php:128
+msgid "Countries"
+msgstr ""
+
+#: pro/Analytics/Geographic/templates/geographic-report.php:42
+msgid "Country"
 msgstr ""
 
 #: admin/partials/templates/customer-details.php:278
@@ -261,37 +1143,108 @@ msgstr ""
 msgid "Country :"
 msgstr ""
 
+#: pro/Analytics/Geographic/templates/geographic-report.php:168
+msgid "Country A"
+msgstr ""
+
+#: pro/Analytics/Geographic/templates/geographic-report.php:170
+msgid "Country B"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:148
+msgid "Coupon Usage:"
+msgstr ""
+
 #: admin/class-pdwchs-segments-list-table.php:22
+#: pro/CRM/templates/tag-management.php:31
+#: pro/Intelligence/templates/churn-prediction.php:252
 msgid "Created"
+msgstr ""
+
+#: pro/Carts/Cart-Tracker.php:283
+msgid "Created At"
 msgstr ""
 
 #: admin/class-pdwchs-segments-list-table.php:21
 msgid "Created By"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:785
+#: pro/Intelligence/Health.php:701
+#: pro/Intelligence/templates/churn-dashboard-widget.php:58
+#: pro/Intelligence/templates/churn-prediction.php:131
+#: pro/Intelligence/templates/churn-prediction.php:402
+msgid "Critical"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:705
+msgid "Critical (0-20)"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:77
+msgid "Critical Risk"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:348
+msgid "Critical: %d"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:715
+msgid "Cross-sell complementary items"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:108
+msgid ""
+"Cross-sell related products within their preferred category and notify about "
+"new arrivals."
+msgstr ""
+
+#: includes/class-pd-customer-history.php:905
 msgid "CSV File Error!"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:780
+#: includes/class-pd-customer-history.php:900
 msgid "CSV file imported successfully."
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:205
+#: pro/Carts/Cart-Tracker.php:279 pro/Analytics/Revenue/Revenue-Pro.php:112
+#: pro/Analytics/templates/data-integrity-indicator.php:61
+msgid "Currency"
+msgstr ""
+
+#: pro/Analytics/Revenue/Revenue-Pro.php:104
+#: pro/Analytics/templates/data-integrity-indicator.php:56
+msgid "Currency mismatch"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-lifecycle-card.php:90
+msgid "Current"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:254
 msgid "Custom Delete"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:237
+#: admin/class-pd-customer-history-admin.php:250
+#: pro/Carts/Abandoned-Carts-List-Table.php:249
+#: pro/Intelligence/Churn-Alerts.php:265
 #: admin/partials/templates/customers.php:26
+#: pro/Carts/templates/cart-detail.php:57
+#: pro/Intelligence/templates/churn-dashboard-widget.php:81
+#: pro/Intelligence/templates/churn-prediction.php:147
+#: pro/Intelligence/templates/churn-prediction.php:246
 #: admin/partials/templates/dashboard/top-customers.php:28
 msgid "Customer"
+msgstr ""
+
+#: pro/Intelligence/templates/behavioral-dashboard-widget.php:31
+msgid "Customer behavior patterns detected across your store"
 msgstr ""
 
 #: admin/partials/templates/customer-details.php:19
 msgid "Customer Details"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:241
+#: admin/class-pd-customer-history-admin.php:254
 msgid "Customer Email"
 msgstr ""
 
@@ -299,11 +1252,16 @@ msgstr ""
 msgid "Customer email address (read-only)"
 msgstr ""
 
+#: pro/Intelligence/templates/health-dashboard-widget.php:25
+msgid "Customer Health Distribution"
+msgstr ""
+
 #: includes/class-pdwchs-upsell.php:33
+#: pro/Intelligence/templates/customer-health-card.php:120
 msgid "Customer Health Score"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:220
+#: admin/class-pd-customer-history-admin.php:233
 msgid "Customer History"
 msgstr ""
 
@@ -311,10 +1269,26 @@ msgstr ""
 msgid "Customer Information"
 msgstr ""
 
+#: pro/Intelligence/Order-Panel.php:79
+msgid "Customer Intelligence"
+msgstr ""
+
 #. Description of the plugin
 msgid ""
 "Customer intelligence for WooCommerce: customer profiles, order history, "
 "session & search tracking, segments, and a customer-first dashboard."
+msgstr ""
+
+#: pro/Intelligence/templates/customer-lifecycle-card.php:74
+msgid "Customer Journey:"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-lifecycle-card.php:48
+msgid "Customer Lifecycle"
+msgstr ""
+
+#: pro/Intelligence/templates/lifecycle-funnel-widget.php:16
+msgid "Customer Lifecycle Funnel"
 msgstr ""
 
 #: admin/partials/templates/customers.php:14
@@ -326,21 +1300,61 @@ msgstr ""
 msgid "Customer Name"
 msgstr ""
 
+#: includes/crm/class-pdwchs-notes.php:307
+#: includes/crm/class-pdwchs-notes.php:351
+#: includes/crm/class-pdwchs-notes.php:372
+msgid "Customer Notes"
+msgstr ""
+
+#. %s: Action taken
+#: pro/Intelligence/Churn-Alerts.php:794
+#, php-format
+msgid "Customer recovered. Action: %s"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:394
+msgid "Customer Risk Summary"
+msgstr ""
+
 #: admin/class-pdwchs-segments-list-table.php:18
 msgid "Customer Segment"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:248
+#: admin/class-pd-customer-history-admin.php:261
 #: admin/partials/templates/segments-list.php:9
 msgid "Customer Segments"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:897
+#: pro/Intelligence/templates/rfm-dashboard-widget.php:19
+msgid "Customer Segments (RFM Analysis)"
+msgstr ""
+
+#: includes/class-pd-customer-history.php:1017
 msgid "Customer support"
 msgstr ""
 
+#: pro/CRM/Tags.php:359 pro/CRM/Tags.php:398 pro/CRM/Tags.php:419
+msgid "Customer Tags"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:152
+msgid "Customer Value"
+msgstr ""
+
+#. 1: Total spent, 2: Order count
+#: pro/Intelligence/Churn-Alerts.php:331
+#, php-format
+msgid "Customer value: %1$s over %2$d orders."
+msgstr ""
+
 #: admin/class-pdwchs-segments-list-table.php:20
-#: admin/partials/templates/revenue.php:82
+#: admin/partials/templates/revenue.php:83
+#: pro/Analytics/Cohorts/Cohort-Export.php:71
+#: pro/Analytics/Revenue/LTV-Panel.php:161
+#: pro/Analytics/templates/ltv-distribution.php:111
+#: pro/CRM/templates/tag-management.php:30
+#: pro/Analytics/Cohorts/templates/cohort-table.php:50
+#: pro/Analytics/Cohorts/templates/cohort-table.php:89
 msgid "Customers"
 msgstr ""
 
@@ -348,18 +1362,70 @@ msgstr ""
 msgid "Customers & Users"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:228
+#: pro/Analytics/Revenue/LTV-Panel.php:160
+msgid "Customers by lifetime spend"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:617
+msgid "customers in Critical range"
+msgstr ""
+
+#: pro/Intelligence/templates/at-risk-alert-widget.php:26
+msgid "Customers nearing churn - immediate action needed"
+msgstr ""
+
+#: pro/Intelligence/templates/lifecycle-funnel-widget.php:50
+msgid "customers tracked"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:181
+msgid "Customers who do not fit any standard segment criteria"
+msgstr ""
+
+#: pro/Intelligence/templates/health-dashboard-widget.php:61
+msgid "Customers with 10+ point health score drop"
+msgstr ""
+
+#: pro/Analytics/templates/ltv-distribution.php:29
+msgid "Customers with at least one completed or processing order"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-dashboard-widget.php:97
+msgid "Daily"
+msgstr ""
+
+#: admin/class-pd-customer-history-admin.php:241
 #: admin/partials/templates/dashboard.php:15
 #: admin/partials/templates/top-nav.php:27
 msgid "Dashboard"
+msgstr ""
+
+#: pro/Analytics/Revenue/Revenue-Pro.php:99
+msgid "Data Mismatch ⚠️"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:219
+msgid "Data retention (days)"
+msgstr ""
+
+#: pro/Analytics/Revenue/Revenue-Pro.php:98
+msgid "Data Verified ✓"
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-manager.php:249
 msgid "Database error while deleting segment."
 msgstr ""
 
+#: includes/crm/class-pdwchs-notes.php:149
+msgid "Database error while saving note."
+msgstr ""
+
 #: includes/segments/class-pdwchs-segments-manager.php:109
 msgid "Database error while saving segment."
+msgstr ""
+
+#: pro/CRM/Tags.php:93
+msgid "Database error while saving tag."
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-manager.php:213
@@ -367,8 +1433,15 @@ msgid "Database error while updating segment."
 msgstr ""
 
 #: includes/class-pd-customer-order-history.php:45
+#: includes/crm/class-pdwchs-notes.php:355
+#: pro/Stats/Sessions-List-Table.php:142 pro/Stats/Sessions-List-Table.php:171
+#: pro/Stats/Sessions-List-Table.php:230
 #: admin/partials/templates/customer-details.php:55
 #: admin/partials/templates/search-analytics.php:74
+#: pro/Analytics/Revenue/Revenue-Pro.php:110
+#: pro/Analytics/templates/data-integrity-indicator.php:37
+#: pro/Analytics/templates/data-integrity-indicator.php:50
+#: pro/Analytics/templates/data-integrity-indicator.php:63
 #: admin/partials/templates/dashboard/last-orders.php:22
 #: admin/partials/templates/dashboard/last-searches.php:21
 msgid "Date"
@@ -376,6 +1449,49 @@ msgstr ""
 
 #: admin/partials/templates/order-history.php:31
 msgid "Date :"
+msgstr ""
+
+#: pro/Analytics/templates/product-revenue-chart.php:30
+#: pro/Analytics/templates/revenue-patterns.php:19
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:21
+msgid "Date Range"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:452
+#: pro/Analytics/Geographic/templates/geographic-report.php:64
+msgid "Date range"
+msgstr ""
+
+#: pro/Analytics/templates/product-revenue-chart.php:40
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:29
+msgid "Day"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-patterns.php:31
+msgid "Day of Week"
+msgstr ""
+
+#: pro/Analytics/templates/product-correlations.php:50
+#: pro/Intelligence/templates/customer-lifecycle-card.php:67
+#: pro/Intelligence/templates/customer-lifecycle-card.php:97
+#: pro/Intelligence/templates/customer-lifecycle-card.php:100
+msgid "days"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:620
+msgid "days ago"
+msgstr ""
+
+#: pro/Intelligence/templates/health-dashboard-widget.php:58
+msgid "Declining Health Alert"
+msgstr ""
+
+#: pro/Intelligence/Churn.php:1028
+msgid "Declining purchase frequency"
+msgstr ""
+
+#: pro/Intelligence/Churn.php:1029
+msgid "Declining spending"
 msgstr ""
 
 #: admin/class-pdwchs-segments-list-table.php:49
@@ -390,13 +1506,41 @@ msgstr ""
 msgid "Default segments cannot have their name or criteria changed."
 msgstr ""
 
-#: admin/class-pdwchs-segments-list-table.php:75
-#: admin/partials/templates/plugin-settings.php:206
+#: pro/Intelligence/templates/churn-prediction.php:444
+msgid "Define the score ranges for each risk level (0-100 scale)."
+msgstr ""
+
+#: admin/class-pdwchs-segments-list-table.php:98
+#: pro/CRM/Tags-Admin-Page.php:159 pro/Stats/Sessions-List-Table.php:264
+#: admin/partials/templates/plugin-settings.php:255
+#: pro/CRM/templates/tag-management.php:47
 msgid "Delete"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:217
+#: admin/partials/templates/plugin-settings.php:266
 msgid "Delete All"
+msgstr ""
+
+#: includes/crm/templates/customer-notes-panel.php:43
+msgid "Delete note"
+msgstr ""
+
+#: includes/crm/class-pdwchs-notes.php:99
+msgid "Delete this note?"
+msgstr ""
+
+#. %d: number of customers currently carrying the tag.
+#: pro/CRM/Tags-Admin-Page.php:152
+msgid "Delete this tag? This removes it from %d customers."
+msgstr ""
+
+#: includes/crm/class-pdwchs-notes.php:347
+#: includes/crm/templates/customer-notes-panel.php:34
+msgid "Deleted user (#%d)"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:88
+msgid "Deliver excellent customer service"
 msgstr ""
 
 #: admin/class-pdwchs-segments-list-table.php:19
@@ -407,19 +1551,39 @@ msgstr ""
 msgid "Description (optional)"
 msgstr ""
 
-#: includes/class-pdwchs-upsell.php:150
+#: pro/Intelligence/Behavioral-Insights.php:141
+msgid "Desktop Shopper"
+msgstr ""
+
+#: pro/Carts/templates/abandoned-carts-list.php:33
+msgid "Detail view coming soon."
+msgstr ""
+
+#: pro/Digest/Segment-Sheet.php:141
+msgid "Digest Segment Sheet"
+msgstr ""
+
+#: includes/class-pdwchs-upsell.php:150 pro/Trial-Gate.php:111
 msgid "Dismiss"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:896
+#: pro/Intelligence/templates/churn-prediction.php:288
+msgid "Dismissed"
+msgstr ""
+
+#: includes/class-pd-customer-history.php:1016
 msgid "Docs"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-health-card.php:74
+msgid "Down %d points"
 msgstr ""
 
 #: admin/partials/templates/customers.php:175
 msgid "Download"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:169
+#: admin/partials/templates/plugin-settings.php:218
 msgid ""
 "Download a file containing all the information about your customers "
 "activities."
@@ -429,16 +1593,25 @@ msgstr ""
 msgid "e.g. High-value customers"
 msgstr ""
 
+#: pro/Intelligence/Lifecycle.php:154
+msgid "Edge case: %d orders, %d days"
+msgstr ""
+
 #: admin/partials/templates/customer-details.php:305
 #: admin/partials/templates/customer-email.php:183
 msgid "Edit this user"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:320
-#: includes/segments/class-pdwchs-segments-export.php:107
+#: includes/class-pd-customer-history-customers.php:360
+#: includes/segments/class-pdwchs-segments-export.php:128
 #: admin/partials/templates/customer-details.php:265
 #: admin/partials/templates/customer-email.php:138
+#: pro/Intelligence/templates/churn-prediction.php:148
 msgid "Email"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:179
+msgid "Email early capture"
 msgstr ""
 
 #: admin/partials/templates/customer-email.php:49
@@ -457,21 +1630,79 @@ msgstr ""
 msgid "Email subject is required."
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:186
+#: pro/Intelligence/templates/customer-churn-card.php:333
+msgid "Email this customer"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:235
 msgid "Empty Tables"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:542
+msgid "Enable Alerts"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:546
+msgid "Enable churn alerts and email notifications"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:60
+msgid "Encourage brand advocacy"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:716
+msgid "Encourage loyalty program enrollment"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:100
+msgid "Encourage second purchase quickly"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:199
+#: pro/Intelligence/templates/customer-health-card.php:202
+msgid "Engagement"
+msgstr ""
+
+#: pro/Intelligence/templates/lifecycle-funnel-widget.php:33
+msgid "Engagement Issues"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:521
+msgid "Engagement Weight"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:136
+msgid ""
+"Ensure mobile-optimized experience, quick checkout, and mobile-specific "
+"promotions."
 msgstr ""
 
 #: admin/partials/templates/customer-email.php:71
 msgid "Enter the email subject"
 msgstr ""
 
+#: pro/CRM/Tags-Admin-Page.php:154
+msgid "Enter the new tag name"
+msgstr ""
+
 #: admin/partials/templates/customer-email.php:92
 msgid "Enter your email message"
+msgstr ""
+
+#: pro/Stats/templates/live-sessions.php:108
+#: pro/Stats/templates/product-view-stats-page.php:35
+#: pro/Stats/templates/search-keywords-page.php:36
+#: pro/Stats/templates/stats-pages.php:36
+#: pro/Stats/templates/stats-tax-view.php:37
+#: pro/Stats/templates/top-selling-products.php:34
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:93
+msgid "entries"
 msgstr ""
 
 #: admin/partials/templates/customers.php:38
 #: admin/partials/templates/customers.php:53
 #: admin/partials/templates/order-history.php:44
+#: pro/Analytics/Revenue/Refund-Rate-Filter.php:137
 msgid "Equal"
 msgstr ""
 
@@ -480,7 +1711,23 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:138
+#: pro/Intelligence/Intelligence.php:612
+#: pro/Analytics/Funnel/Funnel-Ajax.php:121
+#: pro/Analytics/Products/Product-Reports-Ajax.php:301
+#: pro/Analytics/Products/Product-Reports-Ajax.php:324
+#: pro/Analytics/Products/Product-Reports-Ajax.php:356
+#: pro/Analytics/templates/product-correlations.php:89
+#: pro/Analytics/templates/product-revenue-chart.php:58
+#: pro/Analytics/templates/revenue-patterns.php:59
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:45
+msgid "Error loading data. Please try again."
+msgstr ""
+
+#: pro/Analytics/Revenue/Revenue-Pro.php:93
+msgid "Error loading revenue data. Please try again."
+msgstr ""
+
+#: includes/class-pd-customer-history.php:147
 msgid "Every 15 minutes"
 msgstr ""
 
@@ -488,17 +1735,58 @@ msgstr ""
 msgid "Every visit, page view, and search this customer has made."
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:164
-#: admin/partials/templates/plugin-settings.php:170
+#: pro/Intelligence/Health.php:665
+msgid "Excellent"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:701
+msgid "Excellent (81-100)"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:127
+msgid "Execute win-back email campaign"
+msgstr ""
+
+#. %s: rolling window length, e.g. "30-day".
+#: pro/Analytics/Revenue/Retention-Panel.php:205
+#: pro/Analytics/templates/retention-metrics.php:45
+#, php-format
+msgid "Expected CLV · %s basis"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:213
+#: admin/partials/templates/plugin-settings.php:219
 msgid "Export"
 msgstr ""
 
-#: admin/class-pdwchs-segments-list-table.php:68
+#: admin/class-pdwchs-segments-list-table.php:91
+#: pro/Analytics/Cohorts/templates/cohort-table.php:63
 msgid "Export CSV"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:825
-#: includes/class-pd-customer-history.php:872
+#: admin/class-pdwchs-segments-list-table.php:73
+msgid "Export format"
+msgstr ""
+
+#: pro/Intelligence/Churn.php:1027
+msgid "Extended absence"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:167
+msgid "Extremely inactive customers with very low recovery chance"
+msgstr ""
+
+#. %d: RFM frequency score, 1 to 5.
+#: pro/Intelligence/templates/rfm-matrix-widget.php:92
+msgid "F%d"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:1245
+msgid "Failed to assign alert"
+msgstr ""
+
+#: includes/class-pd-customer-history.php:945
+#: includes/class-pd-customer-history.php:992
 msgid "Failed to delete sessions!"
 msgstr ""
 
@@ -507,11 +1795,37 @@ msgstr ""
 msgid "Failed to encode segment criteria."
 msgstr ""
 
+#: pro/Analytics/templates/revenue-dashboard-widget.php:162
+msgid "Failed to load revenue data. Please try again."
+msgstr ""
+
+#: pro/Intelligence/templates/rfm-dashboard-widget.php:44
+msgid "Failed to load RFM data. Please try again."
+msgstr ""
+
 #: admin/partials/templates/customer-email.php:32
 msgid "Failed to send email. Please try again."
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:625
+#: pro/Intelligence/Intelligence.php:1213
+msgid "Failed to update alert status"
+msgstr ""
+
+#: pro/Intelligence/Health.php:683
+msgid "Fair"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:703
+msgid "Fair (41-60)"
+msgstr ""
+
+#: pro/Intelligence/RFM.php:610
+#: pro/Intelligence/templates/rfm-matrix-widget.php:36
+msgid "Fairly recent"
+msgstr ""
+
+#: includes/class-pd-customer-history-customers.php:700
+#: pro/Carts/Abandoned-Carts-List-Table.php:468
 msgid "Filter"
 msgstr ""
 
@@ -527,6 +1841,22 @@ msgstr ""
 msgid "First free-tier limit reached"
 msgstr ""
 
+#: pro/Intelligence/Lifecycle.php:139
+msgid "First purchase %d days ago"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:702
+msgid "First repeat purchase discount"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:83
+msgid "First-time buyers in critical retention window"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:326
+msgid "Follow Up"
+msgstr ""
+
 #: includes/class-pdwchs-telemetry.php:120
 msgid "Free"
 msgstr ""
@@ -537,26 +1867,118 @@ msgid ""
 "segments."
 msgstr ""
 
-#: admin/partials/templates/revenue.php:56
+#: pro/Intelligence/templates/customer-churn-card.php:183
+#: pro/Intelligence/templates/customer-rfm-card.php:81
+msgid "Frequency"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:501
+msgid "Frequency Weight"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:55
+msgid "Frequent buyers who are consistently engaged"
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:230
+#: pro/Analytics/Products/Product-Reports-Ajax.php:231
+#: pro/Analytics/templates/product-correlations.php:10
+#: pro/Stats/templates/top-sub-nav-stats.php:51
+msgid "Frequently Bought Together"
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:368
+msgid "Friday"
+msgstr ""
+
+#: admin/partials/templates/revenue.php:57
 msgid "From"
+msgstr ""
+
+#. %d: number of cohorts the average was taken over.
+#: pro/Analytics/Cohorts/Cohort-Page.php:127
+msgid "from %d cohorts"
 msgstr ""
 
 #: includes/class-pdwchs-upsell.php:53
 msgid "Full Session History"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:72
+#: pro/Analytics/Funnel/Funnel-Ajax.php:128
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:60
+msgid "Funnel Over Time"
+msgstr ""
+
+#: pro/Analytics/Funnel/Funnel-Session-List-Table.php:34
+msgid "Funnel Roadmap"
+msgstr ""
+
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:63
+msgid "Funnel trend chart"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:78
+#: pro/Intelligence/templates/churn-prediction.php:581
 msgid "General Settings"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:124
-msgid "Generate weekly reports :"
+#: admin/partials/templates/plugin-settings.php:150
+msgid "Generate reports"
+msgstr ""
+
+#. %s: human-readable time difference, e.g. "3 hours".
+#: pro/Analytics/Cohorts/templates/cohort-table.php:71
+#, php-format
+msgid "Generated %s ago"
+msgstr ""
+
+#: pro/Analytics/Geographic/Geographic-Page.php:79
+#: pro/Analytics/Geographic/Geographic-Page.php:80
+#: pro/Stats/templates/top-sub-nav-stats.php:56
+#: pro/Analytics/Geographic/templates/geographic-report.php:53
+msgid "Geographic Performance"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:64
+msgid "Gift Shopper"
+msgstr ""
+
+#: pro/Intelligence/Health.php:674
+msgid "Good"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:702
+msgid "Good (61-80)"
+msgstr ""
+
+#: pro/Analytics/templates/product-revenue-chart.php:38
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:27
+msgid "Granularity"
 msgstr ""
 
 #: admin/partials/templates/customers.php:39
 #: admin/partials/templates/customers.php:54
 #: admin/partials/templates/order-history.php:45
+#: pro/Analytics/Revenue/Refund-Rate-Filter.php:138
 msgid "Greater then"
+msgstr ""
+
+#: pro/Analytics/Geographic/templates/geographic-report.php:228
+msgid ""
+"Grouped bar chart comparing the two selected countries on net sales, orders, "
+"items and unique products, each shown as a percentage of the higher of the "
+"two values. The exact figures are listed above the chart."
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:362
+#: pro/Carts/templates/cart-detail.php:76
+#: pro/Intelligence/templates/churn-dashboard-widget.php:94
+#: pro/Intelligence/templates/churn-prediction.php:166
+msgid "Guest"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-dashboard-widget.php:147
+msgid "Guest Orders"
 msgstr ""
 
 #: admin/partials/templates/search-analytics.php:32
@@ -566,29 +1988,137 @@ msgid ""
 "product views here, visit your store while logged out or as a customer."
 msgstr ""
 
+#: pro/Intelligence/templates/order-panel.php:38
+msgid "Health"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-health-card.php:218
+msgid "Health Interpretation:"
+msgstr ""
+
 #: includes/class-pd-customer-history-customers.php:53
-#: includes/segments/class-pdwchs-segments-export.php:112
+#: includes/segments/class-pdwchs-segments-export.php:133
 msgid "Health Score"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:696
+msgid "Health Score :"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:1012
+msgid "Health score updated successfully"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:721
+msgid "Health Trend :"
 msgstr ""
 
 #: includes/class-pdwchs-upsell.php:84
 msgid "Healthy customers whose engagement is trending down."
 msgstr ""
 
-#: includes/class-pdwchs-upsell.php:79
+#: pro/Intelligence/Health.php:678
+msgid "Healthy relationship, good engagement"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-patterns.php:39
+msgid "Heatmap"
+msgstr ""
+
+#. 1: comma-separated list of report section names, 2: period start date, 3: period end date.
+#: includes/class-pd-customer-history.php:511
+#, php-format
+msgid "Hi! Please check attached monthly reports for %1$s from %2$s to %3$s"
+msgstr ""
+
+#: includes/class-pd-customer-history.php:512
+#, php-format
+msgid "Hi! Please check attached weekly reports for %1$s from %2$s to %3$s"
+msgstr ""
+
+#: includes/class-pdwchs-upsell.php:79 pro/Intelligence/Segments-Labels.php:148
 msgid "Hibernating"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:107
-msgid "Hide users with no orders :"
+#: pro/Analytics/Revenue/Revenue-Pro.php:101
+msgid "Hide Details"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:124
+msgid "Hide users with no orders"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:132
+#: pro/Intelligence/templates/churn-prediction.php:401
+msgid "High"
 msgstr ""
 
 #: includes/class-pdwchs-upsell.php:83
 msgid "High Health Declining"
 msgstr ""
 
+#: pro/Intelligence/templates/churn-dashboard-widget.php:62
+#: pro/Intelligence/templates/churn-prediction.php:81
+msgid "High Risk"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:471
+msgid "High Risk Maximum"
+msgstr ""
+
+#: pro/Intelligence/RFM.php:667
+msgid "High value"
+msgstr ""
+
 #: includes/class-pdwchs-upsell.php:67
 msgid "High Value At Risk"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:358
+msgid ""
+"High-value customer - consider personal phone call or personalized email"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:139
+msgid "High-value customers at risk of churning"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:344
+msgid "High: %d"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:136
+msgid "Highest Risk First"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:138
+msgid "Highest Value First"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:743
+msgid "Highlight new products since last visit"
+msgstr ""
+
+#: pro/Intelligence/Health.php:669
+msgid "Highly engaged, strong relationship"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-patterns.php:35
+msgid "Hour of Day"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:79
+msgid "How customer data is listed inside the admin."
+msgstr ""
+
+#: pro/Intelligence/templates/rfm-matrix-widget.php:75
+msgid ""
+"How many customers sit in each recency and frequency band. Recency runs down "
+"the rows, frequency across the columns, so your best customers are top-right."
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:189
+msgid "How often the digest is sent."
 msgstr ""
 
 #: includes/class-pd-customer-history-email.php:89
@@ -608,23 +2138,135 @@ msgstr ""
 msgid "I'm sorry, you are not allowed to see this page!"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:175
-#: admin/partials/templates/plugin-settings.php:181
+#: pro/Carts/templates/cart-detail.php:115
+msgid "Image"
+msgstr ""
+
+#: pro/Intelligence/Health.php:706
+msgid "Immediate intervention, aggressive recovery"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:144
+msgid "Implement VIP recovery program"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:224
+#: admin/partials/templates/plugin-settings.php:230
 msgid "Import"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:179
+#: admin/partials/templates/plugin-settings.php:228
 msgid "Imported data will be added to your database."
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:154
+msgid "Improving"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:50
+msgid "Impulse Buyer"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:232
+#: pro/Intelligence/templates/churn-prediction.php:286
+msgid "In Progress"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:107 pro/Intelligence/Lifecycle.php:115
+msgid "Inactive for %d days"
+msgstr ""
+
+#: pro/Intelligence/Health.php:829
+msgid "Insufficient data for trend"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:71
+msgid ""
+"Insufficient order history for churn prediction. Minimum 2 orders required."
+msgstr ""
+
+#: pro/Intelligence/Churn-Predictor.php:91 pro/Intelligence/Churn.php:204
+msgid "Insufficient order history for prediction"
+msgstr ""
+
+#: pro/Intelligence/Behavioral.php:1603 pro/Intelligence/Behavioral.php:1666
+#: pro/Intelligence/Behavioral.php:1721 pro/Intelligence/Intelligence.php:894
+#: pro/Intelligence/Intelligence.php:910 pro/Intelligence/Intelligence.php:935
+#: pro/Intelligence/Intelligence.php:968 pro/Intelligence/Intelligence.php:984
+#: pro/Intelligence/Intelligence.php:1001
+#: pro/Intelligence/Intelligence.php:1036
+#: pro/Intelligence/Intelligence.php:1052
+#: pro/Intelligence/Intelligence.php:1069
+#: pro/Intelligence/Intelligence.php:1134
+#: pro/Intelligence/Intelligence.php:1150
+#: pro/Intelligence/Intelligence.php:1175
+#: pro/Intelligence/Intelligence.php:1194
+#: pro/Intelligence/Intelligence.php:1227
+#: pro/Intelligence/Intelligence.php:1259
+#: pro/Intelligence/Intelligence.php:1351
+#: pro/Intelligence/Intelligence.php:1423
+#: pro/Analytics/Revenue/Revenue-Pro.php:137
+#: pro/Analytics/Revenue/Revenue-Pro.php:158
+#: pro/Analytics/Revenue/Revenue-Pro.php:185
+msgid "Insufficient permissions"
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-ajax.php:82
 #: includes/segments/class-pdwchs-segments-ajax.php:148
 #: includes/segments/class-pdwchs-segments-ajax.php:175
+#: pro/Analytics/Funnel/Funnel-Ajax.php:144
+#: pro/Analytics/Funnel/Funnel-Ajax.php:172
+#: pro/Analytics/Geographic/Geographic-Page.php:240
+#: pro/Analytics/Products/Product-Reports-Ajax.php:89
+#: pro/Analytics/Products/Product-Reports-Ajax.php:141
+#: pro/Analytics/Products/Product-Reports-Ajax.php:174
+#: pro/Analytics/Revenue/Data-Integrity.php:507
+#: pro/Analytics/Revenue/Data-Integrity.php:534
+#: pro/Analytics/Revenue/Retention-Panel.php:231
 msgid "Insufficient permissions."
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:1234
+msgid "Invalid alert ID"
+msgstr ""
+
+#: pro/Intelligence/Behavioral.php:1742
+msgid "Invalid behavior types"
+msgstr ""
+
+#: pro/Intelligence/Churn-Predictor.php:79
+msgid "Invalid customer ID"
+msgstr ""
+
+#: includes/crm/class-pdwchs-notes.php:123 pro/CRM/Tags.php:237
+#: pro/Timeline/Timeline-Panel.php:309
+msgid "Invalid customer."
+msgstr ""
+
+#: pro/Analytics/Funnel/Funnel-Ajax.php:152
+#: pro/Analytics/Funnel/Funnel-Ajax.php:180
+#: pro/Analytics/Geographic/Geographic-Page.php:248
+#: pro/Analytics/Products/Product-Reports-Ajax.php:108
+#: pro/Analytics/Products/Product-Reports-Ajax.php:182
+#: pro/Analytics/Revenue/Data-Integrity.php:515
+#: pro/Analytics/Revenue/Data-Integrity.php:542
+msgid "Invalid date format."
 msgstr ""
 
 #: includes/class-pd-customer-history-email.php:133
 msgid "Invalid email address for this user."
+msgstr ""
+
+#: pro/Analytics/Funnel/Funnel-Ajax.php:188
+msgid "Invalid granularity."
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:1202
+msgid "Invalid parameters"
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:149
+msgid "Invalid product."
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-ajax.php:96
@@ -641,16 +2283,64 @@ msgstr ""
 msgid "Invalid segment."
 msgstr ""
 
+#: pro/Intelligence/Behavioral.php:1608 pro/Intelligence/Intelligence.php:916
+#: pro/Intelligence/Intelligence.php:1007
+#: pro/Intelligence/Intelligence.php:1075
+#: pro/Intelligence/Intelligence.php:1156
+msgid "Invalid user ID"
+msgstr ""
+
 #: includes/class-pd-customer-history-email.php:120
 msgid "Invalid user ID provided."
 msgstr ""
 
+#: pro/Analytics/Products/Product-Reports-Ajax.php:187
+msgid "Invalid view."
+msgstr ""
+
+#: pro/Analytics/Revenue/Retention-Panel.php:240
+msgid "Invalid window preset."
+msgstr ""
+
+#: pro/Carts/Cart-Tracker.php:282
+msgid "IP Address"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:82
+msgid "IP:"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:250
 #: admin/partials/templates/customer-details.php:56
+#: pro/Analytics/Geographic/Geographic-Page.php:211
+#: pro/Analytics/Geographic/templates/geographic-report.php:45
+#: pro/Analytics/Geographic/templates/geographic-report.php:124
+#: pro/Analytics/Geographic/templates/geographic-report.php:152
 msgid "Items"
 msgstr ""
 
 #: includes/class-pd-customer-order-history.php:48
 msgid "Items & Qty"
+msgstr ""
+
+#: pro/Carts/Cart-Tracker.php:280
+msgid "Items Count"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:699
+msgid "Just made first purchase (≤90 days)"
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:143
+msgid "Key"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:324
+msgid "Key concerns:"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:217
+msgid "Key Indicators"
 msgstr ""
 
 #: admin/partials/templates/search-analytics.php:43
@@ -663,23 +2353,115 @@ msgstr ""
 #: admin/partials/templates/live-searches.php:69
 #: admin/partials/templates/live-sessions.php:70
 #: admin/partials/templates/trash.php:66
+#: pro/Stats/templates/live-sessions.php:94
+#: pro/Stats/templates/search-keywords-page.php:22
+#: pro/Stats/templates/stats-pages.php:22
+#: pro/Stats/templates/stats-tax-view.php:24
 msgid "Keyword Search"
+msgstr ""
+
+#: pro/Stats/Stats-List-Table.php:66
+msgid "Keyword Searches"
+msgstr ""
+
+#: pro/Stats/Stats-List-Table.php:174
+#: pro/Stats/templates/search-keywords-page.php:17
+#: pro/Stats/templates/top-sub-nav-stats.php:21
+msgid "Keywords"
+msgstr ""
+
+#: pro/Segments/Export-Presets.php:71
+msgid "Klaviyo"
 msgstr ""
 
 #: includes/class-pdwchs-upsell.php:39
 msgid "Know who is about to stop buying — before they do."
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-export.php:110
+#: pro/Analytics/templates/product-revenue-chart.php:34
+#: pro/Analytics/templates/revenue-patterns.php:23
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:24
+msgid "Last 30 Days"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:161
+#, php-format
+msgid "Last analyzed: %s ago"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-lifecycle-card.php:129
+#, php-format
+msgid "Last calculated: %s"
+msgstr ""
+
+#. %s: Time since calculation
+#: pro/Intelligence/templates/customer-churn-card.php:345
+#: pro/Intelligence/templates/customer-health-card.php:230
+#: pro/Intelligence/templates/customer-rfm-card.php:120
+#, php-format
+msgid "Last calculated: %s ago"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:153
+msgid "Last Order"
+msgstr ""
+
+#. %1$d: days since last order, %2$s: recency description
+#: pro/Intelligence/RFM.php:617
+#, php-format
+msgid "Last order %1$d days ago (%2$s)"
+msgstr ""
+
+#: pro/Intelligence/Health.php:814
+msgid "Last order %d days ago"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:751
+msgid "Last order 180+ days ago"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:738
+msgid "Last order 91-180 days ago"
+msgstr ""
+
+#: includes/segments/class-pdwchs-segments-export.php:131
 msgid "Last Order Date"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:619
+msgid "Last order:"
 msgstr ""
 
 #: admin/partials/templates/order-history.php:114
 msgid "Last Orders"
 msgstr ""
 
+#: admin/partials/templates/search-analytics.php:109
+msgid "Last Searched"
+msgstr ""
+
 #: admin/partials/templates/search-analytics.php:69
 msgid "Last Searches"
+msgstr ""
+
+#: pro/Intelligence/templates/order-panel.php:116
+msgid "Last seen"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:253
+msgid "Last Updated"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:196
+msgid "Last updated"
+msgstr ""
+
+#: pro/Intelligence/templates/rfm-dashboard-widget.php:50
+msgid "Last updated:"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:753
+msgid "Last-chance aggressive discount (30%)"
 msgstr ""
 
 #: admin/partials/templates/dashboard/last-orders.php:6
@@ -690,10 +2472,31 @@ msgstr ""
 msgid "Latest Searches"
 msgstr ""
 
+#: pro/Intelligence/Segments-Labels.php:113
+msgid "Launch re-engagement campaigns"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:208
+msgid "Launch Urgency Campaign"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:573
+msgid "Leave empty to use the site admin email."
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:131
+msgid "Leave registered users who never ordered out of the customer list."
+msgstr ""
+
 #: admin/partials/templates/customers.php:40
 #: admin/partials/templates/customers.php:55
 #: admin/partials/templates/order-history.php:46
+#: pro/Analytics/Revenue/Refund-Rate-Filter.php:139
 msgid "Less then"
+msgstr ""
+
+#: pro/Intelligence/templates/order-panel.php:72
+msgid "Lifecycle"
 msgstr ""
 
 #: includes/class-pd-customer-history-customers.php:54
@@ -701,10 +2504,44 @@ msgstr ""
 msgid "Lifecycle Stage"
 msgstr ""
 
+#: pro/Intelligence/Intelligence.php:1080
+msgid "Lifecycle stage updated successfully"
+msgstr ""
+
+#: pro/Intelligence/templates/order-panel.php:90
+msgid "Lifetime value"
+msgstr ""
+
+#: pro/Analytics/templates/ltv-distribution.php:37
+msgid "Lifetime value distribution"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:119
+msgid "Line Total"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:228
+msgid "Linked Order"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:234
+msgid "Linked order:"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:236
+msgid "Linked order: #%d (deleted)"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:104
+msgid "List sessions identified as crawlers alongside real visitors."
+msgstr ""
+
 #: admin/partials/templates/live-searches.php:40
 #: admin/partials/templates/live-searches.php:47
 #: admin/partials/templates/live-sessions.php:41
 #: admin/partials/templates/trash.php:40
+#: pro/Stats/templates/live-sessions.php:50
+#: pro/Stats/templates/live-sessions.php:62
 msgid "Live Searches"
 msgstr ""
 
@@ -712,11 +2549,71 @@ msgstr ""
 #: admin/partials/templates/live-sessions.php:40
 #: admin/partials/templates/live-sessions.php:48
 #: admin/partials/templates/trash.php:39
+#: pro/Stats/templates/live-sessions.php:54
+#: pro/Stats/templates/live-sessions.php:61
 msgid "Live Sessions"
 msgstr ""
 
 #: admin/class-pdwchs-segments-list-table.php:62
 msgid "Load"
+msgstr ""
+
+#: pro/Timeline/templates/timeline.php:75
+msgid "Load older"
+msgstr ""
+
+#: pro/Intelligence/templates/at-risk-alert-widget.php:34
+msgid "Loading at risk customers..."
+msgstr ""
+
+#: pro/Intelligence/templates/behavioral-dashboard-widget.php:43
+msgid "Loading behavioral data..."
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:323
+msgid "Loading correlations..."
+msgstr ""
+
+#: pro/Intelligence/templates/health-dashboard-widget.php:69
+msgid "Loading declining customers..."
+msgstr ""
+
+#: pro/Intelligence/templates/health-dashboard-widget.php:40
+msgid "Loading health data..."
+msgstr ""
+
+#: pro/Intelligence/templates/lifecycle-funnel-widget.php:27
+msgid "Loading lifecycle funnel..."
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:300
+msgid "Loading product data..."
+msgstr ""
+
+#: pro/Analytics/Revenue/Revenue-Pro.php:92
+#: pro/Analytics/templates/revenue-dashboard-widget.php:43
+msgid "Loading revenue data..."
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:355
+msgid "Loading revenue patterns..."
+msgstr ""
+
+#: pro/Intelligence/templates/rfm-dashboard-widget.php:29
+msgid "Loading segment data..."
+msgstr ""
+
+#: pro/Analytics/templates/product-correlations.php:84
+#: pro/Analytics/templates/product-revenue-chart.php:55
+#: pro/Analytics/templates/revenue-patterns.php:54
+msgid "Loading..."
+msgstr ""
+
+#: pro/Timeline/Timeline-Panel.php:275 pro/Analytics/Funnel/Funnel-Ajax.php:120
+#: pro/Analytics/Revenue/Retention-Panel.php:198
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:42
+#: pro/Analytics/Geographic/templates/geographic-report.php:193
+msgid "Loading…"
 msgstr ""
 
 #: includes/class-pdwchs-telemetry.php:110
@@ -725,24 +2622,179 @@ msgid ""
 "information stays on your server."
 msgstr ""
 
+#: pro/Intelligence/Segments-Labels.php:153
+msgid "Long inactive customers with low historical value"
+msgstr ""
+
+#: pro/Intelligence/RFM.php:612
+#: pro/Intelligence/templates/rfm-matrix-widget.php:38
+msgid "Long time ago"
+msgstr ""
+
 #: includes/class-pdwchs-upsell.php:80
 msgid "Long-inactive customers worth a re-engagement push."
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:162
+msgid "Lost"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:399
+msgid "Low"
+msgstr ""
+
+#: pro/Intelligence/Health.php:696
+msgid "Low engagement, needs attention"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:449
+msgid "Low Risk Maximum"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:336
+msgid "Low: %d"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:137
+msgid "Lowest Risk First"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:50
+msgid "Loyal"
 msgstr ""
 
 #: includes/class-pdwchs-upsell.php:71
 msgid "Loyal Champions"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:907
+#: includes/class-pd-customer-history-customers.php:982
+#: pro/Intelligence/Lifecycle.php:721
 msgid "Loyal Customer"
+msgstr ""
+
+#. %d: number of months since acquisition.
+#: pro/Analytics/Cohorts/Cohort-Export.php:75
+#: pro/Analytics/Cohorts/Cohort-Page.php:125
+#: pro/Analytics/Cohorts/templates/cohort-table.php:94
+msgid "M+%d"
+msgstr ""
+
+#: pro/Segments/Export-Presets.php:88
+msgid "Mailchimp"
+msgstr ""
+
+#: pro/Intelligence/Health.php:670
+msgid "Maintain satisfaction, reward loyalty"
+msgstr ""
+
+#: pro/CRM/Tags-Filter.php:82
+msgid "Manual Tag :"
+msgstr ""
+
+#: pro/CRM/Tags-Admin-Page.php:53 pro/CRM/Tags-Admin-Page.php:54
+#: pro/CRM/templates/customer-tags-panel.php:18
+#: pro/CRM/templates/tag-management.php:17
+msgid "Manual Tags"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:197
+msgid "Marked abandoned"
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-ajax.php:125
 msgid "Maybe later"
 msgstr ""
 
+#: pro/Intelligence/Order-Gap-Column.php:153
+msgid "Mean days between orders, from the nightly churn calculation."
+msgstr ""
+
+#: pro/Intelligence/Order-Gap-Column.php:71
+msgid ""
+"Mean days between orders, from the nightly churn calculation. Blank until "
+"that calculation has scored the customer."
+msgstr ""
+
+#: pro/Analytics/templates/ltv-distribution.php:68
+msgid "Median lifetime value"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-dashboard-widget.php:66
+#: pro/Intelligence/templates/churn-prediction.php:133
+#: pro/Intelligence/templates/churn-prediction.php:400
+msgid "Medium"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:85
+msgid "Medium Risk"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:460
+msgid "Medium Risk Maximum"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:340
+msgid "Medium: %d"
+msgstr ""
+
 #: admin/partials/templates/customer-email.php:77
 msgid "Message:"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:462
+msgid "Min total"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:158
+msgid "Minimize investment in this segment"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:592
+msgid ""
+"Minimum number of orders required before churn prediction is calculated."
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:586
+msgid "Minimum Orders"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:211
+msgid "Minutes of inactivity before a cart is marked abandoned. Minimum 5."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:134
+msgid "Mobile Shopper"
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:364
+msgid "Monday"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:191
+#: pro/Intelligence/templates/customer-rfm-card.php:93
+msgid "Monetary"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:511
+msgid "Monetary Weight"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:184
+msgid "Monitor for emerging patterns"
+msgstr ""
+
+#: pro/Analytics/templates/product-revenue-chart.php:44
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:33
+msgid "Month"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:187
+#: pro/Analytics/templates/revenue-dashboard-widget.php:107
+msgid "Monthly"
+msgstr ""
+
+#: includes/class-pd-customer-history.php:506
+msgid "Monthly reports"
 msgstr ""
 
 #. %s is the taxonomy name
@@ -751,73 +2803,299 @@ msgstr ""
 msgid "Most viewed %s"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:139
+#: admin/partials/templates/plugin-settings.php:172
 msgid "Most viewed categories"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:99
+#: admin/partials/templates/search-analytics.php:151
 msgid "Most Viewed Products"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:137
+#: admin/partials/templates/plugin-settings.php:168
 #: admin/partials/templates/dashboard/most-viewed-products.php:29
 msgid "Most viewed products"
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-export.php:106
+#: includes/segments/class-pdwchs-segments-export.php:127
 #: admin/partials/templates/customer-details.php:249
 #: admin/partials/templates/customer-email.php:122
+#: pro/CRM/templates/tag-management.php:28
 msgid "Name"
 msgstr ""
 
-#: includes/class-pdwchs-upsell.php:75
+#: includes/class-pdwchs-upsell.php:75 pro/Intelligence/Segments-Labels.php:106
 msgid "Needs Attention"
 msgstr ""
 
-#: admin/partials/templates/revenue.php:67
+#: admin/partials/templates/revenue.php:68
+#: pro/Analytics/templates/revenue-dashboard-widget.php:54
 msgid "Net Revenue"
 msgstr ""
 
-#: admin/partials/templates/revenue.php:101
+#: admin/partials/templates/revenue.php:118
 msgid "Net revenue"
 msgstr ""
 
-#: admin/partials/templates/revenue.php:89
+#: admin/partials/templates/revenue.php:106
 msgid "Net revenue over time"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:905
+#: pro/Analytics/Geographic/Geographic-Page.php:209
+#: pro/Analytics/Geographic/templates/geographic-report.php:43
+#: pro/Analytics/Geographic/templates/geographic-report.php:116
+#: pro/Analytics/Geographic/templates/geographic-report.php:150
+msgid "Net sales"
+msgstr ""
+
+#: pro/Intelligence/templates/order-panel.php:120
+msgid "Never seen on site"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:228
+#: pro/Intelligence/templates/churn-prediction.php:284
+msgid "New"
+msgstr ""
+
+#: includes/class-pd-customer-history-customers.php:980
+#: pro/Intelligence/Lifecycle.php:695 pro/Intelligence/Segments-Labels.php:78
 msgid "New Customer"
 msgstr ""
 
+#: pro/Analytics/templates/revenue-dashboard-widget.php:131
+msgid "New Customers"
+msgstr ""
+
 #: includes/helper/class-pdwchs-helper.php:290
+#: pro/Helpers/class-pd-customer-history-helper.php:287
+#: pro/Stats/Sessions-List-Table.php:189
 msgid "New order"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:87
-#: admin/partials/templates/plugin-settings.php:97
-#: admin/partials/templates/plugin-settings.php:110
+#: pro/CRM/templates/tag-management.php:20
+msgid "New tag name..."
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:86
+msgid "Next Best Action"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:78
+msgid "Night Owl"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:101
+#: admin/partials/templates/plugin-settings.php:114
+#: admin/partials/templates/plugin-settings.php:128
 msgid "No"
 msgstr ""
 
-#: admin/partials/templates/revenue.php:114
+#: pro/Intelligence/templates/churn-prediction.php:312
+msgid ""
+"No active alerts. Churn alerts will appear here when customers are at risk."
+msgstr ""
+
+#: pro/Intelligence/Health.php:847
+msgid "No activity in last 30 days"
+msgstr ""
+
+#: pro/Timeline/Timeline-Panel.php:278
+msgid "No activity of this type for this customer."
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:215
+msgid "No at-risk customers detected. Your customers are healthy!"
+msgstr ""
+
+#: pro/Intelligence/Behavioral.php:1728
+msgid "No behavior types selected"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:76
+msgid "No behavioral patterns detected yet. Click Refresh Analysis below."
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:475
+msgid "No carts found matching your filters."
+msgstr ""
+
+#: pro/Analytics/Cohorts/Cohort-Export.php:49
+msgid "No cohort data available to export."
+msgstr ""
+
+#: pro/Analytics/Cohorts/templates/cohort-table.php:38
+msgid "No cohorts yet."
+msgstr ""
+
+#: pro/Analytics/Revenue/Retention-Panel.php:200
+#: pro/Analytics/templates/retention-metrics.php:82
+msgid ""
+"No completed or processing orders from registered customers yet, so there is "
+"nothing to measure retention against."
+msgstr ""
+
+#: pro/Analytics/templates/ltv-distribution.php:45
+msgid ""
+"No completed or processing orders yet, so there is no lifetime value to "
+"distribute."
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:95
+msgid "No completed orders"
+msgstr ""
+
+#: admin/partials/templates/revenue.php:131
 msgid ""
 "No completed orders in this period yet. Revenue will appear here as orders "
 "come in."
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:175
+#: pro/Analytics/Revenue/Refund-Rate-Column.php:147
+msgid "No completed, processing or refunded orders."
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:596
+msgid ""
+"No customer data available yet. RFM analysis will appear once customers "
+"start making purchases."
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:615
+msgid "No customer health data available yet."
+msgstr ""
+
+#: pro/Analytics/templates/retention-metrics.php:50
+msgid ""
+"No customers churned in this window, so an expected lifetime cannot be "
+"derived."
+msgstr ""
+
+#: pro/Intelligence/templates/rfm-matrix-widget.php:69
+msgid ""
+"No customers have been scored yet. The matrix fills in once customers start "
+"completing orders."
+msgstr ""
+
+#: pro/Analytics/templates/retention-metrics.php:49
+msgid ""
+"No customers ordered in the window before this one, so there is no base to "
+"measure churn against."
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:616
+msgid "No customers with declining health at this time."
+msgstr ""
+
+#: pro/Intelligence/templates/customer-rfm-card.php:23
+msgid "No Data"
+msgstr ""
+
+#: admin/class-pd-customer-history-admin.php:188
 msgid "No filters applied. Cannot save empty segment."
+msgstr ""
+
+#: pro/Analytics/Revenue/Revenue-Pro.php:105
+#: pro/Analytics/templates/data-integrity-indicator.php:70
+msgid "No flagged orders for this range."
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:325
+msgid "No frequently bought together data for this product and window."
+msgstr ""
+
+#: pro/Analytics/Funnel/Funnel-Ajax.php:122
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:48
+msgid "No funnel data for this period."
+msgstr ""
+
+#: pro/Intelligence/templates/churn-dashboard-widget.php:116
+msgid "No high-risk customers detected. Your customers are healthy!"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:181
+msgid "No items captured."
+msgstr ""
+
+#: includes/crm/templates/customer-notes-panel.php:51
+msgid "No notes yet. Add one above."
+msgstr ""
+
+#: pro/Timeline/Timeline-Panel.php:277
+msgid "No older activity."
+msgstr ""
+
+#. 1: range start date, 2: range end date.
+#: pro/Analytics/Geographic/templates/geographic-report.php:88
+#, php-format
+msgid "No orders between %1$s and %2$s."
 msgstr ""
 
 #: admin/partials/templates/customer-details.php:94
 msgid "No orders found!"
 msgstr ""
 
-#: admin/class-pdwchs-segments-list-table.php:108
+#: pro/Intelligence/Health.php:820
+msgid "No orders in last 12 months"
+msgstr ""
+
+#: pro/Intelligence/Health.php:811 pro/Intelligence/RFM.php:604
+#: pro/Intelligence/RFM.php:633 pro/Intelligence/RFM.php:663
+msgid "No orders yet"
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:99
+msgid "No products selected."
+msgstr ""
+
+#: pro/Timeline/templates/timeline.php:53
+msgid "No recorded activity for this customer yet."
+msgstr ""
+
+#: pro/Analytics/Revenue/Revenue-Pro.php:94
+msgid "No revenue data available for this period."
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:357
+msgid "No revenue data for this date range."
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:302
+msgid "No revenue data for this selection."
+msgstr ""
+
+#: admin/class-pdwchs-segments-list-table.php:135
 msgid ""
 "No segments saved yet. Use the \"Save as Segment\" button on the Customers "
 "page to create your first segment."
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:301
+msgid "No site visits in 30 days"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:312
+msgid "No site visits in the last 30 days"
+msgstr ""
+
+#: pro/CRM/templates/customer-tags-panel.php:47
+msgid "No tags yet. Add one above."
+msgstr ""
+
+#: pro/CRM/templates/tag-management.php:56
+msgid "No tags yet. Create one above."
+msgstr ""
+
+#. %s: the date on which zero-result collection began on this site.
+#: admin/partials/templates/search-analytics.php:138
+#, php-format
+msgid ""
+"No zero-result searches recorded yet. Collecting since %s — terms appear "
+"here as visitors search your store and find nothing."
+msgstr ""
+
+#: admin/partials/templates/search-analytics.php:143
+msgid ""
+"No zero-result searches recorded yet. Terms appear here as visitors search "
+"your store and find nothing."
 msgstr ""
 
 #: admin/partials/templates/customers.php:35
@@ -828,11 +3106,131 @@ msgstr ""
 msgid "None reached yet"
 msgstr ""
 
+#: pro/Intelligence/templates/customer-behavioral-card.php:163
+msgid "Not analyzed yet"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-rfm-card.php:122
+#: pro/Intelligence/templates/order-panel.php:50
+#: pro/Intelligence/templates/order-panel.php:67
+#: pro/Intelligence/templates/order-panel.php:84
+msgid "Not calculated yet"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:191
+msgid ""
+"Not enough data to generate behavioral insights. Run a behavioral analysis "
+"first."
+msgstr ""
+
 #: includes/class-pdwchs-telemetry.php:105
 msgid "Not recorded yet"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:134
+#: pro/Intelligence/Order-Gap-Column.php:140
+msgid "Not yet scored by the churn calculation, or only one order."
+msgstr ""
+
+#: includes/crm/class-pdwchs-notes.php:354
+msgid "Note"
+msgstr ""
+
+#: includes/crm/class-pdwchs-notes.php:128
+msgid "Note cannot be empty."
+msgstr ""
+
+#: includes/crm/class-pdwchs-notes.php:132
+msgid "Note cannot exceed 5000 characters."
+msgstr ""
+
+#: includes/crm/class-pdwchs-notes.php:207
+#: includes/crm/class-pdwchs-notes.php:278
+msgid "Note not found."
+msgstr ""
+
+#: includes/crm/templates/customer-notes-panel.php:17
+msgid "Notes"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:225
+#, php-format
+msgid "Notify about new arrivals from %s and offer brand loyalty reward."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:59
+msgid ""
+"Notify about new arrivals from their preferred brand and offer loyalty "
+"rewards."
+msgstr ""
+
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:99
+msgid "Num of Days :"
+msgstr ""
+
+#: pro/Analytics/templates/ltv-distribution.php:101
+msgid ""
+"Number of customers in each lifetime spend bracket. The table below lists "
+"the same figures."
+msgstr ""
+
+#: pro/Carts/templates/cart-dashboard-widget.php:22
+msgid "Observation only — see the Automation Add-on for recovery actions."
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:146
+msgid "Observe and store WooCommerce cart activity for reporting."
+msgstr ""
+
+#: pro/Intelligence/RFM.php:639
+#: pro/Intelligence/templates/rfm-matrix-widget.php:44
+msgid "Occasional buyer"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:102
+msgid "Offer exclusive high-value deals"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:86
+msgid "Offer first repeat purchase discount"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:58
+msgid "Offer loyalty program benefits"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:378
+msgid "Offer loyalty reward"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:71
+msgid "Offer membership programs"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:128
+msgid "Offer personalized special discounts"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:406
+msgid "Offer significant discount"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:142
+msgid "Offer significant discount or incentive"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:115
+msgid "Offer volume discounts, wholesale pricing, and bundle deals."
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:701
+msgid "Onboarding email sequence"
+msgstr ""
+
+#: includes/class-pd-customer-history.php:151
+msgid "Once Monthly"
+msgstr ""
+
+#: includes/class-pd-customer-history.php:143
 msgid "Once Weekly"
 msgstr ""
 
@@ -840,16 +3238,43 @@ msgstr ""
 msgid "Once-active customers starting to slip toward lapse."
 msgstr ""
 
+#: pro/Intelligence/RFM.php:641
+#: pro/Intelligence/templates/rfm-matrix-widget.php:46
+msgid "One-time buyer"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:143
+msgid ""
+"Optimize desktop experience with detailed product views and comparison "
+"features."
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:755
+msgid "OR ignore and focus resources elsewhere"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:170
+msgid "Or ignore completely to save costs"
+msgstr ""
+
 #: admin/partials/templates/search-analytics.php:33
 msgid "Or set “Save ‘admin’ sessions” to Yes under Settings."
 msgstr ""
 
 #: admin/partials/templates/customer-details.php:54
-#: admin/partials/templates/plugin-settings.php:130
+#: admin/partials/templates/plugin-settings.php:155
+#: pro/Analytics/Revenue/Revenue-Pro.php:107
+#: pro/Analytics/templates/data-integrity-indicator.php:34
+#: pro/Analytics/templates/data-integrity-indicator.php:47
+#: pro/Analytics/templates/data-integrity-indicator.php:60
 msgid "Order"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:254
+#: pro/Intelligence/templates/customer-health-card.php:174
+msgid "Order Frequency"
+msgstr ""
+
+#: admin/class-pd-customer-history-admin.php:267
 #: admin/partials/templates/order-history.php:15
 #: admin/partials/templates/top-nav.php:29
 msgid "Order History"
@@ -864,15 +3289,57 @@ msgstr ""
 msgid "Order Status :"
 msgstr ""
 
+#: pro/Timeline/templates/timeline.php:35
+msgid "Ordered"
+msgstr ""
+
+#. %s: order number.
+#: pro/Timeline/Timeline-Panel.php:176
+#, php-format
+msgid "Ordered #%s"
+msgstr ""
+
 #: includes/class-pd-customer-history-customers.php:59
 #: admin/partials/templates/customer-details.php:49
-#: admin/partials/templates/revenue.php:72
+#: admin/partials/templates/revenue.php:73
+#: pro/Analytics/Geographic/Geographic-Page.php:210
+#: pro/Analytics/Products/Product-Reports-Ajax.php:359
+#: pro/Analytics/Geographic/templates/geographic-report.php:44
+#: pro/Analytics/Geographic/templates/geographic-report.php:120
+#: pro/Analytics/Geographic/templates/geographic-report.php:151
 msgid "Orders"
+msgstr ""
+
+#: pro/Analytics/Geographic/templates/geographic-report.php:294
+msgid ""
+"Orders are grouped by their own billing country, including guest checkouts. "
+"Orders with no billing country are grouped under \"Unknown\" and are counted "
+"in the totals, which is what makes these rows add up to the store total. "
+"There is no combined unique-product count: a product sold in two countries "
+"would be counted twice."
+msgstr ""
+
+#: pro/Stats/Stats-List-Table.php:196
+msgid "Orders Average"
 msgstr ""
 
 #: includes/class-pd-customer-history-customers.php:62
 #: admin/partials/templates/customer-details.php:204
 msgid "Orders average"
+msgstr ""
+
+#: pro/Analytics/Revenue/Revenue-Pro.php:102
+#: pro/Analytics/templates/data-integrity-indicator.php:30
+msgid "Orders in unusual statuses"
+msgstr ""
+
+#: pro/Analytics/Funnel/Funnel-Ajax.php:127
+msgid "Overall Conversion"
+msgstr ""
+
+#: pro/Analytics/Revenue/Revenue-Pro.php:103
+#: pro/Analytics/templates/data-integrity-indicator.php:43
+msgid "Partially refunded orders"
 msgstr ""
 
 #: includes/class-pd-customer-order-history.php:50
@@ -883,20 +3350,52 @@ msgstr ""
 msgid "Payment Method :"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:237
+#: admin/class-pd-customer-history-admin.php:250
 msgid "PD Customer"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:241
+#: admin/class-pd-customer-history-admin.php:254
 msgid "PD Customer Email"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:219
+#: admin/class-pd-customer-history-admin.php:232
 msgid "PD Customer History"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:233
+#: admin/class-pd-customer-history-admin.php:246
 msgid "PD Customers"
+msgstr ""
+
+#: pro/Stats/Stats-List-Table.php:65
+msgid "PD Keyword Searches"
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:65
+msgid "PD Searches"
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:57
+msgid "PD Sessions"
+msgstr ""
+
+#: pro/Stats/Stats-List-Table.php:57
+msgid "PD Statistics"
+msgstr ""
+
+#: pro/Stats/Stats-List-Table.php:100
+msgid "PD Total Spent"
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:73
+msgid "PD Trash"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:130
+msgid "Peak Day:"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:134
+msgid "Peak Hour:"
 msgstr ""
 
 #: includes/class-pd-customer-history-customers.php:60
@@ -908,8 +3407,28 @@ msgstr ""
 msgid "Pending Orders Amount"
 msgstr ""
 
+#: pro/Analytics/templates/retention-metrics.php:150
+msgid "Period"
+msgstr ""
+
 #: admin/partials/templates/customer-details.php:235
 msgid "Personal Information"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:357
+msgid "Personal outreach"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:754
+msgid "Personal outreach if high-value"
+msgstr ""
+
+#: includes/crm/class-pdwchs-notes.php:100
+msgid "Please enter a note first."
+msgstr ""
+
+#: pro/CRM/Tags-Admin-Page.php:153 pro/CRM/Tags-Panel.php:138
+msgid "Please enter a tag name first."
 msgstr ""
 
 #: includes/class-pdwchs-telemetry.php:113
@@ -918,6 +3437,58 @@ msgstr ""
 
 #: includes/segments/class-pdwchs-segments-ajax.php:123
 msgid "Plus ready-made intelligence segments:"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:618
+msgid "points"
+msgstr ""
+
+#: pro/Intelligence/Health.php:692
+msgid "Poor"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:704
+msgid "Poor (21-40)"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:64
+msgid "Potential Loyalist"
+msgstr ""
+
+#: pro/Intelligence/templates/order-panel.php:136
+msgid "Predicted next order"
+msgstr ""
+
+#. %s: Predicted date of this customer's next order
+#: pro/Intelligence/templates/customer-churn-card.php:259
+#, php-format
+msgid "Predicted next order: ~ %s"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-lifecycle-card.php:99
+msgid "Present"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:125
+msgid "Previously good customers who are slipping away"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:121
+msgid "Price Range:"
+msgstr ""
+
+#. %s: Primary indicator
+#: pro/Intelligence/templates/customer-churn-card.php:313
+#, php-format
+msgid "Primary concern: %s"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:151
+msgid "Primary Indicator"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:245
+msgid "Priority"
 msgstr ""
 
 #: includes/class-pdwchs-telemetry.php:119
@@ -930,10 +3501,14 @@ msgid ""
 "scoring — no setup required."
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:113
+#: admin/partials/templates/search-analytics.php:165
+#: pro/Analytics/templates/product-correlations.php:101
+#: pro/Carts/templates/cart-detail.php:116
 msgid "Product"
 msgstr ""
 
+#: pro/Stats/Stats-List-Table.php:179 pro/Stats/Stats-List-Table.php:187
+#: pro/Analytics/Funnel/Funnel-Session-List-Table.php:33
 #: admin/partials/templates/dashboard/most-viewed-products.php:51
 #: admin/partials/templates/dashboard/top-selling-products.php:30
 msgid "Product Name"
@@ -943,19 +3518,138 @@ msgstr ""
 msgid "Product Purchased :"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:904
+#: pro/Intelligence/Lifecycle.php:690
+msgid "Product recommendations"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:704
+msgid "Product recommendations based on first purchase"
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:222
+#: pro/Analytics/Products/Product-Reports-Ajax.php:223
+#: pro/Stats/templates/top-sub-nav-stats.php:36
+msgid "Product Revenue"
+msgstr ""
+
+#: pro/Analytics/templates/product-revenue-chart.php:9
+msgid "Product Revenue & Comparison"
+msgstr ""
+
+#: pro/Analytics/templates/product-revenue-chart.php:68
+msgid "Product revenue chart"
+msgstr ""
+
+#: pro/Stats/templates/product-view-stats-page.php:22
+#: pro/Stats/templates/top-selling-products.php:21
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:79
+msgid "Product Search"
+msgstr ""
+
+#: pro/Stats/templates/product-view-stats-page.php:18
+msgid "Product View Count"
+msgstr ""
+
+#: pro/Stats/Stats-List-Table.php:73 pro/Stats/Stats-List-Table.php:74
+msgid "Product Views"
+msgstr ""
+
+#: pro/Analytics/templates/product-revenue-chart.php:15
+msgid "Products (max 3)"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:92
+msgid "Promising"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:229
+msgid "Promote Preferred Brand"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:101
+msgid ""
+"Promote subscription plans with discounts on recurring orders and highlight "
+"convenience."
+msgstr ""
+
+#: includes/class-pd-customer-history-customers.php:979
+#: pro/Intelligence/Lifecycle.php:682
 msgid "Prospect"
 msgstr ""
 
+#: pro/Intelligence/Segments-Labels.php:130
+msgid "Provide aggressive incentives to return"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:379
+msgid "Provide bonus points or exclusive access to re-engage"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:59
+msgid "Provide bundle deals and volume discounts"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:94
+msgid ""
+"Provide detailed product comparisons, reviews, and buying guides to support "
+"their decision."
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:46
+msgid "Provide early access to new products"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:72
+msgid "Provide special discounts to encourage frequency"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:407
+msgid "Provide substantial discount (20%+) with limited validity"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:730
+msgid "Provide VIP customer service"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:87
+msgid "Provide welcome package or bonus"
+msgstr ""
+
+#: pro/Stats/Stats-List-Table.php:181 pro/Stats/Stats-List-Table.php:188
 #: admin/partials/templates/dashboard/top-selling-products.php:31
 msgid "Purchase Count"
+msgstr ""
+
+#. %s: Decline percentage
+#: pro/Intelligence/Churn-Alerts.php:290
+#, php-format
+msgid "Purchase frequency declined by %s%%"
+msgstr ""
+
+#. %s: Decline percentage
+#: pro/Intelligence/templates/customer-churn-card.php:274
+#, php-format
+msgid "Purchase frequency down %s%%"
+msgstr ""
+
+#. %d: Days overdue
+#: pro/Intelligence/Churn-Alerts.php:282
+msgid "Purchase overdue by %d days"
+msgstr ""
+
+#: pro/Analytics/Funnel/Funnel-Ajax.php:126
+msgid "Purchased"
 msgstr ""
 
 #. Author of the plugin
 msgid "PureDevs"
 msgstr ""
 
-#: includes/class-pdwchs-telemetry.php:109
+#: pro/Carts/Cart-Tracker.php:240 pro/Carts/Cart-Tracker.php:299
+msgid "PureDevs Cart History"
+msgstr ""
+
+#: includes/class-pdwchs-telemetry.php:109 pro/Trial-Gate.php:106
 msgid "PureDevs Customer History"
 msgstr ""
 
@@ -963,18 +3657,144 @@ msgstr ""
 msgid "PureDevs Customer History for WooCommerce"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:896
+#: includes/class-pd-customer-history.php:1016
 msgid "PureDevs Customer History for WooCommerce Documentation"
 msgstr ""
 
-#: puredevs-customer-history-for-woocommerce.php:186
+#: puredevs-customer-history-for-woocommerce.php:261
 msgid ""
 "PureDevs Customer History for WooCommerce is enabled but not effective. In "
 "order to work it requires WooCommerce."
 msgstr ""
 
+#: pro/Carts/templates/cart-detail.php:117
+msgid "Qty"
+msgstr ""
+
+#. %d: RFM recency score, 1 to 5.
+#: pro/Intelligence/templates/rfm-matrix-widget.php:105
+msgid "R%d"
+msgstr ""
+
+#: pro/Analytics/templates/product-correlations.php:98
+msgid "Rank"
+msgstr ""
+
+#: pro/Analytics/templates/retention-metrics.php:159
+msgid "Rate"
+msgstr ""
+
+#: pro/Intelligence/Health.php:688
+msgid "Re-engagement campaigns, special offers"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:116
+msgid "Reach out with \"We miss you\" message"
+msgstr ""
+
 #: admin/partials/templates/segments-list.php:66
 msgid "Ready-made Pro segments"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:99
+msgid "Recalculate"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-health-card.php:238
+#: pro/Intelligence/templates/customer-lifecycle-card.php:136
+#: pro/Intelligence/templates/customer-rfm-card.php:128
+msgid "Recalculate Now"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:175
+#: pro/Intelligence/templates/customer-rfm-card.php:69
+msgid "Recency"
+msgstr ""
+
+#: pro/Intelligence/templates/rfm-matrix-widget.php:84
+msgid "Recency band"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:491
+msgid "Recency Weight"
+msgstr ""
+
+#: pro/Intelligence/RFM.php:609
+#: pro/Intelligence/templates/rfm-matrix-widget.php:35
+msgid "Recent"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-health-card.php:160
+msgid "Recent Activity"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:97
+msgid "Recent big spenders with high potential value"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:69
+msgid "Recent buyers showing promise for loyalty"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-lifecycle-card.php:114
+#: pro/Intelligence/templates/customer-rfm-card.php:105
+msgid "Recommended Actions:"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:168
+msgid "Record cart snapshots"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:117
+msgid "Record sessions for logged-in store administrators."
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:378
+#: pro/Carts/Abandoned-Carts-List-Table.php:434
+#: pro/Carts/templates/cart-detail.php:198
+msgid "Recovered"
+msgstr ""
+
+#: pro/Intelligence/Churn.php:1030
+msgid "Reduced engagement"
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:229
+msgid "Referer"
+msgstr ""
+
+#: pro/Intelligence/templates/behavioral-dashboard-widget.php:34
+#: pro/Intelligence/templates/churn-dashboard-widget.php:49
+#: pro/Intelligence/templates/health-dashboard-widget.php:26
+#: pro/Intelligence/templates/rfm-dashboard-widget.php:22
+msgid "Refresh"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:169
+msgid "Refresh Analysis"
+msgstr ""
+
+#: pro/Intelligence/templates/rfm-dashboard-widget.php:20
+msgid "Refresh Data"
+msgstr ""
+
+#: pro/Analytics/Revenue/Refund-Rate-Column.php:87
+msgid "Refund Rate"
+msgstr ""
+
+#: pro/Analytics/Revenue/Refund-Rate-Filter.php:134
+msgid "Refund Rate :"
+msgstr ""
+
+#: pro/Analytics/Revenue/Revenue-Pro.php:111
+#: pro/Analytics/templates/data-integrity-indicator.php:49
+msgid "Refunded"
+msgstr ""
+
+#: pro/Analytics/Revenue/Refund-Rate-Column.php:83
+msgid ""
+"Refunded amount as a share of what the customer was billed, across completed,"
+" processing and refunded orders, for registered customers only."
 msgstr ""
 
 #: includes/class-pd-customer-history-customers.php:61
@@ -986,20 +3806,218 @@ msgstr ""
 msgid "Refunded Orders Amount"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:76
-msgid "Results per page :"
+#: pro/Analytics/Revenue/Refund-Rate-Column.php:158
+msgid ""
+"Refunded share of billing, across completed, processing and refunded orders, "
+"for registered customers only."
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:261
-#: admin/partials/templates/revenue.php:52
+#: admin/partials/templates/revenue.php:101
+msgid "Registered customers only"
+msgstr ""
+
+#: pro/Analytics/templates/retention-metrics.php:128
+msgid "Registered customers only."
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:686
+msgid "Registered user, never purchased"
+msgstr ""
+
+#: pro/Intelligence/RFM.php:638
+#: pro/Intelligence/templates/rfm-matrix-widget.php:43
+msgid "Regular buyer"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:115
+msgid "Remind of product benefits"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:171
+msgid "Remove from expensive marketing campaigns"
+msgstr ""
+
+#: pro/CRM/templates/customer-tags-panel.php:41
+msgid "Remove tag"
+msgstr ""
+
+#: pro/CRM/Tags-Panel.php:137
+msgid "Remove this tag from the customer?"
+msgstr ""
+
+#: pro/CRM/Tags-Admin-Page.php:158 pro/CRM/templates/tag-management.php:46
+msgid "Rename"
+msgstr ""
+
+#: pro/Intelligence/RFM.php:640
+#: pro/Intelligence/templates/rfm-matrix-widget.php:45
+msgid "Repeat buyer"
+msgstr ""
+
+#: admin/partials/templates/revenue.php:88
+msgid "Repeat Purchase Rate"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:141
+msgid "Reports"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:387
+msgid "Request feedback"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:703
+msgid "Request feedback on first order"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:728 pro/Intelligence/Segments-Labels.php:44
+msgid "Request product reviews and testimonials"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:92
+msgid "Researcher"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:387
+msgid "Resolution Rate"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:236
+#: pro/Intelligence/templates/churn-prediction.php:287
+#: pro/Intelligence/templates/churn-prediction.php:363
+msgid "Resolved"
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:261
+msgid "Restore"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:86
+msgid "Results per page"
+msgstr ""
+
+#. %s: rolling window length, e.g. "30-day".
+#: pro/Analytics/Revenue/Retention-Panel.php:203
+#: pro/Analytics/templates/retention-metrics.php:39
+#, php-format
+msgid "Retention · %s window"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-dashboard-widget.php:139
+msgid "Returning Customers"
+msgstr ""
+
+#: admin/class-pd-customer-history-admin.php:274
+#: admin/partials/templates/revenue.php:53
 #: admin/partials/templates/top-nav.php:30
+#: pro/Analytics/Products/Product-Reports-Ajax.php:358
+#: pro/Analytics/Cohorts/templates/cohort-table.php:54
 msgid "Revenue"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-dashboard-widget.php:24
+msgid "Revenue Analytics"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-dashboard-widget.php:124
+msgid "Revenue by Customer Type"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-patterns.php:76
+msgid "Revenue by day of week"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-patterns.php:83
+msgid "Revenue by hour of day"
+msgstr ""
+
+#: pro/Analytics/templates/data-integrity-indicator.php:11
+msgid "Revenue data integrity check"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-dashboard-widget.php:91
+msgid "Revenue Over Time"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-dashboard-widget.php:114
+msgid "Revenue over time chart"
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:238
+#: pro/Analytics/Products/Product-Reports-Ajax.php:239
+#: pro/Analytics/templates/revenue-patterns.php:12
+#: pro/Stats/templates/top-sub-nav-stats.php:76
+msgid "Revenue Patterns"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:183
+msgid "Review customer data for anomalies"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:727
+msgid "Reward loyalty with exclusive perks"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:43
+msgid "Reward with exclusive perks and VIP treatment"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-rfm-card.php:18
+msgid "RFM Analysis"
+msgstr ""
+
+#: pro/Intelligence/templates/rfm-matrix-widget.php:53
+msgid "RFM matrix"
+msgstr ""
+
+#: pro/Intelligence/templates/rfm-matrix-widget.php:62
+msgid ""
+"RFM scores have not been calculated yet. Scores are recalculated nightly, "
+"and the matrix appears after the first run."
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:921
+msgid "RFM scores updated successfully"
 msgstr ""
 
 #: includes/class-pd-customer-history-customers.php:52
 #: includes/class-pdwchs-upsell.php:28
-#: includes/segments/class-pdwchs-segments-export.php:111
+#: includes/segments/class-pdwchs-segments-export.php:132
 msgid "RFM Segment"
+msgstr ""
+
+#: pro/Intelligence/templates/order-panel.php:55
+msgid "RFM segment"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:680
+msgid "RFM Segment :"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-dashboard-widget.php:82
+#: pro/Intelligence/templates/churn-prediction.php:248
+msgid "Risk"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:172
+msgid "Risk Components"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:327
+msgid "Risk Distribution"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:150
+msgid "Risk Level"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:443
+msgid "Risk Level Thresholds"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:149
+#: pro/Intelligence/templates/customer-churn-card.php:133
+msgid "Risk Score"
 msgstr ""
 
 #: includes/class-pd-customer-history-customers.php:48
@@ -1010,12 +4028,27 @@ msgstr ""
 msgid "Role :"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:153
+#: admin/partials/templates/plugin-settings.php:90
+msgid "Rows shown per page on the customer, session and search lists."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:129
+msgid ""
+"Run targeted re-engagement campaigns before their peak shopping season "
+"begins."
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:369
+msgid "Saturday"
+msgstr ""
+
+#: pro/CRM/Tags-Admin-Page.php:160
+#: admin/partials/templates/plugin-settings.php:206
 msgid "Save"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:93
-msgid "Save \"admin\" sessions :"
+#: admin/partials/templates/plugin-settings.php:110
+msgid "Save admin sessions"
 msgstr ""
 
 #: admin/partials/templates/customers.php:113
@@ -1023,22 +4056,84 @@ msgstr ""
 msgid "Save as Segment"
 msgstr ""
 
+#: pro/Carts/Abandoned-Carts-List-Table.php:238
+msgid "Save Cart Settings"
+msgstr ""
+
+#: pro/Digest/Segment-Sheet.php:205
+msgid "Save Digest Segment Settings"
+msgstr ""
+
 #: admin/partials/templates/customers.php:145
 msgid "Save Segment"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:600
+msgid "Save Settings"
 msgstr ""
 
 #: admin/partials/templates/segments-list.php:15
 msgid "Saved Segments"
 msgstr ""
 
+#: pro/Digest/Segment-Sheet.php:197
+msgid ""
+"Saved segments come from the Segments page. The digest uses the segment's "
+"current criteria."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:80
+msgid ""
+"Schedule marketing emails and push notifications for evening hours (8-10 PM)."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:73
+msgid ""
+"Schedule promotional emails and campaigns for Friday evening or Saturday "
+"morning."
+msgstr ""
+
+#: pro/Intelligence/templates/customer-health-card.php:155
+msgid "Score Breakdown:"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:455
+msgid "Scores 0 to this value are Low Risk."
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:466
+msgid "Scores above Low to this value are Medium Risk."
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:477
+msgid ""
+"Scores above Medium to this value are High Risk. Above this is Critical."
+msgstr ""
+
+#: pro/Intelligence/templates/order-panel.php:150
+msgid "Scores are calculated nightly."
+msgstr ""
+
+#. %s: date and time the RFM scores were last calculated.
+#: pro/Intelligence/templates/rfm-matrix-widget.php:157
+#, php-format
+msgid "Scores last calculated %s."
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:485
+msgid "Scoring Weights"
+msgstr ""
+
 #: includes/helper/class-pdwchs-helper.php:280
+#: pro/Helpers/class-pd-customer-history-helper.php:277
+#: pro/Stats/Sessions-List-Table.php:183
 #: admin/partials/templates/customers.php:111
 #: admin/partials/templates/order-history.php:90
-#: admin/partials/templates/plugin-settings.php:135
+#: admin/partials/templates/plugin-settings.php:164
 msgid "Search"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:271
+#: admin/class-pd-customer-history-admin.php:284
 #: admin/partials/templates/search-analytics.php:17
 #: admin/partials/templates/top-nav.php:33
 msgid "Search Analytics"
@@ -1053,6 +4148,10 @@ msgstr ""
 msgid "Search Customer"
 msgstr ""
 
+#: pro/Stats/Sessions-List-Table.php:133 pro/Timeline/templates/timeline.php:42
+msgid "Search History"
+msgstr ""
+
 #: admin/partials/templates/trash.php:64 admin/partials/templates/trash.php:67
 msgid "Search in Trash"
 msgstr ""
@@ -1062,21 +4161,55 @@ msgstr ""
 msgid "Search Order"
 msgstr ""
 
+#: pro/Stats/templates/product-view-stats-page.php:23
+#: pro/Stats/templates/top-selling-products.php:22
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:80
+msgid "Search Products"
+msgstr ""
+
 #: admin/partials/templates/live-searches.php:67
 #: admin/partials/templates/live-searches.php:70
 #: admin/partials/templates/live-sessions.php:68
 #: admin/partials/templates/live-sessions.php:71
+#: pro/Stats/templates/live-sessions.php:92
+#: pro/Stats/templates/live-sessions.php:95
+#: pro/Stats/templates/search-keywords-page.php:23
+#: pro/Stats/templates/stats-pages.php:23
+#: pro/Stats/templates/stats-tax-view.php:25
 msgid "Search Sessions"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:685
-#: includes/class-pd-customer-history.php:743
-#: includes/class-pd-customer-history.php:813
-#: includes/class-pd-customer-history.php:858
+#: admin/partials/templates/search-analytics.php:107
+msgid "Search Term"
+msgstr ""
+
+#: pro/Timeline/templates/timeline.php:32
+msgid "Searched"
+msgstr ""
+
+#. %s: the term the customer searched for.
+#: pro/Timeline/Timeline-Panel.php:115
+#, php-format
+msgid "Searched \"%s\""
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:66 pro/Stats/Stats-List-Table.php:173
+msgid "Searches"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:127
+msgid "Seasonal Shopper"
+msgstr ""
+
+#: includes/class-pd-customer-history.php:805
+#: includes/class-pd-customer-history.php:863
+#: includes/class-pd-customer-history.php:933
+#: includes/class-pd-customer-history.php:978
 #: admin/partials/templates/live-searches.php:12
 #: admin/partials/templates/live-sessions.php:13
 #: admin/partials/templates/plugin-settings.php:23
 #: admin/partials/templates/trash.php:12
+#: pro/Stats/templates/live-sessions.php:17
 msgid "Security check failed!"
 msgstr ""
 
@@ -1089,6 +4222,7 @@ msgstr ""
 msgid "See what Pro adds"
 msgstr ""
 
+#: pro/Digest/Segment-Sheet.php:181
 #: admin/partials/templates/segments-list.php:80
 msgid "Segment"
 msgstr ""
@@ -1106,13 +4240,13 @@ msgstr ""
 msgid "Segment Name"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:173
+#: admin/class-pd-customer-history-admin.php:186
 #: includes/segments/class-pdwchs-segments-manager.php:56
 #: includes/segments/class-pdwchs-segments-manager.php:179
 msgid "Segment name cannot be empty."
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:174
+#: admin/class-pd-customer-history-admin.php:187
 #: includes/segments/class-pdwchs-segments-manager.php:59
 #: includes/segments/class-pdwchs-segments-manager.php:182
 msgid "Segment name cannot exceed 191 characters."
@@ -1124,7 +4258,7 @@ msgstr ""
 msgid "Segment not found."
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:177
+#: admin/class-pd-customer-history-admin.php:190
 msgid "Segment saved successfully."
 msgstr ""
 
@@ -1132,19 +4266,75 @@ msgstr ""
 msgid "Segment saved."
 msgstr ""
 
+#. %s: saved segment name.
+#: pro/Digest/Segment-Sheet.php:270
+#, php-format
+msgid "Segment: %s"
+msgstr ""
+
 #: admin/partials/templates/top-nav.php:31
+#: pro/Intelligence/templates/rfm-dashboard-widget.php:38
 msgid "Segments"
+msgstr ""
+
+#: pro/Analytics/templates/revenue-patterns.php:64
+msgid "Select a date range and click Apply to view revenue patterns."
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:326
+#: pro/Analytics/templates/product-correlations.php:78
+msgid "Select a product above to see frequently bought together items."
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:303
+#: pro/Analytics/templates/product-revenue-chart.php:61
+msgid "Select at least one product and click Apply."
 msgstr ""
 
 #: admin/partials/templates/live-searches.php:64
 #: admin/partials/templates/live-sessions.php:65
 #: admin/partials/templates/order-history.php:32
-#: admin/partials/templates/plugin-settings.php:207
+#: admin/partials/templates/plugin-settings.php:256
 #: admin/partials/templates/trash.php:61
+#: pro/Stats/templates/live-sessions.php:89
 msgid "Select Date Range"
 msgstr ""
 
+#: pro/Analytics/templates/revenue-dashboard-widget.php:31
+msgid "Select date range"
+msgstr ""
+
+#: pro/Stats/templates/live-sessions.php:102
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:87
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:101
+msgid "select one"
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:304
+msgid "Select up to 3 products…"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:201
+msgid "Send Cart Recovery Email"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:87
+msgid ""
+"Send cart recovery emails with incentives like free shipping or small "
+"discounts."
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:156
+msgid "Send deep discount offers"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:122
+msgid ""
+"Send early access or pre-order notifications for upcoming product launches."
+msgstr ""
+
 #: admin/partials/templates/customer-email.php:98
+#: pro/Intelligence/templates/churn-prediction.php:204
 msgid "Send Email"
 msgstr ""
 
@@ -1152,43 +4342,200 @@ msgstr ""
 msgid "Send Email to Customer"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:145
-msgid "Send weekly reports to :"
+#: pro/Intelligence/Behavioral-Insights.php:236
+msgid "Send Exclusive Discount"
 msgstr ""
 
-#: admin/partials/templates/top-nav.php:36
+#: pro/Intelligence/Behavioral-Insights.php:45
+msgid ""
+"Send exclusive discount codes and flash sale notifications to drive repeat "
+"purchases."
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:688
+msgid "Send first-purchase incentive (15% discount)"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:416
+msgid "Send friendly check-in email highlighting new products"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:215
+msgid "Send Gift Guide"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:66
+msgid "Send gift guides before holidays and promote gift wrapping and bundles."
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:169
+msgid "Send last-chance aggressive discount"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:114
+msgid "Send limited time offers"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:85
+msgid "Send onboarding email sequence"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:396
+msgid "Send personalized content"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:741
+msgid "Send personalized discount (20%)"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:370
+msgid "Send personalized discount or special offer to encourage return"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:73
+msgid "Send personalized product recommendations"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:717
+msgid "Send personalized recommendations"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:415
+msgid "Send reminder email"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:181
+msgid "Send reports"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:195
+msgid "Send reports to"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:388
+msgid "Send survey to understand why spending decreased"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:369
+msgid "Send win-back offer"
+msgstr ""
+
+#: pro/Stats/Stats-List-Table.php:167 admin/partials/templates/top-nav.php:36
 msgid "Sessions"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:821
-#: includes/class-pd-customer-history.php:868
+#: includes/class-pd-customer-history.php:941
+#: includes/class-pd-customer-history.php:988
 msgid "Sessions deleted successfully."
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:281
-#: includes/class-pd-customer-history.php:917
+#: pro/Stats/Sessions-List-Table.php:162
+msgid "Sessions History"
+msgstr ""
+
+#: admin/class-pd-customer-history-admin.php:294
+#: includes/class-pd-customer-history.php:1037
 #: admin/partials/templates/plugin-settings.php:13
 #: admin/partials/templates/top-nav.php:40
+#: pro/Intelligence/templates/churn-prediction.php:117
 msgid "Settings"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:57
+#: admin/partials/templates/plugin-settings.php:63
 msgid "Settings Saved"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:1337
+msgid "Settings saved successfully"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:654
+msgid "Settings saved successfully."
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:1268
+msgid "Settings table not found"
+msgstr ""
+
+#: pro/Analytics/templates/ltv-distribution.php:114
+msgid "Share"
+msgstr ""
+
+#: pro/Intelligence/Churn-Alerts.php:397
+msgid "Share new arrivals or recommendations based on past purchases"
+msgstr ""
+
+#: pro/Analytics/Geographic/Geographic-Page.php:208
+msgid "Share of the higher value, per metric (%)"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:99
+msgid "Shopping Preferences"
 msgstr ""
 
 #: admin/partials/templates/customers.php:160
 #: admin/partials/templates/live-searches.php:75
 #: admin/partials/templates/live-sessions.php:76
 #: admin/partials/templates/order-history.php:102
+#: pro/Stats/templates/live-sessions.php:100
+#: pro/Stats/templates/product-view-stats-page.php:27
+#: pro/Stats/templates/search-keywords-page.php:28
+#: pro/Stats/templates/stats-pages.php:28
+#: pro/Stats/templates/stats-spent.php:18
+#: pro/Stats/templates/stats-tax-view.php:29
+#: pro/Stats/templates/top-selling-products.php:26
 msgid "Show"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:83
-msgid "Show BOT sessions :"
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:85
+msgid "Show :"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:830
-#: includes/class-pd-customer-history.php:877
+#: admin/partials/templates/plugin-settings.php:97
+msgid "Show BOT sessions"
+msgstr ""
+
+#: pro/Analytics/templates/product-correlations.php:59
+msgid "Show top"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:99
+msgid "Showcase premium product range"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:147
+msgid "Single purchase, now inactive"
+msgstr ""
+
+#. %s: Decline percentage
+#: pro/Intelligence/Churn-Alerts.php:306
+#, php-format
+msgid "Site engagement declined by %s%%"
+msgstr ""
+
+#: pro/Stats/templates/search-keywords-page.php:20
+#: pro/Stats/templates/stats-pages.php:17
+#: pro/Stats/templates/stats-pages.php:20
+#: pro/Stats/templates/top-sub-nav-stats.php:16
+msgid "Site Pages"
+msgstr ""
+
+#: pro/CRM/Tags.php:402 pro/CRM/templates/tag-management.php:29
+msgid "Slug"
+msgstr ""
+
+#: pro/Intelligence/RFM.php:611
+#: pro/Intelligence/templates/rfm-matrix-widget.php:37
+msgid "Some time ago"
+msgstr ""
+
+#: includes/crm/class-pdwchs-notes.php:101 pro/CRM/Tags-Admin-Page.php:155
+#: pro/CRM/Tags-Panel.php:139
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: includes/class-pd-customer-history.php:950
+#: includes/class-pd-customer-history.php:997
 msgid "Sorry, you don't have permission to access this page."
 msgstr ""
 
@@ -1196,13 +4543,73 @@ msgstr ""
 msgid "Special offer just for you!"
 msgstr ""
 
+#: pro/Analytics/Revenue/LTV-Panel.php:162
+#: pro/Analytics/templates/ltv-distribution.php:108
+msgid "Spend bracket"
+msgstr ""
+
+#. %s: Decline percentage
+#: pro/Intelligence/Churn-Alerts.php:298
+#, php-format
+msgid "Spending declined by %s%%"
+msgstr ""
+
+#. %s: Decline percentage
+#: pro/Intelligence/templates/customer-churn-card.php:289
+#, php-format
+msgid "Spending down %s%%"
+msgstr ""
+
+#: pro/Intelligence/Health.php:838
+#, php-format
+msgid "Spending down %s%% recently"
+msgstr ""
+
+#: pro/Intelligence/Health.php:842
+msgid "Spending stable"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-health-card.php:188
+msgid "Spending Trend"
+msgstr ""
+
+#: pro/Intelligence/Health.php:833
+#, php-format
+msgid "Spending up %s%% recently"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:155
+#: pro/Intelligence/templates/customer-health-card.php:65
+msgid "Stable"
+msgstr ""
+
+#: includes/segments/class-pdwchs-segments-export.php:125
+msgid "Standard"
+msgstr ""
+
+#: pro/Trial-Gate.php:101
+msgid "Start free trial"
+msgstr ""
+
+#: pro/Trial-Gate.php:99
+msgid "Start your free 30-day trial to unlock all premium features."
+msgstr ""
+
 #: admin/partials/templates/top-nav.php:37
 msgid "Statistics"
 msgstr ""
 
 #: includes/class-pd-customer-order-history.php:51
+#: pro/Carts/Abandoned-Carts-List-Table.php:252 pro/Carts/Cart-Tracker.php:277
+#: pro/Analytics/Revenue/Revenue-Pro.php:108
+#: pro/Analytics/templates/data-integrity-indicator.php:35
+#: pro/Intelligence/templates/churn-prediction.php:250
 #: admin/partials/templates/dashboard/last-orders.php:26
 msgid "Status"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:192
+msgid "Status Timeline"
 msgstr ""
 
 #: admin/partials/templates/customer-email.php:67
@@ -1213,7 +4620,23 @@ msgstr ""
 msgid "Subscriber"
 msgstr ""
 
-#: admin/class-pdwchs-segments-list-table.php:97
+#: pro/Intelligence/Behavioral-Insights.php:99
+msgid "Subscription Seeker"
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:363
+msgid "Sunday"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:129
+msgid "Survey to understand concerns"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:742
+msgid "Survey to understand issues"
+msgstr ""
+
+#: admin/class-pdwchs-segments-list-table.php:124
 msgid "System"
 msgstr ""
 
@@ -1225,8 +4648,50 @@ msgstr ""
 msgid "Table View"
 msgstr ""
 
+#: pro/CRM/Tags.php:401
+msgid "Tag"
+msgstr ""
+
+#: pro/CRM/Tags.php:60 pro/CRM/Tags.php:69 pro/CRM/Tags.php:114
+#: pro/CRM/Tags.php:123
+msgid "Tag name cannot be empty."
+msgstr ""
+
+#: pro/CRM/Tags.php:64 pro/CRM/Tags.php:118
+msgid "Tag name cannot exceed 100 characters."
+msgstr ""
+
+#: pro/CRM/Tags.php:134 pro/CRM/Tags.php:179 pro/CRM/Tags.php:248
+#: pro/CRM/Tags.php:524 pro/CRM/Tags.php:604 pro/CRM/Tags.php:673
+msgid "Tag not found."
+msgstr ""
+
+#: pro/Stats/Taxonomy-Stats-List-Table.php:41
+msgid "Term"
+msgstr ""
+
 #: includes/class-pd-customer-history-email.php:86
 msgid "Thank you for being our valued customer. We appreciate your business!"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:199
+msgid "The address every digest is delivered to."
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:142
+msgid "The emailed digest of store activity."
+msgstr ""
+
+#: pro/Digest/Segment-Sheet.php:154
+msgid ""
+"The file contains customer names and email addresses. Only enable this if "
+"the digest recipient should receive them."
+msgstr ""
+
+#: pro/Digest/Segment-Sheet.php:148
+msgid ""
+"The file is attached to the digest you already receive — enable at least one "
+"report type above, or no digest is sent."
 msgstr ""
 
 #. %s is the number of customers
@@ -1245,7 +4710,117 @@ msgid ""
 "collected and waiting."
 msgstr ""
 
-#: admin/partials/templates/revenue.php:59
+#: pro/Digest/Segment-Sheet.php:149
+msgid ""
+"The segment's members are evaluated when the digest runs, not over the "
+"digest's date range."
+msgstr ""
+
+#: pro/Analytics/templates/ltv-distribution.php:31
+msgid "There are no customers yet, so this cannot be derived."
+msgstr ""
+
+#: pro/Analytics/templates/retention-metrics.php:51
+msgid ""
+"There were no customers in the previous window, so an expected lifetime "
+"cannot be derived."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:128
+msgid ""
+"This customer concentrates their purchases in specific seasonal periods."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:107
+msgid ""
+"This customer focuses their purchases within a specific product category."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:86
+msgid ""
+"This customer frequently adds items to cart but does not complete the "
+"purchase."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:44
+msgid ""
+"This customer frequently uses coupons and is motivated by discounts and "
+"deals."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:121
+msgid ""
+"This customer is an early adopter who buys newly released products quickly."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:79
+msgid "This customer is most active during late night and early morning hours."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:51
+msgid ""
+"This customer makes quick purchase decisions with minimal browsing time."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:142
+msgid "This customer primarily browses and shops using a desktop computer."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:135
+msgid "This customer primarily browses and shops using a mobile device."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:72
+msgid "This customer primarily shops on weekends (Saturday and Sunday)."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:65
+msgid ""
+"This customer purchases frequently during gift-giving seasons with diverse "
+"product choices."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:58
+msgid "This customer repeatedly purchases from the same brand(s)."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:100
+msgid ""
+"This customer shows interest in subscription-based products and recurring "
+"purchases."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:114
+msgid "This customer tends to buy large quantities or many items per order."
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:93
+msgid ""
+"This customer visits the site multiple times and researches extensively "
+"before purchasing."
+msgstr ""
+
+#: pro/Analytics/Cohorts/templates/cohort-table.php:113
+msgid "This month has not ended yet."
+msgstr ""
+
+#: pro/Intelligence/templates/order-panel.php:33
+msgid "This order was placed as a guest."
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:367
+msgid "Thursday"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-lifecycle-card.php:65
+msgid "Time in Current Stage:"
+msgstr ""
+
+#: admin/partials/templates/search-analytics.php:108
+msgid "Times Searched"
+msgstr ""
+
+#: admin/partials/templates/revenue.php:60
 msgid "To"
 msgstr ""
 
@@ -1253,17 +4828,29 @@ msgstr ""
 msgid "To:"
 msgstr ""
 
+#: pro/Intelligence/templates/order-panel.php:122
+msgid "Today"
+msgstr ""
+
 #. %s is the taxonomy name
-#: admin/partials/templates/search-analytics.php:154
+#: admin/partials/templates/search-analytics.php:206
 #, php-format
 msgid "Top %s Views"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-dashboard-widget.php:77
+msgid "Top At-Risk Customers"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-behavioral-card.php:110
+msgid "Top Categories:"
 msgstr ""
 
 #: admin/partials/templates/dashboard/top-customers.php:6
 msgid "Top Customers"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:132
+#: admin/partials/templates/plugin-settings.php:159
 msgid "Top customers"
 msgstr ""
 
@@ -1275,13 +4862,28 @@ msgstr ""
 msgid "Top Searches"
 msgstr ""
 
+#: pro/Stats/Stats-List-Table.php:81 pro/Stats/Stats-List-Table.php:82
+msgid "Top Selling Products"
+msgstr ""
+
+#: pro/Stats/templates/top-selling-products.php:17
+#: pro/Stats/templates/top-sub-nav-stats.php:31
 #: admin/partials/templates/dashboard/top-selling-products.php:6
 msgid "Top Selling Products by This Month"
 msgstr ""
 
 #: includes/class-pd-customer-order-history.php:49
+#: pro/Carts/Abandoned-Carts-List-Table.php:251
 #: admin/partials/templates/customer-details.php:57
+#: pro/Analytics/Revenue/Revenue-Pro.php:109
+#: pro/Analytics/templates/data-integrity-indicator.php:36
+#: pro/Analytics/templates/data-integrity-indicator.php:48
+#: pro/Analytics/templates/data-integrity-indicator.php:62
 msgid "Total"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:359
+msgid "Total Alerts"
 msgstr ""
 
 #: admin/partials/templates/dashboard/top-customers.php:29
@@ -1292,8 +4894,14 @@ msgstr ""
 msgid "Total Amount :"
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-export.php:108
+#: pro/Analytics/templates/revenue-dashboard-widget.php:78
+msgid "Total Customers"
+msgstr ""
+
+#: includes/segments/class-pdwchs-segments-export.php:129
+#: pro/Stats/Stats-List-Table.php:195
 #: admin/partials/templates/customer-details.php:106
+#: pro/Analytics/templates/revenue-dashboard-widget.php:62
 #: admin/partials/templates/dashboard/top-customers.php:30
 msgid "Total Orders"
 msgstr ""
@@ -1302,27 +4910,115 @@ msgstr ""
 msgid "Total Spending"
 msgstr ""
 
-#: includes/segments/class-pdwchs-segments-export.php:109
+#: includes/segments/class-pdwchs-segments-export.php:130
+#: pro/Stats/Stats-List-Table.php:101
 #: admin/partials/templates/customer-details.php:223
+#: pro/Stats/templates/stats-spent.php:15
+#: pro/Stats/templates/top-sub-nav-stats.php:81
 msgid "Total Spent"
+msgstr ""
+
+#: pro/Stats/Stats-List-Table.php:193
+msgid "Total spent"
 msgstr ""
 
 #: admin/partials/templates/customers.php:50
 msgid "Total Spent :"
 msgstr ""
 
+#. %1$s: total spent with currency, %2$s: multiplier vs average, %3$s: value description
+#: pro/Intelligence/RFM.php:676
+#, php-format
+msgid "Total spent: %1$s (%2$sx store average - %3$s)"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:528
+#: pro/Intelligence/templates/lifecycle-funnel-widget.php:50
+msgid "Total:"
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:74
 #: admin/partials/templates/live-searches.php:41
 #: admin/partials/templates/live-sessions.php:42
 #: admin/partials/templates/trash.php:41 admin/partials/templates/trash.php:47
+#: pro/Stats/templates/live-sessions.php:52
 msgid "Trash"
 msgstr ""
 
+#: pro/Stats/templates/live-sessions.php:63
+msgid "Trash (%d)"
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:160
+msgid "Trend:"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:120
+msgid "Trendsetter"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:691
+msgid "Trust-building content (reviews, guarantees)"
+msgstr ""
+
+#: pro/Analytics/Geographic/templates/geographic-report.php:96
+msgid ""
+"Try a wider date range. Only completed and processing orders are counted."
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:365
+msgid "Tuesday"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:293
+msgid "Unassigned"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:11
+msgid "Unauthorized or invalid cart."
+msgstr ""
+
+#: includes/crm/class-pdwchs-notes.php:229
+#: includes/crm/class-pdwchs-notes.php:263
 #: includes/segments/class-pdwchs-segments-export.php:55
+#: pro/CRM/Tags-Admin-Page.php:75 pro/CRM/Tags.php:494 pro/CRM/Tags.php:552
+#: pro/CRM/Tags.php:628 pro/CRM/Tags.php:652 pro/CRM/Tags.php:694
+#: pro/Timeline/Timeline-Panel.php:301
+#: pro/Analytics/Cohorts/Cohort-Export.php:44
+#: pro/Analytics/templates/product-correlations.php:2
+#: pro/Analytics/templates/product-revenue-chart.php:2
+#: pro/Analytics/templates/revenue-patterns.php:3
+#: pro/Analytics/Cohorts/templates/cohort-table.php:3
+#: pro/Analytics/Geographic/templates/geographic-report.php:3
 msgid "Unauthorized."
 msgstr ""
 
+#: pro/Intelligence/Segments-Labels.php:176
+msgid "Undefined"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:143
+msgid "Understand what went wrong"
+msgstr ""
+
+#: pro/Analytics/Geographic/Geographic-Page.php:212
+#: pro/Analytics/Geographic/templates/geographic-report.php:46
+#: pro/Analytics/Geographic/templates/geographic-report.php:153
+msgid "Unique products"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:118
+msgid "Unit Price"
+msgstr ""
+
 #: includes/class-pdwchs-telemetry.php:114
+#: pro/Intelligence/Segments-Labels.php:219
+#: pro/Analytics/Geographic/Geographic-Page.php:516
 msgid "Unknown"
+msgstr ""
+
+#: pro/Analytics/Geographic/Geographic-Page.php:283
+msgid "Unknown country."
 msgstr ""
 
 #: includes/segments/class-pdwchs-segments-ajax.php:122
@@ -1335,12 +5031,56 @@ msgstr ""
 msgid "Unlock with Pro"
 msgstr ""
 
+#: pro/Intelligence/templates/customer-health-card.php:70
+msgid "Up %d points"
+msgstr ""
+
+#: pro/Trial-Gate.php:96
+msgid "Upgrade now"
+msgstr ""
+
 #: includes/segments/class-pdwchs-segments-ajax.php:124
 msgid "Upgrade to Pro"
 msgstr ""
 
+#: pro/Intelligence/Lifecycle.php:714 pro/Intelligence/Segments-Labels.php:57
+msgid "Upsell to premium products"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:740
+msgid "URGENT: Launch win-back campaign"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:141
+msgid "URGENT: Make personal outreach (phone/email)"
+msgstr ""
+
+#: pro/Stats/Sessions-List-Table.php:172 pro/Stats/Sessions-List-Table.php:228
+#: pro/Stats/Stats-List-Table.php:168
+msgid "URL"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:186
+msgid "Use low-cost engagement tactics"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:155
+msgid "Use low-cost re-engagement tactics"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:52
+msgid ""
+"Use urgency tactics like limited-time offers and low-stock alerts to trigger "
+"purchases."
+msgstr ""
+
 #: includes/class-pd-customer-history-customers.php:47
+#: pro/Stats/Sessions-List-Table.php:227
 msgid "User"
+msgstr ""
+
+#: pro/Carts/templates/cart-detail.php:88
+msgid "User Agent:"
 msgstr ""
 
 #: admin/partials/templates/customer-details.php:241
@@ -1357,9 +5097,38 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: includes/class-pd-customer-history-customers.php:320
+#: pro/Stats/Stats-List-Table.php:194
+msgid "Users"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-dashboard-widget.php:83
+#: pro/Intelligence/templates/churn-prediction.php:249
+msgid "Value"
+msgstr ""
+
+#: pro/Analytics/Revenue/Revenue-Pro.php:97
+#: pro/Analytics/templates/data-integrity-indicator.php:14
+msgid "Verifying data…"
+msgstr ""
+
+#: pro/Intelligence/RFM.php:637
+#: pro/Intelligence/templates/rfm-matrix-widget.php:42
+msgid "Very frequent buyer"
+msgstr ""
+
+#: pro/Intelligence/RFM.php:608
+#: pro/Intelligence/templates/rfm-matrix-widget.php:34
+msgid "Very recent"
+msgstr ""
+
+#: includes/class-pd-customer-history-customers.php:360
 #: admin/partials/templates/customer-details.php:81
+#: pro/Analytics/templates/revenue-patterns.php:27
 msgid "View"
+msgstr ""
+
+#: pro/Carts/templates/cart-dashboard-widget.php:25
+msgid "View abandoned carts →"
 msgstr ""
 
 #: admin/partials/templates/dashboard/last-orders.php:11
@@ -1372,7 +5141,16 @@ msgstr ""
 msgid "View All"
 msgstr ""
 
-#: admin/partials/templates/search-analytics.php:114
+#: pro/Intelligence/templates/at-risk-alert-widget.php:41
+msgid "View All At Risk Customers"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-dashboard-widget.php:138
+msgid "View All At-Risk Customers"
+msgstr ""
+
+#: pro/Stats/Stats-List-Table.php:180
+#: admin/partials/templates/search-analytics.php:166
 msgid "View Count"
 msgstr ""
 
@@ -1384,8 +5162,55 @@ msgstr ""
 msgid "View Customer Details"
 msgstr ""
 
-#: includes/class-pd-customer-history.php:897
+#. %s: Admin URL
+#: pro/Intelligence/Churn-Alerts.php:533
+#, php-format
+msgid "View customer details: %s"
+msgstr ""
+
+#: pro/Carts/Abandoned-Carts-List-Table.php:399
+msgid "View Detail"
+msgstr ""
+
+#: pro/Analytics/Revenue/Revenue-Pro.php:100
+msgid "View Details"
+msgstr ""
+
+#: pro/Intelligence/templates/order-panel.php:156
+msgid "View full profile"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:621
+#: pro/Intelligence/templates/churn-dashboard-widget.php:104
+#: pro/Intelligence/templates/churn-prediction.php:201
+msgid "View Profile"
+msgstr ""
+
+#: pro/Stats/Stats-List-Table.php:182
+msgid "View vs Purchase Ratio"
+msgstr ""
+
+#: pro/Intelligence/templates/churn-prediction.php:285
+#: pro/Timeline/templates/timeline.php:33
+msgid "Viewed"
+msgstr ""
+
+#. %s: the page path the customer viewed.
+#: pro/Timeline/Timeline-Panel.php:139
+#, php-format
+msgid "Viewed %s"
+msgstr ""
+
+#: pro/Stats/templates/top-sub-nav-stats.php:26
+msgid "Viewed vs Purchased Ratio"
+msgstr ""
+
+#: includes/class-pd-customer-history.php:1017
 msgid "Visit customer support"
+msgstr ""
+
+#: pro/Analytics/Funnel/Funnel-Ajax.php:123
+msgid "Visitors"
 msgstr ""
 
 #: includes/class-pd-customer-history-email.php:94
@@ -1405,8 +5230,30 @@ msgstr ""
 msgid "Website"
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:120
+#: pro/Analytics/Products/Product-Reports-Ajax.php:366
+msgid "Wednesday"
+msgstr ""
+
+#: pro/Analytics/templates/product-revenue-chart.php:42
+#: pro/Analytics/Funnel/templates/aggregate-funnel.php:31
+msgid "Week"
+msgstr ""
+
+#: pro/Intelligence/Behavioral-Insights.php:71
+msgid "Weekend Shopper"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:186
+#: pro/Analytics/templates/revenue-dashboard-widget.php:102
+msgid "Weekly"
+msgstr ""
+
+#: includes/class-pd-customer-history.php:507
 msgid "Weekly reports"
+msgstr ""
+
+#: pro/Intelligence/Lifecycle.php:689
+msgid "Welcome email sequence"
 msgstr ""
 
 #: includes/class-pd-customer-history-email.php:85
@@ -1417,31 +5264,79 @@ msgstr ""
 msgid "What it finds"
 msgstr ""
 
+#: pro/Carts/Abandoned-Carts-List-Table.php:171
+msgid "When unchecked, no cart rows are written or updated."
+msgstr ""
+
+#: pro/Digest/Segment-Sheet.php:173
+msgid "When unchecked, no file is built and the digest is unchanged."
+msgstr ""
+
 #: includes/class-pdwchs-upsell.php:49
 msgid ""
 "Where this customer sits in their journey: New, Active, Loyal, or Lapsed."
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:88
-#: admin/partials/templates/plugin-settings.php:98
-#: admin/partials/templates/plugin-settings.php:111
+#: pro/Intelligence/Health.php:697
+msgid "Win-back campaigns, investigate issues"
+msgstr ""
+
+#: pro/Analytics/templates/product-correlations.php:41
+#: pro/Analytics/templates/retention-metrics.php:63
+msgid "Window"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:175
+msgid "With none selected, no digest is sent and no attachment is built."
+msgstr ""
+
+#: pro/Intelligence/templates/customer-churn-card.php:153
+msgid "Worsening"
+msgstr ""
+
+#: pro/Analytics/Products/Product-Reports-Ajax.php:361
+msgid "Worst"
+msgstr ""
+
+#: admin/partials/templates/plugin-settings.php:102
+#: admin/partials/templates/plugin-settings.php:115
+#: admin/partials/templates/plugin-settings.php:129
 msgid "Yes"
 msgstr ""
 
-#: admin/class-pd-customer-history-admin.php:309
+#: admin/class-pd-customer-history-admin.php:322
+#: pro/Carts/Abandoned-Carts-List-Table.php:48
+#: pro/Analytics/Products/Product-Reports-Ajax.php:383
+#: pro/Analytics/Products/Product-Reports-Ajax.php:395
+#: pro/Analytics/Products/Product-Reports-Ajax.php:407
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:168
+#: admin/partials/templates/plugin-settings.php:217
 msgid "You will download a file with \"Sessions\", \"Searches\" and \"Stats\"."
 msgstr ""
 
-#: admin/partials/templates/plugin-settings.php:187
+#: admin/partials/templates/plugin-settings.php:236
 msgid "You will lose saved Sessions & Searches!"
+msgstr ""
+
+#: pro/Intelligence/Segments-Labels.php:41
+msgid "Your best customers - recent, frequent, high-value buyers"
 msgstr ""
 
 #: includes/class-pdwchs-upsell.php:72
 msgid "Your most frequent, highest-value repeat buyers."
+msgstr ""
+
+#: pro/CRM/templates/customer-tags-panel.php:23
+msgid ""
+"Your own tags, applied by hand. The Behavioral Tags card above is detected "
+"automatically."
+msgstr ""
+
+#: pro/Stats/templates/live-sessions.php:35
+#, php-format
+msgid "Your session was deleted, you can find it in <a href=\"%s\">trash</a>"
 msgstr ""
 
 #. %s is a link to the trash page
@@ -1451,10 +5346,59 @@ msgstr ""
 msgid "Your session was deleted, you can find it in <a href=\"%s\">trash</a>."
 msgstr ""
 
+#: pro/Stats/templates/live-sessions.php:26
+#, php-format
+msgid ""
+"Your session was restored, you can find it in <a href=\"%s\">live "
+"sessions</a>"
+msgstr ""
+
 #. %s is a link to the live sessions page
 #: admin/partials/templates/trash.php:23
 #, php-format
 msgid ""
 "Your session was restored, you can find it in <a href=\"%s\">live "
 "sessions</a>."
+msgstr ""
+
+#: pro/Trial-Gate.php:94
+msgid "Your trial has ended — upgrade to keep premium features."
+msgstr ""
+
+#: admin/partials/templates/search-analytics.php:99
+msgid "Zero-Result Searches"
+msgstr ""
+
+#. %s: quantity added to the cart.
+#: pro/Timeline/Timeline-Panel.php:164
+#, php-format
+msgid "× %s"
+msgstr ""
+
+#. %s: number of results the search returned.
+#: pro/Timeline/Timeline-Panel.php:127
+#, php-format
+msgid "— %s result"
+msgid_plural "— %s results"
+msgstr[0] ""
+msgstr[1] ""
+
+#: pro/Analytics/templates/product-correlations.php:23
+msgid "— Select a product —"
+msgstr ""
+
+#: pro/Digest/Segment-Sheet.php:188
+msgid "— Select a segment —"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:725
+msgid "→ Stable"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:724
+msgid "↗ Improving"
+msgstr ""
+
+#: pro/Intelligence/Intelligence.php:726
+msgid "↘ Declining"
 msgstr ""

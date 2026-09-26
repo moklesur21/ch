@@ -63,15 +63,41 @@ class PD_Customer_History_Public {
 	 */
 	public function pdwchs_woo_init_session() {
 		if ( ! current_user_can( 'manage_woocommerce' ) || get_option( 'pd-woo-default_save_admin_session' ) ) {
-			if ( ! empty( $_GET['s'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			    $search_key = sanitize_text_field( wp_unslash( $_GET['s'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-				$url = 'ACTION::search::' . $search_key;
-				PDWCHS_Sessions_Data::pdwchs_insert( is_user_logged_in() ? get_current_user_id() : 0, $url );
-			}
+			add_action( 'wp', array( $this, 'pdwchs_woo_search_insert' ) );
 			add_action( 'wp_footer', array( $this, 'pdwchs_woo_session_insert' ) );
 			add_action( 'woocommerce_add_to_cart', array( $this, 'pdwchs_woo_action_add_to_cart' ), 10, 3 );
 			add_action( 'woocommerce_new_order', array( $this, 'pdwchs_woo_action_new_order' ), 10, 1 );
 		}
+	}
+
+	/**
+	 * Insert a keyword-search row, with the number of results the search returned.
+	 *
+	 * Hooked on `wp` rather than `init`: this is the earliest point at which the main
+	 * query has run, so `is_search()` is reliable and `$wp_query->found_posts` exists.
+	 * The `init` handler that registers this callback cannot read either value.
+	 *
+	 * @since 3.1.0
+	 */
+	public function pdwchs_woo_search_insert() {
+		if ( ! is_search() ) {
+			return;
+		}
+
+		$search_key = sanitize_text_field( get_query_var( 's' ) );
+		if ( '' === $search_key ) {
+			return;
+		}
+
+		global $wp_query;
+
+		$url = 'ACTION::search::' . $search_key;
+
+		PDWCHS_Sessions_Data::pdwchs_insert(
+			is_user_logged_in() ? get_current_user_id() : 0,
+			$url,
+			(int) $wp_query->found_posts
+		);
 	}
 
 	/**

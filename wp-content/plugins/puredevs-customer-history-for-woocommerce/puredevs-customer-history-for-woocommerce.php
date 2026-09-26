@@ -7,8 +7,8 @@
  * @wordpress-plugin
  * Plugin Name:       PureDevs Customer History for WooCommerce
  * Plugin URI:        https://puredevs.com/plugin/puredevs-customer-history-for-woocommerce/
- * Description:       Customer intelligence for WooCommerce: customer profiles, order history, session & search tracking, segments, and a customer-first dashboard.
- * Version:           3.0.2
+ * Description:       Customer intelligence for WooCommerce: customer profiles, order history, session & search tracking, zero-result searches, private notes, segments, and a customer-first dashboard.
+ * Version:           3.1.2
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            PureDevs
@@ -19,7 +19,7 @@
  * Domain Path:       /languages
  * Requires Plugins:  woocommerce
  * WC requires at least: 7.0
- * WC tested up to:   10.7
+ * WC tested up to:   11.0
  */
 if ( ! defined( 'WPINC' ) ) {
     die;
@@ -119,11 +119,21 @@ if ( ! function_exists( 'pchfwv_fs_uninstall_cleanup' ) ) {
             'pd-woo-show_bot_sessions',
             'pd-woo-generate_weekly_report',
             'pd-woo-send_weekly_report_to',
+            // Feature 15.4 — digest interval (weekly|monthly), free-owned (3.1.0).
+            'pdwchs_digest_interval',
             'pdwchs_db_version',
             'pdwchs_version',
             // Free-tier decision telemetry (3.0.2, local only).
             'pdwchs_first_activated_at',
             'pdwchs_first_cap_hit',
+            // Feature 15.2 — when zero-result capture began on this site (3.1.0).
+            'pdwchs_results_count_since',
+            // Feature 15.6 — when the sessions (user_id, reg_date) index was added on this site (3.1.0).
+            'pdwchs_sessions_index_since',
+            // Feature 15.7 — when the sessions (session_id, user_id) index was added on this site (3.1.0).
+            'pdwchs_sessions_session_index_since',
+            // R15-28 — one-shot sessions-schema repair marker, free-owned (3.1.2).
+            'pdwchs_sessions_schema_repaired',
             // Legacy referral/points settings. The feature was removed in 2.1.8 and the
             // orphaned code in 3.0.2, but 2.x-era installs may still hold these rows.
             'pdwchs_referral_codes_generated',
@@ -141,6 +151,8 @@ if ( ! function_exists( 'pchfwv_fs_uninstall_cleanup' ) ) {
         delete_site_option( 'pdwchs_db_version' );
         $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}pd_woo_customer_history_sessions" );
         $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}pdwchs_segments" );
+        // Feature 15.3 — Customer Notes is free-owned; drop it in both builds.
+        $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}pdwchs_customer_notes" );
     }
 }
 
@@ -196,7 +208,7 @@ add_action( 'plugins_loaded', 'pdwchs_woo_customer_history_install', 12 );
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PDWCHS_CUSTOMER_HISTORY_VERSION', '3.0.2' );
+define( 'PDWCHS_CUSTOMER_HISTORY_VERSION', '3.1.2' );
 define( 'PDWCHS_CUSTOMER_HISTORY_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'PDWCHS_CUSTOMER_HISTORY_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'PDWCHS_CUSTOMER_HISTORY_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );

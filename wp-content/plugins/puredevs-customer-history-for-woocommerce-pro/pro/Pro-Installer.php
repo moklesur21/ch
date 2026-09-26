@@ -9,6 +9,7 @@ class PDWCHS_Pro_Installer {
 	public static function pdwchs_activate() {
 		self::pdwchs_create_intelligence_tables(); // chains behavioral → churn → default settings
 		self::pdwchs_create_carts_table();
+		self::pdwchs_migrate_carts_php_session(); // Feature 15.7 bridge column on an existing table
 		self::pdwchs_register_options();
 		self::pdwchs_register_cron();
 	}
@@ -54,6 +55,10 @@ class PDWCHS_Pro_Installer {
 		}
 		require_once __DIR__ . '/Carts/Cart-Cron.php';
 		PDWCHS_Cart_Cron::pdwchs_schedule_events();
+		require_once __DIR__ . '/Analytics/Cohorts/Cohort-Cron.php';
+		PDWCHS_Cohort_Cron::pdwchs_schedule_events();
+		require_once __DIR__ . '/Tracking/Session-Merge-Backfill.php';
+		PDWCHS_Session_Merge_Backfill::pdwchs_schedule_events();
 	}
 
 	/** Clear every Pro cron (incl. the legacy analyze_customer_behavior hook). */
@@ -70,6 +75,8 @@ class PDWCHS_Pro_Installer {
 			'pdwchs_weekly_churn_cleanup',
 			'pdwchs_cart_abandonment_check',
 			'pdwchs_cart_cleanup',
+			'pdwchs_daily_cohort_calculation',
+			'pdwchs_session_merge_backfill',
 		);
 		foreach ( $hooks as $hook ) {
 			wp_clear_scheduled_hook( $hook );
@@ -84,6 +91,7 @@ class PDWCHS_Pro_Installer {
 			'pdwchs_behavioral_tags'       => 'pdwchs_create_behavioral_tables',
 			'pdwchs_churn_scores'          => 'pdwchs_create_churn_tables',
 			'pdwchs_carts'                 => 'pdwchs_create_carts_table',
+			'pdwchs_tags'                  => 'pdwchs_create_tags_tables',
 		);
 		foreach ( $probes as $table => $method ) {
 			$exists = $wpdb->get_var(
@@ -92,6 +100,13 @@ class PDWCHS_Pro_Installer {
 			if ( ! $exists ) {
 				self::$method();
 			}
+		}
+
+		// Feature 15.7 — the carts bridge column. The probe map above tests table
+		// existence only; a column needs its own branch. Runs after the loop so a
+		// site missing the table entirely gets it created first, with the column.
+		if ( ! get_option( 'pdwchs_carts_php_session_since' ) ) {
+			self::pdwchs_migrate_carts_php_session();
 		}
 	}
 
@@ -403,6 +418,7 @@ class PDWCHS_Pro_Installer {
 			currency CHAR(3) NOT NULL DEFAULT '',
 			ip_address VARCHAR(45) NULL,
 			user_agent VARCHAR(255) NULL,
+			php_session_id VARCHAR(50) NULL,
 			order_id BIGINT UNSIGNED NULL,
 			created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -415,13 +431,132 @@ class PDWCHS_Pro_Installer {
 			INDEX idx_session_key (session_key),
 			INDEX idx_email (email),
 			INDEX idx_status_updated (status, updated_at),
-			INDEX idx_order_id (order_id)
+			INDEX idx_order_id (order_id),
+			INDEX idx_php_session_id (php_session_id)
 		) {$charset_collate};";
 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		dbDelta( $carts_sql );
 
 		update_option( 'pdwchs_db_version', '6.0' );
+	}
+
+	/**
+	 * Feature 15.10 — create the manual-tags definition table and the customer↔tag
+	 * junction, in that order.
+	 *
+	 * Creation order is fixed: pdwchs_tags first, then pdwchs_customer_tags, which
+	 * carries a FOREIGN KEY to it. MySQL refuses to create a child table whose parent
+	 * does not exist. The uninstall routine drops them in the mirror-image order
+	 * ( puredevs-customer-history-for-woocommerce.php:178-179 ) for the same reason.
+	 *
+	 * Deliberately no update_option( 'pdwchs_db_version', ... ): Free and Pro write
+	 * that option independently (Free tops out at 5.0, Pro at 6.0 above), so a
+	 * version_compare() gate on one side can be satisfied by the other side's
+	 * unrelated bump and silently never fire. Creation is guaranteed by the
+	 * SHOW TABLES probe in pdwchs_check_version_upgrade() instead, which tests for
+	 * the table itself and cannot be fooled by an option.
+	 *
+	 * These tables are create-only. dbDelta() cannot diff CREATE TABLE IF NOT EXISTS
+	 * — see the note on pdwchs_migrate_carts_php_session() below — so any future
+	 * column change needs its own explicit ALTER migration in that shape; editing the
+	 * DDL here would do nothing on an existing site.
+	 *
+	 * The notes table is not created here. It is free-owned as of Feature 15.3
+	 * ( includes/class-pd-customer-history-activator.php:96 ).
+	 *
+	 * @since 3.1.1
+	 */
+	public static function pdwchs_create_tags_tables() {
+		global $wpdb;
+		$charset_collate = $wpdb->get_charset_collate();
+
+		$tags_table          = $wpdb->prefix . 'pdwchs_tags';
+		$customer_tags_table = $wpdb->prefix . 'pdwchs_customer_tags';
+
+		$tags_sql = "CREATE TABLE IF NOT EXISTS {$tags_table} (
+			id BIGINT(20) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+			name VARCHAR(100) NOT NULL,
+			slug VARCHAR(100) NOT NULL,
+			created_by BIGINT(20) UNSIGNED NOT NULL,
+			created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			UNIQUE KEY uniq_slug (slug)
+		) {$charset_collate};";
+
+		$customer_tags_sql = "CREATE TABLE IF NOT EXISTS {$customer_tags_table} (
+			id BIGINT(20) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+			customer_id BIGINT(20) UNSIGNED NOT NULL,
+			tag_id BIGINT(20) UNSIGNED NOT NULL,
+			tagged_by BIGINT(20) UNSIGNED NOT NULL,
+			created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			UNIQUE KEY uniq_customer_tag (customer_id, tag_id),
+			INDEX idx_tag_id (tag_id),
+			FOREIGN KEY (customer_id) REFERENCES {$wpdb->users}(ID) ON DELETE CASCADE,
+			FOREIGN KEY (tag_id) REFERENCES {$tags_table}(id) ON DELETE CASCADE
+		) {$charset_collate};";
+
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		dbDelta( $tags_sql );
+		dbDelta( $customer_tags_sql );
+	}
+
+	/**
+	 * Feature 15.7 — add the php_session_id bridge column and its index to an
+	 * existing carts table.
+	 *
+	 * dbDelta() cannot diff CREATE TABLE IF NOT EXISTS: its table-name regex
+	 * ( wp-admin/includes/upgrade.php:2964 ) captures the literal "IF", so it looks
+	 * up a table called IF, finds nothing, and never compares columns. The DDL above
+	 * therefore serves fresh installs only and every existing site needs this.
+	 *
+	 * The column probe and the index probe are deliberately separate statements: a
+	 * site can end up with the column but not the index (an interrupted ALTER, a
+	 * restored dump), and one combined probe would set the option and leave the
+	 * table permanently unindexed.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @return void
+	 */
+	public static function pdwchs_migrate_carts_php_session() {
+		global $wpdb;
+		$table = $wpdb->prefix . 'pdwchs_carts';
+
+		$column = $wpdb->get_results( $wpdb->prepare(
+			"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
+			 WHERE table_schema = DATABASE()
+			   AND table_name   = %s
+			   AND column_name  = 'php_session_id'",
+			$table
+		) );
+
+		if ( empty( $column ) ) {
+			// false !== $result, not if ( $result ): a successful ALTER TABLE returns 0.
+			$result = $wpdb->query( "ALTER TABLE {$wpdb->prefix}pdwchs_carts ADD php_session_id VARCHAR(50) NULL" );
+			if ( false !== $result ) {
+				$column = true;
+			}
+		}
+
+		$index = $wpdb->get_results( $wpdb->prepare(
+			"SELECT INDEX_NAME FROM INFORMATION_SCHEMA.STATISTICS
+			 WHERE table_schema = DATABASE()
+			   AND table_name   = %s
+			   AND index_name   = 'idx_php_session_id'",
+			$table
+		) );
+
+		if ( empty( $index ) ) {
+			$result = $wpdb->query( "ALTER TABLE {$wpdb->prefix}pdwchs_carts ADD INDEX idx_php_session_id (php_session_id)" );
+			if ( false !== $result ) {
+				$index = true;
+			}
+		}
+
+		// Only when BOTH halves are present — a half-migrated table must heal next load.
+		if ( ! empty( $column ) && ! empty( $index ) && ! get_option( 'pdwchs_carts_php_session_since' ) ) {
+			add_option( 'pdwchs_carts_php_session_since', time() );
+		}
 	}
 
 	/**

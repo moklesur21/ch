@@ -40,7 +40,6 @@ class PDWCHS_Sessions_List_Table extends WP_List_Table {
 		add_action( 'pdwchs_admin_menu_late',                    array( $this, 'pdwchs_register_menus' ) );    // H3
 		add_action( 'pdwchs_enqueue_admin_styles',               array( $this, 'pdwchs_enqueue_styles' ) );    // H4
 		add_action( 'pdwchs_enqueue_admin_scripts',              array( $this, 'pdwchs_enqueue_scripts' ) );   // H5
-		add_action( 'pdwchs_customer_details_sessions_section',  array( $this, 'pdwchs_customer_sessions_section' ) ); // H7
 	}
 
 	// -------------------------------------------------------------------------

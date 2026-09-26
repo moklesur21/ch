@@ -62,6 +62,29 @@ class PDWCHS_Segments_List_Table extends WP_List_Table {
 				 . esc_html__( 'Load', 'puredevs-customer-history-for-woocommerce' )
 				 . '</button> ';
 
+		// R15-27B: the preset selector renders only when there is a choice to make. On a free build
+		// the registry holds one preset, so a single-option dropdown would be noise in an already
+		// crowded cell — the export then uses 'default', which is the handler's fallback anyway.
+		// This is a registry count, deliberately not a tier check.
+		$presets = PDWCHS_Segments_Export::pdwchs_get_export_presets();
+
+		if ( count( $presets ) > 1 ) {
+			$output .= '<label class="screen-reader-text" for="pdwchs-export-preset-' . esc_attr( $item->id ) . '">'
+					 . esc_html__( 'Export format', 'puredevs-customer-history-for-woocommerce' )
+					 . '</label>';
+
+			$output .= '<select class="pdwchs-export-preset" id="pdwchs-export-preset-' . esc_attr( $item->id ) . '">';
+
+			foreach ( $presets as $key => $preset ) {
+				// A preset registered without a label renders its slug rather than an empty option.
+				$label = isset( $preset['label'] ) ? $preset['label'] : $key;
+
+				$output .= '<option value="' . esc_attr( $key ) . '">' . esc_html( $label ) . '</option>';
+			}
+
+			$output .= '</select> ';
+		}
+
 		$output .= '<button type="button"'
 				 . ' class="button pdwchs-export-segment"'
 				 . ' data-segment-id="' . esc_attr( $item->id ) . '">'
@@ -76,7 +99,11 @@ class PDWCHS_Segments_List_Table extends WP_List_Table {
 					 . '</button>';
 		}
 
-		return $output;
+		// The controls are wrapped, not returned bare: the rule that lines them up is flex, and a
+		// <td> set to display:flex stops being a table cell — the fixed table layout then no longer
+		// constrains its width and the last button (Delete) paints outside the table's right edge.
+		// The wrapper keeps the cell a cell and lets the controls wrap inside the column.
+		return '<div class="pdwchs-segment-actions">' . $output . '</div>';
 	}
 
 	public function column_default( $item, $column_name ) {

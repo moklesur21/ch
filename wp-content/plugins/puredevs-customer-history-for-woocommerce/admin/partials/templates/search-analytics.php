@@ -96,6 +96,58 @@ $pdwchs_search = ! empty( $_GET['search_session'] ) ? sanitize_text_field( wp_un
 		</div>
 
 		<div class="pd-woo-panel" style="margin-top:20px;">
+			<h2><?php echo esc_html__( 'Zero-Result Searches', 'puredevs-customer-history-for-woocommerce' ); ?></h2>
+			<?php
+			$zero_results = PDWCHS_Search_Stats_Data::pdwchs_get_zero_result_terms( array( 'search' => $pdwchs_search, 'limit' => 20 ) );
+			if ( ! empty( $zero_results ) ) :
+			?>
+			<table class="wp-list-table widefat fixed striped posts">
+				<thead>
+					<tr>
+						<th><?php echo esc_html__( 'Search Term', 'puredevs-customer-history-for-woocommerce' ); ?></th>
+						<th><?php echo esc_html__( 'Times Searched', 'puredevs-customer-history-for-woocommerce' ); ?></th>
+						<th><?php echo esc_html__( 'Last Searched', 'puredevs-customer-history-for-woocommerce' ); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php
+				foreach ( $zero_results as $row ) :
+					$url_parts = explode( '::', $row->url );
+					if ( isset( $url_parts[1] ) && 'search' === $url_parts[1] && ! empty( $url_parts[2] ) ) :
+						$last_ts = strtotime( $row->last_searched );
+				?>
+					<tr>
+						<td><?php echo esc_html( $url_parts[2] ); ?></td>
+						<td><?php echo esc_html( number_format_i18n( (int) $row->qta ) ); ?></td>
+						<td><?php echo esc_html( $last_ts ? date_i18n( get_option( 'date_format' ), $last_ts, true ) : $row->last_searched ); ?></td>
+					</tr>
+				<?php
+					endif;
+				endforeach;
+				?>
+				</tbody>
+			</table>
+			<?php else : ?>
+				<p style="color:#666;">
+				<?php
+				$pdwchs_zr_since = get_option( 'pdwchs_results_count_since' );
+				if ( $pdwchs_zr_since ) {
+					echo esc_html(
+						sprintf(
+							/* translators: %s: the date on which zero-result collection began on this site. */
+							__( 'No zero-result searches recorded yet. Collecting since %s — terms appear here as visitors search your store and find nothing.', 'puredevs-customer-history-for-woocommerce' ),
+							date_i18n( get_option( 'date_format' ), (int) $pdwchs_zr_since )
+						)
+					);
+				} else {
+					echo esc_html__( 'No zero-result searches recorded yet. Terms appear here as visitors search your store and find nothing.', 'puredevs-customer-history-for-woocommerce' );
+				}
+				?>
+				</p>
+			<?php endif; ?>
+		</div>
+
+		<div class="pd-woo-panel" style="margin-top:20px;">
 			<h2><?php echo esc_html__( 'Most Viewed Products', 'puredevs-customer-history-for-woocommerce' ); ?></h2>
 			<?php
 			$site_pages      = PDWCHS_Search_Stats_Data::get_url_counts( array( 'search' => $pdwchs_search ) );

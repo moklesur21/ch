@@ -36,6 +36,7 @@ class PDWCHS_Sessions_Data {
 			reg_date        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			del             TINYINT(1) NOT NULL DEFAULT '0',
 			session_id      VARCHAR(50),
+			results_count   INT NULL DEFAULT NULL,
 			PRIMARY KEY     (id)
 		) $charset_collate";
 
@@ -47,23 +48,137 @@ class PDWCHS_Sessions_Data {
 
 		public static function pdwchs_update_table() {
 
+		// R15-28: at most one run per request. The activator reaches this method from
+		// four separate guards (the repair branch plus the three since-options), and on
+		// a fresh install every one of them fires on the same page load.
+		static $ran = false;
+		if ( $ran ) {
+			return;
+		}
+		$ran = true;
+
 		/*
 		 *  Check if dbDelta() exists
 		 */
 		if ( ! function_exists( 'dbDelta' ) ) { require_once( ABSPATH . 'wp-admin/includes/upgrade.php' ); }
 		global $wpdb;
-		$row = $wpdb->get_results(  "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = '{$wpdb->prefix}pd_woo_customer_history_sessions' AND column_name = 'session_id'"  );
+
+		$sessions_table = $wpdb->prefix . 'pd_woo_customer_history_sessions';
+
+		// R15-28: every probe in this method filters table_schema = DATABASE(). Without
+		// it INFORMATION_SCHEMA spans every schema the MySQL user can read, so a
+		// same-named table in another database on the same server answers for this one —
+		// the ALTER is skipped, the since-option below latches the failure, and every
+		// subsequent search insert dies silently on the missing column.
+		$row = $wpdb->get_results( $wpdb->prepare(
+			"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
+			 WHERE table_schema = DATABASE()
+			   AND table_name   = %s
+			   AND column_name  = 'session_id'",
+			$sessions_table
+		) );
 		if(empty($row)){
 		   $result = $wpdb->query("ALTER TABLE {$wpdb->prefix}pd_woo_customer_history_sessions ADD session_id VARCHAR(50)");
 		   if($result){
 			   add_site_option('pdwchs_db_version','1.1');
 		   }
 		}
+
+		$row = $wpdb->get_results( $wpdb->prepare(
+			"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
+			 WHERE table_schema = DATABASE()
+			   AND table_name   = %s
+			   AND column_name  = 'results_count'",
+			$sessions_table
+		) );
+		if ( empty( $row ) ) {
+			$result = $wpdb->query( "ALTER TABLE {$wpdb->prefix}pd_woo_customer_history_sessions ADD results_count INT NULL DEFAULT NULL" );
+			if ( $result !== false ) {
+				$row = true; // Column now exists.
+			}
+		}
+
+		self::pdwchs_sync_since_option( 'pdwchs_results_count_since', ! empty( $row ) );
+
+		// Feature 15.6 — (user_id, reg_date) index for per-customer, newest-first paging.
+		$index = $wpdb->get_results( $wpdb->prepare(
+			"SELECT INDEX_NAME FROM INFORMATION_SCHEMA.STATISTICS
+			 WHERE table_schema = DATABASE()
+			   AND table_name   = %s
+			   AND index_name   = 'idx_user_date'",
+			$wpdb->prefix . 'pd_woo_customer_history_sessions'
+		) );
+
+		if ( empty( $index ) ) {
+			// false !== $result, not if ( $result ): a successful ALTER TABLE returns 0.
+			$result = $wpdb->query( "ALTER TABLE {$wpdb->prefix}pd_woo_customer_history_sessions ADD INDEX idx_user_date (user_id, reg_date)" );
+			if ( false !== $result ) {
+				$index = true;
+			}
+		}
+
+		self::pdwchs_sync_since_option( 'pdwchs_sessions_index_since', ! empty( $index ) );
+
+		// Feature 15.7 — (session_id, user_id) index for the guest-to-customer merge.
+		// Same probe style as idx_user_date above: table_schema-filtered, and guarded by a
+		// set-once option. Column order is deliberate — session_id leads because the merge
+		// predicate is session_id = %s AND user_id = 0, and the backfill loose-scans
+		// distinct session_id values off the same index.
+		$session_index = $wpdb->get_results( $wpdb->prepare(
+			"SELECT INDEX_NAME FROM INFORMATION_SCHEMA.STATISTICS
+			 WHERE table_schema = DATABASE()
+			   AND table_name   = %s
+			   AND index_name   = 'idx_session_user'",
+			$wpdb->prefix . 'pd_woo_customer_history_sessions'
+		) );
+
+		if ( empty( $session_index ) ) {
+			// false !== $result, not if ( $result ): a successful ALTER TABLE returns 0.
+			$result = $wpdb->query( "ALTER TABLE {$wpdb->prefix}pd_woo_customer_history_sessions ADD INDEX idx_session_user (session_id, user_id)" );
+			if ( false !== $result ) {
+				$session_index = true;
+			}
+		}
+
+		self::pdwchs_sync_since_option( 'pdwchs_sessions_session_index_since', ! empty( $session_index ) );
+	}
+
+	/**
+	 * Keep a schema since-option honest about the CURRENT database.
+	 *
+	 * These options are set-once guards: the activator skips the healer entirely once
+	 * one is present. Before R15-28 the column probes above were not schema-scoped, so
+	 * a site could stamp an option for a column that exists only in a sibling database
+	 * — latching the failure permanently and leaving the admin UI claiming to collect
+	 * data it never records.
+	 *
+	 * So the option is treated as a fact rather than a latch: stamped when the artefact
+	 * is genuinely present here, deleted when it is not. A stamp written by the old
+	 * unscoped probe therefore clears itself, and the activator's `! get_option()`
+	 * guard retries on the next load.
+	 *
+	 * @since 3.1.2
+	 *
+	 * @param string $option  Option name.
+	 * @param bool   $present Whether the artefact exists in the current database.
+	 * @return void
+	 */
+	private static function pdwchs_sync_since_option( $option, $present ) {
+		if ( $present ) {
+			if ( ! get_option( $option ) ) {
+				add_option( $option, time() );
+			}
+			return;
+		}
+
+		if ( get_option( $option ) ) {
+			delete_option( $option );
+		}
 	}
 
 	// --- Core DML ---
 
-		public static function pdwchs_insert( $user_id, $url ) {
+		public static function pdwchs_insert( $user_id, $url, $results_count = null ) {
 		if ( $user_id >= 0 && $url != '' ) {
 			global $wpdb;
 			$wpdb->hide_errors();
@@ -78,29 +193,36 @@ class PDWCHS_Sessions_Data {
 
 			$reg_date = gmdate( 'Y-m-d  H:i:s', time() + 3600 * $timezone );
 
-			$wpdb->insert(
-				$table,
-				array(
-					'id' => '',
-					'user_id' => $user_id,
-					'ip' => $ipaddress,
-					'url' => $url,
-					'referer' => $referer,
-					'reg_date' => $reg_date,
-					'del' => 0,
-					'session_id' => session_id(),
-				),
-				array(
-					'%d',
-					'%d',
-					'%s',
-					'%s',
-					'%s',
-					'%s',
-					'%d',
-					'%s',
-				)
+			$data = array(
+				'id' => '',
+				'user_id' => $user_id,
+				'ip' => $ipaddress,
+				'url' => $url,
+				'referer' => $referer,
+				'reg_date' => $reg_date,
+				'del' => 0,
+				'session_id' => session_id(),
 			);
+
+			$format = array(
+				'%d',
+				'%d',
+				'%s',
+				'%s',
+				'%s',
+				'%s',
+				'%d',
+				'%s',
+			);
+
+			// Omit the key entirely when no count was supplied — a null against a
+			// %d format would be cast to 0 and brand the row "zero results".
+			if ( null !== $results_count ) {
+				$data['results_count'] = (int) $results_count;
+				$format[]              = '%d';
+			}
+
+			$wpdb->insert( $table, $data, $format );
 
 		}
 

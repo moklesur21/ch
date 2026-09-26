@@ -161,14 +161,27 @@ class PD_Customer_History_Admin {
 			wp_localize_script( 'pdwchs-save-segment', 'pdwchs_segments_vars', array(
 				'nonce'       => wp_create_nonce( 'pdwchs_segment_nonce' ),
 				'ajaxurl'     => admin_url( 'admin-ajax.php' ),
-				'allowedKeys' => array(
+				/**
+				 * Filter the criteria keys "Save as Segment" reads out of the URL.
+				 *
+				 * Must stay in step with the same filter in
+				 * PDWCHS_Segments_Manager::pdwchs_whitelist_criteria(): js/pdwchs-save-segment.js
+				 * walks this array and pulls each key from window.location.search, so a key
+				 * missing here is never read and the saved segment loses that criterion
+				 * silently — no PHP error, no JS error, just a member count that disagrees
+				 * with the list the user was looking at.
+				 *
+				 * @since 3.1.1
+				 * @param array $keys Allowed criteria keys.
+				 */
+				'allowedKeys' => apply_filters( 'pdwchs_segment_criteria_keys', array(
 					'user_role', 'customer_country', 'order_number', 'order_number_input',
 					'total_spent', 'total_spent_input', 'start_date', 'end_date',
 					'total_amount', 'total_order_input', 'order_status', 'payment_method',
 					's', 'product_filter', 'rfm_segment', 'health_score_range',
 					'health_trend', 'lifecycle_stage', 'lifecycle_days', 'behavior_filter',
 					'show-items',
-				),
+				) ),
 				'i18n'        => array(
 					'emptyName'     => __( 'Segment name cannot be empty.', 'puredevs-customer-history-for-woocommerce' ),
 					'nameTooLong'   => __( 'Segment name cannot exceed 191 characters.', 'puredevs-customer-history-for-woocommerce' ),

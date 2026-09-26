@@ -70,6 +70,14 @@ class PDWCHS_Stats_List_Table extends WP_List_Table {
 		);
 		add_submenu_page(
 			'',
+			__( 'Zero-Result Searches', 'puredevs-customer-history-for-woocommerce' ),
+			__( 'Zero-Result Searches', 'puredevs-customer-history-for-woocommerce' ),
+			$capability,
+			'pd-woo-zero-result-searches',
+			array( $this, 'pdwchs_zero_result_callback' )
+		);
+		add_submenu_page(
+			'',
 			__( 'Product Views', 'puredevs-customer-history-for-woocommerce' ),
 			__( 'Product Views', 'puredevs-customer-history-for-woocommerce' ),
 			$capability,
@@ -129,6 +137,11 @@ class PDWCHS_Stats_List_Table extends WP_List_Table {
 		include __DIR__ . '/templates/search-keywords-page.php';
 	}
 
+	public function pdwchs_zero_result_callback() {
+		$this->pdwchs_init_table();
+		include __DIR__ . '/templates/zero-result-searches-page.php';
+	}
+
 	public function pdwchs_product_view_callback() {
 		$this->pdwchs_init_table();
 		include __DIR__ . '/templates/product-view-stats-page.php';
@@ -172,6 +185,13 @@ class PDWCHS_Stats_List_Table extends WP_List_Table {
 			$columns = array(
 				'searches' => esc_html__( 'Searches', 'puredevs-customer-history-for-woocommerce' ),
 				'keywords' => esc_html__( 'Keywords', 'puredevs-customer-history-for-woocommerce' ),
+			);
+		}
+		if ( 'pd-woo-zero-result-searches' === $page ) {
+			$columns = array(
+				'keywords'      => esc_html__( 'Search Term', 'puredevs-customer-history-for-woocommerce' ),
+				'searches'      => esc_html__( 'Times Searched', 'puredevs-customer-history-for-woocommerce' ),
+				'last_searched' => esc_html__( 'Last Searched', 'puredevs-customer-history-for-woocommerce' ),
 			);
 		}
 		if ( 'pd-woo-product-view-stats' === $page ) {
@@ -231,7 +251,49 @@ class PDWCHS_Stats_List_Table extends WP_List_Table {
 				if ( isset( $url_array[1] ) && 'search' === $url_array[1] && ! empty( $url_array[2] ) ) {
 					$this->session_array[] = array(
 						'searches' => '<span class="dashicons dashicons-chart-bar mr-5"></span> <strong>' . $stat->qta . '</strong>',
-						'keywords' => '<span class="dashicons dashicons-search mr-5"></span> <strong>' . $url_array[2] . '</strong>',
+						// The keyword is raw visitor input from the storefront search box, and
+						// WP_List_Table echoes this cell as markup — escape it (CLAUDE.md rule 5).
+						'keywords' => '<span class="dashicons dashicons-search mr-5"></span> <strong>' . esc_html( $url_array[2] ) . '</strong>',
+					);
+				}
+			}
+		}
+
+		// Bridge page: closes the Pro-side blind spot Feature 15.2 left open (its free widget lives on
+		// a page Pro hides). Retire this branch, its siblings in get_columns()/sort_data()/no_items(),
+		// its template and its sub-nav entry when R20-03/R20-04 ship the Search Gap Report, which is a
+		// strict superset of what this shows.
+		if ( 'pd-woo-zero-result-searches' === $page ) {
+			// limit 0 = every term, not the free widget's top 20. The reader only applies its
+			// ORDER BY when a limit is set, so these rows arrive unordered and sort_data() below
+			// is what imposes most-searched-first.
+			$stats = PDWCHS_Search_Stats_Data::pdwchs_get_zero_result_terms(
+				array(
+					'search' => $search,
+					'limit'  => 0,
+				)
+			);
+
+			foreach ( $stats as $stat ) {
+				$url_array = explode( '::', $stat->url );
+				if ( isset( $url_array[1] ) && 'search' === $url_array[1] && ! empty( $url_array[2] ) ) {
+					$last_ts = strtotime( $stat->last_searched );
+
+					$this->session_array[] = array(
+						// The term is raw visitor input from the storefront search box — escaped, always.
+						'keywords'      => '<span class="dashicons dashicons-search mr-5"></span> <strong>'
+										 . esc_html( $url_array[2] ) . '</strong>',
+						'searches'      => '<span class="dashicons dashicons-chart-bar mr-5"></span> <strong>'
+										 . esc_html( number_format_i18n( (int) $stat->qta ) ) . '</strong>',
+						'last_searched' => esc_html(
+							$last_ts
+								? date_i18n( get_option( 'date_format' ), $last_ts, true )
+								: $stat->last_searched
+						),
+						// Hidden sort keys — get_columns() does not list them, so they never render.
+						'zr_count'      => (int) $stat->qta,
+						'zr_term'       => $url_array[2],
+						'zr_time'       => $last_ts ? (int) $last_ts : 0,
 					);
 				}
 			}
@@ -348,6 +410,7 @@ class PDWCHS_Stats_List_Table extends WP_List_Table {
 			'url'                 => array( 'url', false ),
 			'searches'            => array( 'searches', false ),
 			'keywords'            => array( 'keywords', false ),
+			'last_searched'       => array( 'last_searched', false ),
 			'product_name'        => array( 'product_name', false ),
 			'view_count'          => array( 'view_count', false ),
 			'purchase_count'      => array( 'purchase_count', false ),
@@ -370,6 +433,7 @@ class PDWCHS_Stats_List_Table extends WP_List_Table {
 			case 'url':
 			case 'searches':
 			case 'keywords':
+			case 'last_searched':
 			case 'product_name':
 			case 'view_count':
 			case 'purchase_count':
@@ -382,6 +446,41 @@ class PDWCHS_Stats_List_Table extends WP_List_Table {
 			default:
 				return print_r( $item, true );
 		}
+	}
+
+	/**
+	 * Empty-state copy.
+	 *
+	 * Core's "No items found." is a lie on the zero-result page: an empty table there means
+	 * collection has started and nothing has failed yet, not that the report is broken. Every
+	 * other Statistics page delegates to core untouched.
+	 *
+	 * The two copy variants are the free widget's strings character for character
+	 * (admin/partials/templates/search-analytics.php:136-144) so both builds say the same thing
+	 * and the translation memory matches.
+	 */
+	public function no_items() {
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if ( 'pd-woo-zero-result-searches' !== $page ) {
+			parent::no_items();
+			return;
+		}
+
+		$since = get_option( 'pdwchs_results_count_since' );
+
+		if ( $since ) {
+			echo esc_html(
+				sprintf(
+					/* translators: %s: the date on which zero-result collection began on this site. */
+					__( 'No zero-result searches recorded yet. Collecting since %s — terms appear here as visitors search your store and find nothing.', 'puredevs-customer-history-for-woocommerce' ),
+					date_i18n( get_option( 'date_format' ), (int) $since )
+				)
+			);
+			return;
+		}
+
+		echo esc_html__( 'No zero-result searches recorded yet. Terms appear here as visitors search your store and find nothing.', 'puredevs-customer-history-for-woocommerce' );
 	}
 
 	/**
@@ -415,7 +514,28 @@ class PDWCHS_Stats_List_Table extends WP_List_Table {
 			$order = sanitize_text_field( wp_unslash( $_GET['order'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		}
 
-		$result = strcmp( $a[ $orderby ] ?? '', $b[ $orderby ] ?? '' );
+		// The zero-result page's visible cells are HTML, and strcmp on "<strong>9</strong>" versus
+		// "<strong>12</strong>" puts 9 above 12. Sort on its hidden scalar keys instead — for the
+		// default (no orderby in the URL, which falls through to zr_count) and for every column
+		// header the user can click. One map, so this page's ordering is decided in one place.
+		if ( 'pd-woo-zero-result-searches' === $page ) {
+			$zr_map  = array(
+				'keywords'      => 'zr_term',
+				'searches'      => 'zr_count',
+				'last_searched' => 'zr_time',
+			);
+			$orderby = isset( $zr_map[ $orderby ] ) ? $zr_map[ $orderby ] : 'zr_count';
+		}
+
+		$a_val = $a[ $orderby ] ?? '';
+		$b_val = $b[ $orderby ] ?? '';
+
+		// Numeric only when BOTH sides are numeric, so the sibling pages — whose cells are all HTML
+		// strings — keep the exact strcmp behaviour they had before this branch existed.
+		$result = ( is_numeric( $a_val ) && is_numeric( $b_val ) )
+			? ( $a_val <=> $b_val )
+			: strcmp( (string) $a_val, (string) $b_val );
+
 		return ( 'asc' === $order ) ? $result : -$result;
 	}
 

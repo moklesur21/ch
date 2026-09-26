@@ -1,0 +1,168 @@
+/**
+ * Cohort Retention page styles.
+ *
+ * Page-scoped: enqueued only on admin.php?page=pd-woo-cohorts.
+ *
+ * @since 3.1.0
+ */
+
+/* --------------------------------------------------------------------------
+ * Toolbar
+ * -------------------------------------------------------------------------- */
+
+.pdwchs-cohort-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 20px 0 12px;
+}
+
+.pdwchs-cohort-generated {
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* --------------------------------------------------------------------------
+ * View toggle — redeclared here; the products stylesheet is page-scoped
+ * to the product pages and is not loaded on this page.
+ * -------------------------------------------------------------------------- */
+
+.pdwchs-cohort-view-toggle {
+    display: inline-flex;
+}
+
+.pdwchs-cohort-view-toggle .pdwchs-view-btn {
+    border-radius: 0;
+    border-right-width: 0;
+    font-size: 13px;
+}
+
+.pdwchs-cohort-view-toggle .pdwchs-view-btn:first-child {
+    border-radius: 3px 0 0 3px;
+}
+
+.pdwchs-cohort-view-toggle .pdwchs-view-btn:last-child {
+    border-radius: 0 3px 3px 0;
+    border-right-width: 1px;
+}
+
+.pdwchs-cohort-view-toggle .pdwchs-view-btn--active {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+ * Average-retention chart
+ * -------------------------------------------------------------------------- */
+
+/* height + position: the canvas is sized by its container, as on the revenue
+   patterns page — without them a maintainAspectRatio:false chart collapses. */
+
+.pdwchs-cohort-chart-wrap {
+    position: relative;
+    height: 280px;
+    max-width: 900px;
+    margin: 16px 0 24px;
+}
+
+/* --------------------------------------------------------------------------
+ * Table — scrolls inside its own container, never the page body.
+ * -------------------------------------------------------------------------- */
+
+.pdwchs-cohort-table-wrap {
+    overflow-x: auto;
+    margin-top: 12px;
+}
+
+.pdwchs-cohort-table {
+    min-width: 900px;
+}
+
+.pdwchs-cohort-table th,
+.pdwchs-cohort-table td {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.pdwchs-cohort-table th.pdwchs-cohort-label,
+.pdwchs-cohort-table td.pdwchs-cohort-label {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    text-align: left;
+    font-weight: 600;
+    background: #fff;
+    box-shadow: 1px 0 0 0 #dcdcde;
+}
+
+/* --------------------------------------------------------------------------
+ * Cells
+ * -------------------------------------------------------------------------- */
+
+.pdwchs-cohort-cell {
+    font-size: 12px;
+}
+
+.pdwchs-cohort-cell--partial {
+    color: #a7aaad;
+    cursor: help;
+}
+
+.pdwchs-cohort-cell--empty {
+    color: #3c434a;
+}
+
+/* Ten-step ramp on WordPress admin blue (#2271b1), light to saturated. */
+
+.pdwchs-cohort-cell--d0 {
+    background: #f2f7fb;
+    color: #3c434a;
+}
+
+.pdwchs-cohort-cell--d1 {
+    background: #e2edf6;
+    color: #3c434a;
+}
+
+.pdwchs-cohort-cell--d2 {
+    background: #cfe1f1;
+    color: #3c434a;
+}
+
+.pdwchs-cohort-cell--d3 {
+    background: #b9d4eb;
+    color: #3c434a;
+}
+
+.pdwchs-cohort-cell--d4 {
+    background: #9fc4e4;
+    color: #3c434a;
+}
+
+.pdwchs-cohort-cell--d5 {
+    background: #82b1db;
+    color: #3c434a;
+}
+
+.pdwchs-cohort-cell--d6 {
+    background: #5f9bd1;
+    color: #fff;
+}
+
+.pdwchs-cohort-cell--d7 {
+    background: #4187c6;
+    color: #fff;
+}
+
+.pdwchs-cohort-cell--d8 {
+    background: #2f7bbc;
+    color: #fff;
+}
+
+.pdwchs-cohort-cell--d9 {
+    background: #2271b1;
+    color: #fff;
+}

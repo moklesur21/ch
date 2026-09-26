@@ -1,0 +1,238 @@
+/**
+ * Geographic Performance page styles.
+ *
+ * Page-scoped: enqueued only on admin.php?page=pd-woo-geographic, with `custom-style` as its
+ * dependency. Every selector is rooted at a .pdwchs-geo- class so nothing here can reach a shared
+ * admin shell on another page. No !important anywhere — the rules below only ever extend core's
+ * list-table styling, never fight it.
+ *
+ * @since 3.1.1
+ */
+
+/* --------------------------------------------------------------------------
+ * Toolbar — the date range form
+ * -------------------------------------------------------------------------- */
+
+.pdwchs-geo-toolbar {
+    margin: 20px 0 12px;
+}
+
+.pdwchs-geo-range-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.pdwchs-geo-range-form label {
+    font-weight: 600;
+}
+
+.pdwchs-geo-toolbar .pdwchs-date-range-input {
+    min-width: 240px;
+    background: #fff;
+    cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+ * Summary line
+ * -------------------------------------------------------------------------- */
+
+.pdwchs-geo-summary {
+    margin: 12px 0 16px;
+}
+
+.pdwchs-geo-summary-range {
+    margin: 0 0 8px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+.pdwchs-geo-summary-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pdwchs-geo-summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 140px;
+    padding: 10px 14px;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.pdwchs-geo-summary-label {
+    color: #64748b;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.pdwchs-geo-summary-value {
+    color: #1d2327;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+ * Table — scrolls inside its own container, never the page body.
+ * -------------------------------------------------------------------------- */
+
+.pdwchs-geo-table-wrap {
+    overflow-x: auto;
+    margin-top: 12px;
+}
+
+.pdwchs-geo-table {
+    min-width: 720px;
+}
+
+.pdwchs-geo-table th.pdwchs-geo-numeric,
+.pdwchs-geo-table td.pdwchs-geo-numeric {
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* The sort link fills the header cell, so the whole cell is the click target. */
+
+.pdwchs-geo-table thead th a {
+    display: block;
+}
+
+.pdwchs-geo-table td.pdwchs-geo-country {
+    font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+ * Comparison layer (R15-21B) — selects, the two panels and the chart.
+ *
+ * Sits above the table and below the summary. Every selector is under
+ * .pdwchs-geo-compare, so nothing here can reach the table above it.
+ * -------------------------------------------------------------------------- */
+
+.pdwchs-geo-compare {
+    margin: 0 0 20px;
+    padding: 16px;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.pdwchs-geo-compare-title {
+    margin: 0 0 12px;
+    font-size: 15px;
+}
+
+.pdwchs-geo-compare-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 0 0 16px;
+}
+
+.pdwchs-geo-compare-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 0;
+}
+
+.pdwchs-geo-compare-field label {
+    color: #64748b;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.pdwchs-geo-compare-select {
+    min-width: 200px;
+    max-width: 100%;
+}
+
+/* Both states start hidden and are shown by the script. With JavaScript off
+   they stay hidden and the server-rendered content below remains visible. */
+
+.pdwchs-geo-compare-loading,
+.pdwchs-geo-compare-error {
+    display: none;
+    margin: 0 0 12px;
+}
+
+.pdwchs-geo-compare-error {
+    color: #b32d2e;
+}
+
+/* --------------------------------------------------------------------------
+ * The two panels
+ * -------------------------------------------------------------------------- */
+
+.pdwchs-geo-compare-panels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.pdwchs-geo-compare-panel {
+    flex: 1 1 260px;
+    min-width: 0;
+    padding: 12px 14px;
+    border: 1px solid #dcdcde;
+    border-radius: 4px;
+    background: #f6f7f7;
+}
+
+.pdwchs-geo-compare-country {
+    margin: 0 0 10px;
+    font-size: 14px;
+    overflow-wrap: break-word;
+}
+
+.pdwchs-geo-compare-metrics {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pdwchs-geo-compare-metric {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0;
+    padding: 6px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.pdwchs-geo-compare-metric:last-child {
+    border-bottom: 0;
+}
+
+.pdwchs-geo-compare-label {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.pdwchs-geo-compare-value {
+    color: #1d2327;
+    font-weight: 600;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+ * The chart — never wider than its container, on any screen.
+ * -------------------------------------------------------------------------- */
+
+.pdwchs-geo-compare-chart-wrap {
+    margin-top: 16px;
+}
+
+.pdwchs-geo-compare-chart-wrap canvas {
+    max-width: 100%;
+}

@@ -1556,8 +1556,8 @@ class PD_Customer_History_Intelligence {
 		}
 
 		$upload_dir   = wp_upload_dir();
-		$initial_date = date( 'Y-m-d', strtotime( '-1 week' ) );
-		$final_date   = date( 'Y-m-d' );
+		$initial_date = substr( $start, 0, 10 );
+		$final_date   = substr( $end, 0, 10 );
 
 		// --- Search keywords CSV ---
 		if ( in_array( 'search', $_generate_weekly_report, true ) ) {

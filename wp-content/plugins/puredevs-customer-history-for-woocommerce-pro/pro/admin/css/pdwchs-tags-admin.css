@@ -1,0 +1,89 @@
+/**
+ * Manual Tags — management page internals.
+ *
+ * The table shell is WordPress core (.wp-list-table widefat fixed striped) and
+ * is deliberately left alone; only the feature's own rows are styled here, all
+ * of them scoped under .pdwchs-tags-admin.
+ *
+ * @package    PD_Customer_History
+ * @subpackage Pro/CRM
+ * @since      3.1.1
+ */
+
+/* ==========================================================================
+   Create row
+   ========================================================================== */
+
+.pdwchs-tags-admin .pdwchs-tags-create {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin: 16px 0;
+}
+
+.pdwchs-tags-admin .pdwchs-tag-new-name {
+	flex: 1 1 260px;
+	max-width: 380px;
+}
+
+/* Full width so a message never squeezes the input out of the row. */
+.pdwchs-tags-admin .pdwchs-tags-create .pdwchs-crm-error {
+	flex: 1 0 100%;
+}
+
+/* ==========================================================================
+   Table cells
+   ========================================================================== */
+
+.pdwchs-tags-admin .pdwchs-tag-count-cell,
+.pdwchs-tags-admin .pdwchs-tag-created-cell {
+	color: #50575e;
+}
+
+.pdwchs-tags-admin .pdwchs-tag-slug-cell {
+	color: #646970;
+	font-family: Consolas, Monaco, monospace;
+	font-size: 12px;
+}
+
+/* ==========================================================================
+   Inline rename state
+   ========================================================================== */
+
+.pdwchs-tags-admin .pdwchs-tag-rename-input {
+	width: 60%;
+	min-width: 120px;
+	margin-right: 6px;
+}
+
+.pdwchs-tags-admin .pdwchs-tag-rename-save,
+.pdwchs-tags-admin .pdwchs-tag-rename-cancel {
+	margin-right: 6px;
+}
+
+/* ==========================================================================
+   Row actions
+   ========================================================================== */
+
+.pdwchs-tags-admin .pdwchs-tag-actions-cell .button-link {
+	margin-right: 10px;
+}
+
+.pdwchs-tags-admin .pdwchs-tag-delete-btn {
+	color: #b32d2e;
+}
+
+.pdwchs-tags-admin .pdwchs-tag-row-error {
+	margin-top: 4px;
+}
+
+/* ==========================================================================
+   Empty state
+   ========================================================================== */
+
+.pdwchs-tags-admin .pdwchs-tags-empty {
+	margin-top: 12px;
+	color: #646970;
+	font-style: italic;
+}

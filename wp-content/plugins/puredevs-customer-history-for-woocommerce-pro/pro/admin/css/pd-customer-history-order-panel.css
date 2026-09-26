@@ -1,0 +1,91 @@
+/* Order-screen intelligence panel — meta box internals.
+
+   This stylesheet loads on a screen the plugin does not own, so every selector is
+   scoped under .pdwchs-order-panel: a stray global rule here breaks WooCommerce's
+   order UI, not ours. Admin colours are inherited rather than restated, and nothing
+   here forces an override — the meta box is ~250px of side column, not a page. */
+
+.pdwchs-order-panel {
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+/* Rows */
+.pdwchs-order-panel-rows {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.pdwchs-order-panel-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 4px 8px;
+	margin: 0;
+	padding: 7px 0;
+	border-bottom: 1px solid #f0f0f1;
+}
+
+.pdwchs-order-panel-row:last-child {
+	border-bottom: none;
+}
+
+.pdwchs-order-panel-label {
+	flex: 0 0 auto;
+	color: #646970;
+}
+
+/* The value column wraps rather than overflowing: a long segment name in 250px
+   has nowhere else to go. */
+.pdwchs-order-panel-value {
+	flex: 1 1 auto;
+	min-width: 0;
+	text-align: right;
+	overflow-wrap: break-word;
+	font-weight: 600;
+}
+
+/* The three "Not calculated yet" / "Never seen" states read as absent, not as data. */
+.pdwchs-order-panel-empty {
+	color: #8c8f94;
+	font-weight: 400;
+	font-style: italic;
+}
+
+/* Colour dot — the label configs supply the background inline. */
+.pdwchs-order-panel-dot {
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	margin-right: 2px;
+	border-radius: 50%;
+	vertical-align: middle;
+}
+
+.pdwchs-order-panel-icon {
+	margin-right: 1px;
+}
+
+/* Health status name, under the score. */
+.pdwchs-order-panel-sub {
+	display: block;
+	color: #646970;
+	font-weight: 400;
+	font-size: 12px;
+}
+
+/* Guest line and the nightly-scores note: full width, quiet. */
+.pdwchs-order-panel-guest,
+.pdwchs-order-panel-note {
+	margin: 4px 0 0;
+	color: #646970;
+	font-size: 12px;
+}
+
+.pdwchs-order-panel-link {
+	margin: 10px 0 0;
+	padding-top: 8px;
+	border-top: 1px solid #f0f0f1;
+}

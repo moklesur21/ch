@@ -85,6 +85,35 @@ class PD_Customer_History_Activator {
 	}
 
 	/**
+	 * Create the customer notes table (Feature 15.3 — relocated free from Pro).
+	 *
+	 * Ported from the notes-only portion of pro/Pro-Installer.php::pdwchs_create_crm_tables()
+	 * on the `developer` branch. Tags + the customer↔tag junction table stay Pro (Feature 15.10)
+	 * and are NOT created here.
+	 *
+	 * @since 3.1.0
+	 */
+	private static function pdwchs_create_notes_table() {
+		global $wpdb;
+		$charset_collate = $wpdb->get_charset_collate();
+		$notes_table      = $wpdb->prefix . 'pdwchs_customer_notes';
+
+		$notes_sql = "CREATE TABLE IF NOT EXISTS {$notes_table} (
+			id BIGINT(20) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+			customer_id BIGINT(20) UNSIGNED NOT NULL,
+			note_text TEXT NOT NULL,
+			created_by BIGINT(20) UNSIGNED NOT NULL,
+			created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			INDEX idx_customer_created (customer_id, created_at),
+			INDEX idx_created_by (created_by),
+			FOREIGN KEY (customer_id) REFERENCES {$wpdb->users}(ID) ON DELETE CASCADE
+		) {$charset_collate};";
+
+		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		dbDelta( $notes_sql );
+	}
+
+	/**
 	 * Check version and run upgrades if needed
 	 *
 	 * @since    2.0.0
@@ -116,6 +145,41 @@ class PD_Customer_History_Activator {
 		// Heal any premium tables skipped when trial was not active at install time.
 		self::pdwchs_ensure_premium_tables();
 
+		// R15-28: one-time repair for installs whose 15.2/15.6/15.7 migration was skipped
+		// by an INFORMATION_SCHEMA probe that was not scoped to this database and so
+		// matched a same-named table in another schema on the same server. Those installs
+		// carry a since-option for an artefact they do not have, which makes the three
+		// guards below skip the healer forever — this branch is the only thing that can
+		// break that deadlock. pdwchs_update_table() now clears any since-option whose
+		// artefact is genuinely absent here, so the guards resume healing from next load.
+		if ( ! get_option( 'pdwchs_sessions_schema_repaired' ) ) {
+			require_once PDWCHS_CUSTOMER_HISTORY_PLUGIN_DIR . 'includes/data/class-pdwchs-sessions-data.php';
+			PDWCHS_Sessions_Data::pdwchs_update_table();
+			add_option( 'pdwchs_sessions_schema_repaired', 1 );
+		}
+
+		// Heal the sessions schema for Feature 15.2 (results_count). Guarded by a
+		// set-once option rather than pdwchs_db_version, which the Free (5.0) and Pro
+		// (up to 6.0) installers both write — see docs/cb/Feature-15.2-...md decision 3.
+		if ( ! get_option( 'pdwchs_results_count_since' ) ) {
+			require_once PDWCHS_CUSTOMER_HISTORY_PLUGIN_DIR . 'includes/data/class-pdwchs-sessions-data.php';
+			PDWCHS_Sessions_Data::pdwchs_update_table();
+		}
+
+		// Heal the sessions schema for Feature 15.6 (idx_user_date). Set-once option for the
+		// same reason as results_count above — pdwchs_db_version is written by both installers.
+		if ( ! get_option( 'pdwchs_sessions_index_since' ) ) {
+			require_once PDWCHS_CUSTOMER_HISTORY_PLUGIN_DIR . 'includes/data/class-pdwchs-sessions-data.php';
+			PDWCHS_Sessions_Data::pdwchs_update_table();
+		}
+
+		// Heal the sessions schema for Feature 15.7 (idx_session_user). Set-once option for the
+		// same reason as the two branches above — pdwchs_db_version is written by both installers.
+		if ( ! get_option( 'pdwchs_sessions_session_index_since' ) ) {
+			require_once PDWCHS_CUSTOMER_HISTORY_PLUGIN_DIR . 'includes/data/class-pdwchs-sessions-data.php';
+			PDWCHS_Sessions_Data::pdwchs_update_table();
+		}
+
 		// Update plugin version if changed
 		if ( version_compare( $installed_version, $current_version, '<' ) ) {
 			update_option( 'pdwchs_version', $current_version );
@@ -132,7 +196,7 @@ class PD_Customer_History_Activator {
 	}
 
 	/**
-	 * Ensure Free-owned tables exist (sessions heal only).
+	 * Ensure Free-owned tables exist (sessions + notes heal).
 	 * Pro tables are healed by PDWCHS_Pro_Installer.
 	 *
 	 * @since 2.1.7
@@ -144,6 +208,11 @@ class PD_Customer_History_Activator {
 		if ( ! $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $sessions_table ) ) ) {
 			require_once PDWCHS_CUSTOMER_HISTORY_PLUGIN_DIR . 'includes/data/class-pdwchs-sessions-data.php';
 			PDWCHS_Sessions_Data::pdwchs_create_table();
+		}
+
+		$notes_table = $wpdb->prefix . 'pdwchs_customer_notes';
+		if ( ! $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $notes_table ) ) ) {
+			self::pdwchs_create_notes_table();
 		}
 	}
 

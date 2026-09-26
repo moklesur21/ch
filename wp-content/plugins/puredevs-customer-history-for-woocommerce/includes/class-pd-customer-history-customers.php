@@ -64,7 +64,30 @@ if ( ! class_exists( 'PD_Customer_History_Customers' ) ) {
                 'actions'      => esc_html__( 'Actions', 'puredevs-customer-history-for-woocommerce' ),
             ) );
 
-            return $columns;
+            /**
+             * Filter the Customers & Users list columns.
+             *
+             * This free build declares no column through this seam itself — it returns exactly the
+             * columns it has always returned. The seam exists so a premium build can add one without
+             * a free-file edit.
+             *
+             * It runs last, after the pdwchs_is_pro_active() block above, so a listener sees the array
+             * this request would otherwise have rendered: the four intelligence columns are present on
+             * a licensed build and absent on a lapse. A listener that wants to sit beside a particular
+             * column can therefore find it by key.
+             *
+             * A listener may add, reorder or remove, because the return value is used directly.
+             * Removal is honoured but not encouraged: a listener that removes a column it did not add
+             * is breaking someone else's page.
+             *
+             * A column added here is filled by pdwchs_customers_column_{$column_name} in
+             * column_default() below — declaring one without the other renders an empty cell.
+             *
+             * @since 3.1.2
+             *
+             * @param array $columns Column key => display label, in render order.
+             */
+            return apply_filters( 'pdwchs_customers_columns', $columns );
         }
 		/**
 		 * Prepare the list of items for display.
@@ -214,6 +237,23 @@ if ( ! class_exists( 'PD_Customer_History_Customers' ) ) {
 				$pdwchs_seg_mgr = new PDWCHS_Segments_Manager();
 				$customers      = $pdwchs_seg_mgr->pdwchs_filter_customers_by_intelligence( $customers, $pdwchs_intel );
 			}
+
+			/**
+			 * Filter the customer list by criteria this free build does not know about.
+			 *
+			 * Same filter as the one in PDWCHS_Segments_Manager::pdwchs_apply_criteria_filters(),
+			 * so the list, the saved-segment count and the CSV export stay in agreement.
+			 * Here the second argument is a RAW $_GET superset — unslashed, but neither
+			 * whitelisted nor sanitised. Listeners must sanitise whatever they read.
+			 *
+			 * Applied before pdwchs_full_customer_count below, so the free-tier cap banner
+			 * counts the filtered set rather than the whole one.
+			 *
+			 * @since 3.1.1
+			 * @param array $customers WP_User objects, keys not guaranteed contiguous.
+			 * @param array $criteria  Raw $_GET, unslashed and unsanitised.
+			 */
+			$customers = apply_filters( 'pdwchs_segment_apply_extra_criteria', $customers, wp_unslash( $_GET ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 			$args = array();
 			$args = apply_filters( 'pdwchs_customers_query_args', $args, $_GET ); // H11
@@ -384,7 +424,31 @@ if ( ! class_exists( 'PD_Customer_History_Customers' ) ) {
                 case 'behavior_tags':
                     return apply_filters( 'pdwchs_customers_column_behavioral', '--', $item['user_id'] ); // H13
                 default:
-                    return ''; // Unknown column — render nothing (was a debug print_r dump).
+                    /**
+                     * Filter the cell value for a column this free build does not declare.
+                     *
+                     * The counterpart to pdwchs_customers_columns in get_columns(): that seam declares
+                     * the column, this one fills it. The free build declares none through either, so
+                     * with no listener registered this returns '' and the cell renders empty — the
+                     * behaviour this branch has today, and deliberately not the debug print_r dump it
+                     * used to carry.
+                     *
+                     * The hook name carries the column key as a dynamic suffix, matching
+                     * pdwchs_customers_column_rfm_segment and pdwchs_customers_column_behavioral
+                     * above, so a listener never fires for a column it does not own.
+                     *
+                     * IMPORTANT: WP_List_Table echoes this return value into the <td> unescaped, and
+                     * this class does not override single_row_columns(). A listener must therefore
+                     * return escaped, display-ready markup. The value is deliberately not escaped
+                     * here, because the two filters above return badge markup and every future
+                     * consumer will need to as well.
+                     *
+                     * @since 3.1.2
+                     *
+                     * @param string $value   Cell contents. Default '' — an unfilled column renders empty.
+                     * @param int    $user_id The row's WordPress user id.
+                     */
+                    return apply_filters( "pdwchs_customers_column_{$column_name}", '', $item['user_id'] );
             }
         }
 
@@ -598,7 +662,18 @@ if ( ! class_exists( 'PD_Customer_History_Customers' ) ) {
                 <input type="hidden" name="page" value="<?php echo esc_attr( isset( $_GET['page'] ) ? $_GET['page'] : 'pd-woo-customers' ); ?>" />
                 <?php
                 // Preserve other existing query parameters
-                $preserve_params = array( 's', 'user_role', 'order_number', 'order_number_input', 'total_spent', 'total_spent_input', 'customer_country', 'rfm_segment', 'health_score_range', 'health_trend', 'product_filter', 'behavior_filter', 'behavior_match', 'show-items' );
+                /**
+                 * Filter the query parameters this second filter form re-emits as hidden inputs.
+                 *
+                 * extra_tablenav() renders its own <form method="get">, separate from the main
+                 * filter form, so any parameter missing from this list is dropped the moment the
+                 * user submits the lifecycle filters. Listeners adding a criteria key should add
+                 * it here too, or their filter silently stops applying.
+                 *
+                 * @since 3.1.1
+                 * @param array $params Query parameter names to preserve.
+                 */
+                $preserve_params = apply_filters( 'pdwchs_customers_preserve_params', array( 's', 'user_role', 'order_number', 'order_number_input', 'total_spent', 'total_spent_input', 'customer_country', 'rfm_segment', 'health_score_range', 'health_trend', 'product_filter', 'behavior_filter', 'behavior_match', 'show-items' ) );
                 foreach ( $preserve_params as $param ) {
                     if ( isset( $_GET[ $param ] ) && ! empty( $_GET[ $param ] ) ) {
                         echo '<input type="hidden" name="' . esc_attr( $param ) . '" value="' . esc_attr( $_GET[ $param ] ) . '" />';

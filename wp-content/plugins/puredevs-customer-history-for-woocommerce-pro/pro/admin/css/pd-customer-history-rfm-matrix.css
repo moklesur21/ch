@@ -1,0 +1,155 @@
+/**
+ * RFM Matrix Heat-Map Panel Styles
+ *
+ * Page-scoped: enqueued only on admin.php?page=pd-woo-dashboard. Everything is scoped under
+ * .pdwchs-rfm-matrix so the sibling widgets sharing this page are never touched.
+ *
+ * The shared shell (.pd-woo-panel, and the table rules that reach every descendant table) comes from
+ * custom-style, which is declared as this stylesheet's dependency. No !important anywhere — the rules
+ * below only ever extend that shell, never fight it.
+ *
+ * The ten-step ramp is copied from pd-customer-history-cohorts.css rather than shared, because that
+ * stylesheet is enqueued only on the cohorts page. Same WordPress-admin-blue scale, same point at
+ * which the text flips to white, under this panel's own class names.
+ *
+ * @package    PD_Customer_History
+ * @subpackage PD_Customer_History/pro/admin/css
+ * @since      3.1.2
+ */
+
+/* ==========================================================================
+   Panel shell
+   ========================================================================== */
+
+.pdwchs-rfm-matrix-widget {
+    margin-bottom: 20px;
+}
+
+/* .pd-woo-panel-header has no base rule anywhere; every widget supplies its own. */
+
+.pdwchs-rfm-matrix-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.pdwchs-rfm-matrix-header h2 {
+    margin: 0;
+    font-size: 15px;
+}
+
+.pdwchs-rfm-matrix-intro,
+.pdwchs-rfm-matrix-empty {
+    margin: 0 0 12px;
+    color: #50575e;
+}
+
+/* ==========================================================================
+   Grid
+   ========================================================================== */
+
+/* A narrow admin column must scroll the grid rather than crushing the cells. */
+.pdwchs-rfm-matrix-scroll {
+    overflow-x: auto;
+}
+
+.pdwchs-rfm-matrix {
+    width: auto;
+    min-width: 320px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.pdwchs-rfm-matrix th,
+.pdwchs-rfm-matrix td {
+    width: 56px;
+    padding: 8px 4px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.pdwchs-rfm-matrix-corner {
+    width: 44px;
+    background: transparent;
+}
+
+.pdwchs-rfm-matrix-axis {
+    width: 44px;
+    font-weight: 600;
+    color: #50575e;
+    cursor: help;
+}
+
+.pdwchs-rfm-matrix-cell {
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    cursor: help;
+}
+
+/* ==========================================================================
+   Ten-step ramp on WordPress admin blue (#2271b1), light to saturated.
+   Copied from pd-customer-history-cohorts.css:120-168 — see the file docblock.
+   ========================================================================== */
+
+.pdwchs-rfm-matrix-cell--d0 {
+    background: #f2f7fb;
+    color: #3c434a;
+}
+
+.pdwchs-rfm-matrix-cell--d1 {
+    background: #e2edf6;
+    color: #3c434a;
+}
+
+.pdwchs-rfm-matrix-cell--d2 {
+    background: #cfe1f1;
+    color: #3c434a;
+}
+
+.pdwchs-rfm-matrix-cell--d3 {
+    background: #b9d4eb;
+    color: #3c434a;
+}
+
+.pdwchs-rfm-matrix-cell--d4 {
+    background: #9fc4e4;
+    color: #3c434a;
+}
+
+.pdwchs-rfm-matrix-cell--d5 {
+    background: #82b1db;
+    color: #3c434a;
+}
+
+.pdwchs-rfm-matrix-cell--d6 {
+    background: #5f9bd1;
+    color: #fff;
+}
+
+.pdwchs-rfm-matrix-cell--d7 {
+    background: #4187c6;
+    color: #fff;
+}
+
+.pdwchs-rfm-matrix-cell--d8 {
+    background: #2f7bbc;
+    color: #fff;
+}
+
+.pdwchs-rfm-matrix-cell--d9 {
+    background: #2271b1;
+    color: #fff;
+}
+
+/* ==========================================================================
+   Footnotes
+   ========================================================================== */
+
+.pdwchs-rfm-matrix-footnote,
+.pdwchs-rfm-matrix-calculated {
+    margin: 12px 0 0;
+    font-size: 12px;
+    color: #646970;
+}

@@ -63,6 +63,15 @@ class PD_Customer_History {
 	protected $version;
 
 	/**
+	 * Customer notes CRUD, AJAX, and privacy exporter/eraser (Feature 15.3).
+	 *
+	 * @since    3.1.0
+	 * @access   private
+	 * @var      PDWCHS_Customer_Notes    $notes    Handles customer notes.
+	 */
+	private $notes;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -137,6 +146,10 @@ class PD_Customer_History {
 			'interval' => 15 * MINUTE_IN_SECONDS,
 			'display'  => __( 'Every 15 minutes', 'puredevs-customer-history-for-woocommerce' ),
 		];
+		$schedules['monthly'] = array(
+			'interval' => 30 * DAY_IN_SECONDS,
+			'display'  => __( 'Once Monthly', 'puredevs-customer-history-for-woocommerce' ),
+		);
 		return $schedules;
 	}
 
@@ -158,10 +171,102 @@ class PD_Customer_History {
 		return 0;
 	}
 
-	public function pdwchs_generate_weekly_reports_schedule_events(){
-		if ( ! wp_next_scheduled( 'pdwchs_generate_weekly_reports' ) ) {
-			wp_schedule_event( time(), 'weekly', 'pdwchs_generate_weekly_reports' );
+	/**
+	 * Resolve the digest interval, validated against the two supported values.
+	 *
+	 * The stored value doubles as the cron recurrence key — 'weekly' and 'monthly'
+	 * are both registered in pdwchs_custom_add_cron_interval(). Written by the
+	 * settings form (R15-06B); any other value falls back to 'weekly'.
+	 *
+	 * @return string 'weekly'|'monthly'
+	 */
+	public function pdwchs_get_digest_interval() {
+		$interval = get_option( 'pdwchs_digest_interval', 'weekly' );
+
+		return ( 'monthly' === $interval ) ? 'monthly' : 'weekly';
+	}
+
+	/**
+	 * Ensure exactly one correctly-recurring digest event is queued.
+	 *
+	 * Runs on every request via 'init', so it must stay cheap and idempotent.
+	 *
+	 * Recurrence alone is not a sufficient health check. wp_get_schedule()
+	 * reports only the next event, so a hook carrying several events is
+	 * indistinguishable from one carrying a single event — and every duplicate
+	 * sends its own digest email. This counts the queued events instead and
+	 * rebuilds unless there is exactly one on the wanted recurrence, which also
+	 * self-heals sites that already accumulated duplicates.
+	 *
+	 * @return void
+	 */
+	public function pdwchs_generate_weekly_reports_schedule_events() {
+		// WP-Cron iterates the very array it is about to run; rescheduling
+		// mid-pass races the runner. Leave the schedule alone during cron.
+		if ( wp_doing_cron() ) {
+			return;
 		}
+
+		$interval    = $this->pdwchs_get_digest_interval();
+		$recurrences = $this->pdwchs_get_digest_event_recurrences();
+
+		// Exactly one event, already on the wanted recurrence — nothing to do.
+		if ( array( $interval ) === $recurrences ) {
+			return;
+		}
+
+		// Wrong recurrence, none at all, or duplicates: rebuild from scratch.
+		// wp_unschedule_hook() drops every event for the hook whatever its args;
+		// wp_clear_scheduled_hook() only matches the empty-args signature.
+		if ( ! empty( $recurrences ) ) {
+			wp_unschedule_hook( 'pdwchs_generate_weekly_reports' );
+		}
+
+		wp_schedule_event( $this->pdwchs_get_digest_first_run(), $interval, 'pdwchs_generate_weekly_reports' );
+	}
+
+	/**
+	 * Recurrence of every queued digest event, in cron-array order.
+	 *
+	 * One entry per event, so the array length is the duplicate count.
+	 *
+	 * @return array List of recurrence slugs; false for a malformed entry.
+	 */
+	private function pdwchs_get_digest_event_recurrences() {
+		$recurrences = array();
+		$cron        = _get_cron_array();
+
+		if ( ! is_array( $cron ) ) {
+			return $recurrences;
+		}
+
+		foreach ( $cron as $hooks ) {
+			if ( ! isset( $hooks['pdwchs_generate_weekly_reports'] ) || ! is_array( $hooks['pdwchs_generate_weekly_reports'] ) ) {
+				continue;
+			}
+
+			foreach ( $hooks['pdwchs_generate_weekly_reports'] as $event ) {
+				$recurrences[] = isset( $event['schedule'] ) ? $event['schedule'] : false;
+			}
+		}
+
+		return $recurrences;
+	}
+
+	/**
+	 * Timestamp of the first digest run — the next midnight in site time.
+	 *
+	 * Never time(): an immediately due event means changing the interval mails
+	 * a digest as soon as the next cron pass runs, which is not what "send
+	 * reports weekly/monthly" promises the store owner.
+	 *
+	 * @return int UTC timestamp.
+	 */
+	private function pdwchs_get_digest_first_run() {
+		$offset   = (float) get_option( 'gmt_offset', 0 ) * HOUR_IN_SECONDS;
+		$site_now = time() + $offset;
+
+		return (int) ( ( floor( $site_now / DAY_IN_SECONDS ) + 1 ) * DAY_IN_SECONDS - $offset );
 	}
 
 	/**
@@ -174,10 +279,13 @@ class PD_Customer_History {
 	 */
 	public function pdwchs_generate_weekly_reports_callback(){
 		global $wpdb;
-		$initial_date =gmdate('Y-m-d', strtotime('-1 week'));;
-		$final_date =gmdate('Y-m-d');
-		$initial_date_fn =gmdate('Y-m-d H:i:s', strtotime('-1 week'));;
-		$final_date_fn =gmdate('Y-m-d H:i:s');
+		$interval = $this->pdwchs_get_digest_interval();
+		$offset   = ( 'monthly' === $interval ) ? '-30 days' : '-1 week';
+
+		$initial_date    = gmdate( 'Y-m-d', strtotime( $offset ) );
+		$final_date      = gmdate( 'Y-m-d' );
+		$initial_date_fn = gmdate( 'Y-m-d H:i:s', strtotime( $offset ) );
+		$final_date_fn   = gmdate( 'Y-m-d H:i:s' );
 		$upload_dir = wp_upload_dir();
 		$attachments = [];
 		$reports = [];
@@ -394,8 +502,16 @@ class PD_Customer_History {
 			$headers = 'From: '.get_option('blogname').' <'.get_option('admin_email').'>' . "\r\n";
 			$headers .= "MIME-Version: 1.0\r\n";
 			$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-			$subject = 'Weekly reports';
-			$msg = 'Hi! Please check attached weekly reports for '.implode(', ',$reports).' from '.$initial_date.' to '.$final_date;
+			$subject = ( 'monthly' === $interval )
+				? __( 'Monthly reports', 'puredevs-customer-history-for-woocommerce' )
+				: __( 'Weekly reports', 'puredevs-customer-history-for-woocommerce' );
+
+			/* translators: 1: comma-separated list of report section names, 2: period start date, 3: period end date. */
+			$body_template = ( 'monthly' === $interval )
+				? __( 'Hi! Please check attached monthly reports for %1$s from %2$s to %3$s', 'puredevs-customer-history-for-woocommerce' )
+				: __( 'Hi! Please check attached weekly reports for %1$s from %2$s to %3$s', 'puredevs-customer-history-for-woocommerce' );
+
+			$msg = sprintf( $body_template, implode( ', ', $reports ), $initial_date, $final_date );
 
 			$msg .= '<br/>';
 			if(!empty($order_report_html)){
@@ -531,6 +647,10 @@ class PD_Customer_History {
 		$this->segments_ajax = new PDWCHS_Segments_Ajax();
 		require_once PDWCHS_CUSTOMER_HISTORY_PLUGIN_DIR . 'includes/segments/class-pdwchs-segments-export.php';
 		$this->segments_export = new PDWCHS_Segments_Export();
+
+		// Feature 15.3 — Customer Notes (relocated free from Pro; see docs/cb/Feature-15.3-...md).
+		require_once PDWCHS_CUSTOMER_HISTORY_PLUGIN_DIR . 'includes/crm/class-pdwchs-notes.php';
+		$this->notes = new PDWCHS_Customer_Notes();
 
 		$this->loader = new PD_Customer_History_Loader();
 

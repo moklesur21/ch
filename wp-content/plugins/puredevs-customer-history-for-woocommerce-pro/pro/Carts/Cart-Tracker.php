@@ -94,8 +94,12 @@ class PDWCHS_Cart_Tracker {
 					'currency'      => $currency,
 					'ip_address'    => $ip_address,
 					'user_agent'    => $user_agent,
+					// Feature 15.7 bridge: the PHP session that CREATED this cart row.
+					// INSERT only — the UPDATE branch below deliberately never refreshes
+					// identity columns, and the bridge depends on that.
+					'php_session_id' => session_id(),
 				),
-				array( '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%f', '%s', '%s', '%s' )
+				array( '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%f', '%s', '%s', '%s', '%s' )
 			);
 		} else {
 			$wpdb->update( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.DirectDatabaseQuery.NoCaching
@@ -385,6 +389,7 @@ class PDWCHS_Cart_Tracker {
 			currency CHAR(3) NOT NULL DEFAULT '',
 			ip_address VARCHAR(45) NULL,
 			user_agent VARCHAR(255) NULL,
+			php_session_id VARCHAR(50) NULL,
 			order_id BIGINT UNSIGNED NULL,
 			created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -397,7 +402,8 @@ class PDWCHS_Cart_Tracker {
 			INDEX idx_session_key (session_key),
 			INDEX idx_email (email),
 			INDEX idx_status_updated (status, updated_at),
-			INDEX idx_order_id (order_id)
+			INDEX idx_order_id (order_id),
+			INDEX idx_php_session_id (php_session_id)
 		) {$charset_collate};";
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';

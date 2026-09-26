@@ -279,6 +279,60 @@ class PDWCHS_Revenue_Data_Free {
 	}
 
 	/**
+	 * Get the repeat purchase rate for a date range with period-over-period comparison.
+	 *
+	 * A customer counts as "repeat" when they placed two or more revenue-status orders
+	 * inside the range. The metric is window-scoped, not lifetime.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @param string $start_date Y-m-d, inclusive.
+	 * @param string $end_date   Y-m-d, inclusive.
+	 * @return array
+	 */
+	public function pdwchs_get_repeat_purchase_rate( $start_date, $end_date ) {
+		$start_date = PDWCHS_Data_Window::pdwchs_clamp_start( $start_date );
+		$dates = $this->pdwchs_validate_and_normalize_dates( $start_date, $end_date );
+		if ( false === $dates ) {
+			return $this->pdwchs_zeroed_repeat_rate();
+		}
+		$start_date = $dates['start'];
+		$end_date   = $dates['end'];
+
+		$cache_key = $this->pdwchs_cache_key( 'repeat', array( $start_date, $end_date ) ) . '_w' . PDWCHS_Data_Window::pdwchs_days();
+		$cached    = get_transient( $cache_key );
+		if ( false !== $cached ) {
+			return $cached;
+		}
+
+		$current  = $this->pdwchs_query_repeat_counts( $start_date, $end_date );
+		$previous = $this->pdwchs_get_comparison_period( $start_date, $end_date );
+		$prev     = $this->pdwchs_query_repeat_counts( $previous['start'], $previous['end'] );
+
+		$rate = $current['total_customers'] > 0
+			? round( ( $current['repeat_customers'] / $current['total_customers'] ) * 100, 1 )
+			: 0.0;
+
+		$previous_rate = $prev['total_customers'] > 0
+			? round( ( $prev['repeat_customers'] / $prev['total_customers'] ) * 100, 1 )
+			: 0.0;
+
+		$change = $this->pdwchs_calc_percentage_change( $rate, $previous_rate );
+
+		$result = array(
+			'rate'             => (float) $rate,
+			'repeat_customers' => (int) $current['repeat_customers'],
+			'total_customers'  => (int) $current['total_customers'],
+			'previous_rate'    => (float) $previous_rate,
+			'change'           => $change,
+		);
+
+		set_transient( $cache_key, $result, self::CACHE_TTL );
+
+		return $result;
+	}
+
+	/**
 	 * Check if HPOS (Custom Order Tables) is enabled.
 	 *
 	 * @since 2.2.0
@@ -456,6 +510,80 @@ class PDWCHS_Revenue_Data_Free {
 	}
 
 	/**
+	 * Query distinct-customer counts for a date range.
+	 *
+	 * Groups revenue-status orders by customer, then counts the groups: every group
+	 * is one customer, groups with two or more orders are repeat customers.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @param string $start_date Y-m-d.
+	 * @param string $end_date   Y-m-d.
+	 * @return array
+	 */
+	private function pdwchs_query_repeat_counts( $start_date, $end_date ) {
+		global $wpdb;
+
+		$end_exclusive = gmdate( 'Y-m-d', strtotime( $end_date . ' +1 day' ) );
+		$start_param   = $start_date . ' 00:00:00';
+		$end_param     = $end_exclusive . ' 00:00:00';
+
+		$statuses     = self::REVENUE_STATUSES_SQL;
+		$placeholders = implode( ', ', array_fill( 0, count( $statuses ), '%s' ) );
+
+		if ( $this->pdwchs_is_hpos_enabled() ) {
+			// HPOS: one row per order, so COUNT(*) per customer is exact.
+
+			$row = $wpdb->get_row(
+				$wpdb->prepare(
+					"SELECT
+						COUNT(*) AS total_customers,
+						COALESCE(SUM(CASE WHEN order_count >= 2 THEN 1 ELSE 0 END), 0) AS repeat_customers
+					FROM (
+						SELECT customer_id, COUNT(*) AS order_count
+						FROM {$wpdb->prefix}wc_orders
+						WHERE type = 'shop_order'
+						  AND status IN ({$placeholders})
+						  AND date_created_gmt >= %s
+						  AND date_created_gmt <  %s
+						  AND customer_id > 0
+						GROUP BY customer_id
+					) t",
+					array_merge( $statuses, array( $start_param, $end_param ) )
+				)
+			);
+		} else {
+			// Legacy: postmeta join can duplicate rows, so count distinct order IDs.
+
+			$row = $wpdb->get_row(
+				$wpdb->prepare(
+					"SELECT
+						COUNT(*) AS total_customers,
+						COALESCE(SUM(CASE WHEN order_count >= 2 THEN 1 ELSE 0 END), 0) AS repeat_customers
+					FROM (
+						SELECT pm_cust.meta_value AS customer_id, COUNT(DISTINCT p.ID) AS order_count
+						FROM {$wpdb->posts} p
+						INNER JOIN {$wpdb->postmeta} pm_cust
+							ON p.ID = pm_cust.post_id AND pm_cust.meta_key = '_customer_user'
+						WHERE p.post_type = 'shop_order'
+						  AND p.post_status IN ({$placeholders})
+						  AND p.post_date_gmt >= %s
+						  AND p.post_date_gmt <  %s
+						  AND pm_cust.meta_value > 0
+						GROUP BY pm_cust.meta_value
+					) t",
+					array_merge( $statuses, array( $start_param, $end_param ) )
+				)
+			);
+		}
+
+		return array(
+			'repeat_customers' => $row ? (int) $row->repeat_customers : 0,
+			'total_customers'  => $row ? (int) $row->total_customers : 0,
+		);
+	}
+
+	/**
 	 * Generate an ordered list of period labels for the date range.
 	 *
 	 * @since 2.2.0
@@ -596,6 +724,23 @@ class PDWCHS_Revenue_Data_Free {
 				'aov_change'             => null,
 				'total_customers_change' => null,
 			),
+		);
+	}
+
+	/**
+	 * Return zeroed repeat purchase rate structure.
+	 *
+	 * @since 3.1.0
+	 *
+	 * @return array
+	 */
+	private function pdwchs_zeroed_repeat_rate() {
+		return array(
+			'rate'             => 0.0,
+			'repeat_customers' => 0,
+			'total_customers'  => 0,
+			'previous_rate'    => 0.0,
+			'change'           => null,
 		);
 	}
 }

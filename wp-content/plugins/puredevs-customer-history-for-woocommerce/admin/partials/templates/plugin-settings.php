@@ -51,7 +51,13 @@ defined( 'ABSPATH' ) or exit;
 				$send_weekly_report_to = sanitize_text_field($_POST['send_weekly_report_to']);
 				$save_send_weekly_report_to = update_option('pd-woo-send_weekly_report_to', $send_weekly_report_to);
 
-				if ( $result_per_page || $save_sessions || $hide_users_with_no_order || $show_bot_sessions || $save_generate_weekly_report || $save_send_weekly_report_to ) {
+				$digest_interval_input = isset( $_POST['digest_interval'] ) ? sanitize_text_field( wp_unslash( $_POST['digest_interval'] ) ) : 'weekly';
+				if ( 'monthly' !== $digest_interval_input ) {
+					$digest_interval_input = 'weekly';
+				}
+				$save_digest_interval = update_option( 'pdwchs_digest_interval', $digest_interval_input );
+
+				if ( $result_per_page || $save_sessions || $hide_users_with_no_order || $show_bot_sessions || $save_generate_weekly_report || $save_send_weekly_report_to || $save_digest_interval ) {
                     ?>
                     <div class="updated">
                         <p><?php esc_html_e('Settings Saved', 'puredevs-customer-history-for-woocommerce'); ?></p>
@@ -61,101 +67,144 @@ defined( 'ABSPATH' ) or exit;
             }
         }
         ?>
-		<form id="group-form" class="settings-form" action="admin.php?page=pd-woo-settings" method="post">
-            <?php wp_nonce_field( 'save_customer_history_settings_action', 'save_customer_history_settings' ); ?>
+		<form id="group-form" class="settings-form pdwchs-settings-stack" action="admin.php?page=pd-woo-settings" method="post">
+			<?php wp_nonce_field( 'save_customer_history_settings_action', 'save_customer_history_settings' ); ?>
 			<input type="hidden" name="act" value="save">
-			<table class="form-table">
-				<tbody>
-					<tr class="general_tags">
-						<table class="general_tags_container">
-							<tr class="general_tags_heading">
-								<th colspan="2"><h2><?php echo esc_html__( 'General Settings', 'puredevs-customer-history-for-woocommerce' ); ?></h2></th>
-							</tr>
-							<tr><td><br></td></tr>
-							<tr>
-								<th scope="row"><label for="results_per_page"><?php echo esc_html__( 'Results per page :', 'puredevs-customer-history-for-woocommerce' ); ?></label></th>
-								<td><input name="results_per_page" type="number" class="small-text" placeholder="10" value="<?php echo esc_attr( get_option( 'pd-woo-results_per_page' ) ); ?>"></td>
-							</tr>
-							<?php
-							if ( pdwchs_is_pro_active() ) {
-								?>
-								<tr>
-									<th scope="row"><label for="show_bot_sessions"><?php echo esc_html__('Show BOT sessions :', 'puredevs-customer-history-for-woocommerce'); ?></label>
-									</th>
-									<td>
-										<select name="show_bot_sessions">
-											<option value="0"><?php echo esc_html__('No', 'puredevs-customer-history-for-woocommerce'); ?></option>
-											<option value="1"<?php echo get_option('pd-woo-show_bot_sessions') ? ' selected="selected"' : ''; ?>><?php echo esc_html__('Yes', 'puredevs-customer-history-for-woocommerce'); ?></option>
-										</select>
-									</td>
-								</tr>
-								<tr>
-									<th scope="row"><label for="default_save_admin_session"><?php echo esc_html__('Save "admin" sessions :', 'puredevs-customer-history-for-woocommerce'); ?></label>
-									</th>
-									<td>
-										<select name="default_save_admin_session">
-											<option value="0"><?php echo esc_html__('No', 'puredevs-customer-history-for-woocommerce'); ?></option>
-											<option value="1"<?php echo get_option('pd-woo-default_save_admin_session') ? ' selected="selected"' : ''; ?>><?php echo esc_html__('Yes', 'puredevs-customer-history-for-woocommerce'); ?></option>
-										</select>
-									</td>
-								</tr>
-								<?php
-							}
-							?>
 
-							<tr>
-								<th scope="row"><label for="hide_users_with_no_orders"><?php echo esc_html__( 'Hide users with no orders :', 'puredevs-customer-history-for-woocommerce' ); ?></label></th>
-								<td>
-									<select name="hide_users_with_no_orders">
-										<option value="0"><?php echo esc_html__( 'No', 'puredevs-customer-history-for-woocommerce' ); ?></option>
-										<option value="1"<?php echo get_option('pd-woo-hide_users_with_no_orders') ? ' selected="selected"' : ''; ?>><?php echo esc_html__( 'Yes', 'puredevs-customer-history-for-woocommerce' ); ?></option>
-									</select>
-								</td>
-							</tr>
-						</table>
-					</tr>
-					<tr class="weekly_reports">
-						<table class="weekly_reports_container">
-							<tr class="weekly_reports_heading">
-								<th colspan="2"><h2><?php echo esc_html__( 'Weekly reports', 'puredevs-customer-history-for-woocommerce' ); ?></h2></th>
-							</tr>
-							<tr><td><br></td></tr>
-							<tr>
-								<th scope="row"><label for="generate_weekly_report"><?php echo esc_html__( 'Generate weekly reports :', 'puredevs-customer-history-for-woocommerce' ); ?></label></th>
-								<?php 
-									$pd_woo_generate_weekly_report = get_option('pd-woo-generate_weekly_report');
-								?>
-								<td>
-									<input type="checkbox" id="order" name="generate_weekly_report[]" value="order" <?php if( !empty( $pd_woo_generate_weekly_report ) && in_array('order', $pd_woo_generate_weekly_report) ){?> checked <?php }?>/>
-									<label for="order"> <?php echo esc_html__( 'Order', 'puredevs-customer-history-for-woocommerce' ); ?></label><br>
-									<input type="checkbox" id="top_customer" name="generate_weekly_report[]" value="top_customer" <?php if( !empty( $pd_woo_generate_weekly_report ) && in_array('top_customer', $pd_woo_generate_weekly_report) ){?> checked <?php }?>/>
-									<label for="top_customer"> <?php echo esc_html__( 'Top customers', 'puredevs-customer-history-for-woocommerce' ); ?></label><br>
-									<?php if ( pdwchs_is_pro_active() ) { ?>
-									<input type="checkbox" id="search" name="generate_weekly_report[]" value="search" <?php if( !empty( $pd_woo_generate_weekly_report ) && in_array('search', $pd_woo_generate_weekly_report) ){?> checked <?php }?>/>
-									<label for="search"> <?php echo esc_html__( 'Search', 'puredevs-customer-history-for-woocommerce' ); ?></label><br>
-									<input type="checkbox" id="most_viewed_products" name="generate_weekly_report[]" value="most_viewed_products" <?php if( !empty( $pd_woo_generate_weekly_report ) && in_array('most_viewed_products', $pd_woo_generate_weekly_report) ){?> checked <?php }?>/>
-									<label for="most_viewed_products"> <?php echo esc_html__( 'Most viewed products', 'puredevs-customer-history-for-woocommerce' ); ?></label><br>
-									<input type="checkbox" id="most_viewed_categories" name="generate_weekly_report[]" value="most_viewed_categories" <?php if( !empty( $pd_woo_generate_weekly_report ) && in_array('most_viewed_categories', $pd_woo_generate_weekly_report) ){?> checked <?php }?>/>
-									<label for="most_viewed_categories"> <?php echo esc_html__( 'Most viewed categories', 'puredevs-customer-history-for-woocommerce' ); ?></label><br>
-									<?php } ?>
-								</td>
-							</tr>
-							<tr><td><br></td></tr>
-							<tr class="send_weekly_report_to">
-								<th scope="row"><label for="send_weekly_report_to"><?php echo esc_html__( 'Send weekly reports to :', 'puredevs-customer-history-for-woocommerce' ); ?></label></th>
-								<td>
-									<input type="email" id="send_weekly_report_to" name="send_weekly_report_to" value="<?php echo esc_html( get_option( 'pd-woo-send_weekly_report_to' ) ); ?>" placeholder="admin@example.com"/>
-								</td>
-							</tr>
-						</table>
-					</tr>
-					<tr>
-						<th scope="row"><input type="submit" value="<?php echo esc_attr__( 'Save', 'puredevs-customer-history-for-woocommerce' ); ?>" class="button button-primary button-large"></th>
-						<td></td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="pdwchs-settings-card">
+				<div class="pdwchs-settings-card__head">
+					<span class="dashicons dashicons-admin-generic" aria-hidden="true"></span>
+					<div class="pdwchs-settings-card__head-text">
+						<h2><?php echo esc_html__( 'General Settings', 'puredevs-customer-history-for-woocommerce' ); ?></h2>
+						<p><?php echo esc_html__( 'How customer data is listed inside the admin.', 'puredevs-customer-history-for-woocommerce' ); ?></p>
+					</div>
+				</div>
 
+				<div class="pdwchs-settings-card__body">
+					<div class="pdwchs-field">
+						<div class="pdwchs-field__label">
+							<label for="results_per_page"><?php echo esc_html__( 'Results per page', 'puredevs-customer-history-for-woocommerce' ); ?></label>
+						</div>
+						<div class="pdwchs-field__control">
+							<input id="results_per_page" name="results_per_page" type="number" class="small-text" placeholder="10" value="<?php echo esc_attr( get_option( 'pd-woo-results_per_page' ) ); ?>">
+							<p class="description"><?php echo esc_html__( 'Rows shown per page on the customer, session and search lists.', 'puredevs-customer-history-for-woocommerce' ); ?></p>
+						</div>
+					</div>
+
+					<?php if ( pdwchs_is_pro_active() ) { ?>
+					<div class="pdwchs-field">
+						<div class="pdwchs-field__label">
+							<label for="show_bot_sessions"><?php echo esc_html__( 'Show BOT sessions', 'puredevs-customer-history-for-woocommerce' ); ?></label>
+						</div>
+						<div class="pdwchs-field__control">
+							<select id="show_bot_sessions" name="show_bot_sessions">
+								<option value="0"><?php echo esc_html__( 'No', 'puredevs-customer-history-for-woocommerce' ); ?></option>
+								<option value="1"<?php echo get_option( 'pd-woo-show_bot_sessions' ) ? ' selected="selected"' : ''; ?>><?php echo esc_html__( 'Yes', 'puredevs-customer-history-for-woocommerce' ); ?></option>
+							</select>
+							<p class="description"><?php echo esc_html__( 'List sessions identified as crawlers alongside real visitors.', 'puredevs-customer-history-for-woocommerce' ); ?></p>
+						</div>
+					</div>
+
+					<div class="pdwchs-field">
+						<div class="pdwchs-field__label">
+							<label for="default_save_admin_session"><?php echo esc_html__( 'Save admin sessions', 'puredevs-customer-history-for-woocommerce' ); ?></label>
+						</div>
+						<div class="pdwchs-field__control">
+							<select id="default_save_admin_session" name="default_save_admin_session">
+								<option value="0"><?php echo esc_html__( 'No', 'puredevs-customer-history-for-woocommerce' ); ?></option>
+								<option value="1"<?php echo get_option( 'pd-woo-default_save_admin_session' ) ? ' selected="selected"' : ''; ?>><?php echo esc_html__( 'Yes', 'puredevs-customer-history-for-woocommerce' ); ?></option>
+							</select>
+							<p class="description"><?php echo esc_html__( 'Record sessions for logged-in store administrators.', 'puredevs-customer-history-for-woocommerce' ); ?></p>
+						</div>
+					</div>
+					<?php } ?>
+
+					<div class="pdwchs-field">
+						<div class="pdwchs-field__label">
+							<label for="hide_users_with_no_orders"><?php echo esc_html__( 'Hide users with no orders', 'puredevs-customer-history-for-woocommerce' ); ?></label>
+						</div>
+						<div class="pdwchs-field__control">
+							<select id="hide_users_with_no_orders" name="hide_users_with_no_orders">
+								<option value="0"><?php echo esc_html__( 'No', 'puredevs-customer-history-for-woocommerce' ); ?></option>
+								<option value="1"<?php echo get_option( 'pd-woo-hide_users_with_no_orders' ) ? ' selected="selected"' : ''; ?>><?php echo esc_html__( 'Yes', 'puredevs-customer-history-for-woocommerce' ); ?></option>
+							</select>
+							<p class="description"><?php echo esc_html__( 'Leave registered users who never ordered out of the customer list.', 'puredevs-customer-history-for-woocommerce' ); ?></p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="pdwchs-settings-card">
+				<div class="pdwchs-settings-card__head">
+					<span class="dashicons dashicons-email-alt" aria-hidden="true"></span>
+					<div class="pdwchs-settings-card__head-text">
+						<h2><?php echo esc_html__( 'Reports', 'puredevs-customer-history-for-woocommerce' ); ?></h2>
+						<p><?php echo esc_html__( 'The emailed digest of store activity.', 'puredevs-customer-history-for-woocommerce' ); ?></p>
+					</div>
+				</div>
+
+				<div class="pdwchs-settings-card__body">
+					<?php $pd_woo_generate_weekly_report = get_option( 'pd-woo-generate_weekly_report' ); ?>
+					<div class="pdwchs-field">
+						<div class="pdwchs-field__label">
+							<label for="order"><?php echo esc_html__( 'Generate reports', 'puredevs-customer-history-for-woocommerce' ); ?></label>
+						</div>
+						<div class="pdwchs-field__control">
+							<label class="pdwchs-check" for="order">
+								<input type="checkbox" id="order" name="generate_weekly_report[]" value="order" <?php if ( ! empty( $pd_woo_generate_weekly_report ) && in_array( 'order', $pd_woo_generate_weekly_report ) ) { ?>checked<?php } ?>/>
+								<span><?php echo esc_html__( 'Order', 'puredevs-customer-history-for-woocommerce' ); ?></span>
+							</label>
+							<label class="pdwchs-check" for="top_customer">
+								<input type="checkbox" id="top_customer" name="generate_weekly_report[]" value="top_customer" <?php if ( ! empty( $pd_woo_generate_weekly_report ) && in_array( 'top_customer', $pd_woo_generate_weekly_report ) ) { ?>checked<?php } ?>/>
+								<span><?php echo esc_html__( 'Top customers', 'puredevs-customer-history-for-woocommerce' ); ?></span>
+							</label>
+							<?php if ( pdwchs_is_pro_active() ) { ?>
+							<label class="pdwchs-check" for="search">
+								<input type="checkbox" id="search" name="generate_weekly_report[]" value="search" <?php if ( ! empty( $pd_woo_generate_weekly_report ) && in_array( 'search', $pd_woo_generate_weekly_report ) ) { ?>checked<?php } ?>/>
+								<span><?php echo esc_html__( 'Search', 'puredevs-customer-history-for-woocommerce' ); ?></span>
+							</label>
+							<label class="pdwchs-check" for="most_viewed_products">
+								<input type="checkbox" id="most_viewed_products" name="generate_weekly_report[]" value="most_viewed_products" <?php if ( ! empty( $pd_woo_generate_weekly_report ) && in_array( 'most_viewed_products', $pd_woo_generate_weekly_report ) ) { ?>checked<?php } ?>/>
+								<span><?php echo esc_html__( 'Most viewed products', 'puredevs-customer-history-for-woocommerce' ); ?></span>
+							</label>
+							<label class="pdwchs-check" for="most_viewed_categories">
+								<input type="checkbox" id="most_viewed_categories" name="generate_weekly_report[]" value="most_viewed_categories" <?php if ( ! empty( $pd_woo_generate_weekly_report ) && in_array( 'most_viewed_categories', $pd_woo_generate_weekly_report ) ) { ?>checked<?php } ?>/>
+								<span><?php echo esc_html__( 'Most viewed categories', 'puredevs-customer-history-for-woocommerce' ); ?></span>
+							</label>
+							<?php } ?>
+							<p class="description"><?php echo esc_html__( 'With none selected, no digest is sent and no attachment is built.', 'puredevs-customer-history-for-woocommerce' ); ?></p>
+						</div>
+					</div>
+
+					<div class="pdwchs-field digest_interval">
+						<div class="pdwchs-field__label">
+							<label for="digest_interval"><?php echo esc_html__( 'Send reports', 'puredevs-customer-history-for-woocommerce' ); ?></label>
+						</div>
+						<div class="pdwchs-field__control">
+							<?php $pdwchs_digest_interval = get_option( 'pdwchs_digest_interval', 'weekly' ); ?>
+							<select name="digest_interval" id="digest_interval">
+								<option value="weekly" <?php selected( $pdwchs_digest_interval, 'weekly' ); ?>><?php echo esc_html__( 'Weekly', 'puredevs-customer-history-for-woocommerce' ); ?></option>
+								<option value="monthly" <?php selected( $pdwchs_digest_interval, 'monthly' ); ?>><?php echo esc_html__( 'Monthly', 'puredevs-customer-history-for-woocommerce' ); ?></option>
+							</select>
+							<p class="description"><?php echo esc_html__( 'How often the digest is sent.', 'puredevs-customer-history-for-woocommerce' ); ?></p>
+						</div>
+					</div>
+
+					<div class="pdwchs-field send_weekly_report_to">
+						<div class="pdwchs-field__label">
+							<label for="send_weekly_report_to"><?php echo esc_html__( 'Send reports to', 'puredevs-customer-history-for-woocommerce' ); ?></label>
+						</div>
+						<div class="pdwchs-field__control">
+							<input type="email" id="send_weekly_report_to" name="send_weekly_report_to" value="<?php echo esc_attr( get_option( 'pd-woo-send_weekly_report_to' ) ); ?>" placeholder="admin@example.com"/>
+							<p class="description"><?php echo esc_html__( 'The address every digest is delivered to.', 'puredevs-customer-history-for-woocommerce' ); ?></p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="pdwchs-settings-actions">
+				<input type="submit" value="<?php echo esc_attr__( 'Save', 'puredevs-customer-history-for-woocommerce' ); ?>" class="button button-primary button-large">
+			</div>
 		</form>
         <?php do_action('pdwchs_settings_extra_sections'); ?>
         <?php if ( pdwchs_is_pro_active() ) { ?>
