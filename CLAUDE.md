@@ -82,8 +82,10 @@ dev repo's `docs/marketing/` on 2026-09-26; the dev repo no longer holds it):
   Full guide + deploy checklist: `project_asset/docs/demo-site-lockdown.md`
 - V2–V4 video coverage: the seeded dataset carries videos 1–4 (Champions/5-5-5
   hero, refund + on-hold cases, five-month flat-total revenue shape) and
-  `wp pdwchs-demo verify` machine-checks all of it. Answers to the recording
-  docs' open questions: `project_asset/docs/v2-v4-coverage-report.md`.
+  `wp pdwchs-demo verify` machine-checks all of it. Current video briefs:
+  `project_asset/demo/videos/v1`–`v3`. The old V2–V4 coverage report was
+  removed on 2026-07-30 with the superseded docs; read it from git history:
+  `git show a5a0bb4^:project_asset/docs/v2-v4-coverage-report.md`.
 - Storefront branding: the shop is styled as **Northline Supply Co.** (apparel)
   via the git-tracked child theme `wp-content/themes/northline/` (child of
   Twenty Twenty-Five) plus `wp pdwchs-demo setup-storefront` (idempotent; sets
@@ -97,5 +99,4 @@ dev repo's `docs/marketing/` on 2026-09-26; the dev repo no longer holds it):
   confirmed read-only. Known delta: Marcus's *Brand Loyal* tag is absent on
   live (older WooCommerce lacks the `product_brand` taxonomy) — appears
   after a Woo update + refresh. Recordings are always local, so no impact.
-- Next planned task: `project_asset/docs/update-01.txt`.
 - Git remote: https://github.com/moklesur21/ch.git
