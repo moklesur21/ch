@@ -1,0 +1,2796 @@
+[
+  {
+    "id": "NAV-01",
+    "title": "Plugin menu and top tab bar (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "clip": [
+      "#toplevel_page_pd-woo-dashboard",
+      ".nav-tab-wrapper.top-nav"
+    ],
+    "maxHeight": 520,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#toplevel_page_pd-woo-dashboard",
+        "label": "Customer History admin menu"
+      },
+      {
+        "n": 2,
+        "selector": ".nav-tab-wrapper.top-nav",
+        "label": "Top tab bar on every plugin page"
+      },
+      {
+        "n": 3,
+        "selector": "#pd-sessions-tab",
+        "label": "Sessions tab (Pro)"
+      },
+      {
+        "n": 4,
+        "selector": "#pd-stats-tab",
+        "label": "Statistics tab (Pro)"
+      }
+    ]
+  },
+  {
+    "id": "NAV-02",
+    "title": "Statistics sub-navigation (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-stats",
+    "clip": [
+      "h1",
+      ".subsubsub"
+    ],
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".subsubsub",
+        "label": "Statistics sub-navigation: 14 report tabs"
+      }
+    ]
+  },
+  {
+    "id": "NAV-03",
+    "title": "Sessions sub-navigation (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-sessions",
+    "clip": [
+      "h1",
+      ".subsubsub"
+    ],
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".subsubsub",
+        "label": "Live Sessions / Live Searches / Trash"
+      }
+    ]
+  },
+  {
+    "id": "DASH-00",
+    "title": "Dashboard, full page (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "settleMs": 2500
+  },
+  {
+    "id": "DASH-01",
+    "title": "Dashboard widget: Top Customers",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "clip": "panel:Top Customers",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Top Customers",
+        "label": "Widget heading \"Top Customers\""
+      },
+      {
+        "n": 2,
+        "selector": "panel:Top Customers >> [title=\"Chart View\"]",
+        "label": "Table / chart toggle"
+      },
+      {
+        "n": 3,
+        "selector": "panel:Top Customers >> [title=\"View All\"]",
+        "label": "View All → Customers & Users"
+      },
+      {
+        "n": 4,
+        "selector": "panel:Top Customers >> .toggle-section",
+        "label": "Collapse / expand"
+      },
+      {
+        "n": 5,
+        "selector": "panel:Top Customers >> table",
+        "label": "Data table"
+      }
+    ]
+  },
+  {
+    "id": "DASH-01-chart",
+    "title": "Dashboard widget: Top Customers (chart view)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "panel:Top Customers >> [title=\"Chart View\"]"
+      },
+      {
+        "type": "wait",
+        "ms": 900
+      }
+    ],
+    "clip": "panel:Top Customers",
+    "pad": 16
+  },
+  {
+    "id": "DASH-02",
+    "title": "Dashboard widget: Latest Orders",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "clip": "panel:Latest Orders",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Latest Orders",
+        "label": "Widget heading \"Latest Orders\""
+      },
+      {
+        "n": 2,
+        "selector": "panel:Latest Orders >> [title=\"View All\"]",
+        "label": "View All → Order History"
+      },
+      {
+        "n": 3,
+        "selector": "panel:Latest Orders >> .toggle-section",
+        "label": "Collapse / expand"
+      },
+      {
+        "n": 4,
+        "selector": "panel:Latest Orders >> table",
+        "label": "Data table"
+      }
+    ]
+  },
+  {
+    "id": "DASH-03",
+    "title": "Dashboard widget: Top Selling Products by This Month",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "clip": "panel:Top Selling Products by This Month",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Top Selling Products by This Month",
+        "label": "Widget heading \"Top Selling Products by This Month\""
+      },
+      {
+        "n": 2,
+        "selector": "panel:Top Selling Products by This Month >> [title=\"Chart View\"]",
+        "label": "Table / chart toggle"
+      },
+      {
+        "n": 3,
+        "selector": "panel:Top Selling Products by This Month >> [title=\"View All\"]",
+        "label": "View All → Top Selling Products (Pro)"
+      },
+      {
+        "n": 4,
+        "selector": "panel:Top Selling Products by This Month >> .toggle-section",
+        "label": "Collapse / expand"
+      },
+      {
+        "n": 5,
+        "selector": "panel:Top Selling Products by This Month >> table",
+        "label": "Data table"
+      }
+    ]
+  },
+  {
+    "id": "DASH-03-chart",
+    "title": "Dashboard widget: Top Selling Products by This Month (chart view)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "panel:Top Selling Products by This Month >> [title=\"Chart View\"]"
+      },
+      {
+        "type": "wait",
+        "ms": 900
+      }
+    ],
+    "clip": "panel:Top Selling Products by This Month",
+    "pad": 16
+  },
+  {
+    "id": "DASH-04",
+    "title": "Dashboard widget: Top Searches",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "clip": "panel:Top Searches",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Top Searches",
+        "label": "Widget heading \"Top Searches\""
+      },
+      {
+        "n": 2,
+        "selector": "panel:Top Searches >> [title=\"Chart View\"]",
+        "label": "Table / chart toggle"
+      },
+      {
+        "n": 3,
+        "selector": "panel:Top Searches >> [title=\"View All\"]",
+        "label": "View All → searches"
+      },
+      {
+        "n": 4,
+        "selector": "panel:Top Searches >> .toggle-section",
+        "label": "Collapse / expand"
+      },
+      {
+        "n": 5,
+        "selector": "panel:Top Searches >> table",
+        "label": "Data table"
+      }
+    ]
+  },
+  {
+    "id": "DASH-04-chart",
+    "title": "Dashboard widget: Top Searches (chart view)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "panel:Top Searches >> [title=\"Chart View\"]"
+      },
+      {
+        "type": "wait",
+        "ms": 900
+      }
+    ],
+    "clip": "panel:Top Searches",
+    "pad": 16
+  },
+  {
+    "id": "DASH-05",
+    "title": "Dashboard widget: Most viewed Product categories",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "clip": "panel:Most viewed Product categories",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Most viewed Product categories",
+        "label": "Widget heading \"Most viewed Product categories\""
+      },
+      {
+        "n": 2,
+        "selector": "panel:Most viewed Product categories >> [title=\"Chart View\"]",
+        "label": "Table / chart toggle"
+      },
+      {
+        "n": 3,
+        "selector": "panel:Most viewed Product categories >> [title=\"View All\"]",
+        "label": "View All"
+      },
+      {
+        "n": 4,
+        "selector": "panel:Most viewed Product categories >> .toggle-section",
+        "label": "Collapse / expand"
+      },
+      {
+        "n": 5,
+        "selector": "panel:Most viewed Product categories >> table",
+        "label": "Data table"
+      }
+    ]
+  },
+  {
+    "id": "DASH-05-chart",
+    "title": "Dashboard widget: Most viewed Product categories (chart view)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "panel:Most viewed Product categories >> [title=\"Chart View\"]"
+      },
+      {
+        "type": "wait",
+        "ms": 900
+      }
+    ],
+    "clip": "panel:Most viewed Product categories",
+    "pad": 16
+  },
+  {
+    "id": "DASH-06",
+    "title": "Dashboard widget: Latest Searches",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "clip": "panel:Latest Searches",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Latest Searches",
+        "label": "Widget heading \"Latest Searches\""
+      },
+      {
+        "n": 2,
+        "selector": "panel:Latest Searches >> [title=\"View All\"]",
+        "label": "View All"
+      },
+      {
+        "n": 3,
+        "selector": "panel:Latest Searches >> .toggle-section",
+        "label": "Collapse / expand"
+      },
+      {
+        "n": 4,
+        "selector": "panel:Latest Searches >> table",
+        "label": "Data table"
+      }
+    ]
+  },
+  {
+    "id": "DASH-07",
+    "title": "Dashboard widget: Most viewed products",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "clip": "panel:Most viewed products",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Most viewed products",
+        "label": "Widget heading \"Most viewed products\""
+      },
+      {
+        "n": 2,
+        "selector": "panel:Most viewed products >> [title=\"Chart View\"]",
+        "label": "Table / chart toggle"
+      },
+      {
+        "n": 3,
+        "selector": "panel:Most viewed products >> [title=\"View All\"]",
+        "label": "View All"
+      },
+      {
+        "n": 4,
+        "selector": "panel:Most viewed products >> .toggle-section",
+        "label": "Collapse / expand"
+      },
+      {
+        "n": 5,
+        "selector": "panel:Most viewed products >> table",
+        "label": "Data table"
+      }
+    ]
+  },
+  {
+    "id": "DASH-07-chart",
+    "title": "Dashboard widget: Most viewed products (chart view)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "panel:Most viewed products >> [title=\"Chart View\"]"
+      },
+      {
+        "type": "wait",
+        "ms": 900
+      }
+    ],
+    "clip": "panel:Most viewed products",
+    "pad": 16
+  },
+  {
+    "id": "DASH-08",
+    "title": "Dashboard widget: Most viewed Brands",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "clip": "panel:Most viewed Brands",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Most viewed Brands",
+        "label": "Widget heading \"Most viewed Brands\""
+      },
+      {
+        "n": 2,
+        "selector": "panel:Most viewed Brands >> [title=\"Chart View\"]",
+        "label": "Table / chart toggle"
+      },
+      {
+        "n": 3,
+        "selector": "panel:Most viewed Brands >> [title=\"View All\"]",
+        "label": "View All"
+      },
+      {
+        "n": 4,
+        "selector": "panel:Most viewed Brands >> .toggle-section",
+        "label": "Collapse / expand"
+      },
+      {
+        "n": 5,
+        "selector": "panel:Most viewed Brands >> table",
+        "label": "Data table"
+      }
+    ]
+  },
+  {
+    "id": "DASH-08-chart",
+    "title": "Dashboard widget: Most viewed Brands (chart view)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "panel:Most viewed Brands >> [title=\"Chart View\"]"
+      },
+      {
+        "type": "wait",
+        "ms": 900
+      }
+    ],
+    "clip": "panel:Most viewed Brands",
+    "pad": 16
+  },
+  {
+    "id": "DASH-10",
+    "title": "Revenue Analytics widget (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "settleMs": 2500,
+    "clip": ".pdwchs-revenue-widget",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Revenue Analytics",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": "#pdwchs-revenue-date-picker",
+        "label": "Date-range picker (presets)"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-data-integrity",
+        "label": "Data-integrity badge"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-revenue-cards-grid",
+        "label": "Four KPI cards with change vs previous period"
+      },
+      {
+        "n": 5,
+        "selector": ".pdwchs-granularity-toggle",
+        "label": "Daily / Weekly / Monthly"
+      },
+      {
+        "n": 6,
+        "selector": "#pdwchs-revenue-chart",
+        "label": "Revenue Over Time line chart"
+      },
+      {
+        "n": 7,
+        "selector": ".pdwchs-revenue-split-grid",
+        "label": "Revenue by Customer Type: new / returning / guest"
+      }
+    ]
+  },
+  {
+    "id": "DASH-11",
+    "title": "Retention widget (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "settleMs": 2500,
+    "clip": ".pdwchs-retention-widget",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Retention",
+        "label": "Heading shows the selected window"
+      },
+      {
+        "n": 2,
+        "selector": "#pdwchs-retention-preset",
+        "label": "Window preset: 15d … 24 months"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-retention-cards",
+        "label": "Expected CLV and churn-rate cards"
+      },
+      {
+        "n": 4,
+        "selector": "#pdwchs-retention-chart",
+        "label": "Churn rate per period"
+      },
+      {
+        "n": 5,
+        "selector": ".pdwchs-retention-series-table",
+        "label": "Period / Base / Churned / Rate table"
+      }
+    ]
+  },
+  {
+    "id": "DASH-12",
+    "title": "Lifetime value distribution widget (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "settleMs": 2500,
+    "clip": ".pdwchs-ltv-widget",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Lifetime value distribution",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-ltv-cards",
+        "label": "Average and median LTV"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-ltv-total",
+        "label": "Customers counted"
+      },
+      {
+        "n": 4,
+        "selector": "#pdwchs-ltv-chart",
+        "label": "Histogram by spend bracket"
+      },
+      {
+        "n": 5,
+        "selector": ".pdwchs-ltv-bracket-table",
+        "label": "Bracket / Customers / Share table"
+      }
+    ]
+  },
+  {
+    "id": "DASH-13",
+    "title": "Abandoned Carts widget (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "clip": "panel:Abandoned Carts (Last 7 Days)",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Abandoned Carts (Last 7 Days)",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-cart-widget-headline",
+        "label": "Count and value at risk"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-cart-widget-note",
+        "label": "Observation-only note"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-cart-widget a",
+        "label": "Link to the Abandoned Carts page"
+      }
+    ]
+  },
+  {
+    "id": "DASH-14",
+    "title": "Customer Segments (RFM Analysis) widget (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "settleMs": 2500,
+    "clip": ".pdwchs-rfm-widget",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Customer Segments (RFM Analysis)",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-refresh-rfm",
+        "label": "Refresh"
+      },
+      {
+        "n": 3,
+        "selector": "#pdwchs-rfm-chart",
+        "label": "Doughnut of segment share"
+      },
+      {
+        "n": 4,
+        "selector": "heading:Segments",
+        "label": "Clickable legend (filters the customer list)"
+      },
+      {
+        "n": 5,
+        "selector": ".pdwchs-rfm-footer",
+        "label": "Last updated stamp"
+      }
+    ]
+  },
+  {
+    "id": "DASH-15",
+    "title": "Customer Health Distribution widget (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "settleMs": 2500,
+    "clip": ".pdwchs-health-distribution-widget",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Customer Health Distribution",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-refresh-health",
+        "label": "Refresh"
+      },
+      {
+        "n": 3,
+        "selector": "#pdwchs-health-distribution-chart",
+        "label": "One bar per band: Excellent … Critical"
+      }
+    ]
+  },
+  {
+    "id": "DASH-16",
+    "title": "Declining Health Alert widget (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "settleMs": 2500,
+    "clip": ".pdwchs-declining-health-widget",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Declining Health Alert",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": "#pdwchs-declining-health-list",
+        "label": "Customers with a 10+ point drop"
+      }
+    ]
+  },
+  {
+    "id": "DASH-17",
+    "title": "Customer Lifecycle Funnel widget (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "settleMs": 2500,
+    "clip": "#pdwchs-lifecycle-funnel-widget",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Customer Lifecycle Funnel",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-funnel",
+        "label": "Prospect → New → Active → Loyal (click a stage to filter)"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-engagement-issues",
+        "label": "At Risk and Churned counts"
+      },
+      {
+        "n": 4,
+        "selector": "#pdwchs-lifecycle-funnel-widget .pdwchs-widget-footer",
+        "label": "Total customers tracked"
+      }
+    ]
+  },
+  {
+    "id": "DASH-18",
+    "title": "At Risk Customers (30+ Days) widget (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "settleMs": 2500,
+    "clip": "#pdwchs-at-risk-alert-widget",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:At Risk Customers (30+ Days)",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": "#pdwchs-at-risk-alert-widget .pdwchs-widget-content",
+        "label": "Customers in the At Risk stage for 30+ days"
+      },
+      {
+        "n": 3,
+        "selector": "#pdwchs-at-risk-alert-widget .pdwchs-widget-footer",
+        "label": "View All At Risk Customers"
+      }
+    ]
+  },
+  {
+    "id": "DASH-19",
+    "title": "Behavioral Segments widget (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "settleMs": 3000,
+    "clip": ".pdwchs-behavioral-distribution-widget",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Behavioral Segments",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": "#pdwchs-behavioral-segments-chart",
+        "label": "Customers per behavioural tag"
+      },
+      {
+        "n": 3,
+        "selector": "heading:Actionable Insights",
+        "label": "Insights list"
+      }
+    ]
+  },
+  {
+    "id": "DASH-20",
+    "title": "Churn Risk Overview widget (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "settleMs": 2500,
+    "clip": ".pdwchs-churn-dashboard-widget",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Churn Risk Overview",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-churn-stats-grid",
+        "label": "Critical / High / Medium / Active Alerts"
+      },
+      {
+        "n": 3,
+        "selector": "heading:Top At-Risk Customers",
+        "label": "Top 5 by risk score"
+      },
+      {
+        "n": 4,
+        "selector": "heading:Active Alerts",
+        "label": "Latest alerts with priority"
+      },
+      {
+        "n": 5,
+        "selector": ".pdwchs-churn-widget-footer",
+        "label": "Link to Churn Prediction page"
+      }
+    ]
+  },
+  {
+    "id": "DASH-21",
+    "title": "RFM matrix widget (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "clip": ".pdwchs-rfm-matrix-widget",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:RFM matrix",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-rfm-matrix-intro",
+        "label": "How to read the grid"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-rfm-matrix-scroll",
+        "label": "Recency (rows) × frequency (columns), count per cell"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-rfm-matrix-calculated",
+        "label": "Scores last calculated"
+      }
+    ]
+  },
+  {
+    "id": "CUST-01",
+    "title": "Customers & Users, full page (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customers",
+    "maxHeight": 2400,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "Page title"
+      },
+      {
+        "n": 2,
+        "selector": "fieldset",
+        "label": "Advanced search filters"
+      },
+      {
+        "n": 3,
+        "selector": "a[href*=\"download_cus_info\"]",
+        "label": "Download CSV"
+      },
+      {
+        "n": 4,
+        "selector": "form.search-box",
+        "label": "Keyword search (Pro)"
+      },
+      {
+        "n": 5,
+        "selector": "#show-items",
+        "label": "Rows per page (Pro)"
+      },
+      {
+        "n": 6,
+        "selector": "table.wp-list-table",
+        "label": "Customer list"
+      }
+    ]
+  },
+  {
+    "id": "CUST-02",
+    "title": "Customer filters (Pro shows every filter)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customers",
+    "clip": "fieldset",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "fieldset select",
+        "label": "Role (Pro)"
+      },
+      {
+        "n": 2,
+        "selector": "#customer_country + .select2",
+        "label": "Country (Pro)"
+      },
+      {
+        "n": 3,
+        "selector": "#refund_rate",
+        "label": "Refund Rate (Pro)"
+      },
+      {
+        "n": 4,
+        "selector": "#rfm_segment + .select2",
+        "label": "RFM Segment (Pro)"
+      },
+      {
+        "n": 5,
+        "selector": "#health_score_range",
+        "label": "Health Score (Pro)"
+      },
+      {
+        "n": 6,
+        "selector": "#health_trend",
+        "label": "Health Trend (Pro)"
+      },
+      {
+        "n": 7,
+        "selector": "#behavior_filter",
+        "label": "Behavior (Pro)"
+      },
+      {
+        "n": 8,
+        "selector": "#tag_filter",
+        "label": "Manual Tag (Pro)"
+      },
+      {
+        "n": 9,
+        "selector": "#product_filter + .select2",
+        "label": "Product Purchased"
+      },
+      {
+        "n": 10,
+        "selector": "#pdwchs-save-segment-btn",
+        "label": "Save as Segment"
+      }
+    ]
+  },
+  {
+    "id": "CUST-03",
+    "title": "Save as Segment modal",
+    "url": "/wp-admin/admin.php?page=pd-woo-customers&order_number=greater_then&order_number_input=2",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#pdwchs-save-segment-btn"
+      },
+      {
+        "type": "wait",
+        "ms": 600
+      }
+    ],
+    "clip": "#pdwchs-modal-overlay .pdwchs-modal, #pdwchs-modal-overlay > div",
+    "pad": 30,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#pdwchs-segment-name",
+        "label": "Segment name"
+      },
+      {
+        "n": 2,
+        "selector": "#pdwchs-segment-description",
+        "label": "Description (optional)"
+      },
+      {
+        "n": 3,
+        "selector": "#pdwchs-modal-overlay .button-primary",
+        "label": "Save Segment"
+      }
+    ]
+  },
+  {
+    "id": "CUST-04",
+    "title": "Customer list columns (Pro adds six)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customers",
+    "clip": "table.wp-list-table",
+    "maxHeight": 520,
+    "pad": 12,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "th#rfm_segment",
+        "label": "RFM Segment"
+      },
+      {
+        "n": 2,
+        "selector": "th#health_score",
+        "label": "Health Score"
+      },
+      {
+        "n": 3,
+        "selector": "th#lifecycle_stage",
+        "label": "Lifecycle Stage"
+      },
+      {
+        "n": 4,
+        "selector": "th#behavior_tags",
+        "label": "Behaviors"
+      },
+      {
+        "n": 5,
+        "selector": "th#refund_rate",
+        "label": "Refund Rate"
+      },
+      {
+        "n": 6,
+        "selector": "th#order_gap",
+        "label": "Avg Order Gap"
+      },
+      {
+        "n": 7,
+        "selector": "th#actions",
+        "label": "View / Email actions"
+      }
+    ]
+  },
+  {
+    "id": "CUST-05",
+    "title": "List controls: keyword search, rows per page, lifecycle filters (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customers",
+    "clip": [
+      "form.search-box",
+      "#show-result",
+      ".pdwchs-lifecycle-filters"
+    ],
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "form.search-box",
+        "label": "Search by name or email"
+      },
+      {
+        "n": 2,
+        "selector": "#show-items",
+        "label": "Show N entries"
+      },
+      {
+        "n": 3,
+        "selector": "#lifecycle_stage_filter",
+        "label": "Lifecycle stage"
+      },
+      {
+        "n": 4,
+        "selector": "#lifecycle_days_filter",
+        "label": "Days in stage"
+      }
+    ]
+  },
+  {
+    "id": "PROF-00",
+    "title": "Customer Details, full page (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "maxHeight": 3000
+  },
+  {
+    "id": "PROF-01",
+    "title": "Order history grouped by status",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "clip": "panel:Completed Orders",
+    "maxHeight": 620,
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Completed Orders",
+        "label": "One collapsible group per order status"
+      },
+      {
+        "n": 2,
+        "selector": "panel:Completed Orders >> .toggle-section",
+        "label": "Collapse / expand"
+      },
+      {
+        "n": 3,
+        "selector": "panel:Completed Orders >> table",
+        "label": "Order / Date / Items / Total / Actions"
+      }
+    ]
+  },
+  {
+    "id": "PROF-02",
+    "title": "Activity Timeline (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "clip": ".pdwchs-timeline-panel",
+    "maxHeight": 760,
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Activity Timeline",
+        "label": "Heading with Search History / All Sessions links"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-timeline-filters",
+        "label": "All / Searched / Viewed / Carted / Ordered"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-timeline-list",
+        "label": "Chronological events"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-timeline-more",
+        "label": "Load older"
+      }
+    ]
+  },
+  {
+    "id": "PROF-02b",
+    "title": "Activity Timeline filtered to Ordered (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "button.pdwchs-timeline-filter:has-text(\"Ordered\")"
+      },
+      {
+        "type": "wait",
+        "ms": 1200
+      }
+    ],
+    "clip": ".pdwchs-timeline-panel",
+    "maxHeight": 760,
+    "pad": 16
+  },
+  {
+    "id": "PROF-03",
+    "title": "Financial Summary",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "clip": "panel:Financial Summary",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Financial Summary",
+        "label": "Seven totals for this customer"
+      }
+    ]
+  },
+  {
+    "id": "PROF-04",
+    "title": "Personal Information",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "clip": "panel:Personal Information",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Personal Information",
+        "label": "Identity and contact"
+      },
+      {
+        "n": 2,
+        "selector": "panel:Personal Information >> a[href*=\"user-edit\"]",
+        "label": "Edit this user"
+      }
+    ]
+  },
+  {
+    "id": "PROF-05",
+    "title": "Notes",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "clip": ".pdwchs-notes-panel",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Notes",
+        "label": "Heading with live count"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-notes-add",
+        "label": "Compose a private note"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-note-add-btn",
+        "label": "Add Note"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-notes-list",
+        "label": "Newest first, author and date"
+      },
+      {
+        "n": 5,
+        "selector": ".pdwchs-note-delete",
+        "label": "Delete"
+      }
+    ]
+  },
+  {
+    "id": "PROF-06",
+    "title": "RFM Analysis card (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "clip": ".pdwchs-rfm-analysis-card",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:RFM Analysis",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-rfm-card-header .pdwchs-badge",
+        "label": "Segment badge"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-rfm-scores",
+        "label": "R / F / M scores out of 5"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-rfm-recommendations",
+        "label": "Recommended Actions"
+      },
+      {
+        "n": 5,
+        "selector": ".pdwchs-recalculate-rfm-btn",
+        "label": "Recalculate Now"
+      }
+    ]
+  },
+  {
+    "id": "PROF-07",
+    "title": "Customer Health Score card (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "clip": ".pdwchs-health-score-card",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Customer Health Score",
+        "label": "Heading with trend chip"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-health-gauge-container",
+        "label": "0–100 gauge"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-health-breakdown",
+        "label": "Score Breakdown: four components"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-health-interpretation",
+        "label": "Health Interpretation"
+      },
+      {
+        "n": 5,
+        "selector": ".pdwchs-recalculate-health",
+        "label": "Recalculate Now"
+      }
+    ]
+  },
+  {
+    "id": "PROF-08",
+    "title": "Customer Lifecycle card (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "clip": ".pdwchs-lifecycle-card",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Customer Lifecycle",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": "heading:Time in Current Stage:",
+        "label": "Days in stage"
+      },
+      {
+        "n": 3,
+        "selector": "heading:Customer Journey:",
+        "label": "Stage history"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-recalculate-lifecycle",
+        "label": "Recalculate Now"
+      }
+    ]
+  },
+  {
+    "id": "PROF-09",
+    "title": "Behavioral Profile card (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "clip": ".pdwchs-behavioral-card",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Behavioral Profile",
+        "label": "Heading with tag count"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-behavioral-tags",
+        "label": "Detected tags with confidence %"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-next-action",
+        "label": "Next Best Action"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-preferences",
+        "label": "Shopping Preferences"
+      },
+      {
+        "n": 5,
+        "selector": ".pdwchs-refresh-behavioral-btn",
+        "label": "Refresh Analysis"
+      }
+    ]
+  },
+  {
+    "id": "PROF-10",
+    "title": "Churn Risk Analysis card (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "clip": ".pdwchs-churn-card",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Churn Risk Analysis",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-churn-score-section",
+        "label": "Risk score ring, level, confidence, trend"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-churn-components",
+        "label": "Risk Components"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-churn-indicators",
+        "label": "Key Indicators"
+      },
+      {
+        "n": 5,
+        "selector": ".pdwchs-recalculate-churn",
+        "label": "Recalculate"
+      }
+    ]
+  },
+  {
+    "id": "PROF-11",
+    "title": "Manual Tags panel (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "clip": ".pdwchs-tags-panel",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Manual Tags",
+        "label": "Heading with count"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-tags-hint",
+        "label": "Manual vs automatic tags note"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-tags-add",
+        "label": "Add or pick a tag"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-tags-list",
+        "label": "Assigned tags, × to remove"
+      }
+    ]
+  },
+  {
+    "id": "MAIL-01",
+    "title": "Send Email to Customer",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer-email&user_id={HERO}",
+    "maxHeight": 1400,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Email Form",
+        "label": "Compose form"
+      },
+      {
+        "n": 2,
+        "selector": "#email_subject, input[name=\"email_subject\"], input[name=\"subject\"]",
+        "label": "Subject"
+      },
+      {
+        "n": 3,
+        "selector": ".form-table .wp-editor-wrap, .form-table textarea",
+        "label": "Message editor"
+      },
+      {
+        "n": 4,
+        "selector": "input[type=\"submit\"].button-primary, button.button-primary",
+        "label": "Send Email"
+      },
+      {
+        "n": 5,
+        "selector": "heading:Customer Information",
+        "label": "Customer sidebar"
+      }
+    ]
+  },
+  {
+    "id": "ORD-01",
+    "title": "Order History (Pro filters visible)",
+    "url": "/wp-admin/admin.php?page=pd-woo-order-history",
+    "maxHeight": 2000,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#daterange",
+        "label": "Date range"
+      },
+      {
+        "n": 2,
+        "selector": "heading:Total Amount",
+        "label": "Total Amount (Pro)"
+      },
+      {
+        "n": 3,
+        "selector": "heading:Payment Method",
+        "label": "Payment Method (Pro)"
+      },
+      {
+        "n": 4,
+        "selector": "heading:Order Status",
+        "label": "Order Status (Pro)"
+      },
+      {
+        "n": 5,
+        "selector": "form.search-box",
+        "label": "Keyword search (Pro)"
+      },
+      {
+        "n": 6,
+        "selector": "heading:Last Orders",
+        "label": "Order table"
+      }
+    ]
+  },
+  {
+    "id": "REV-01",
+    "title": "Revenue page",
+    "url": "/wp-admin/admin.php?page=pd-woo-revenue",
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#pd-customer-history form",
+        "label": "From / To / Apply"
+      },
+      {
+        "n": 2,
+        "selector": "#pd-customer-history form + div, .pd-woo-panel:has(#pdwchs-revenue-chart)",
+        "label": "KPI cards"
+      },
+      {
+        "n": 3,
+        "selector": "heading:Net revenue over time",
+        "label": "Trend chart"
+      },
+      {
+        "n": 4,
+        "selector": "#pdwchs-revenue-chart",
+        "label": "Daily net revenue"
+      }
+    ]
+  },
+  {
+    "id": "SEG-01",
+    "title": "Customer Segments page (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-segments",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Saved Segments",
+        "label": "Saved Segments panel"
+      },
+      {
+        "n": 2,
+        "selector": "panel:Saved Segments >> a",
+        "label": "+ New Segment → Customers page"
+      },
+      {
+        "n": 3,
+        "selector": "table.wp-list-table",
+        "label": "Segment / Description / Customers / Created By / Created / Actions"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-segment-actions",
+        "label": "Load · export preset · Export CSV · Delete"
+      }
+    ]
+  },
+  {
+    "id": "SEG-02",
+    "title": "Segment row actions (Pro export presets)",
+    "url": "/wp-admin/admin.php?page=pd-woo-segments",
+    "clip": "table.wp-list-table",
+    "maxHeight": 560,
+    "pad": 12,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".pdwchs-load-segment",
+        "label": "Load into the Customers page"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-export-preset",
+        "label": "Standard / Klaviyo / Mailchimp preset (Pro)"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-export-segment",
+        "label": "Export CSV"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-delete-segment",
+        "label": "Delete (not on Default segments)"
+      }
+    ]
+  },
+  {
+    "id": "SESS-01",
+    "title": "Live Sessions (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-sessions",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "Page title"
+      },
+      {
+        "n": 2,
+        "selector": ".subsubsub",
+        "label": "Sub-navigation"
+      },
+      {
+        "n": 3,
+        "selector": "#pd-customer-history a.button",
+        "label": "Check for new Sessions"
+      },
+      {
+        "n": 4,
+        "selector": "form.search-box",
+        "label": "Date range + keyword search"
+      },
+      {
+        "n": 5,
+        "selector": "#show-items",
+        "label": "Rows per page"
+      },
+      {
+        "n": 6,
+        "selector": "table.wp-list-table",
+        "label": "Report table"
+      }
+    ]
+  },
+  {
+    "id": "SESS-02",
+    "title": "Live Searches (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-searches",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "Page title"
+      },
+      {
+        "n": 2,
+        "selector": ".subsubsub",
+        "label": "Sub-navigation"
+      },
+      {
+        "n": 3,
+        "selector": "form.search-box",
+        "label": "Date range + keyword search"
+      },
+      {
+        "n": 4,
+        "selector": "table.wp-list-table",
+        "label": "Report table"
+      }
+    ]
+  },
+  {
+    "id": "SESS-03",
+    "title": "Trash (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-trash",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "Page title"
+      },
+      {
+        "n": 2,
+        "selector": ".subsubsub",
+        "label": "Sub-navigation"
+      },
+      {
+        "n": 3,
+        "selector": "table.wp-list-table",
+        "label": "Report table"
+      }
+    ]
+  },
+  {
+    "id": "STAT-01",
+    "title": "Statistics: Site Pages (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-stats",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "Page title"
+      },
+      {
+        "n": 2,
+        "selector": ".subsubsub",
+        "label": "Sub-navigation"
+      },
+      {
+        "n": 3,
+        "selector": "form.search-box",
+        "label": "Keyword search"
+      },
+      {
+        "n": 4,
+        "selector": "#show-items",
+        "label": "Rows per page"
+      },
+      {
+        "n": 5,
+        "selector": "table.wp-list-table",
+        "label": "Report table"
+      }
+    ]
+  },
+  {
+    "id": "STAT-02",
+    "title": "Statistics: Keywords (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-search-stats",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "Page title"
+      },
+      {
+        "n": 2,
+        "selector": ".subsubsub",
+        "label": "Sub-navigation"
+      },
+      {
+        "n": 3,
+        "selector": "form.search-box",
+        "label": "Keyword search"
+      },
+      {
+        "n": 4,
+        "selector": "table.wp-list-table",
+        "label": "Report table"
+      }
+    ]
+  },
+  {
+    "id": "STAT-03",
+    "title": "Statistics: Zero-Result Searches (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-zero-result-searches",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "Page title"
+      },
+      {
+        "n": 2,
+        "selector": ".subsubsub",
+        "label": "Sub-navigation"
+      },
+      {
+        "n": 3,
+        "selector": "form.search-box",
+        "label": "Search terms"
+      },
+      {
+        "n": 4,
+        "selector": "table.wp-list-table",
+        "label": "Report table"
+      }
+    ]
+  },
+  {
+    "id": "STAT-04",
+    "title": "Statistics: Viewed vs Purchased Ratio (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-product-view-stats",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "Page title"
+      },
+      {
+        "n": 2,
+        "selector": ".subsubsub",
+        "label": "Sub-navigation"
+      },
+      {
+        "n": 3,
+        "selector": "form.search-box",
+        "label": "Product search"
+      },
+      {
+        "n": 4,
+        "selector": "table.wp-list-table",
+        "label": "Report table"
+      }
+    ]
+  },
+  {
+    "id": "STAT-05",
+    "title": "Statistics: Top Selling Products by This Month (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-top-selling-stats",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "Page title"
+      },
+      {
+        "n": 2,
+        "selector": ".subsubsub",
+        "label": "Sub-navigation"
+      },
+      {
+        "n": 3,
+        "selector": "table.wp-list-table",
+        "label": "Report table"
+      }
+    ]
+  },
+  {
+    "id": "STAT-06",
+    "title": "Statistics: Product Revenue & Comparison (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-product-revenue",
+    "actions": [
+      {
+        "type": "select",
+        "selector": "#pdwchs-product-select",
+        "value": [
+          "14",
+          "22",
+          "20"
+        ]
+      },
+      {
+        "type": "click",
+        "selector": "#pdwchs-product-apply"
+      },
+      {
+        "type": "wait",
+        "ms": 2500
+      }
+    ],
+    "maxHeight": 1400,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".pdwchs-product-revenue-filters",
+        "label": "Products (max 3) · Date Range · Granularity · Apply"
+      },
+      {
+        "n": 2,
+        "selector": "#pdwchs-product-revenue-chart",
+        "label": "One line per product"
+      },
+      {
+        "n": 3,
+        "selector": "#pdwchs-product-summary-cards",
+        "label": "Summary cards"
+      }
+    ]
+  },
+  {
+    "id": "STAT-07",
+    "title": "Statistics: Aggregate Conversion Funnel (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-conversion-funnel-stats",
+    "settleMs": 2500,
+    "maxHeight": 2800,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".pdwchs-funnel-filters",
+        "label": "Date Range · Granularity · Apply"
+      },
+      {
+        "n": 2,
+        "selector": "#pdwchs-funnel-bar-chart",
+        "label": "Visitors → Add to Cart → Checkout Started → Purchased"
+      },
+      {
+        "n": 3,
+        "selector": "#pdwchs-funnel-stat-cards",
+        "label": "Stage-to-stage conversion rates"
+      },
+      {
+        "n": 4,
+        "selector": "heading:Funnel Over Time",
+        "label": "Funnel Over Time"
+      },
+      {
+        "n": 5,
+        "selector": "heading:Conversion Funnel Visualization",
+        "label": "Per-product session funnel (Last N days)"
+      },
+      {
+        "n": 6,
+        "selector": "#num-of-days",
+        "label": "Num of Days"
+      }
+    ]
+  },
+  {
+    "id": "STAT-08",
+    "title": "Statistics: Cohort Retention, customers view (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-cohorts",
+    "maxHeight": 1400,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".pdwchs-cohort-view-toggle",
+        "label": "Customers / Revenue view"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-cohort-export-form",
+        "label": "Export CSV"
+      },
+      {
+        "n": 3,
+        "selector": "#pdwchs-cohort-chart",
+        "label": "Average retention by month since first order"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-cohort-table",
+        "label": "Cohort × M+0 … M+12 heat-map"
+      }
+    ]
+  },
+  {
+    "id": "STAT-08b",
+    "title": "Statistics: Cohort Retention, revenue view (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-cohorts&view=revenue",
+    "clip": ".pdwchs-cohort-table-wrap",
+    "pad": 16
+  },
+  {
+    "id": "STAT-09",
+    "title": "Statistics: Frequently Bought Together (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-product-correlations",
+    "actions": [
+      {
+        "type": "select",
+        "selector": "#pdwchs-anchor-product",
+        "value": "14"
+      },
+      {
+        "type": "wait",
+        "ms": 2500
+      }
+    ],
+    "maxHeight": 1200,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#pdwchs-anchor-product",
+        "label": "Anchor Product"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-correlations-filter-row .pdwchs-filter-group",
+        "label": "Window: 30 / 60 / 90 / 180 days"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-correlations-filter-row .pdwchs-filter-group:nth-of-type(2), .pdwchs-correlations-filter-row .pdwchs-filter-group + .pdwchs-filter-group",
+        "label": "Show top 5 / 10 / 20"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-correlations-table",
+        "label": "Rank / Product / Co-occurrences / Confidence"
+      }
+    ]
+  },
+  {
+    "id": "STAT-10",
+    "title": "Statistics: Geographic Performance (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-geographic",
+    "settleMs": 2000,
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".pdwchs-geo-range-form",
+        "label": "Date range + Apply"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-geo-summary",
+        "label": "Net sales · Orders · Items · Countries"
+      },
+      {
+        "n": 3,
+        "selector": "heading:Compare countries",
+        "label": "Compare countries"
+      },
+      {
+        "n": 4,
+        "selector": "#pdwchs-geo-compare-a",
+        "label": "Country A"
+      },
+      {
+        "n": 5,
+        "selector": "#pdwchs-geo-compare-chart",
+        "label": "Comparison chart"
+      },
+      {
+        "n": 6,
+        "selector": ".pdwchs-geo-table-wrap",
+        "label": "Sortable country table"
+      }
+    ]
+  },
+  {
+    "id": "STAT-11",
+    "title": "Statistics: Category View (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-category-stats&pd_taxonomy=product_cat",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "Page title"
+      },
+      {
+        "n": 2,
+        "selector": ".subsubsub",
+        "label": "Sub-navigation"
+      },
+      {
+        "n": 3,
+        "selector": "table.wp-list-table",
+        "label": "Report table"
+      }
+    ]
+  },
+  {
+    "id": "STAT-11b",
+    "title": "Statistics: Brand View (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-brand-stats&pd_taxonomy=product_brand",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "Page title"
+      },
+      {
+        "n": 2,
+        "selector": ".subsubsub",
+        "label": "Sub-navigation"
+      },
+      {
+        "n": 3,
+        "selector": "table.wp-list-table",
+        "label": "Report table"
+      }
+    ]
+  },
+  {
+    "id": "STAT-12",
+    "title": "Statistics: Revenue Patterns, Day of Week (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-revenue-patterns",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "button.pdwchs-view-btn:has-text(\"Day of Week\")"
+      },
+      {
+        "type": "click",
+        "selector": "#pdwchs-patterns-apply"
+      },
+      {
+        "type": "wait",
+        "ms": 2500
+      }
+    ],
+    "maxHeight": 1300,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".pdwchs-product-revenue-filters",
+        "label": "Date Range · View · Apply"
+      },
+      {
+        "n": 2,
+        "selector": "#pdwchs-patterns-summary",
+        "label": "Best / worst day and hour"
+      },
+      {
+        "n": 3,
+        "selector": "#pdwchs-patterns-dow-chart",
+        "label": "Revenue by day of week"
+      }
+    ]
+  },
+  {
+    "id": "STAT-12b",
+    "title": "Statistics: Revenue Patterns, Hour of Day (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-revenue-patterns",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "button.pdwchs-view-btn:has-text(\"Hour of Day\")"
+      },
+      {
+        "type": "click",
+        "selector": "#pdwchs-patterns-apply"
+      },
+      {
+        "type": "wait",
+        "ms": 2500
+      }
+    ],
+    "maxHeight": 1300,
+    "callouts": []
+  },
+  {
+    "id": "STAT-12c",
+    "title": "Statistics: Revenue Patterns, Heatmap (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-revenue-patterns",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "button.pdwchs-view-btn:has-text(\"Heatmap\")"
+      },
+      {
+        "type": "click",
+        "selector": "#pdwchs-patterns-apply"
+      },
+      {
+        "type": "wait",
+        "ms": 2500
+      }
+    ],
+    "maxHeight": 1300,
+    "callouts": []
+  },
+  {
+    "id": "STAT-13",
+    "title": "Statistics: Total Spent (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-stats-spent",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "Page title"
+      },
+      {
+        "n": 2,
+        "selector": ".subsubsub",
+        "label": "Sub-navigation"
+      },
+      {
+        "n": 3,
+        "selector": "#show-items",
+        "label": "Rows per page"
+      },
+      {
+        "n": 4,
+        "selector": "table.wp-list-table",
+        "label": "Report table"
+      }
+    ]
+  },
+  {
+    "id": "CART-01",
+    "title": "Abandoned Carts list (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-abandoned-carts",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".pdwchs-carts-filter-form",
+        "label": "Status · Date range · Min total · Filter"
+      },
+      {
+        "n": 2,
+        "selector": "table.wp-list-table",
+        "label": "Customer / Items / Total / Status / Last Updated / Actions"
+      }
+    ]
+  },
+  {
+    "id": "CART-02",
+    "title": "Cart Detail (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-abandoned-carts&cart_id={CART}",
+    "maxHeight": 1100,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Cart Detail",
+        "label": "Heading with status chip"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-cart-detail-main .pdwchs-cart-detail-meta-box:first-child",
+        "label": "Customer or guest details"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-cart-detail-main .pdwchs-cart-detail-meta-box:last-child",
+        "label": "Cart Contents"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-cart-detail-sidebar .pdwchs-cart-detail-meta-box",
+        "label": "Status Timeline"
+      }
+    ]
+  },
+  {
+    "id": "CHURN-01",
+    "title": "Churn Prediction: At-Risk Customers tab (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-churn-prediction",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".pdwchs-churn-stats-grid",
+        "label": "Critical / High / Medium / Active Alerts"
+      },
+      {
+        "n": 2,
+        "selector": ".nav-tab-wrapper:not(.top-nav)",
+        "label": "At-Risk · Alerts · Analytics · Settings"
+      },
+      {
+        "n": 3,
+        "selector": "#pdwchs-risk-filter",
+        "label": "Risk level filter"
+      },
+      {
+        "n": 4,
+        "selector": "#pdwchs-sort-filter",
+        "label": "Sort"
+      },
+      {
+        "n": 5,
+        "selector": "#pdwchs-tab-at-risk table",
+        "label": "At-risk table with score, indicator, value, last order"
+      }
+    ]
+  },
+  {
+    "id": "CHURN-02",
+    "title": "Churn Prediction: Alerts tab (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-churn-prediction&tab=alerts",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Churn Alerts",
+        "label": "Heading"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-alert-summary",
+        "label": "New / In Progress / Resolved"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-alert-status-select",
+        "label": "Status (inline)"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-alert-assign-select",
+        "label": "Assigned To (inline)"
+      }
+    ]
+  },
+  {
+    "id": "CHURN-03",
+    "title": "Churn Prediction: Analytics tab (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-churn-prediction&tab=analytics",
+    "settleMs": 2000,
+    "maxHeight": 1400,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Risk Distribution",
+        "label": "Risk Distribution doughnut"
+      },
+      {
+        "n": 2,
+        "selector": "heading:Alert Statistics (30 Days)",
+        "label": "Alert Statistics"
+      },
+      {
+        "n": 3,
+        "selector": "heading:Customer Risk Summary",
+        "label": "Stacked risk bar"
+      }
+    ]
+  },
+  {
+    "id": "CHURN-04",
+    "title": "Churn Prediction: Settings tab (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-churn-prediction&tab=settings",
+    "maxHeight": 2000,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Risk Level Thresholds",
+        "label": "Risk Level Thresholds"
+      },
+      {
+        "n": 2,
+        "selector": "heading:Scoring Weights",
+        "label": "Scoring Weights (must total 100)"
+      },
+      {
+        "n": 3,
+        "selector": "heading:Alert Settings",
+        "label": "Alert Settings (admin email only)"
+      },
+      {
+        "n": 4,
+        "selector": "heading:General Settings",
+        "label": "Minimum Orders"
+      },
+      {
+        "n": 5,
+        "selector": "#pdwchs-save-churn-settings",
+        "label": "Save Settings"
+      }
+    ]
+  },
+  {
+    "id": "TAGS-01",
+    "title": "Manual Tags page (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-manual-tags",
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".pdwchs-tags-create",
+        "label": "Create a tag"
+      },
+      {
+        "n": 2,
+        "selector": "table.wp-list-table",
+        "label": "Name / Slug / Customers / Created / Actions"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-tag-rename-btn",
+        "label": "Rename"
+      },
+      {
+        "n": 4,
+        "selector": ".pdwchs-tag-delete-btn",
+        "label": "Delete"
+      }
+    ]
+  },
+  {
+    "id": "SET-00",
+    "title": "Settings, full page (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-settings"
+  },
+  {
+    "id": "SET-01",
+    "title": "General Settings card",
+    "url": "/wp-admin/admin.php?page=pd-woo-settings",
+    "clip": "panel:General Settings",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#results_per_page",
+        "label": "Results per page"
+      },
+      {
+        "n": 2,
+        "selector": "#show_bot_sessions",
+        "label": "Show BOT sessions (Pro)"
+      },
+      {
+        "n": 3,
+        "selector": "#default_save_admin_session",
+        "label": "Save admin sessions (Pro)"
+      },
+      {
+        "n": 4,
+        "selector": "#hide_users_with_no_orders",
+        "label": "Hide users with no orders"
+      }
+    ]
+  },
+  {
+    "id": "SET-02",
+    "title": "Reports card (digest)",
+    "url": "/wp-admin/admin.php?page=pd-woo-settings",
+    "clip": "panel:Reports",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#order",
+        "label": "Order (free)"
+      },
+      {
+        "n": 2,
+        "selector": "#top_customer",
+        "label": "Top customers (free)"
+      },
+      {
+        "n": 3,
+        "selector": "#search",
+        "label": "Search (Pro)"
+      },
+      {
+        "n": 4,
+        "selector": "#most_viewed_products",
+        "label": "Most viewed products (Pro)"
+      },
+      {
+        "n": 5,
+        "selector": "#most_viewed_categories",
+        "label": "Most viewed categories (Pro)"
+      },
+      {
+        "n": 6,
+        "selector": "#digest_interval",
+        "label": "Weekly / Monthly"
+      },
+      {
+        "n": 7,
+        "selector": "#send_weekly_report_to",
+        "label": "Recipient"
+      }
+    ]
+  },
+  {
+    "id": "SET-03",
+    "title": "Abandoned Cart Tracking card (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-settings",
+    "clip": ".cart-settings-form",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#pdwchs_cart_tracking_enabled",
+        "label": "Cart tracking"
+      },
+      {
+        "n": 2,
+        "selector": "#pdwchs_cart_email_capture_enabled",
+        "label": "Email early capture"
+      },
+      {
+        "n": 3,
+        "selector": "#pdwchs_cart_abandonment_timeout_minutes",
+        "label": "Abandonment timeout"
+      },
+      {
+        "n": 4,
+        "selector": "#pdwchs_cart_cleanup_days",
+        "label": "Data retention"
+      }
+    ]
+  },
+  {
+    "id": "SET-04",
+    "title": "Digest Segment Sheet card (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-settings",
+    "clip": ".digest-segment-settings-form",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#pdwchs_digest_segment_enabled",
+        "label": "Attach a segment CSV"
+      },
+      {
+        "n": 2,
+        "selector": "#pdwchs_digest_segment_id",
+        "label": "Segment"
+      }
+    ]
+  },
+  {
+    "id": "SET-05",
+    "title": "Session data tools: Export / Import / Empty Tables (Pro)",
+    "url": "/wp-admin/admin.php?page=pd-woo-settings",
+    "clip": [
+      "heading:Export",
+      "panel:Empty Tables"
+    ],
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Export",
+        "label": "Export all session data"
+      },
+      {
+        "n": 2,
+        "selector": "heading:Import",
+        "label": "Import CSV"
+      },
+      {
+        "n": 3,
+        "selector": "heading:Empty Tables",
+        "label": "Custom Delete by date range / Delete All"
+      }
+    ]
+  },
+  {
+    "id": "WC-01",
+    "title": "WooCommerce order screen: Customer Intelligence meta box (Pro)",
+    "url": "/wp-admin/admin.php?page=wc-orders&action=edit&id={HERO_ORDER}",
+    "clip": "#pdwchs_order_intelligence",
+    "pad": 24,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#pdwchs_order_intelligence h2",
+        "label": "Customer Intelligence meta box"
+      },
+      {
+        "n": 2,
+        "selector": "#pdwchs_order_intelligence .inside",
+        "label": "Health · RFM · Lifecycle · LTV · Last seen · Predicted next order"
+      },
+      {
+        "n": 3,
+        "selector": "#pdwchs_order_intelligence a",
+        "label": "View full profile"
+      }
+    ]
+  },
+  {
+    "id": "WC-01b",
+    "title": "WooCommerce order screen with the meta box in context (Pro)",
+    "url": "/wp-admin/admin.php?page=wc-orders&action=edit&id={HERO_ORDER}",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#pdwchs_order_intelligence",
+        "label": "Customer Intelligence meta box in the sidebar"
+      }
+    ]
+  },
+  {
+    "id": "SYS-01",
+    "title": "Site Health → Info → PureDevs Customer History (local telemetry)",
+    "url": "/wp-admin/site-health.php?tab=debug",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#health-check-section-pdwchs_customer_history"
+      },
+      {
+        "type": "wait",
+        "ms": 600
+      }
+    ],
+    "clip": "#health-check-accordion-block-pdwchs_customer_history, #health-check-section-pdwchs_customer_history",
+    "pad": 20,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#health-check-section-pdwchs_customer_history",
+        "label": "Section"
+      },
+      {
+        "n": 2,
+        "selector": "#health-check-accordion-block-pdwchs_customer_history table",
+        "label": "Four read-only fields; nothing leaves the server"
+      }
+    ]
+  },
+  {
+    "id": "SYS-02",
+    "title": "Tools → Export Personal Data",
+    "url": "/wp-admin/export-personal-data.php",
+    "maxHeight": 900,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "h1",
+        "label": "WordPress privacy tools — the plugin registers exporters and erasers for notes, tags and carts"
+      }
+    ]
+  },
+  {
+    "tier": "free",
+    "id": "FREE-00",
+    "title": "Dashboard, full page (Free)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+  },
+  {
+    "tier": "free",
+    "id": "FREE-01",
+    "title": "Free dashboard: six widgets, trial notice and the attention banner",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "maxHeight": 1900,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".nav-tab-wrapper.top-nav",
+        "label": "Free tab bar: Search Analytics replaces Sessions/Statistics"
+      },
+      {
+        "n": 2,
+        "selector": ".notice.notice-info:has(a[href*=\"pdwchs_dismiss\"]), .pd-woo-dashboard .notice",
+        "label": "Notice area: trial notice, with the upsell banner directly below"
+      }
+    ]
+  },
+  {
+    "tier": "free",
+    "id": "FREE-02",
+    "title": "Trial notice (premium build without an active licence)",
+    "url": "/wp-admin/admin.php?page=pd-woo-dashboard",
+    "clip": "#wpbody-content .notice",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#wpbody-content .notice",
+        "label": "Freemius trial notice (Free build without an active licence)"
+      }
+    ]
+  },
+  {
+    "tier": "free",
+    "id": "FREE-03",
+    "title": "Customers list (Free): scope banner and free-only filters",
+    "url": "/wp-admin/admin.php?page=pd-woo-customers",
+    "maxHeight": 1600,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "fieldset",
+        "label": "Free filters: orders, total spent, product purchased"
+      },
+      {
+        "n": 2,
+        "selector": "#pd-customer-history .notice",
+        "label": "100-customer scope banner"
+      },
+      {
+        "n": 3,
+        "selector": "table.wp-list-table",
+        "label": "Free columns only"
+      }
+    ]
+  },
+  {
+    "tier": "free",
+    "id": "FREE-04",
+    "title": "Customer profile (Free): locked Pro previews",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "maxHeight": 2600,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Full Session History",
+        "label": "Locked: Full Session History"
+      },
+      {
+        "n": 2,
+        "selector": "heading:RFM Segment",
+        "label": "Locked: RFM Segment"
+      },
+      {
+        "n": 3,
+        "selector": "heading:Customer Health Score",
+        "label": "Locked: Health Score"
+      },
+      {
+        "n": 4,
+        "selector": "heading:Churn Risk",
+        "label": "Locked: Churn Risk"
+      },
+      {
+        "n": 5,
+        "selector": "heading:Behavioral Tags",
+        "label": "Locked: Behavioral Tags"
+      },
+      {
+        "n": 6,
+        "selector": "heading:Lifecycle Stage",
+        "label": "Locked: Lifecycle Stage"
+      }
+    ]
+  },
+  {
+    "tier": "free",
+    "id": "FREE-04b",
+    "title": "Locked card close-up (Free)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customer&user_id={HERO}",
+    "clip": "panel:RFM Segment",
+    "pad": 16,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:RFM Segment",
+        "label": "Title"
+      },
+      {
+        "n": 2,
+        "selector": "panel:RFM Segment >> a",
+        "label": "Unlock with Pro"
+      }
+    ]
+  },
+  {
+    "tier": "free",
+    "id": "FREE-05",
+    "title": "Segments (Free): one custom segment and the Ready-made Pro segments teaser",
+    "url": "/wp-admin/admin.php?page=pd-woo-segments",
+    "maxHeight": 1500,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "heading:Saved Segments",
+        "label": "Saved Segments (1 custom on Free)"
+      },
+      {
+        "n": 2,
+        "selector": "heading:Ready-made Pro segments",
+        "label": "Locked teaser table"
+      },
+      {
+        "n": 3,
+        "selector": "panel:Ready-made Pro segments >> a",
+        "label": "Unlock with Pro"
+      }
+    ]
+  },
+  {
+    "tier": "free",
+    "id": "FREE-06",
+    "title": "Segment-cap modal (Free)",
+    "url": "/wp-admin/admin.php?page=pd-woo-customers&order_number=greater_then&order_number_input=2",
+    "actions": [
+      {
+        "type": "click",
+        "selector": "#pdwchs-save-segment-btn"
+      },
+      {
+        "type": "wait",
+        "ms": 500
+      },
+      {
+        "type": "fill",
+        "selector": "#pdwchs-segment-name",
+        "value": "Second segment"
+      },
+      {
+        "type": "click",
+        "selector": "#pdwchs-modal-overlay .button-primary"
+      },
+      {
+        "type": "waitFor",
+        "selector": ".pdwchs-upsell-box"
+      },
+      {
+        "type": "wait",
+        "ms": 500
+      }
+    ],
+    "clip": ".pdwchs-upsell-box",
+    "pad": 40,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": ".pdwchs-upsell-box h2",
+        "label": "Unlock unlimited segments with Pro"
+      },
+      {
+        "n": 2,
+        "selector": ".pdwchs-upsell-box .button-primary",
+        "label": "Upgrade to Pro"
+      },
+      {
+        "n": 3,
+        "selector": ".pdwchs-upsell-close",
+        "label": "Maybe later"
+      }
+    ]
+  },
+  {
+    "tier": "free",
+    "id": "FREE-07",
+    "title": "Search Analytics page (Free only)",
+    "url": "/wp-admin/admin.php?page=pd-woo-search-analytics",
+    "maxHeight": 2600,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#pd-customer-history .notice",
+        "label": "Heads-up notice about admin activity"
+      },
+      {
+        "n": 2,
+        "selector": "heading:Top Keyword Searches",
+        "label": "Top Keyword Searches"
+      },
+      {
+        "n": 3,
+        "selector": "heading:Last Searches",
+        "label": "Last Searches"
+      },
+      {
+        "n": 4,
+        "selector": "heading:Zero-Result Searches",
+        "label": "Zero-Result Searches"
+      },
+      {
+        "n": 5,
+        "selector": "heading:Most Viewed Products",
+        "label": "Most Viewed Products"
+      }
+    ]
+  },
+  {
+    "tier": "free",
+    "id": "FREE-08",
+    "title": "Revenue page (Free): 90-day floor on the From date",
+    "url": "/wp-admin/admin.php?page=pd-woo-revenue",
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#pd-customer-history form input[type=\"date\"]",
+        "label": "From date cannot go earlier than 90 days back"
+      },
+      {
+        "n": 2,
+        "selector": "heading:Net revenue over time",
+        "label": "Trend chart"
+      }
+    ]
+  },
+  {
+    "tier": "free",
+    "id": "FREE-09",
+    "title": "Settings (Free)",
+    "url": "/wp-admin/admin.php?page=pd-woo-settings",
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "panel:General Settings",
+        "label": "Two free fields"
+      },
+      {
+        "n": 2,
+        "selector": "panel:Reports",
+        "label": "Order + Top customers, Weekly/Monthly, recipient"
+      }
+    ]
+  },
+  {
+    "tier": "free",
+    "id": "FREE-10",
+    "title": "Order History (Free): date range only",
+    "url": "/wp-admin/admin.php?page=pd-woo-order-history",
+    "maxHeight": 1400,
+    "callouts": [
+      {
+        "n": 1,
+        "selector": "#daterange",
+        "label": "Date range (90-day floor)"
+      },
+      {
+        "n": 2,
+        "selector": "table.wp-list-table",
+        "label": "Order list"
+      }
+    ]
+  }
+]

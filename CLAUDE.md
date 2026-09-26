@@ -22,9 +22,37 @@ backups and `wp-config.php` are all ignored. Tracked:
 - `wp-content/plugins/puredevs-customer-history-for-woocommerce` — the free version
 - `wp-content/plugins/pdwchs-demo-tools` — demo data/tooling plugin (needs optimisation)
 - `wp-content/mu-plugins/auto_login_local.php` — local-only auto-login helper
-- `project_asset/` — project docs and demo assets
+- `project_asset/` — project docs and demo assets (`marketing/` — see below)
 - `scripts/` — helper scripts: `wpc` (wp-cli wrapper), `demo-refresh.sh`
-  (shoot-morning data refresh), `live-refresh.sh` (live-site refresh via REST)
+  (shoot-morning data refresh), `live-refresh.sh` (live-site refresh via REST),
+  `install-plugin.sh` (plugin builds from the dev repo)
+
+## Plugin updates
+
+The two plugin folders are **build output**, never source. Update them only with
+`scripts/install-plugin.sh [git-ref]` (default `release`): it builds the ref in a
+throw-away worktree of the dev repo
+(`/Applications/MAMP/htdocs/puredevs-customer-history/wp-content/plugins/puredevs-customer-history-for-woocommerce`)
+with its `build.sh`, and swaps in the free and pro builds. Never copy, symlink or
+check out the dev source tree here — the free folder would carry `pro/` and turn
+premium. `project_asset/plugin-build.txt` records the installed version and commit.
+After an install: load wp-admin once, run `scripts/demo-refresh.sh`, commit, and
+upgrade the live site to the same version before the next `live-refresh.sh`
+(parity needs the same plugin version — `project_asset/docs/live-migration.md` §5).
+
+## Marketing assets
+
+`project_asset/marketing/` is the home of all marketing material (moved from the
+dev repo's `docs/marketing/` on 2026-09-26; the dev repo no longer holds it):
+- `MARKETING-BRIEF-3.1.2.md` — screen-by-screen feature reference with entry IDs.
+  Its source `file:line` references resolve inside the installed plugin folders
+  (`pro/…` → the `-pro` folder) while `plugin-build.txt` says 3.1.2.
+- `MARKETING-BRIEF-3.1.2*.pdf` + `…-PDF-INDEX.md` — PDF export and page index.
+  The PDF generator scripts were lost; regenerating needs new ones.
+- `screenshots/` — 102 callout shots (captured on the dev store's seed data).
+- `PureDevs_Proof_Marketing_Ad_Strategy_v1.md` — ad strategy.
+- `tooling/` — Playwright capture scripts; see `tooling/README.md`. Never run its
+  `seed-demo-data.php` here (use `scripts/demo-refresh.sh`).
 
 ## Local environment
 
@@ -35,11 +63,12 @@ backups and `wp-config.php` are all ignored. Tracked:
   adds `--socket` for `db export`/`db import`). Shoot-morning routine:
   `scripts/demo-refresh.sh` — refresh + verify + record/don't-record verdict
   in one command.
-- The **free** plugin is the active one; pro is installed but inactive
-  (realistic upgrade flow for demos).
+- Both builds are installed side by side; activate one at a time — free for the
+  realistic upgrade-flow demo, pro for Pro features (pro is active as of 2026-09-26).
 - Auto-login helper (mu-plugin): `http://localhost/ch/?local_login=1&user_email=<email>`
   — gated to `WP_ENVIRONMENT_TYPE=local` and disabled when `PDWCHS_DEMO_LOCKDOWN`
-  is defined. Never deploy this file to the live VPS.
+  is defined. Never deploy this file to the live VPS — nor the screenshot
+  tier override `wp-content/mu-plugins/pdwchs-capture-tier.php` (capture only).
 
 ## Roadmap / notes
 
