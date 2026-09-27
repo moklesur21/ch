@@ -1,0 +1,216 @@
+# V1 Placement Kit — How much of my WooCommerce revenue comes from returning customers?
+
+**Version 1.1 · 21 Sep 2026** · Demo Video Prompt Pack v3, FILE 5 · supersedes v1.0
+From `PureDevs_V1_Script_v1_2.md`, `PureDevs_V1_Demo_Brief_v1_2.md` and `PureDevs_V1_Recording_Brief_v1_2.md`.
+**Final video length:** not edited yet. Planned 1:46. Every `[LENGTH]` and timecode is filled in after the edit.
+**Question page URL (approved):** https://puredevs.com/questions/woocommerce-new-vs-returning-customers/
+
+**Where V1 is embedded:** /pricing (above the plans) · the question page · the LP-Category variant (AG1). In each, the first link under the video must be "Start the trial" → /pricing. The main homepage hero takes V8 instead: every homepage button goes to WordPress.org, which would make V1's "the link below starts the trial" untrue.
+
+---
+
+## 1. The 20–30 s cut
+
+Beat 1 + the answer frame + the beat-4 decision + the end card. Beat 2 is skipped. About 23 s.
+
+| Cut time | Master source (planned — confirm after edit) | Picture | Voice (reused from the master) | Caption |
+|---|---|---|---|---|
+| 0:00–0:05 | 0:00–0:05, beat 1 | scene-01 answer frame, cropped to the three boxes. Lower third **PureDevs Customer History**; small **Demo store** label | How much of your WooCommerce revenue comes from returning customers? | How much of your WooCommerce revenue comes from **returning customers**? |
+| 0:05–0:08 | 1:06–1:09, beat 4 first sentence | scene-01 | So here is the decision this gives you. | So here is **the decision** this gives you. |
+| 0:08–0:19 | 1:20–1:33, beat 4b from "Returning is…" or "New is…" (skip "And look at the biggest card.") | scene-06, biggest box | `[A: Returning is the biggest — so your next hour belongs to the customers who already buy from you. That's where the biggest share of this revenue comes from.]` `[B: New is the biggest — so your next hour goes to bringing those new customers back. That's the gap in this revenue.]` | The same line, with **your next hour** and **biggest share of this revenue** / **the gap in this revenue** in bold |
+| 0:19–0:23 | 1:42–1:46, end card | End card: answer-frame still + **PureDevs Customer History** + **Start the trial · puredevs.com/pricing** | This split is Pro. The link below starts the trial. | **Start the trial** |
+
+- **Nothing to re-record.** All voice comes from the master.
+- **Never under 11 s.** The planned cut is about 23 s.
+- The guest clause is left out to stay under 30 s.
+- The "Demo store" label replaces beat 2's "demo store", which the cut skips.
+- No spoken figures. One CTA.
+- Retargeting ads carry their own CTA button to /pricing, so "the link below" holds.
+
+**Optional vertical 9:16.** Frame 1080 × 1920. Question text in the top third, 72 px. Place the three-box strip across the middle at full width; if the amounts aren't readable, use scene-06 (the biggest box) for the decision line. Captions in the bottom third, at least 60 px. Short title: "How much of my WooCommerce revenue comes from returning customers?" (66 characters).
+
+---
+
+## 2. Question page
+
+| Field | Content |
+|---|---|
+| Slug | `/questions/woocommerce-new-vs-returning-customers/` |
+| H1 | How much of my WooCommerce revenue comes from returning customers? |
+| Meta title (56 / 60) | WooCommerce New vs Returning Customer Revenue \| PureDevs |
+| Meta description (145 / 155) | See new, returning and guest revenue side by side for the same dates, inside your own WordPress admin. A short demo of PureDevs Customer History. |
+| Video | YouTube embed of the master; poster = the Script v1.2 §C still |
+| CTA button (one) | **Start the free trial** → https://puredevs.com/pricing · small text under it: "30 days, no card needed." |
+
+**Written walkthrough** (from the transcript; no demo figures):
+
+1. Open **Customer History → Dashboard** and scroll to **Revenue Analytics**. This is a Pro report, and it runs inside your own WordPress admin: self-hosted, nothing leaves your server.
+2. Under **Revenue by Customer Type** you get three cards — New Customers, Returning Customers and Guest Orders — each with its revenue and the number of orders behind it. New and Returning count customers with an account; guest orders are placed without one.
+3. One date range at the top drives all three, so you're always comparing the same dates.
+4. WooCommerce's own Orders report can show orders from new or returning customers, one filter at a time. Customer History adds new, returning and guest revenue side by side for the same dates.
+5. Read the proportion, not the number: which card is biggest, and where the guest card sits.
+6. If returning customers bring the biggest share, your next hour goes to the customers who already buy from you. If new customers do, bringing them back is the gap. If the guest card is big, decide whether to encourage accounts at checkout — repeat guests never show as returning.
+7. The plugin doesn't decide for you. It shows you where the money comes from.
+8. The free version shows your repeat purchase rate; this split is Pro.
+
+**Screenshots.** Take frames from the recording, never the Brief's screenshots, which carry red callouts. Label each "Demo store data".
+
+| # | File (see §7) | Caption | Alt text |
+|---|---|---|---|
+| 1 | V1-shot-1-path.png | Customer History → Dashboard, inside your own wp-admin. | WordPress admin with the Customer History menu open and the plugin's Dashboard tab selected (demo store). |
+| 2 | V1-shot-2-split.png | New, returning and guest revenue, side by side for the same dates (Pro). | Revenue by Customer Type section with three cards — New Customers, Returning Customers, Guest Orders — each showing revenue and order count (demo store). |
+| 3 | V1-shot-3-free-rate.png | The free version shows your repeat purchase rate (registered customers only). | Free Revenue page with five summary cards; the last card is Repeat Purchase Rate, captioned "Registered customers only" (demo store). |
+
+**FAQ** (from Demo Brief v1.2 §8 and the research's buyer doubts):
+
+- **Does the free version show this split?**
+  No, the new, returning and guest split is Pro. The free version shows your repeat purchase rate for registered customers, for the most recent 90 days.
+- **How does it decide who is new or returning?**
+  It looks at customers with an account, for the dates you pick.
+  - **New:** their first paid order falls inside those dates. Every order they place in that period counts as New, even a second or third.
+  - **Returning:** they ordered in that period, and their first paid order came before it.
+
+  Only completed and processing orders count, and revenue is net of refunds. Days follow GMT, not your site's timezone. Results can be up to 30 minutes behind.
+- **How are guest orders handled?**
+  Any order placed without an account goes in Guest Orders. The plugin doesn't match guests by email, so a guest who buys twice stays in Guest Orders and never shows as returning. If that shopper later creates an account, their old guest orders stay in Guest and their first order with the account counts as New. The exception: if WooCommerce links their old guest orders to the new account, those orders count toward that customer. The plugin never changes your orders.
+- **Does it only count orders placed after I install it?**
+  No. It reads your existing WooCommerce orders, so earlier orders are included once Pro is active.
+- **Does my data leave my site, or slow my store down?**
+  It's self-hosted: nothing leaves your server, and it works with WordPress's personal-data export and erase tools. The only outside contact is Freemius, for licensing and its optional opt-in. The report runs in your WordPress admin and caches its results for 30 minutes. On your storefront the plugin records activity server-side, with no JavaScript tracker.
+
+**VideoObject JSON-LD** (alongside the planned SoftwareApplication JSON-LD):
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "How much of my WooCommerce revenue comes from returning customers?",
+  "description": "A demo of PureDevs Customer History: new, returning and guest revenue side by side for the same dates, inside WordPress. Recorded on a demo store with synthetic data.",
+  "thumbnailUrl": ["[THUMBNAIL URL]"],
+  "uploadDate": "[YYYY-MM-DD]",
+  "duration": "[PT#M#S]",
+  "embedUrl": "https://www.youtube.com/embed/[VIDEO ID]",
+  "publisher": { "@type": "Organization", "name": "PureDevs", "url": "https://puredevs.com/" }
+}
+```
+
+---
+
+## 3. Email line
+
+**Line** (plain text, fill `[LENGTH]` after the edit):
+
+> `[LENGTH]` video: how much of my WooCommerce revenue comes from returning customers? https://puredevs.com/questions/woocommerce-new-vs-returning-customers/
+
+**Where it goes:**
+- **Trial 3** ("the split your revenue chart hides"), after the first paragraph, once Trial 3 is fixed:
+  - path → "Customer History → Dashboard → Revenue Analytics";
+  - cut the abandoned-carts paragraph.
+- **The Week 7 pre-BFCM email** to free users and trials (strategy §6.4).
+
+No dollar amounts. It links to the question page, never to YouTube.
+
+**Trial terms (30 days, no card) settle one lifecycle choice:** Trial 5 → **Variant A** (the trial lapses to Free). Delete Variant B.
+
+---
+
+## 4. WordPress.org
+
+**NOT FOR README.** V1 is Pro-answered. The readme video is V13.
+
+---
+
+## 5. In-plugin poster
+
+| Field | Content |
+|---|---|
+| Poster text (7 words) | How much revenue comes from returning customers? |
+| Link text | Watch the demo on puredevs.com |
+| Image | The Script v1.2 §C still, **bundled inside the plugin**. No remote image, no iframe |
+| Opens | The question page, in a new tab |
+| Where | 1st choice: the Freemius trial / pricing screen (strategy §5.2) — `[OPEN — dev: can the plugin add a block to that screen?]`. Otherwise: the free Revenue page, beside the Repeat Purchase Rate card. That's a product change for the next release |
+| Behaviour | One small, dismissible card. Never on every page. V16 replaces it on the trial screen once V16 exists |
+
+---
+
+## 6. Capterra and G2 media
+
+**Video caption:**
+> How much of my WooCommerce revenue comes from returning customers? A `[LENGTH]` demo of Customer History's Revenue by Customer Type, recorded on a demo store.
+
+**Screenshot captions, in order:**
+1. Customer History → Dashboard, inside your own wp-admin.
+2. Revenue by Customer Type: new, returning and guest revenue side by side for the same dates (Pro). New and Returning count customers with an account.
+3. The free version shows your repeat purchase rate (registered customers only).
+
+---
+
+## 7. Shot list for the editor
+
+**Screenshots**, exported as PNG at 1920 px wide from the recorded clips:
+
+| File | Source frame | Crop |
+|---|---|---|
+| V1-shot-1-path.png | scene-02: Customer History highlighted in the left menu, Dashboard tab active | Left menu + tab bar + page title "Dashboard" |
+| V1-shot-2-split.png | scene-01 | Heading "Revenue by Customer Type" + the three boxes. Four top boxes and badge out (Q2) |
+| V1-shot-3-free-rate.png | scene-08 | Page title "Revenue" + the row of five boxes, including "Registered customers only" |
+
+**GIF** (under 2 MB) for the question page and in-plugin use:
+- **Source:** scene-04, from the cursor arriving under NEW CUSTOMERS to the cursor resting under GUEST ORDERS. About 5 s.
+- **Crop:** the three boxes only, 800 px wide, 10–12 fps.
+- **Loop:** the last frame jumps back to the first.
+- **Legibility:** labels and amounts must read at 600 px wide.
+- **Not in the plain-text emails.**
+
+---
+
+## 8. Ad match (strategy §6.2, AG2 Questions)
+
+The existing copy matches this page, so no new headlines or descriptions.
+
+| Use | Copy | Characters |
+|---|---|---|
+| Headline, pin to position 1 | New vs Returning Revenue | 24 / 30 |
+| Headline | PureDevs Customer History | 25 / 30 |
+| Headline | Your Data Stays On Your Site | 28 / 30 |
+| Headline, unlocked (Q4: 30 days, no card) | Start Your Free Trial | 21 / 30 |
+| Headline, only if the final length is 2:00 or less | Watch The 2-Minute Demo | 23 / 30 |
+| Description | You decide what to do. The plugin shows you where the money comes from. | 71 / 90 |
+| Description, only if the final length is 2:00 or less | Watch a 2-minute demo on a working WooCommerce store, then try it on your own orders. | 85 / 90 |
+
+- **Don't use Description 1:** it names features this page doesn't show.
+- **Keywords:** in Google Ads, give `[woocommerce new vs returning customers]` and `[woocommerce returning customer report]` this page as their keyword-level final URL.
+- **Optional seeds**, marked "check in Keyword Planner": `[woocommerce new vs returning customers report]` · `[woocommerce returning customers]` · `[woocommerce revenue breakdown new returning]`.
+- No competitor names, price, recovery language, or "identifies repeat buyers".
+
+---
+
+## 9. Sanity check (FILE 6 audit list, every section)
+
+| # | Section | Finding | Rule | Status |
+|---|---|---|---|---|
+| 1 | §1 cut | No spoken figures; one CTA; about 23 s; "Demo store" label; option B uses the corrected v1.2 line | U2.1, U5, U7 | PASS |
+| 2 | Embeds | V1 appears only where the first link under it is the trial; homepage hero → V8 (audit finding 5) | U7 | PASS |
+| 3 | §2 walkthrough | Honest sentence says "orders" (finding 1). Account qualifier and guest reason come from dev's code read (Q1) | U2.2, U5 | PASS; re-check if 11.2 ships first |
+| 4 | §2 FAQ | Definitions, GMT days, net-of-refunds and guest handling all come from dev's code read. The FAQ 5 speed line is corrected (finding 3); the Freemius qualifier is added (finding 4) | U5, U3 | PASS |
+| 5 | §2 FAQ | Dev's copy rule: never "identifies repeat buyers" without the qualifier. The FAQ says who is counted and who isn't | Q1 | PASS |
+| 6 | §2 CTA | "30 days, no card needed" in button text: confirmed (Q4); changeable page text | U7 | PASS |
+| 7 | §3 | Email line correct. Trial 3 needs its two fixes first. Trial 5 → Variant A | Standing decisions | Open (lifecycle file) |
+| 8 | §4 | NOT FOR README | Pack §4 | PASS |
+| 9 | §5 | 7 words; bundled; new tab; modest | Pack §5 | PASS. The slot needs a dev answer |
+| 10 | §6–§7 | Tier and demo store stated; KPI row and badge cropped; GIF under 2 MB | U5, Q2 | PASS |
+| 11 | §8 | Within 30 / 90. Headline 10 unlocked by Q4. "2-minute" copy holds (planned 1:46) | U7 | PASS; confirm with the final length |
+| 12 | Whole kit | No cap, ⚑, "only / first", competitor names, recovery language or price | U2.3, U3, U4 | PASS |
+| 13 | Lifecycle file (outside V1) | Welcome 1 and Trial 4 state the 100-customer cap; Trial 1 and 2 lead with churn and RFM; Trial 2's "opens your mail app" contradicts Brief A4; labels are 3.0.0-era | U2.3, U4, product facts | Flag for the lifecycle revision |
+
+**Verdict:** **PASS.** Before publishing:
+- Fill `[LENGTH]`, timecodes, upload date, duration, YouTube ID and thumbnail URL after the edit.
+- Fix Trial 3 before the email line goes in.
+- Dev answers whether the Freemius-screen poster slot is possible.
+
+---
+
+## Changelog
+
+- **v1.1 — 21 Sep 2026.** Q1 answers applied: FAQ rewritten; account qualifier and guest reason in the walkthrough; option B corrected. Q4 applied: button microcopy, headline 10 unlocked, Trial 5 → Variant A. Audit findings 1, 3, 4 and 5 applied; homepage hero → V8. Timecodes follow Script v1.2 (planned 1:46).
+- **v1.0 — 21 Sep 2026.** First placement kit.
