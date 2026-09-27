@@ -43,7 +43,10 @@ upgrade the live site to the same version before the next `live-refresh.sh`
 ## Marketing assets
 
 `project_asset/marketing/` is the home of all marketing material (moved from the
-dev repo's `docs/marketing/` on 2026-09-26; the dev repo no longer holds it):
+dev repo's `docs/marketing/` on 2026-09-26). All marketing work — brief updates,
+screenshots, strategy, videos — happens here; the dev repo is for development
+only. Its `marketing` branch still holds the 2026-09-26 copy, frozen and
+unmaintained: never sync from it or edit it.
 - `MARKETING-BRIEF-3.1.2.md` — screen-by-screen feature reference with entry IDs.
   Its source `file:line` references resolve inside the installed plugin folders
   (`pro/…` → the `-pro` folder) while `plugin-build.txt` says 3.1.2.
@@ -82,8 +85,10 @@ dev repo's `docs/marketing/` on 2026-09-26; the dev repo no longer holds it):
   Full guide + deploy checklist: `project_asset/docs/demo-site-lockdown.md`
 - V2–V4 video coverage: the seeded dataset carries videos 1–4 (Champions/5-5-5
   hero, refund + on-hold cases, five-month flat-total revenue shape) and
-  `wp pdwchs-demo verify` machine-checks all of it. Current video briefs:
-  `project_asset/demo/videos/v1`–`v3`. The old V2–V4 coverage report was
+  `wp pdwchs-demo verify` machine-checks all of it. These July videos were
+  retired on 2026-09-27: video work now follows
+  `project_asset/strategy/PureDevs_Video_Docs/` (Topic Filter v4.2), and the
+  new V1 set is in `project_asset/demo/videos/v1`. The old V2–V4 coverage report was
   removed on 2026-07-30 with the superseded docs; read it from git history:
   `git show a5a0bb4^:project_asset/docs/v2-v4-coverage-report.md`.
 - Storefront branding: the shop is styled as **Northline Supply Co.** (apparel)
