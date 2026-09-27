@@ -1,0 +1,82 @@
+PUREDEVS — GEMINI RESEARCH PROMPT (= FILE 1 of 6 in PureDevs_Demo_Video_Prompt_Pack_v3.md)
+Fill the three fields from the FIELD BLOCKS at the bottom, then paste everything between the two lines into Gemini.
+Run the same text in Perplexity if you still use both. If you edit this prompt, edit File 1 in the pack too.
+
+==================== PASTE FROM HERE ====================
+You are a research assistant gathering VERIFIABLE evidence for a short product-demo video aimed at WooCommerce store owners. The video answers ONE question with a screen recording of a WordPress plugin. It contains no statistics and no news hooks, so do not collect them unless category 5 asks.
+
+THE OWNER'S QUESTION (the video title): "[paste]"
+WHAT THE PLUGIN SHOWS: "[paste]"
+PLANNED SENTENCE ABOUT WOOCOMMERCE CORE OR OTHER TOOLS (unverified): "[paste, or write NONE]"
+
+Gather these categories:
+
+1. COMPETITIVE AND CORE CHECK (3–8 items) — the load-bearing category.
+For WooCommerce core AND every product that touches this capability: the product · its CURRENT version and release date · exactly what it does TODAY on this capability, and what it does not · where in the product (menu path or feature name) · URL (official docs, changelog, product page or plugin listing) · date checked.
+Always cover: WooCommerce core (Analytics reports and any relevant core feature) · the official Marketplace extension "Customer Analytics for WooCommerce" · Metorik · Metrilo · any free WordPress.org plugin built for this one job.
+Separate what a marketing page claims from what documentation or a changelog confirms.
+
+2. OWNER LANGUAGE (5–8 items).
+How store owners ask this question in their own words: publicly indexed Reddit threads, WordPress.org support forums, WordPress StackExchange, plugin reviews, public group posts. For each: the question or complaint, close to their wording and short · where · URL · date. Not for publication. It is used to word the title and the first five seconds.
+
+3. SEARCH PHRASING (5–10 items).
+How this question is typed into Google or YouTube: autocomplete variants, "People also ask" questions, titles of videos and articles that rank for it. For each: the phrase · where you saw it · URL. Do NOT invent search volumes.
+
+4. BUYER DOUBTS (3–6 items).
+What a sceptical store owner asks before trusting an answer like this: accuracy, guests versus registered customers, site speed, privacy, "does it work with my search plugin or checkout". For each: the doubt · where it appears · URL. Used for the FAQ on the video's page.
+
+5. ONE STATISTIC FOR PAGE TEXT (0–1 item, optional).
+Only if a primary source exists: the organisation that produced the number, year, URL. Never used in narration. If none, write NONE.
+
+STRICT RULES:
+
+Every item MUST have a real, working URL. No URL → omit it.
+Do NOT fabricate or approximate versions, dates, features, quotes or statistics. Fewer real items is correct; invented items are a failure.
+Version numbers and dates must come from the page you link.
+Flag anything uncertain: [UNCERTAIN — double-check].
+Prefer 2026 sources, then the last 2–3 years.
+[MOST IMPORTANT: For any WooCommerce or other plugin's feature you want to criticise, please check the latest version — perhaps they already fixed it. Double-check and confirm.]
+OUTPUT: a clean list per category with the fields above. Then VERDICT ON THE PLANNED SENTENCE: accurate / needs rewording / false, with the evidence and a corrected wording. Then a SOURCE LINK LIST of every URL used.
+==================== PASTE TO HERE ====================
+
+
+FIELD BLOCKS — from PureDevs_Video_Topic_Filter_v4.2, in recording order.
+Every PLANNED SENTENCE below is a guess to be tested, not a fact. The research decides whether it survives.
+
+V1
+QUESTION: How much of my WooCommerce revenue comes from returning customers?
+PLUGIN SHOWS: Revenue for a date range split into new customers, returning customers and guest orders, side by side (PRO). The free version shows a Repeat Purchase Rate card.
+PLANNED SENTENCE: WooCommerce lets you filter the Orders report by new or returning customers, but it does not show new, returning and guest revenue side by side for the same dates.
+
+V8
+QUESTION: Where does my store data go when I install this?
+PLUGIN SHOWS: Self-hosted analytics. Tracking runs inside WordPress and everything is stored in the site's own database. No external account, API key or tracking script (FREE).
+PLANNED SENTENCE: Hosted WooCommerce analytics services need an account and copy store data to their own servers; a self-hosted plugin keeps it in the site's own database. For category 1, check how Metorik, Metrilo and Putler connect to a store and where each says the data is stored.
+
+V13
+QUESTION: What are shoppers searching for in my store and not finding?
+PLUGIN SHOWS: A list of on-site search terms that returned zero products, with times searched and last searched (FREE; full history in PRO).
+PLANNED SENTENCE: WooCommerce core does not keep a list of what shoppers type into the store's search box, or of searches that found nothing. For category 1, also check FiboSearch, Advanced Woo Search, SearchWP, Relevanssi and Jetpack Search: which of them report zero-result searches, and in which plan.
+
+V4
+QUESTION: Where do shoppers drop off before they pay?
+PLUGIN SHOWS: A store-wide funnel (visitors → add to cart → checkout started → purchased) with stage-to-stage rates, over time and per product (PRO).
+PLANNED SENTENCE: WooCommerce Analytics reports orders and revenue, but has no funnel from visit to add-to-cart to checkout to purchase. For category 1, also check the official Google Analytics for WooCommerce extension, MonsterInsights and Metorik.
+
+V16
+No research run. The video is about our own Free and Pro tiers. Go straight to Step 1 in Claude and write "Research: none".
+
+V14
+QUESTION: Which products get viewed but not bought?
+PLUGIN SHOWS: Most viewed products (FREE) and a table of views against purchases for every product (PRO).
+PLANNED SENTENCE: WooCommerce's Products report shows what sold, not how many times each product page was viewed. For category 1, also check Jetpack Stats, Metorik and any "product views" plugin.
+
+V7
+QUESTION: When do my customers actually buy?
+PLUGIN SHOWS: Revenue by day of the week, by hour of the day, and a day-by-hour heat-map (PRO).
+PLANNED SENTENCE: WooCommerce charts revenue over time, but has no report that ranks days of the week or hours of the day. For category 1, check whether core's charts offer an hourly interval and for which date ranges; also check Metorik and Putler.
+
+V3
+QUESTION: Which products do my customers actually buy together?
+PLUGIN SHOWS: An admin report: pick a product and see which other products appear in the same orders, and how often (PRO). It is a report, not a storefront widget.
+PLANNED SENTENCE: WooCommerce core has no report of which products are bought together, and "frequently bought together" plugins add a storefront widget rather than a report. For category 1, check the official Product Recommendations extension, Metorik and the most-installed "frequently bought together" plugins.

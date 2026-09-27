@@ -1,0 +1,80 @@
+PUREDEVS — CLAUDE RUN SHEET
+Works with the project file PureDevs_Demo_Video_Prompt_Pack_v3.md
+One video at a time. Change the Video ID in each step.
+Steps 2–4 can continue in the same chat as Step 1. In a new chat, attach what is listed under "Attach".
+
+-----
+STEP 1 — DEMO BRIEF
+
+Use this project file
+PureDevs_Demo_Video_Prompt_Pack_v3.md
+Read the UNIVERSAL BLOCK first, then run section # ═══ FILE 2 of 6 — demo-brief-prompt.md ═══
+Video ID: V1
+Research: attached (Gemini output)      [for V16 write: Research: none]
+-
+[MOST IMPORTANT: For any woocommerce or any other plugins, feature you want to criticise, please check the latest version, perhaps they already fixed them. Double check and confirm.]
+
+No spoken figures anywhere in the demo. The narration says "read the proportion, not the number" — which does double duty: it works on any demo store, and it's rhetorically stronger than reciting totals.
+
+Assume there is no 100-customer cap on the free version. Never mention one.
+
+wp.org: https://wordpress.org/plugins/puredevs-customer-history-for-woocommerce/
+website: https://puredevs.com/
+
+and finally do a sanity check and find out any false claim
+-
+OUTPUT: the Demo Brief as a md file
+
+-----
+STEP 2 — SCRIPT + YOUTUBE DESCRIPTION + THUMBNAIL
+
+Using the Demo Brief you generated [new chat: attach the approved Demo Brief] and
+Use this project file
+PureDevs_Demo_Video_Prompt_Pack_v3.md
+Read the UNIVERSAL BLOCK first, then run section # ═══ FILE 3 of 6 — script-prompt.md ═══
+Video ID: V1
+please create the final video script md file
+and also the YOUTUBE PACKAGE and the POSTER / THUMBNAIL
+always do sanity check
+
+-----
+STEP 3 — RECORDING BRIEF FOR THE EDITOR
+
+Using the approved script [new chat: attach the script and the Demo Brief] and
+Use this project file
+PureDevs_Demo_Video_Prompt_Pack_v3.md
+Read the UNIVERSAL BLOCK first, then run section # ═══ FILE 4 of 6 — recording-brief-prompt.md ═══
+Video ID: V1
+Attach: current demo-store screenshots for every screen in the script
+please create a md file for the editor
+Check the screenshots and let me know if you need anything else
+also, at recording time the demo values can be different, so keep that in mind
+always do sanity check
+
+-----
+STEP 4 — PLACEMENT KIT (the 20–30 s cut, question page, email line, wp.org, in-plugin, Capterra/G2, shot list, ad match)
+
+Using the approved script and the Demo Brief [new chat: attach both] and
+Use this project file
+PureDevs_Demo_Video_Prompt_Pack_v3.md
+Read the UNIVERSAL BLOCK first, then run section # ═══ FILE 5 of 6 — placement-kit-prompt.md ═══
+Video ID: V1
+Final video length: [mm:ss, once edited — or write "not edited yet"]
+please create one md file
+always do sanity check
+
+-----
+STEP 5 — FINAL FALSE-CLAIM AUDIT (best in a fresh chat, on the finished package or on anything you edited by hand)
+
+Use this project file
+PureDevs_Demo_Video_Prompt_Pack_v3.md
+Read the UNIVERSAL BLOCK first, then run section # ═══ FILE 6 of 6 — claim-audit-prompt.md ═══
+Video ID: V1
+Attach or paste: the asset(s) to audit
+[MOST IMPORTANT: For any woocommerce or any other plugins, feature you want to criticise, please check the latest version, perhaps they already fixed them. Double check and confirm.]
+OUTPUT: the problem table, the corrected version, and PASS or FIX FIRST
+
+-----
+NO LONGER USED (retired with Content Prompt Pack v2)
+synthesis-prompt.md · shorts-prompt.md · social-prompt.md (all sets) · blog-prompt.md (outline and draft)
+The question page replaces the blog. The one 20–30 s cut replaces the shorts.
