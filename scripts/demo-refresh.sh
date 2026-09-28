@@ -5,7 +5,7 @@
 # then   wp pdwchs-demo verify --report           (report sheet + 0-FAIL gate)
 # and prints a clear record / don't-record verdict.
 #
-# Shoot-day rules (project_asset/docs/last-discussion.txt):
+# Shoot-day rules (project_asset/demo/DEMO-STORE-RUNBOOK.md §3):
 #   - Same-day retakes: nothing to do — keep recording.
 #   - New shoot day:    run this with no args that morning; record the same day.
 #   - Pinned anchor:    byte-identical numbers, but "days since" reads 51+N.
@@ -37,7 +37,8 @@ Usage: scripts/demo-refresh.sh [YYYY-MM-DD] [--snapshot]
 
 Exit 0 + green "0 FAIL" verdict = record; exit 1 = do NOT record.
 Rules: same-day retakes need nothing; record the same day you refresh.
-See project_asset/docs/last-discussion.txt and the runbook §3.
+See project_asset/demo/DEMO-STORE-RUNBOOK.md §3 and, per video,
+project_asset/docs/video-production.md.
 EOF
 }
 

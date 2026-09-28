@@ -55,6 +55,11 @@ every `wpc …` command below then works verbatim.
 
 ## 3. Recording workflow (local)
 
+> **Sep 2026:** this section is the July-series workflow (pinned anchors, the
+> Phase-2 sheet). For the Topic Filter v4.2 videos follow
+> `project_asset/docs/video-production.md`; the refresh / verify commands below
+> still apply.
+
 **Every recording morning:**
 
 ```bash

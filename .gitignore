@@ -51,3 +51,13 @@ node_modules/
 *.zip
 *.sql
 *.sql.gz
+
+# --- Media never enters git (video recordings live in ------------------
+# --- project_asset/content/videos/*/recordings/ and go to the editor via Drive)
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.wav
+*.mp3
+*.m4a

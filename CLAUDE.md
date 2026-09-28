@@ -22,7 +22,8 @@ backups and `wp-config.php` are all ignored. Tracked:
 - `wp-content/plugins/puredevs-customer-history-for-woocommerce` — the free version
 - `wp-content/plugins/pdwchs-demo-tools` — demo data/tooling plugin (needs optimisation)
 - `wp-content/mu-plugins/auto_login_local.php` — local-only auto-login helper
-- `project_asset/` — project docs and demo assets (`marketing/` — see below)
+- `project_asset/` — project docs and demo assets (`marketing/` — see below;
+  `content/videos/` — per-video docs and recordings, see "Demo videos" below)
 - `scripts/` — helper scripts: `wpc` (wp-cli wrapper), `demo-refresh.sh`
   (shoot-morning data refresh), `live-refresh.sh` (live-site refresh via REST),
   `install-plugin.sh` (plugin builds from the dev repo)
@@ -83,12 +84,15 @@ unmaintained: never sync from it or edit it.
   `includes/class-pdwchs-demo-lockdown.php`. Inert unless
   `PDWCHS_DEMO_LOCKDOWN` is defined true in `wp-config.php` (live only).
   Full guide + deploy checklist: `project_asset/docs/demo-site-lockdown.md`
-- V2–V4 video coverage: the seeded dataset carries videos 1–4 (Champions/5-5-5
-  hero, refund + on-hold cases, five-month flat-total revenue shape) and
-  `wp pdwchs-demo verify` machine-checks all of it. These July videos were
-  retired on 2026-09-27: video work now follows
-  `project_asset/strategy/PureDevs_Video_Docs/` (Topic Filter v4.2), and the
-  new V1 set is in `project_asset/demo/videos/v1`. The old V2–V4 coverage report was
+- Demo videos: the July V2–V4 set (Champions/5-5-5 hero, refund + on-hold
+  cases, five-month flat-total revenue shape) was retired on 2026-09-27; the
+  seeded dataset and `wp pdwchs-demo verify` still carry its checks until the
+  verifier is re-scoped. Video work now follows
+  `project_asset/strategy/PureDevs_Video_Docs/` (Topic Filter v4.2 + Prompt
+  Pack v3). Per-video docs, scene files and recordings live in
+  `project_asset/content/videos/vN/` (video/audio files are gitignored). The
+  workflow — who does what, gates, the recorder, status per video — is
+  `project_asset/docs/video-production.md`. The old V2–V4 coverage report was
   removed on 2026-07-30 with the superseded docs; read it from git history:
   `git show a5a0bb4^:project_asset/docs/v2-v4-coverage-report.md`.
 - Storefront branding: the shop is styled as **Northline Supply Co.** (apparel)
