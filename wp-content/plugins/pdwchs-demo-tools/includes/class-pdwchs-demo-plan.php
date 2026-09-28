@@ -135,6 +135,7 @@ class PDWCHS_Demo_Plan {
 			$this->build_refund_cases()              // V3: refund/on-hold case customers
 		);
 		$this->extend_guests( $guest_orders );       // V4: guest revenue steady every month
+		$this->add_repeat_buyers( $customers );      // V1 scene 08: Repeat Purchase Rate card > 0
 
 		// V4 shape: after every cohort exists, re-balance the qreg plug so the
 		// five-month total is flat and returning declines at THIS anchor day.
@@ -1235,6 +1236,35 @@ class PDWCHS_Demo_Plan {
 			);
 		}
 		$guest_orders['browse'] = $browse;
+	}
+
+	/**
+	 * V1 scene 08: the free build's "Repeat Purchase Rate" card is window-
+	 * scoped — a customer counts as repeat only with two or more paid orders
+	 * INSIDE the 30-day range (class-pdwchs-revenue-data-free.php,
+	 * pdwchs_query_repeat_counts). Every archetype above places at most one
+	 * order per 30 days (potentials re-order every 28-42 days, actives every
+	 * 30-52), so the card read 0 %. Give eight potentials a quick re-order ten
+	 * days before their latest one: days-ago placement keeps both orders inside
+	 * the window at ANY anchor, the extra recent order keeps churn Low, and the
+	 * compensator absorbs the revenue (it re-plugs the anchor month). Runs on
+	 * the extension stream after every cohort is built, so no earlier draw moves.
+	 */
+	private function add_repeat_buyers( &$customers ) {
+		$added = 0;
+		foreach ( $customers as $idx => $c ) {
+			if ( 'potential' !== $c['archetype'] || $added >= 8 ) {
+				continue;
+			}
+			$last = min( wp_list_pluck( $c['orders'], 'days' ) );
+			if ( $last < 2 || $last > 18 ) { // the re-order must land <= day 28
+				continue;
+			}
+			$order = $this->order( $last + 10, $this->rnd( 30, 52 ) );
+			$customers[ $idx ]['orders'][] = $order;
+			$customers[ $idx ]['visits'][] = $this->visit( $order['days'], 'order', count( $customers[ $idx ]['orders'] ) - 1, array( 'hh' => $order['hh'], 'mm' => max( 0, $order['mm'] - 9 ) ) );
+			$added++;
+		}
 	}
 
 	// ── expectations / analytic pre-check ───────────────────────────────

@@ -113,7 +113,7 @@ if [ "$VERIFY_OK" -eq 1 ]; then
   else
     printf '%s\n' "${GREEN}${BOLD}0 FAIL — retake dataset for $ANCHOR rebuilt.  (${MIN}m${SEC}s; staleness warnings expected)${RESET}"
   fi
-  printf '%s\n' "If there are WARN lines above: read them, decide. The report sheet must match your narration."
+  printf '%s\n' "If there are WARN lines above: read them, decide. The answer-frame sheet feeds the delivery note (which card is biggest), never the narration."
   exit 0
 else
   printf '%s\n' "${RED}${BOLD}VERIFY FAILED — do NOT record.${RESET}"

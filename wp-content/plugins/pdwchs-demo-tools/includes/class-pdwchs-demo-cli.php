@@ -88,9 +88,12 @@ class PDWCHS_Demo_CLI {
 	}
 
 	/**
-	 * Run the Phase-1E acceptance checks (read-only).
+	 * Run the demo-store acceptance checks (read-only): environment, dataset
+	 * shape, Pro dashboard widgets alive (warn only) and the per-video checks
+	 * (v1_*, v4_*) from project_asset/docs/video-production.md §3.
 	 *
-	 * [--report]  Also print the Phase-2 report-back sheet values.
+	 * [--report]  Also print the answer-frame sheet: what the V1 screens show
+	 *             today. Feeds the delivery note, never the narration.
 	 */
 	public function verify( $args, $assoc ) {
 		$verifier = new PDWCHS_Demo_Verifier();
@@ -106,7 +109,7 @@ class PDWCHS_Demo_CLI {
 		}, $result['checks'] ), array( 'status', 'check', 'actual' ) );
 
 		if ( ! empty( $assoc['report'] ) ) {
-			WP_CLI::log( "\nPhase-2 report-back sheet:" );
+			WP_CLI::log( "\nAnswer-frame sheet (what the V1 screens show today):" );
 			foreach ( $verifier->report() as $field => $value ) {
 				WP_CLI::log( sprintf( '  %-28s %s', $field . ':', is_array( $value ) ? implode( ' | ', $value ) : $value ) );
 			}

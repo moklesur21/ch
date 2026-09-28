@@ -86,8 +86,9 @@ unmaintained: never sync from it or edit it.
   Full guide + deploy checklist: `project_asset/docs/demo-site-lockdown.md`
 - Demo videos: the July V2–V4 set (Champions/5-5-5 hero, refund + on-hold
   cases, five-month flat-total revenue shape) was retired on 2026-09-27; the
-  seeded dataset and `wp pdwchs-demo verify` still carry its checks until the
-  verifier is re-scoped. Video work now follows
+  seeder still builds that data, but `wp pdwchs-demo verify` was re-scoped on
+  2026-09-28 to the v4.2 videos (`v1_*`, `v4_*`; `dash_*` warn only). Video
+  work now follows
   `project_asset/strategy/PureDevs_Video_Docs/` (Topic Filter v4.2 + Prompt
   Pack v3). Per-video docs, scene files and recordings live in
   `project_asset/content/videos/vN/` (video/audio files are gitignored). The

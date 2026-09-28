@@ -106,10 +106,18 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
 - If the seeder cannot meet a prerequisite, fix the seeder
   (`class-pdwchs-demo-seeder.php`). V13's zero-result searches are missing
   because search rows are written without `results_count`.
-- Known debt: the verifier still carries the July V2–V4 checks (hero churn,
-  Champions, refund cases, the flat five-month shape). First job under V1:
-  re-scope it to the v4.2 list so 0 FAIL means something again. Until then,
-  read the report and ignore the July rows.
+- Done 28 Sep 2026: the verifier is scoped to the v4.2 list — `env_*`,
+  `data_*`, `dash_*` (Pro dashboard widgets alive, warn only, for V16's
+  scroll-past), `v1_*`, `v4_funnel`. The July hero / V2 / V3 / V4-shape checks
+  are gone (git history has them); the seeder still builds that data. The
+  `v1_*` checks call the plugin's own methods for the same window the screens
+  send (today and the 29 days before it), and `verify --report` prints the
+  answer-frame sheet: the three cards, which is biggest, the guest position,
+  the badge and the repeat rate — the delivery-note facts, never narration.
+- The demo-tools plugin is also what the live site regenerates from
+  (`scripts/live-refresh.sh`): after any seeder or verifier change here,
+  upload the same plugin version to ch.puredevs.com before the next live
+  refresh, or the live verdict will differ.
 - Timing: widgets cache up to 30 minutes, so finish seeding at least 30 minutes
   before recording. Record on the day you refresh (`demo-refresh.sh --help`
   covers pinned anchors and retakes).
@@ -241,7 +249,7 @@ sets up nothing; a wrong clip is re-made by re-running its scene.
 
 | Video | Week (§6) | 1 Research | 2 Brief + Script | 3 Data verified | 4 Recorded | 5 Edited | 6 Kit + audit |
 |---|---|---|---|---|---|---|---|
-| V1 returning revenue (PRO) | 1 | used 21 Sep; not archived in `research/` — Demo Brief §12 carries the checks | Brief v1.2 + Script v1.2, approved 21 Sep | not yet: no `v1_*` checks; verifier still July-scoped | not yet; Recording Brief v1.2 was written for a human editor with two sites — revise for the recorder | — | Kit v1.1 drafted; `[LENGTH]` open; audit pending |
+| V1 returning revenue (PRO) | 1 | used 21 Sep; not archived in `research/` — Demo Brief §12 carries the checks | Brief v1.2 + Script v1.2, approved 21 Sep | **done 28 Sep**: verifier re-scoped to v4.2 (`v1_*`, `v4_funnel`, `dash_*` warn-only); seeder gives 8 potentials a second in-window order so the free Repeat Purchase Rate card is not 0 %; `demo-refresh.sh` → 31 pass / 0 fail | not yet; Recording Brief v1.2 was written for a human editor with two sites — revise for the recorder | — | Kit v1.1 drafted; `[LENGTH]` open; audit pending |
 | V8 data location (FREE) | 1 | — | — | needs a site state without the plugin, for the one-take install | — | — | — |
 | V13 zero-result searches (FREE) | 2 | — | — | zero-result rows missing from the seeder; record on the free build | — | — | — |
 | V4 funnel (PRO) | 3 | — | — | — | — | — | — |
