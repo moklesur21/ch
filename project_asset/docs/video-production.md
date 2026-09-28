@@ -121,6 +121,18 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
 - Timing: widgets cache up to 30 minutes, so finish seeding at least 30 minutes
   before recording. Record on the day you refresh (`demo-refresh.sh --help`
   covers pinned anchors and retakes).
+- Environment (found 28 Sep 2026, fixed the same day): MAMP's MySQL 5.7
+  dropped most concurrent connections once mysqld held more than 1024 open
+  files — `File Descriptor N exceeded FD_SETSIZE=1024` in
+  `/Applications/MAMP/logs/mysql_error.log`. The dashboard fires a dozen
+  admin-ajax calls at once, so its cards showed "—" and the badge "Could not
+  load integrity check" while single requests (and WP-CLI) worked. Fix:
+  `/Applications/MAMP/conf/my.cnf` with `innodb_open_files = 300` and
+  `table_open_cache = 400`, then restart MySQL in MAMP. The file lives
+  outside the repo — re-create it after a MAMP reinstall. Before a recording
+  session: `SHOW GLOBAL STATUS LIKE 'Connection_errors_internal'` must be 0
+  and the error log must have no FD_SETSIZE lines; a burst of 12 fetches to
+  the split endpoint from the dashboard page must all return JSON.
 
 ### Step 4 — Recording brief, scene file, recording (Claude)
 
@@ -216,7 +228,11 @@ Status: **not built yet.** Replace this section with what actually worked.
   in `scenes.json`. Rest "under the label", never over a number.
 - Cleanliness: before each scene it asserts no spinner, error, "No data",
   update badge or admin notice; on failure it stops and reports instead of
-  recording.
+  recording. The full Pro dashboard takes well over 8 s to settle on this Mac
+  (a dozen widgets, each its own admin-ajax call), so "ready" means no
+  `.spinner.is-active` is visible, not a fixed wait. The update nags seen on
+  28 Sep ("88 updates available", the WordPress 7.1.2 notice, the red bubbles)
+  are a `[DEV SETUP]` item for step 4: update or hide them before recording.
 - Setup and cleanup exactly as `tooling/README.md` steps 3 and 5: throw-away
   admin, `creds.json` outside git, delete both afterwards, remove the tier
   override if it was used.

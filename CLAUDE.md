@@ -67,6 +67,11 @@ unmaintained: never sync from it or edit it.
   adds `--socket` for `db export`/`db import`). Shoot-morning routine:
   `scripts/demo-refresh.sh` — refresh + verify + record/don't-record verdict
   in one command.
+- MAMP's MySQL 5.7 needs `/Applications/MAMP/conf/my.cnf` with
+  `innodb_open_files = 300` and `table_open_cache = 400` (added 2026-09-28,
+  outside the repo — re-create after a MAMP reinstall). Without it mysqld
+  passes 1024 open files and drops concurrent connections (select() /
+  FD_SETSIZE), so the plugin dashboard's parallel AJAX shows "—".
 - Both builds are installed side by side; activate one at a time — free for the
   realistic upgrade-flow demo, pro for Pro features (pro is active as of 2026-09-26).
 - Auto-login helper (mu-plugin): `http://localhost/ch/?local_login=1&user_email=<email>`
