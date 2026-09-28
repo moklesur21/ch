@@ -24,6 +24,7 @@ and §5 (the recorder) with what actually worked on V1.
 | The research prompt (FILE 1, paste-ready, with a FIELD BLOCK per video) | `project_asset/strategy/PureDevs_Video_Docs/gemini.txt` |
 | What the product does, Free / Pro, exact UI wording, ⛔ / ⚑ notes | `project_asset/marketing/MARKETING-BRIEF-3.1.2.md` (+ `-PDF-INDEX.md`) — and, in this repo, the installed plugin code itself |
 | Format, placements, exclusions, ad rules | `project_asset/marketing/PureDevs_Proof_Marketing_Ad_Strategy_v1.md` |
+| The voice: ElevenLabs clone of Yeasir's own voice — plan, model, locked settings, voice log, script conversion, chunking, listening check, file naming, editing to the audio, re-renders, YouTube disclosure | `project_asset/strategy/PureDevs_Video_Docs/PureDevs_ElevenLabs_Voiceover_Workflow_v1_1.md` (owner decision 28 Sep 2026; applies to every video) |
 | Launch dates | `project_asset/strategy/assets/PureDevs_Execution_List_v1.md` — ad launch Tue 6 Oct 2026. The Topic Filter's §6 week plan still shows the older dates |
 | Demo data: refresh, verify, seeder | `scripts/demo-refresh.sh` · `wp-content/plugins/pdwchs-demo-tools/` · `project_asset/demo/DEMO-STORE-RUNBOOK.md` |
 | Browser tooling: login, tier override, Chrome via playwright-core | `project_asset/marketing/tooling/` and its `README.md` |
@@ -50,8 +51,10 @@ project_asset/content/videos/vN/
     scene-01.mp4 … scene-NN.mp4        video and audio files are gitignored (*.mp4 *.mov *.webm *.mkv *.wav *.mp3 *.m4a)
     answer-frame.png · answer-frame-crop.png · poster.png
     delivery-note.md                   which card / bar / row is biggest, when recorded, anything skipped — never an amount
-    voice-over.md                      the spoken script with every [A]/[B] option resolved
+    voice-over.md                      the CAPTION script: the approved words with every [A]/[B] option resolved, correct spelling
+    voice-over-elevenlabs.md           the VOICE script for ElevenLabs: same words, [PAUSE] → break tags, one chunk per beat
     captions.srt                       draft burned-in captions with the emphasis words marked
+    voice/                             step 5 — the generated narration, one file per chunk (V1_b1.wav …); audio is gitignored
 ```
 
 Rules: file names follow the V1 pattern (`PureDevs_V1_Script_v1_2.md`); every
@@ -67,8 +70,8 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
 | 1 | Research | Yeasir | `gemini.txt` + the video's FIELD BLOCK | `vN/research/*` | — |
 | 2 | Demo Brief, then Script + YouTube package + poster spec | Claude | Topic Filter row · Brief entries · research · plugin code · freshness checks made today | Demo Brief, Script | **A — Yeasir approves the script.** Nothing is recorded before this |
 | 3 | Demo data | Claude | the row's demo prerequisites + the script's stop-and-report conditions | `verify` checks for this video, seeder fixes if needed, a green `demo-refresh.sh` | verify: 0 FAIL |
-| 4 | Recording brief, scene file, recording | Claude | approved script, green data | Recording Brief, `scenes.json`, `recordings/*` | **B — scene-01, the answer frame, goes to Yeasir first** as the quality check, before the rest is recorded |
-| 5 | Voice-over and edit | Yeasir + editor | `recordings/`, Recording Brief §C–§E, poster spec | the 1080p master + the 20–30 s cut | — |
+| 4 | Recording brief, scene file, recording, the two scripts | Claude | approved script, green data | Recording Brief, `scenes.json`, `recordings/*` incl. `voice-over.md` (caption script) and `voice-over-elevenlabs.md` (voice script) | **B — scene-01, the answer frame, goes to Yeasir first** as the quality check, before the rest is recorded |
+| 5 | Voice (ElevenLabs) and edit | Yeasir + editor | the voice script, the voice log; then `recordings/` + `voice/`, Recording Brief §D–§E, poster spec | `recordings/voice/*.wav`, then the 1080p master + the 20–30 s cut | — |
 | 6 | Placement kit and final audit | Claude | the final export | Placement Kit; FILE 6 audit → **PASS / FIX FIRST** | **C — PASS before anything is published** |
 
 ### Step 1 — Research (Yeasir)
@@ -150,10 +153,19 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
   - `delivery-note.md` — the editor's note as FILE 4 §E asks, written from what
     the page showed (which card is biggest, where guest sits, date and time,
     anything skipped). Which box, never the amount.
-  - `voice-over.md` — the script with the `[A]/[B]` and `[C]/[D]` options
-    chosen from the delivery note. This is what Yeasir records.
+  - `voice-over.md` — the **caption script**: the approved script with the
+    `[A]/[B]` and `[C]/[D]` options chosen from the delivery note, correct
+    spelling, the emphasis words listed. Captions, the question-page
+    walkthrough and the YouTube transcript come from it.
+  - `voice-over-elevenlabs.md` — the **voice script**, built from the caption
+    script by the ElevenLabs workflow's §2 rules: the same words, word for
+    word; `[PAUSE]` → `<break time="0.7s" />` (`1.0s` before the decision or
+    CTA line); one chunk per beat, beat 3 and any beat over about 60 words or
+    3 breaks split; respellings from the voice log go here only, never into
+    captions; no figures, no URLs, no trial terms. It ends with the chunk
+    plan (`V1_b1` …) and a word-for-word check against the caption script.
   - `captions.srt` — draft captions with the emphasis words marked, timed to
-    the script's beat slots; the editor re-times them to the voice-over.
+    the script's beat slots; the editor re-times them to the audio.
 - Free scenes are recorded on the free build activated in place of Pro (both
   are installed side by side, one active at a time: `scripts/wpc plugin
   deactivate … && scripts/wpc plugin activate …`), with every trial notice
@@ -164,14 +176,31 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
   admin browsing is never recorded, and they come before any plugin page in
   the same scene (Free reads cache 30 minutes).
 
-### Step 5 — Voice-over and edit (Yeasir + editor)
+### Step 5 — Voice (ElevenLabs) and edit (Yeasir + editor)
 
-- The editor receives `recordings/` (Drive or similar, never the git repo),
-  the Recording Brief, the Script's §C poster spec and `voice-over.md`.
-- The voice-over is recorded from `voice-over.md`; captions use only the lines
-  actually spoken.
-- Master at 1080p; the 20–30 s cut per Placement Kit §1; poster 1280 × 720,
-  under 2 MB.
+- The narration is generated, not recorded: an ElevenLabs Instant Voice Clone
+  of Yeasir's own voice (owner decision 28 Sep 2026; pronunciation test
+  passed), Eleven Multilingual v2, the settings locked in the workflow's voice
+  log. Yeasir pastes `voice-over-elevenlabs.md` one chunk at a time, in order,
+  in one session, listens to every chunk on headphones, and keeps the best
+  take — workflow §3–§4. Audio is made **after** the recording and **before**
+  the picture edit: the script's timings were estimates, the real audio sets
+  the cut.
+- Files: `recordings/voice/V1_b1.wav …` (WAV if the plan offers it, else the
+  highest MP3; `_t2` for a replacement take) plus a short note: date and
+  "voice log unchanged". Audio is gitignored.
+- The editor receives `recordings/` and `voice/` (Drive or similar, never the
+  git repo), the Recording Brief and the Script's §C poster spec. Audio first,
+  then the picture is cut to it: holds never below 5 s on a card, chart or
+  table, the answer frame ≥ 8 s; captions from `voice-over.md` /
+  `captions.srt`, never from the voice script; the voice track normalised once
+  (about −14 LUFS integrated, peaks ≤ −1 dBTP); the master within 60–120 s
+  (tell Yeasir if it passes 2:00 — the "2-minute demo" ad lines depend on it).
+- Master at 1080p; the 20–30 s cut per Placement Kit §1 from the same chunks;
+  poster 1280 × 720, under 2 MB.
+- A later change re-renders only the affected chunk with the same voice ID and
+  settings and re-checks the length (workflow §7). No YouTube AI disclosure is
+  needed for an own-voice clone (workflow §8).
 
 ### Step 6 — Placement kit and final audit (Claude)
 
@@ -306,7 +335,9 @@ sets up nothing; a wrong clip is re-made by re-running its scene.
 
 - Sign in to, or accept anything on, an outside service (Freemius opt-in,
   trial start, WordPress.org, YouTube).
-- Judge the voice-over's delivery — only timing, captions and claims.
+- Generate the audio: ElevenLabs holds Yeasir's account and voice clone.
+  Claude prepares and checks the two scripts; Yeasir generates and listens.
+- Judge the voice's delivery — only the words, timing, captions and claims.
 - Touch the live site or its data.
 
 ---
@@ -315,7 +346,7 @@ sets up nothing; a wrong clip is re-made by re-running its scene.
 
 | Video | Week (§6) | 1 Research | 2 Brief + Script | 3 Data verified | 4 Recorded | 5 Edited | 6 Kit + audit |
 |---|---|---|---|---|---|---|---|
-| V1 returning revenue (PRO) | 1 | used 21 Sep; not archived in `research/` — Demo Brief §12 carries the checks | Brief v1.2 + Script v1.2, approved 21 Sep | **done 28 Sep**: verifier re-scoped to v4.2 (`v1_*`, `v4_funnel`, `dash_*` warn-only); seeder gives 8 potentials a second in-window order so the free Repeat Purchase Rate card is not 0 %; `demo-refresh.sh` → 31 pass / 0 fail | **done 28 Sep**: gate B passed on scene-01; all eight clips recorded (3840 × 2160, 2:33 of footage), stills, `delivery-note.md` (option A / C), `voice-over.md`, `captions.srt`; Recording Brief v1.3 | next: Yeasir records the voice from `voice-over.md`; editor gets `recordings/` + brief v1.3 | Kit v1.1 drafted; `[LENGTH]` open; audit pending |
+| V1 returning revenue (PRO) | 1 | used 21 Sep; not archived in `research/` — Demo Brief §12 carries the checks | Brief v1.2 + Script v1.2, approved 21 Sep | **done 28 Sep**: verifier re-scoped to v4.2 (`v1_*`, `v4_funnel`, `dash_*` warn-only); seeder gives 8 potentials a second in-window order so the free Repeat Purchase Rate card is not 0 %; `demo-refresh.sh` → 31 pass / 0 fail | **done 28 Sep**: gate B passed on scene-01; all eight clips recorded (3840 × 2160, 2:33 of footage), stills, `delivery-note.md` (option A / C), `voice-over.md`, `voice-over-elevenlabs.md` (8 chunks, 239 words), `captions.srt`; Recording Brief v1.4 | next: Yeasir fills the voice log and generates the 8 chunks (workflow §1.6, §3); editor gets `recordings/` + `voice/` + brief v1.4 and cuts picture to the audio | Kit v1.1 drafted; `[LENGTH]` open; audit pending |
 | V8 data location (FREE) | 1 | — | — | needs a site state without the plugin, for the one-take install | — | — | — |
 | V13 zero-result searches (FREE) | 2 | — | — | zero-result rows missing from the seeder; record on the free build | — | — | — |
 | V4 funnel (PRO) | 3 | — | — | — | — | — | — |

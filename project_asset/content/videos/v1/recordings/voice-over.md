@@ -1,8 +1,9 @@
-# V1 voice-over — what Yeasir records
+# V1 voice-over — the caption script
 
 **From:** `PureDevs_V1_Script_v1_2.md` §A, with the recording-day options resolved from `delivery-note.md` (28 Sep 2026): **option A** — Returning Customers is the biggest card · **option C** — Guest Orders is the smallest of the three.
+**Role:** the narration's words with correct spelling — the source for the captions, the question-page walkthrough and the YouTube transcript. The audio itself is generated with ElevenLabs from `voice-over-elevenlabs.md`, which carries these same words with the pauses as break tags, one chunk per beat (`PureDevs_ElevenLabs_Voiceover_Workflow_v1_1.md` §2).
 **Length:** about 1:46 · 239 spoken words · founder voice, second person, short sentences · `[PAUSE]` = a beat of air.
-**Rule:** no figure is spoken anywhere. If the answer frame is ever re-recorded on another day, re-read `delivery-note.md` first: a different biggest card means options B / D, not this file.
+**Rule:** no figure is spoken anywhere. If the answer frame is ever re-recorded on another day, re-read `delivery-note.md` first: a different biggest card means options B / D, and both scripts change.
 
 ---
 
