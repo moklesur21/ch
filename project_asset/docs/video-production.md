@@ -208,38 +208,88 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
 
 ---
 
-## 5. The recorder — plan, to be proven on V1
-
-Status: **not built yet.** Replace this section with what actually worked.
+## 5. The recorder — built 28 Sep 2026, proven on V1 scene-01
 
 - File: `project_asset/marketing/tooling/record-scenes.mjs`, next to
-  `capture-screens.mjs`, reusing its login (`.auth/creds.json`, a throw-away
-  admin), its Chrome (playwright-core driving the installed Google Chrome — no
-  browser download) and, if needed, the tier override. Run:
-  `node record-scenes.mjs --video v1 [--only scene-01]` →
-  `content/videos/v1/recordings/`.
-- Picture: viewport 1920 × 1080 at device scale 2, so the source is
-  3840 × 2160 and the editor's zooms stay sharp. Frames captured with CDP
-  `Page.startScreencast` (fallback: timed screenshots), encoded with ffmpeg
-  (H.264, 30 fps, high bitrate) into `scene-NN.mp4`. Playwright's own
-  `recordVideo` is the last resort: low bitrate, soft picture.
-- Cursor: headless Chrome draws none, so the recorder injects a highlighted
-  cursor into the page and moves it with eased motion between the rest points
-  in `scenes.json`. Rest "under the label", never over a number.
-- Cleanliness: before each scene it asserts no spinner, error, "No data",
-  update badge or admin notice; on failure it stops and reports instead of
-  recording. The full Pro dashboard takes well over 8 s to settle on this Mac
-  (a dozen widgets, each its own admin-ajax call), so "ready" means no
-  `.spinner.is-active` is visible, not a fixed wait. The update nags seen on
-  28 Sep ("88 updates available", the WordPress 7.1.2 notice, the red bubbles)
-  are a `[DEV SETUP]` item for step 4: update or hide them before recording.
-- Setup and cleanup exactly as `tooling/README.md` steps 3 and 5: throw-away
-  admin, `creds.json` outside git, delete both afterwards, remove the tier
-  override if it was used.
+  `capture-screens.mjs` (same playwright-core, same installed Google Chrome,
+  no browser download). Scene file: `content/videos/vN/scenes.json`. Runs:
+  - `node record-scenes.mjs --video v1 --probe` — readiness audit, geometry,
+    home-position check, park point, the resolved A/B and C/D facts, the
+    screencast frame size; `probe.png` goes to the OS temp dir; records nothing.
+  - `node record-scenes.mjs --video v1 --only scene-01,scene-02`, or without
+    `--only` for every scene plus the stills and `delivery-note.md`.
+  - Options: `--fps 30 --crf 16 --keep-frames --force`.
+- Login: the local auto-login helper, as the throw-away admin `pdwchs-shot`
+  (`shot@example.invalid`, display name "Sarah M.", default avatar). Never
+  the real admin: the page carries that account's Gravatar hash. Create it
+  with `scripts/wpc user create pdwchs-shot shot@example.invalid
+  --role=administrator --display_name="Sarah M." --user_pass=<random>` and
+  `scripts/wpc user meta update pdwchs-shot show_welcome_panel 0`; delete it
+  when the series is done. No password is stored anywhere.
+- Picture: viewport 1920 × 1080 CSS px at device scale 2. Chrome's own
+  screencast (CDP `Page.startScreencast`, JPEG q93) delivers 3840 × 2160
+  frames whenever something repaints; each frame is saved with Chrome's
+  timestamp, ffmpeg's concat demuxer turns the timestamps into per-frame
+  durations, then `fps=30`, libx264 preset fast, CRF 16, yuv420p, faststart,
+  cut to the scene's exact length. A static scene is one frame; the 12 s
+  answer frame is about 750 KB.
+- Cursor: headless Chrome draws none, so an init script adds a fixed overlay
+  (black-and-white arrow plus a 48 px amber ring) that follows real
+  `mousemove` events; the recorder drives `page.mouse.move` in eased 14 ms
+  steps, so hover states are real; a click pulses the ring. Smooth scrolls
+  run in-page with requestAnimationFrame.
+- Readiness audit before every scene, and again after the click in scene 02:
+  no visible spinner or "Loading…", no notice, welcome panel or update /
+  count bubble, none of "Failed to load", "Could not load", "No data",
+  "Error establishing", "Data Mismatch"; the three cards and four KPIs
+  populated; badge "Data Verified"; on the free Revenue page the Repeat
+  Purchase Rate card present and not 0 %. A failure means the scene is not
+  recorded (`--force` overrides). The Pro dashboard needs 10–12 s to settle
+  (the plugin's session lock serialises its AJAX), so "ready" is a condition,
+  never a fixed wait.
+- Positions come from the DOM at run time (`heading:`, `text:` and CSS
+  selectors): rest points "below", "right", "center", "below-right" and
+  "text-right" (beside the text of a full-width block). Check every new rest
+  point once at full resolution, not on a downscaled tile: on the V1 cards
+  the label spans the card, so "below" lands at the card's centre on the
+  amount's row, beside the left-aligned number — which is what the brief
+  wants. Park points: the blank header row between the widget title and the
+  date box (inside the frame, outside beat 1's crop), below the cards, or the
+  admin-menu gap. The home position is computed (split section bottom 70 px
+  above the frame bottom — any more and Retention's heading creeps in) and
+  checked (title and date box visible, Retention off screen).
+  `{biggest-card}` resolves from what the screen shows. A click that loads a
+  new document is declared (`"nav": true`) so the recorder waits for it.
+- Builds: each scene names `pro` or `free`; the recorder switches with WP-CLI
+  (`plugin deactivate` / `activate`) and restores the original build at the
+  end.
+- Output: `recordings/scene-NN.mp4`, `answer-frame.png` (3840 × 2160),
+  `answer-frame-crop.png` (the split section), `delivery-note.md` (which card
+  is biggest, the guest position, the margin, the clip table — no amounts).
+- `[DEV SETUP]` done for V1 on 28 Sep: WordPress 7.1.2, WooCommerce 11.1.2
+  and every plugin and theme updated (no update bubbles); WooCommerce
+  post-update notices cleared; the WooPayments incentive badge on the
+  Payments menu dismissed for the shot user through WooCommerce's own
+  `Payments::dismiss_extension_suggestion_incentive(…, do_not_track = true)`;
+  UpdraftPlus's "thank you" notice dismissed through its own option
+  (`updraftplus_dismisseddashnotice`, a year ahead); welcome panel off; the
+  WordPress home screen (scene 02's first frame) tidied through the account's
+  own Screen Options: at 1920 px the dashboard is always four columns and an
+  empty column shows a dashed "Drag boxes here" box, so the account keeps
+  exactly four neutral widgets, one per column (`meta-box-order_dashboard`:
+  WooCommerce Status · At a Glance · Recent Reviews · Quick Draft) and hides
+  the rest (`metaboxhidden_dashboard`: Site Health, Events & News, Activity,
+  WooCommerce Setup); Email Log's widget is hidden through the plugin's own
+  `email-log-core[hide_dashboard_widget]` setting. Re-check with `--probe`
+  before every session.
 - Not the recorder's job: anything that signs in to or accepts something on an
   outside service — the Freemius opt-in prompt in V8, starting the trial in
   V16. Those steps are Yeasir's, on camera, or are filmed on the local builds
   without the sign-in.
+- Switch builds only when the screen itself differs. V1's scene 08 (the
+  Repeat Purchase Rate card, REV-02) is recorded on Pro: the card is the same
+  template in both builds and the zoom never reaches the tab bar. A free-only
+  screen (V13's Zero-Result Searches) still needs the free build.
 
 ---
 
@@ -265,7 +315,7 @@ sets up nothing; a wrong clip is re-made by re-running its scene.
 
 | Video | Week (§6) | 1 Research | 2 Brief + Script | 3 Data verified | 4 Recorded | 5 Edited | 6 Kit + audit |
 |---|---|---|---|---|---|---|---|
-| V1 returning revenue (PRO) | 1 | used 21 Sep; not archived in `research/` — Demo Brief §12 carries the checks | Brief v1.2 + Script v1.2, approved 21 Sep | **done 28 Sep**: verifier re-scoped to v4.2 (`v1_*`, `v4_funnel`, `dash_*` warn-only); seeder gives 8 potentials a second in-window order so the free Repeat Purchase Rate card is not 0 %; `demo-refresh.sh` → 31 pass / 0 fail | not yet; Recording Brief v1.2 was written for a human editor with two sites — revise for the recorder | — | Kit v1.1 drafted; `[LENGTH]` open; audit pending |
+| V1 returning revenue (PRO) | 1 | used 21 Sep; not archived in `research/` — Demo Brief §12 carries the checks | Brief v1.2 + Script v1.2, approved 21 Sep | **done 28 Sep**: verifier re-scoped to v4.2 (`v1_*`, `v4_funnel`, `dash_*` warn-only); seeder gives 8 potentials a second in-window order so the free Repeat Purchase Rate card is not 0 %; `demo-refresh.sh` → 31 pass / 0 fail | **done 28 Sep**: gate B passed on scene-01; all eight clips recorded (3840 × 2160, 2:33 of footage), stills, `delivery-note.md` (option A / C), `voice-over.md`, `captions.srt`; Recording Brief v1.3 | next: Yeasir records the voice from `voice-over.md`; editor gets `recordings/` + brief v1.3 | Kit v1.1 drafted; `[LENGTH]` open; audit pending |
 | V8 data location (FREE) | 1 | — | — | needs a site state without the plugin, for the one-take install | — | — | — |
 | V13 zero-result searches (FREE) | 2 | — | — | zero-result rows missing from the seeder; record on the free build | — | — | — |
 | V4 funnel (PRO) | 3 | — | — | — | — | — | — |

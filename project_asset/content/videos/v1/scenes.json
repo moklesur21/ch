@@ -1,0 +1,148 @@
+{
+  "video": "v1",
+  "title": "How much of my WooCommerce revenue comes from returning customers?",
+  "source": "PureDevs_V1_Recording_Brief_v1_2.md §B scene table; holds and rest points as written there",
+  "base": "http://localhost/ch",
+  "user": "shot@example.invalid",
+  "viewport": { "width": 1920, "height": 1080, "scale": 2 },
+  "dashboard": "/wp-admin/admin.php?page=pd-woo-dashboard",
+  "home": {
+    "comment": "Home position: scroll so the three Revenue by Customer Type cards sit fully visible near the bottom of the frame; 'Revenue Analytics' and the date box should still be above them, 'Retention' must be off screen.",
+    "anchor": ".pdwchs-revenue-split-section",
+    "bottomGap": 70,
+    "mustBeVisible": ["heading:Revenue Analytics", "#pdwchs-revenue-date-picker"],
+    "mustBeHidden": ["heading:Retention"]
+  },
+  "ready": {
+    "dashboard": ["no-spinner", "no-notice", "no-error", "split-loaded", "badge-verified"],
+    "wp-home": ["no-spinner", "no-notice"],
+    "revenue-free": ["no-notice", "no-error", "repeat-rate-loaded"]
+  },
+  "stills": {
+    "answer-frame": { "scene": "scene-01", "kind": "viewport" },
+    "answer-frame-crop": { "scene": "scene-01", "kind": "clip", "selector": ".pdwchs-revenue-split-section", "pad": 24 }
+  },
+  "scenes": [
+    {
+      "id": "scene-01",
+      "beat": "1 (reused in 5 and the end card)",
+      "build": "pro",
+      "url": "{dashboard}",
+      "ready": "dashboard",
+      "setup": [ { "do": "home" }, { "do": "park", "where": "empty" } ],
+      "steps": [ { "do": "hold", "s": 12 } ],
+      "note": "Answer frame. Cursor parked away from the cards, no movement."
+    },
+    {
+      "id": "scene-02",
+      "beat": "2",
+      "build": "pro",
+      "url": "/wp-admin/",
+      "ready": "wp-home",
+      "setup": [ { "do": "park", "where": "menu-gap" } ],
+      "steps": [
+        { "do": "hold", "s": 3 },
+        { "do": "move", "to": "#toplevel_page_pd-woo-dashboard > a", "at": "center", "dx": -30, "s": 1.4 },
+        { "do": "hold", "s": 0.6 },
+        { "do": "click", "nav": true },
+        { "do": "wait-ready", "ready": "dashboard" },
+        { "do": "hold", "s": 1.5 },
+        { "do": "scroll-home", "s": 4.5 },
+        { "do": "hold", "s": 5 }
+      ],
+      "note": "From the WordPress home screen: click Customer History (not WordPress's own Dashboard), wait, one slow scroll to the home position."
+    },
+    {
+      "id": "scene-03",
+      "beat": "2",
+      "build": "pro",
+      "url": "{dashboard}",
+      "ready": "dashboard",
+      "setup": [ { "do": "home" }, { "do": "park", "where": "empty" } ],
+      "steps": [
+        { "do": "hold", "s": 3 },
+        { "do": "move", "to": "heading:Revenue Analytics", "at": "right", "s": 1.6 },
+        { "do": "hold", "s": 6 }
+      ],
+      "note": "Cursor rests just to the right of the words Revenue Analytics."
+    },
+    {
+      "id": "scene-04",
+      "beat": "3",
+      "build": "pro",
+      "url": "{dashboard}",
+      "ready": "dashboard",
+      "setup": [ { "do": "home" }, { "do": "park", "where": "empty" } ],
+      "steps": [
+        { "do": "hold", "s": 3 },
+        { "do": "move", "to": ".pdwchs-revenue-split-new .pdwchs-revenue-split-label", "at": "below", "s": 1.4 },
+        { "do": "hold", "s": 2 },
+        { "do": "move", "to": ".pdwchs-revenue-split-returning .pdwchs-revenue-split-label", "at": "below", "s": 1.2 },
+        { "do": "hold", "s": 2 },
+        { "do": "move", "to": ".pdwchs-revenue-split-guest .pdwchs-revenue-split-label", "at": "below", "s": 1.2 },
+        { "do": "hold", "s": 2 },
+        { "do": "park", "where": "below-cards", "s": 1.2 },
+        { "do": "hold", "s": 10 }
+      ],
+      "note": "Left to right. The label spans the card, so 'below' lands at the card's centre on the amount's row — beside the left-aligned number, never over it (checked at full resolution 28 Sep). Then park below the cards."
+    },
+    {
+      "id": "scene-05",
+      "beat": "3",
+      "build": "pro",
+      "url": "{dashboard}",
+      "ready": "dashboard",
+      "setup": [ { "do": "home" }, { "do": "park", "where": "empty" } ],
+      "steps": [
+        { "do": "hold", "s": 3 },
+        { "do": "move", "to": "#pdwchs-revenue-date-picker", "at": "right", "s": 1.6 },
+        { "do": "hold", "s": 6 },
+        { "do": "park", "where": "below-cards", "s": 1.6 },
+        { "do": "hold", "s": 12 }
+      ],
+      "note": "Rest beside the date box — never click it — then move down and rest below the three cards."
+    },
+    {
+      "id": "scene-06",
+      "beat": "3 and 4",
+      "build": "pro",
+      "url": "{dashboard}",
+      "ready": "dashboard",
+      "setup": [ { "do": "home" }, { "do": "park", "where": "empty" } ],
+      "steps": [
+        { "do": "hold", "s": 3 },
+        { "do": "move", "to": "{biggest-card} .pdwchs-revenue-split-label", "at": "below", "s": 1.4 },
+        { "do": "hold", "s": 20 }
+      ],
+      "note": "The biggest card, resolved from what the screen shows. Cursor at the card's centre on the amount's row, beside the number."
+    },
+    {
+      "id": "scene-07",
+      "beat": "3 and 4",
+      "build": "pro",
+      "url": "{dashboard}",
+      "ready": "dashboard",
+      "setup": [ { "do": "home" }, { "do": "park", "where": "empty" } ],
+      "steps": [
+        { "do": "hold", "s": 3 },
+        { "do": "move", "to": ".pdwchs-revenue-split-guest .pdwchs-revenue-split-label", "at": "below", "s": 1.4 },
+        { "do": "hold", "s": 15 }
+      ],
+      "note": "The Guest Orders card. Cursor at the card's centre on the amount's row, beside the number."
+    },
+    {
+      "id": "scene-08",
+      "beat": "5",
+      "build": "pro",
+      "url": "/wp-admin/admin.php?page=pd-woo-revenue",
+      "ready": "revenue-free",
+      "setup": [ { "do": "park", "where": "empty" } ],
+      "steps": [
+        { "do": "hold", "s": 3 },
+        { "do": "move", "to": "text:Registered customers only", "at": "text-right", "s": 1.6 },
+        { "do": "hold", "s": 6 }
+      ],
+      "note": "The Repeat Purchase Rate card (REV-02) on the Revenue page, default range. Recorded on Pro: the card is the same template in both builds; the editor's zoom stays on the card and caption, never wide enough to show the tab bar. No date boxes, no Apply."
+    }
+  ]
+}

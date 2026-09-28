@@ -1,0 +1,115 @@
+1
+00:00:00,300 --> 00:00:04,800
+How much of your WooCommerce revenue comes from <b>returning customers</b>?
+
+2
+00:00:05,000 --> 00:00:08,700
+This is a WooCommerce demo store running PureDevs Customer History.
+
+3
+00:00:08,700 --> 00:00:12,000
+Open <b>Customer History</b>, <b>Dashboard</b>, and scroll to Revenue Analytics.
+
+4
+00:00:12,000 --> 00:00:14,200
+This is a <b>Pro report</b>.
+
+5
+00:00:14,400 --> 00:00:17,500
+It's self-hosted — <b>nothing leaves your server</b>.
+
+6
+00:00:17,500 --> 00:00:20,000
+It reads your store's own orders.
+
+7
+00:00:20,000 --> 00:00:21,400
+Here's the split.
+
+8
+00:00:21,500 --> 00:00:22,400
+<b>New</b> Customers.
+
+9
+00:00:22,500 --> 00:00:23,400
+<b>Returning</b> Customers.
+
+10
+00:00:23,500 --> 00:00:24,400
+<b>Guest</b> Orders.
+
+11
+00:00:24,800 --> 00:00:29,300
+Each card shows the revenue, and the orders behind it.
+
+12
+00:00:29,400 --> 00:00:35,000
+New and Returning count customers <b>with an account</b>; guest orders are placed without one.
+
+13
+00:00:35,000 --> 00:00:37,000
+One date range, three cards.
+
+14
+00:00:37,300 --> 00:00:44,400
+WooCommerce's own Orders report can show orders from new or returning customers, one filter at a time.
+
+15
+00:00:44,500 --> 00:00:54,000
+Customer History adds new, returning and guest revenue <b>side by side</b> for the <b>same dates</b>, so you can decide where your next hour goes.
+
+16
+00:00:54,000 --> 00:00:57,500
+Now <b>read the proportion, not the number</b>.
+
+17
+00:00:58,000 --> 00:01:02,500
+Returning Customers is the biggest of the three.
+
+18
+00:01:03,000 --> 00:01:06,000
+And guests? The smallest card.
+
+19
+00:01:06,000 --> 00:01:09,300
+So here is <b>the decision</b> this gives you.
+
+20
+00:01:09,800 --> 00:01:11,500
+Guests are small here.
+
+21
+00:01:11,600 --> 00:01:18,000
+If yours is big, decide whether to encourage <b>accounts at checkout</b> — repeat guests never show as returning.
+
+22
+00:01:18,000 --> 00:01:20,700
+And look at the biggest card.
+
+23
+00:01:20,800 --> 00:01:28,500
+Returning is the biggest — so <b>your next hour</b> belongs to the customers who already buy from you.
+
+24
+00:01:28,600 --> 00:01:33,000
+That's where the <b>biggest share of this revenue</b> comes from.
+
+25
+00:01:33,000 --> 00:01:35,600
+The plugin doesn't decide for you.
+
+26
+00:01:35,700 --> 00:01:39,000
+It shows you <b>where the money comes from</b>.
+
+27
+00:01:39,000 --> 00:01:42,000
+The <b>free version</b> shows your repeat purchase rate.
+
+28
+00:01:42,000 --> 00:01:43,600
+This split is Pro.
+
+29
+00:01:43,700 --> 00:01:46,000
+The link below <b>starts the trial</b>.
