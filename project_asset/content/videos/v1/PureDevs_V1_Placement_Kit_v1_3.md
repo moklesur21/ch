@@ -1,6 +1,6 @@
 # V1 Placement Kit — How much of my WooCommerce revenue comes from returning customers?
 
-**Version 1.2 · 6 Oct 2026** · Demo Video Prompt Pack v3, FILE 5 · supersedes v1.1
+**Version 1.3 · 6 Oct 2026** · Demo Video Prompt Pack v3, FILE 5 · supersedes v1.2
 From `PureDevs_V1_Script_v1_2.md`, `PureDevs_V1_Demo_Brief_v1_2.md` and `PureDevs_V1_Recording_Brief_v1_4.md`, filled from the final master.
 **Final master:** `recordings/pd v1 final edit -14LUFS.mp4` — **1:40** (99.8 s), 2560 × 1440, −14.0 LUFS. Step-6 audit: **PASS** (6 Oct 2026).
 **Question page URL (approved):** https://puredevs.com/questions/woocommerce-new-vs-returning-customers/
@@ -41,6 +41,8 @@ From `PureDevs_V1_Script_v1_2.md`, `PureDevs_V1_Demo_Brief_v1_2.md` and `PureDev
 ---
 
 ## 1. The 20–30 s cut
+
+**Made:** `recordings/V1_cut_24s.mp4` — 23.5 s, 2560 × 1440 H.264, −14.0 LUFS, built with ffmpeg from the master and `end-card.mp4` exactly as the table below says (short audio fades at each join; the end card holds about 2 s after the last word, with silence). Video files stay out of git.
 
 Beat 1 + the answer frame + the beat-4 decision + the end card. Beat 2 is skipped. About **24 s**. Take picture and voice together from the master (it already carries the zooms and captions); put a 0.2 s audio crossfade at each join so the music bed doesn't jump.
 
@@ -187,6 +189,8 @@ No dollar amounts. It links to the question page, never to YouTube.
 | V1-shot-2-split.png | scene-01, or `answer-frame-crop.png` directly | Heading "Revenue by Customer Type" + the three boxes. Four top boxes and badge out (Q2) |
 | V1-shot-3-free-rate.png | scene-08 (recorded on Pro; the card row is the same template in both builds) | Page title "Revenue" + the row of five boxes, including "Registered customers only". The crop starts below the tab bar, so nothing Pro-only is in the picture |
 
+**Made (6 Oct 2026), in `recordings/`:** `V1-shot-1-path.png` (1920 × 620, scene-02 at 13 s, before the cursor reappears), `V1-shot-2-split.png` (1920 × 192, from `answer-frame-crop.png`), `V1-shot-3-free-rate.png` (1920 × 254, scene-08 at 1 s, crop starts below the tab bar). Each carries a small "Demo store data" label placed off the cards. GIFs: `V1-split.gif` (1200 × 81, 56 KB) and `V1-split-800.gif` (800 × 54, 29 KB) — scene-04 from 4.2 s for 7.4 s, 12 fps, looping. **Use the 1200 px GIF:** the three cards span the whole widget, so at 800 px the card labels are about 6 px tall and only the amounts read; at 1200 px both read. No three-card strip is legible displayed at 600 px — show it at full column width.
+
 **GIF** (under 2 MB) for the question page and in-plugin use:
 - **Source:** scene-04, from the cursor arriving under NEW CUSTOMERS to the cursor resting under GUEST ORDERS. About 5 s.
 - **Crop:** the three boxes only, 800 px wide, 10–12 fps.
@@ -245,6 +249,7 @@ The existing copy matches this page, so no new headlines or descriptions.
 
 ## Changelog
 
+- **v1.3 — 6 Oct 2026.** Assets made from the recordings: the three screenshots, two GIFs (1200 px recommended for legibility) and the 23.5 s cut; §1 and §7 say where they are.
 - **v1.2 — 6 Oct 2026.** Filled from the final master (`pd v1 final edit -14LUFS.mp4`, 1:40, step-6 audit PASS): new §0 with the length, JSON-LD duration, upload file, thumbnail source, YouTube chapters (replacing Script v1.2 §B's placeholders) and the beat starts; §1 cut re-timed to the master (about 24 s, option A resolved, the tool's end card); `[LENGTH]` → 1:40 in §3 and §6; shot list sources the raw clips; shot 3's alt text made build-neutral; honest sentence re-checked (WooCommerce 11.1.2); "2-minute" copy confirmed.
 - **v1.1 — 21 Sep 2026.** Q1 answers applied: FAQ rewritten; account qualifier and guest reason in the walkthrough; option B corrected. Q4 applied: button microcopy, headline 10 unlocked, Trial 5 → Variant A. Audit findings 1, 3, 4 and 5 applied; homepage hero → V8. Timecodes follow Script v1.2 (planned 1:46).
 - **v1.0 — 21 Sep 2026.** First placement kit.
