@@ -18,6 +18,8 @@ screens show different customers and numbers than the committed ones.
 | `build-shots.mjs` → `shots.json` | The shot manifest: URL, actions, clip region and numbered callouts per screenshot ID. Edit the `.mjs`, then run it. |
 | `capture-screens.mjs` | Logs in, captures each shot with the installed Google Chrome (playwright-core, no browser download) and draws the callouts in the page. `{HERO}` resolves to the dev seeder's hero, else the `ch` demo-tools ledger hero. |
 | `build-index.mjs` | Regenerates `../screenshots/INDEX.md`. |
+| `record-scenes.mjs` | Demo-video scene recorder: plays `content/videos/<vN>/scenes.json` on the local store and writes the clips, stills and delivery note to `<vN>/recordings/`. See `project_asset/docs/video-production.md` §5. |
+| `make-end-card.mjs` | Demo-video end card: `node make-end-card.mjs --video v8` renders the `endCard` block of that video's `scenes.json` (answer-frame crop, optional outline, product name, one CTA, "Demo Store") to `recordings/end-card.png` + a 4 s `end-card.mp4`. |
 
 ## Steps on `ch` (macOS + MAMP)
 

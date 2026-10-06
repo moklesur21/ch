@@ -20,7 +20,17 @@
   },
   "stills": {
     "answer-frame": { "scene": "scene-01", "kind": "viewport" },
-    "answer-frame-crop": { "scene": "scene-01", "kind": "clip", "selector": ".pdwchs-revenue-split-section", "pad": 24 }
+    "answer-frame-crop": { "scene": "scene-01", "kind": "clip", "selector": ".pdwchs-revenue-split-section", "pad": 24, "measure": ["{biggest-card}"] }
+  },
+  "endCard": {
+    "image": "recordings/answer-frame-crop.png",
+    "trimX": 16,
+    "highlight": "{biggest-card}",
+    "title": "PureDevs Customer History",
+    "cta": "Start the trial · puredevs.com/pricing",
+    "label": "Demo Store",
+    "size": [2560, 1440],
+    "seconds": 4
   },
   "scenes": [
     {

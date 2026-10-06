@@ -54,6 +54,7 @@ project_asset/content/videos/vN/
     voice-over.md                      the CAPTION script: the approved words with every [A]/[B] option resolved, correct spelling
     voice-over-elevenlabs.md           the VOICE script for ElevenLabs: same words, [PAUSE] → break tags, one chunk per beat
     captions.srt                       draft burned-in captions with the emphasis words marked
+    end-card.png · end-card.mp4        step 4 — from make-end-card.mjs and the endCard block in scenes.json
     voice/                             step 5 — the generated narration, one file per chunk (V1_b1.wav …); audio is gitignored
 ```
 
@@ -295,6 +296,18 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
 - Output: `recordings/scene-NN.mp4`, `answer-frame.png` (3840 × 2160),
   `answer-frame-crop.png` (the split section), `delivery-note.md` (which card
   is biggest, the guest position, the margin, the clip table — no amounts).
+  A clip still with `"measure": [selectors]` also writes
+  `answer-frame-crop.json`: those elements' rects in the still's pixels.
+- End card: `node make-end-card.mjs --video vN` renders the video's
+  `endCard` block in `scenes.json` — the answer-frame crop (grey page margin
+  trimmed by `trimX`), a green outline on `highlight` (a key from the still's
+  `.json`, e.g. `{biggest-card}`, or an explicit rect, or null), the product
+  name, one CTA, the "Demo Store" label — to `recordings/end-card.png` and a
+  4 s H.264 `end-card.mp4` at the master's size. The CTA follows the tier:
+  Pro-answered → "Start the trial · puredevs.com/pricing"; free-answered →
+  install free (V8, V13). The editor places it after the last line with a
+  short dissolve and ends the lower-third / "Demo Store" overlays where it
+  starts (the card carries both); hold it ~2 s past the last word.
 - `[DEV SETUP]` done for V1 on 28 Sep: WordPress 7.1.2, WooCommerce 11.1.2
   and every plugin and theme updated (no update bubbles); WooCommerce
   post-update notices cleared; the WooPayments incentive badge on the
@@ -346,7 +359,7 @@ sets up nothing; a wrong clip is re-made by re-running its scene.
 
 | Video | Week (§6) | 1 Research | 2 Brief + Script | 3 Data verified | 4 Recorded | 5 Edited | 6 Kit + audit |
 |---|---|---|---|---|---|---|---|
-| V1 returning revenue (PRO) | 1 | used 21 Sep; not archived in `research/` — Demo Brief §12 carries the checks | Brief v1.2 + Script v1.2, approved 21 Sep | **done 28 Sep**: verifier re-scoped to v4.2 (`v1_*`, `v4_funnel`, `dash_*` warn-only); seeder gives 8 potentials a second in-window order so the free Repeat Purchase Rate card is not 0 %; `demo-refresh.sh` → 31 pass / 0 fail | **done 28 Sep**: gate B passed on scene-01; all eight clips recorded (3840 × 2160, 2:33 of footage), stills, `delivery-note.md` (option A / C), `voice-over.md`, `voice-over-elevenlabs.md` (8 chunks, 239 words), `captions.srt`; Recording Brief v1.4 | next: Yeasir fills the voice log and generates the 8 chunks (workflow §1.6, §3); editor gets `recordings/` + `voice/` + brief v1.4 and cuts picture to the audio | Kit v1.1 drafted; `[LENGTH]` open; audit pending |
+| V1 returning revenue (PRO) | 1 | used 21 Sep; not archived in `research/` — Demo Brief §12 carries the checks | Brief v1.2 + Script v1.2, approved 21 Sep | **done 28 Sep**: verifier re-scoped to v4.2 (`v1_*`, `v4_funnel`, `dash_*` warn-only); seeder gives 8 potentials a second in-window order so the free Repeat Purchase Rate card is not 0 %; `demo-refresh.sh` → 31 pass / 0 fail | **done 28 Sep**: gate B passed on scene-01; all eight clips recorded (3840 × 2160, 2:33 of footage), stills, `delivery-note.md` (option A / C), `voice-over.md`, `voice-over-elevenlabs.md` (8 chunks, 239 words), `captions.srt`; Recording Brief v1.4 | audio chunks in `recordings/audio/` (29 Sep); `V1_master.mp4` delivered 6 Oct (1:40, 2560 × 1440 HEVC) | **audit 6 Oct: FIX FIRST** — caption spelling (WooCommerce ×3, "1 date range"), no end card, audio −11.1 LUFS / +0.3 dBTP. Beat-5 free-version shot left wide (full Pro page): owner's call, 6 Oct. Honest sentence re-checked: WooCommerce 11.1.2 still latest. Kit `[LENGTH]` waits for the fixed master |
 | V8 data location (FREE) | 1 | — | — | needs a site state without the plugin, for the one-take install | — | — | — |
 | V13 zero-result searches (FREE) | 2 | — | — | zero-result rows missing from the seeder; record on the free build | — | — | — |
 | V4 funnel (PRO) | 3 | — | — | — | — | — | — |

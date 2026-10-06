@@ -409,7 +409,22 @@ try {
         for (const [name, spec] of Object.entries(plan.stills || {})) {
           if (spec.scene !== s.id) continue;
           if (spec.kind === 'viewport') { await page.screenshot({ path: path.join(OUT, `${name}.png`) }); log(`  ✓ ${name}.png`); }
-          else if (spec.kind === 'clip') { const rr = await rect(spec.selector); const pad = spec.pad ?? 24; await page.screenshot({ path: path.join(OUT, `${name}.png`), clip: { x: Math.max(0, rr.x - pad), y: Math.max(0, rr.y - pad), width: rr.w + pad * 2, height: rr.h + pad * 2 } }); log(`  ✓ ${name}.png`); }
+          else if (spec.kind === 'clip') {
+            const rr = await rect(spec.selector); const pad = spec.pad ?? 24;
+            const clip = { x: Math.max(0, rr.x - pad), y: Math.max(0, rr.y - pad), width: rr.w + pad * 2, height: rr.h + pad * 2 };
+            await page.screenshot({ path: path.join(OUT, `${name}.png`), clip });
+            log(`  ✓ ${name}.png`);
+            // sidecar for make-end-card.mjs: rects of the "measure" selectors, in the still's own pixels
+            if (spec.measure?.length) {
+              const rects = {};
+              for (const m of spec.measure) {
+                const r = await rect(m).catch(() => null);
+                if (r) rects[m] = { x: Math.round((r.x - clip.x) * VP.scale), y: Math.round((r.y - clip.y) * VP.scale), w: Math.round(r.w * VP.scale), h: Math.round(r.h * VP.scale) };
+              }
+              fs.writeFileSync(path.join(OUT, `${name}.json`), JSON.stringify({ image: `${name}.png`, scale: VP.scale, rects }, null, 2) + '\n');
+              log(`  ✓ ${name}.json (${Object.keys(rects).join(', ')})`);
+            }
+          }
         }
       } catch (e) {
         // one broken scene must not end the run: log it, leave any half-written clip out, carry on

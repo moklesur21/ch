@@ -1,0 +1,8 @@
+{
+  "image": "answer-frame-crop.png",
+  "scale": 2,
+  "note": "Measured from the PNG's pixels on 2026-10-06 (the still predates the recorder's sidecar); a re-record writes this file itself.",
+  "rects": {
+    "{biggest-card}": { "x": 1184, "y": 108, "w": 1104, "h": 190 }
+  }
+}
