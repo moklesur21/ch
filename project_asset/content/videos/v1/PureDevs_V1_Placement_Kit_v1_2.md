@@ -1,27 +1,59 @@
 # V1 Placement Kit — How much of my WooCommerce revenue comes from returning customers?
 
-**Version 1.1 · 21 Sep 2026** · Demo Video Prompt Pack v3, FILE 5 · supersedes v1.0
-From `PureDevs_V1_Script_v1_2.md`, `PureDevs_V1_Demo_Brief_v1_2.md` and `PureDevs_V1_Recording_Brief_v1_2.md`.
-**Final video length:** not edited yet. Planned 1:46. Every `[LENGTH]` and timecode is filled in after the edit.
+**Version 1.2 · 6 Oct 2026** · Demo Video Prompt Pack v3, FILE 5 · supersedes v1.1
+From `PureDevs_V1_Script_v1_2.md`, `PureDevs_V1_Demo_Brief_v1_2.md` and `PureDevs_V1_Recording_Brief_v1_4.md`, filled from the final master.
+**Final master:** `recordings/pd v1 final edit -14LUFS.mp4` — **1:40** (99.8 s), 2560 × 1440, −14.0 LUFS. Step-6 audit: **PASS** (6 Oct 2026).
 **Question page URL (approved):** https://puredevs.com/questions/woocommerce-new-vs-returning-customers/
 
-**Where V1 is embedded:** /pricing (above the plans) · the question page · the LP-Category variant (AG1). In each, the first link under the video must be "Start the trial" → /pricing. The main homepage hero takes V8 instead: every homepage button goes to WordPress.org, which would make V1's "the link below starts the trial" untrue.
+**Where V1 is embedded:** /pricing (above the plans) · the question page · the LP-Category variant (AG1). In each, the first link under the video must be "Start the trial" → /pricing. The main homepage hero takes V8 instead: every homepage button goes to WordPress.org, which would make V1's "the link below starts the trial" untrue. Embeds are YouTube embeds. If a page ever self-hosts the file instead, use an H.264 copy: the master is HEVC, which Firefox doesn't play.
+
+## 0. Publish-day values (from the final master)
+
+| Field | Value |
+|---|---|
+| Length | **1:40** (filled in §3 and §6) |
+| JSON-LD `duration` | `PT1M40S` |
+| Upload file | `recordings/pd v1 final edit -14LUFS.mp4` (not the editor's `pd v1 final edit.mp4`, which is 3 dB louder and peaks above 0 dBTP) |
+| Thumbnail | Built from `recordings/answer-frame-crop.png` to Script v1.2 §C: 1280 × 720, under 2 MB, the question in three lines, a thin outline on Returning, "Demo store" |
+
+**YouTube chapters** — these replace the placeholders in Script v1.2 §B, timed to where each beat's voice starts in the master. Every chapter is at least 10 s.
+
+```
+00:00 How much revenue comes from returning customers — and where to click
+00:21 New, returning and guest revenue, side by side
+01:04 The decision it gives you
+01:28 Free vs Pro
+```
+
+**Beat starts in the master** (voice onsets; picture cuts land within a few frames):
+
+| Beat | Starts | First words |
+|---|---|---|
+| 1 | 0:00.0 | "How much of your WooCommerce revenue…" |
+| 2 | 0:04.9 | "This is a WooCommerce demo store…" |
+| 3a | 0:21.0 | "Here's the split." |
+| 3b | 0:36.0 | "One date range, three cards." |
+| 3c | 0:55.1 | "Now read the proportion, not the number." |
+| 4a | 1:04.3 | "So here is the decision this gives you." |
+| 4b | 1:16.2 | "And look at the biggest card." |
+| 5 | 1:28.2 | "The plugin doesn't decide for you." — "The free version…" 1:32.7 · "This split is Pro." 1:35.9 · end card from 1:37.6 |
 
 ---
 
 ## 1. The 20–30 s cut
 
-Beat 1 + the answer frame + the beat-4 decision + the end card. Beat 2 is skipped. About 23 s.
+Beat 1 + the answer frame + the beat-4 decision + the end card. Beat 2 is skipped. About **24 s**. Take picture and voice together from the master (it already carries the zooms and captions); put a 0.2 s audio crossfade at each join so the music bed doesn't jump.
 
-| Cut time | Master source (planned — confirm after edit) | Picture | Voice (reused from the master) | Caption |
+| Cut time | Master source (final) | Picture | Voice (from the master) | Caption |
 |---|---|---|---|---|
-| 0:00–0:05 | 0:00–0:05, beat 1 | scene-01 answer frame, cropped to the three boxes. Lower third **PureDevs Customer History**; small **Demo store** label | How much of your WooCommerce revenue comes from returning customers? | How much of your WooCommerce revenue comes from **returning customers**? |
-| 0:05–0:08 | 1:06–1:09, beat 4 first sentence | scene-01 | So here is the decision this gives you. | So here is **the decision** this gives you. |
-| 0:08–0:19 | 1:20–1:33, beat 4b from "Returning is…" or "New is…" (skip "And look at the biggest card.") | scene-06, biggest box | `[A: Returning is the biggest — so your next hour belongs to the customers who already buy from you. That's where the biggest share of this revenue comes from.]` `[B: New is the biggest — so your next hour goes to bringing those new customers back. That's the gap in this revenue.]` | The same line, with **your next hour** and **biggest share of this revenue** / **the gap in this revenue** in bold |
-| 0:19–0:23 | 1:42–1:46, end card | End card: answer-frame still + **PureDevs Customer History** + **Start the trial · puredevs.com/pricing** | This split is Pro. The link below starts the trial. | **Start the trial** |
+| 0:00–0:04.9 | 0:00.0–0:04.9, beat 1 | The master's opening: answer frame, then the Returning card highlighted. Lower third **PureDevs Customer History**; **Demo Store** label | How much of your WooCommerce revenue comes from returning customers? | As in the master |
+| 0:05–0:07.5 | 1:04.3–1:06.8, beat 4a, first sentence only | The master's picture at 1:04 (the dashboard) | So here is the decision this gives you. | As in the master |
+| 0:07.7–0:17.7 | 1:18.2–1:28.2, beat 4b from "Returning is the biggest…" (skip "And look at the biggest card.") | The master's Returning-card zoom | Returning is the biggest — so your next hour belongs to the customers who already buy from you. That's where the biggest share of this revenue comes from. | As in the master |
+| 0:18–0:22 | 1:35.9–1:39.8, beat 5's last two sentences | `recordings/end-card.mp4` (the tool's card) | This split is Pro. The link below starts the trial. | **Start the trial** |
+| 0:22–0:24 | — | End card held; music fades out | — | — |
 
 - **Nothing to re-record.** All voice comes from the master.
-- **Never under 11 s.** The planned cut is about 23 s.
+- **Never under 11 s.** The cut is about 24 s.
 - The guest clause is left out to stay under 30 s.
 - The "Demo store" label replaces beat 2's "demo store", which the cut skips.
 - No spoken figures. One CTA.
@@ -59,7 +91,7 @@ Beat 1 + the answer frame + the beat-4 decision + the end card. Beat 2 is skippe
 |---|---|---|---|
 | 1 | V1-shot-1-path.png | Customer History → Dashboard, inside your own wp-admin. | WordPress admin with the Customer History menu open and the plugin's Dashboard tab selected (demo store). |
 | 2 | V1-shot-2-split.png | New, returning and guest revenue, side by side for the same dates (Pro). | Revenue by Customer Type section with three cards — New Customers, Returning Customers, Guest Orders — each showing revenue and order count (demo store). |
-| 3 | V1-shot-3-free-rate.png | The free version shows your repeat purchase rate (registered customers only). | Free Revenue page with five summary cards; the last card is Repeat Purchase Rate, captioned "Registered customers only" (demo store). |
+| 3 | V1-shot-3-free-rate.png | The free version shows your repeat purchase rate (registered customers only). | Revenue page with five summary cards; the last card is Repeat Purchase Rate, captioned "Registered customers only" (demo store). |
 
 **FAQ** (from Demo Brief v1.2 §8 and the research's buyer doubts):
 
@@ -88,7 +120,7 @@ Beat 1 + the answer frame + the beat-4 decision + the end card. Beat 2 is skippe
   "description": "A demo of PureDevs Customer History: new, returning and guest revenue side by side for the same dates, inside WordPress. Recorded on a demo store with synthetic data.",
   "thumbnailUrl": ["[THUMBNAIL URL]"],
   "uploadDate": "[YYYY-MM-DD]",
-  "duration": "[PT#M#S]",
+  "duration": "PT1M40S",
   "embedUrl": "https://www.youtube.com/embed/[VIDEO ID]",
   "publisher": { "@type": "Organization", "name": "PureDevs", "url": "https://puredevs.com/" }
 }
@@ -98,9 +130,9 @@ Beat 1 + the answer frame + the beat-4 decision + the end card. Beat 2 is skippe
 
 ## 3. Email line
 
-**Line** (plain text, fill `[LENGTH]` after the edit):
+**Line** (plain text):
 
-> `[LENGTH]` video: how much of my WooCommerce revenue comes from returning customers? https://puredevs.com/questions/woocommerce-new-vs-returning-customers/
+> 1:40 video: how much of my WooCommerce revenue comes from returning customers? https://puredevs.com/questions/woocommerce-new-vs-returning-customers/
 
 **Where it goes:**
 - **Trial 3** ("the split your revenue chart hides"), after the first paragraph, once Trial 3 is fixed:
@@ -136,7 +168,7 @@ No dollar amounts. It links to the question page, never to YouTube.
 ## 6. Capterra and G2 media
 
 **Video caption:**
-> How much of my WooCommerce revenue comes from returning customers? A `[LENGTH]` demo of Customer History's Revenue by Customer Type, recorded on a demo store.
+> How much of my WooCommerce revenue comes from returning customers? A 1:40 demo of Customer History's Revenue by Customer Type, recorded on a demo store.
 
 **Screenshot captions, in order:**
 1. Customer History → Dashboard, inside your own wp-admin.
@@ -147,13 +179,13 @@ No dollar amounts. It links to the question page, never to YouTube.
 
 ## 7. Shot list for the editor
 
-**Screenshots**, exported as PNG at 1920 px wide from the recorded clips:
+**Screenshots**, exported as PNG at 1920 px wide from the raw clips in `recordings/` (3840 × 2160, no captions or zooms), never from the edited master:
 
 | File | Source frame | Crop |
 |---|---|---|
 | V1-shot-1-path.png | scene-02: Customer History highlighted in the left menu, Dashboard tab active | Left menu + tab bar + page title "Dashboard" |
-| V1-shot-2-split.png | scene-01 | Heading "Revenue by Customer Type" + the three boxes. Four top boxes and badge out (Q2) |
-| V1-shot-3-free-rate.png | scene-08 | Page title "Revenue" + the row of five boxes, including "Registered customers only" |
+| V1-shot-2-split.png | scene-01, or `answer-frame-crop.png` directly | Heading "Revenue by Customer Type" + the three boxes. Four top boxes and badge out (Q2) |
+| V1-shot-3-free-rate.png | scene-08 (recorded on Pro; the card row is the same template in both builds) | Page title "Revenue" + the row of five boxes, including "Registered customers only". The crop starts below the tab bar, so nothing Pro-only is in the picture |
 
 **GIF** (under 2 MB) for the question page and in-plugin use:
 - **Source:** scene-04, from the cursor arriving under NEW CUSTOMERS to the cursor resting under GUEST ORDERS. About 5 s.
@@ -174,9 +206,9 @@ The existing copy matches this page, so no new headlines or descriptions.
 | Headline | PureDevs Customer History | 25 / 30 |
 | Headline | Your Data Stays On Your Site | 28 / 30 |
 | Headline, unlocked (Q4: 30 days, no card) | Start Your Free Trial | 21 / 30 |
-| Headline, only if the final length is 2:00 or less | Watch The 2-Minute Demo | 23 / 30 |
+| Headline (final length 1:40 — under 2:00, so it holds) | Watch The 2-Minute Demo | 23 / 30 |
 | Description | You decide what to do. The plugin shows you where the money comes from. | 71 / 90 |
-| Description, only if the final length is 2:00 or less | Watch a 2-minute demo on a working WooCommerce store, then try it on your own orders. | 85 / 90 |
+| Description (final length 1:40 — holds) | Watch a 2-minute demo on a working WooCommerce store, then try it on your own orders. | 85 / 90 |
 
 - **Don't use Description 1:** it names features this page doesn't show.
 - **Keywords:** in Google Ads, give `[woocommerce new vs returning customers]` and `[woocommerce returning customer report]` this page as their keyword-level final URL.
@@ -189,22 +221,23 @@ The existing copy matches this page, so no new headlines or descriptions.
 
 | # | Section | Finding | Rule | Status |
 |---|---|---|---|---|
-| 1 | §1 cut | No spoken figures; one CTA; about 23 s; "Demo store" label; option B uses the corrected v1.2 line | U2.1, U5, U7 | PASS |
-| 2 | Embeds | V1 appears only where the first link under it is the trial; homepage hero → V8 (audit finding 5) | U7 | PASS |
-| 3 | §2 walkthrough | Honest sentence says "orders" (finding 1). Account qualifier and guest reason come from dev's code read (Q1) | U2.2, U5 | PASS; re-check if 11.2 ships first |
+| 1 | §1 cut | No spoken figures; one CTA; about 24 s, timed from the final master; "Demo Store" label; option A (the recorded store) | U2.1, U5, U7 | PASS |
+| 2 | Embeds | V1 appears only where the first link under it is the trial; homepage hero → V8 (audit finding 5). Self-hosted embeds need an H.264 copy | U7 | PASS |
+| 3 | §2 walkthrough | Honest sentence says "orders" (finding 1). Account qualifier and guest reason come from dev's code read (Q1). **Re-checked 6 Oct 2026:** WooCommerce 11.1.2 is still the latest release, and its Orders report still has the new / returning customer-type filter (core `Admin/API/Reports/Orders`) | U2.2, U5 | PASS — re-check on publish day if a newer WooCommerce has shipped |
 | 4 | §2 FAQ | Definitions, GMT days, net-of-refunds and guest handling all come from dev's code read. The FAQ 5 speed line is corrected (finding 3); the Freemius qualifier is added (finding 4) | U5, U3 | PASS |
 | 5 | §2 FAQ | Dev's copy rule: never "identifies repeat buyers" without the qualifier. The FAQ says who is counted and who isn't | Q1 | PASS |
 | 6 | §2 CTA | "30 days, no card needed" in button text: confirmed (Q4); changeable page text | U7 | PASS |
 | 7 | §3 | Email line correct. Trial 3 needs its two fixes first. Trial 5 → Variant A | Standing decisions | Open (lifecycle file) |
 | 8 | §4 | NOT FOR README | Pack §4 | PASS |
 | 9 | §5 | 7 words; bundled; new tab; modest | Pack §5 | PASS. The slot needs a dev answer |
-| 10 | §6–§7 | Tier and demo store stated; KPI row and badge cropped; GIF under 2 MB | U5, Q2 | PASS |
-| 11 | §8 | Within 30 / 90. Headline 10 unlocked by Q4. "2-minute" copy holds (planned 1:46) | U7 | PASS; confirm with the final length |
+| 10 | §6–§7 | Tier and demo store stated; KPI row and badge cropped; GIF under 2 MB. Shot 3's alt text no longer says "Free Revenue page" (the frame comes from the Pro build; the crop is build-neutral) | U5, Q2 | PASS |
+| 11 | §8 | Within 30 / 90. Headline 10 unlocked by Q4. "2-minute" copy holds: final length 1:40 | U7 | PASS |
+| 12a | §0 | The beat-5 free-version shot in the master shows the full Pro page; kept by the owner's decision (6 Oct). The narration's claim itself ("The free version shows your repeat purchase rate") is true | Owner call | Noted |
 | 12 | Whole kit | No cap, ⚑, "only / first", competitor names, recovery language or price | U2.3, U3, U4 | PASS |
 | 13 | Lifecycle file (outside V1) | Welcome 1 and Trial 4 state the 100-customer cap; Trial 1 and 2 lead with churn and RFM; Trial 2's "opens your mail app" contradicts Brief A4; labels are 3.0.0-era | U2.3, U4, product facts | Flag for the lifecycle revision |
 
-**Verdict:** **PASS.** Before publishing:
-- Fill `[LENGTH]`, timecodes, upload date, duration, YouTube ID and thumbnail URL after the edit.
+**Verdict:** **PASS.** Length, duration, chapters and cut timecodes are filled from the final master. Still open:
+- After the upload: upload date, YouTube video ID and thumbnail URL in the JSON-LD; the chapters from §0 in the YouTube description.
 - Fix Trial 3 before the email line goes in.
 - Dev answers whether the Freemius-screen poster slot is possible.
 
@@ -212,5 +245,6 @@ The existing copy matches this page, so no new headlines or descriptions.
 
 ## Changelog
 
+- **v1.2 — 6 Oct 2026.** Filled from the final master (`pd v1 final edit -14LUFS.mp4`, 1:40, step-6 audit PASS): new §0 with the length, JSON-LD duration, upload file, thumbnail source, YouTube chapters (replacing Script v1.2 §B's placeholders) and the beat starts; §1 cut re-timed to the master (about 24 s, option A resolved, the tool's end card); `[LENGTH]` → 1:40 in §3 and §6; shot list sources the raw clips; shot 3's alt text made build-neutral; honest sentence re-checked (WooCommerce 11.1.2); "2-minute" copy confirmed.
 - **v1.1 — 21 Sep 2026.** Q1 answers applied: FAQ rewritten; account qualifier and guest reason in the walkthrough; option B corrected. Q4 applied: button microcopy, headline 10 unlocked, Trial 5 → Variant A. Audit findings 1, 3, 4 and 5 applied; homepage hero → V8. Timecodes follow Script v1.2 (planned 1:46).
 - **v1.0 — 21 Sep 2026.** First placement kit.
