@@ -13,7 +13,8 @@ Yeasir shares these with you (Drive). They come from `ch/project_asset/content/v
 | File | For |
 |---|---|
 | `pd v1 final edit -14LUFS.mp4` | **The video to upload.** Do **not** upload `pd v1 final edit.mp4`: it is the louder copy |
-| `V1-poster.png` (1280 × 720) | YouTube thumbnail — **not made yet; wait for Yeasir** |
+| `V1-poster.png` (1280 × 720, 100 KB) | YouTube thumbnail |
+| `V1-poster.webp` (1280 × 720, 41 KB) | The video poster on the question page |
 | `V1-shot-1-path.png`, `V1-shot-2-split.png`, `V1-shot-3-free-rate.png` | Capterra / G2 screenshots |
 | `V1-shot-1-path.webp`, `V1-shot-2-split.webp`, `V1-shot-3-free-rate.webp` | The question page on puredevs.com |
 | `V1-split.gif` | Optional, question page |
@@ -45,7 +46,7 @@ Yeasir shares these with you (Drive). They come from `ch/project_asset/content/v
   Start the 30-day free trial (no card needed): https://puredevs.com/pricing
   ```
   *Tracked links:* if Yeasir wants UTM tags on the two puredevs.com links, build them in the team UTM sheet with `utm_source=youtube`, `utm_medium=video` and the campaign value Yeasir approves (suggested: `returning_revenue`). Don't invent other values.
-- [ ] **Thumbnail:** upload `V1-poster.png` (when Yeasir sends it).
+- [ ] **Thumbnail:** upload `V1-poster.png`.
 - [ ] **Tags:**
   ```
   woocommerce new vs returning customers, woocommerce new vs returning customers report, woocommerce returning customers, woocommerce revenue breakdown new returning, woocommerce new customer report, woocommerce repeat purchase rate, woocommerce reporting plugin, woocommerce orders report customer type filter
@@ -65,7 +66,7 @@ Yeasir shares these with you (Drive). They come from `ch/project_asset/content/v
 **Developer** builds the "Questions" section first (spec: `ch/project_asset/content/questions/PureDevs_Question_Pages_Dev_Spec_v1.md`). The V1 page will already exist as a **draft** with its text filled in. Then you:
 
 - [ ] Open **Questions → "How much of my WooCommerce revenue comes from returning customers?"** in wp-admin.
-- [ ] **Featured image:** upload `V1-poster.webp` (from Yeasir; under 80 KB). Alt text: `Revenue by Customer Type on a demo store: New Customers, Returning Customers and Guest Orders cards`
+- [ ] **Featured image:** upload `V1-poster.webp` (41 KB). Alt text: `How much of my WooCommerce revenue comes from returning customers? Revenue by Customer Type on a demo store, with the Returning Customers card outlined`
 - [ ] In the body, upload the three **WebP** screenshots into the three image blocks. Copy each caption and alt text from the spec's Appendix A, "Body". Every caption ends with "Demo store, sample data."
 - [ ] In the **Question page** box, fill:
   - YouTube ID: *(from step 1)*

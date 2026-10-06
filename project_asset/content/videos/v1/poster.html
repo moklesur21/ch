@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  /* V1 thumbnail / poster — Script v1.2 §C. Real UI pixels from answer-frame-crop.png (3472×344, 2× retina);
+     each card is cropped to its left 440 px (text ends ≤ 356 px from the card's left edge) so the
+     amounts stay large; the card's right border is redrawn to close it. */
+  html,body{margin:0;width:1280px;height:720px;overflow:hidden}
+  body{background:#1d2327;position:relative;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .q{position:absolute;left:56px;top:40px;right:48px;color:#fff;font-size:78px;font-weight:800;line-height:1.08;letter-spacing:-1.6px}
+  .q .hl{color:#22c55e}
+  .panel{position:absolute;left:48px;top:336px;width:1140px;padding:20px 22px 22px;background:#fff;border-radius:16px}
+  .heading{position:relative;width:340px;height:39px;overflow:hidden}
+  .row{display:flex;justify-content:space-between;margin-top:14px}
+  .card{position:relative;width:360px;height:155px;overflow:hidden;border-radius:3px}
+  .card::after{content:"";position:absolute;right:0;top:0;bottom:0;width:2px;background:#ccd0d4}
+  .full{position:absolute;width:2840.1px;height:281.4px;max-width:none}   /* 3472×344 at 0.818 */
+  .hl-ring{position:absolute;border:4px solid #22c55e;border-radius:9px;box-sizing:border-box}
+  .brand{position:absolute;left:56px;bottom:34px;color:rgba(255,255,255,.88);font-size:28px;font-weight:600;letter-spacing:-.2px}
+  .demo{position:absolute;right:48px;bottom:30px;background:#cfe2f3;color:#1d2327;font-size:24px;font-weight:500;padding:6px 14px;border-radius:6px}
+</style></head><body>
+  <div class="q">How much of my WooCommerce<br>revenue comes from<br><span class="hl">returning customers?</span></div>
+  <div class="panel">
+    <div class="heading"><img class="full" src="recordings/answer-frame-crop.png" style="left:-32.7px;top:-36.8px" alt=""></div>
+    <div class="row">
+      <div class="card"><img class="full" src="recordings/answer-frame-crop.png" style="left:-39.3px;top:-88.3px" alt=""></div>
+      <div class="card"><img class="full" src="recordings/answer-frame-crop.png" style="left:-968.5px;top:-88.3px" alt=""></div>
+      <div class="card"><img class="full" src="recordings/answer-frame-crop.png" style="left:-1897.8px;top:-88.3px" alt=""></div>
+    </div>
+  </div>
+  <!-- outline around the Returning card (panel left 48 + pad 22 + card 2 left 390; panel top 336 + pad 20 + heading 39 + gap 14) -->
+  <div class="hl-ring" style="left:453px;top:402px;width:376px;height:171px"></div>
+  <div class="brand">PureDevs Customer History</div>
+  <div class="demo">Demo store</div>
+</body></html>

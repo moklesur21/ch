@@ -221,7 +221,7 @@ Sources: Section D4 (title, meta, answer, decide, tier note), V1 Placement Kit v
 | Excerpt (meta description) | See how much WooCommerce revenue comes from new, returning and guest customers. A short demo on a working store, plus the steps to check your own. |
 | `_pdq_answer` | Open Customer History → Dashboard → Revenue Analytics. "Revenue by Customer Type" shows New Customers, Returning Customers and Guest Orders, each with revenue and order count for the dates you pick. |
 | `_pdq_video_name` | `returning_revenue` |
-| Featured image (poster) | `V1-poster.webp`, 1280 × 720, under 80 KB. **Not made yet** — Yeasir supplies it. Alt: "Revenue by Customer Type on a demo store: New Customers, Returning Customers and Guest Orders cards" |
+| Featured image (poster) | `V1-poster.webp`, 1280 × 720, 41 KB. Alt: "How much of my WooCommerce revenue comes from returning customers? Revenue by Customer Type on a demo store, with the Returning Customers card outlined" |
 | `_pdq_youtube_id` | *(set on publish day, from the YouTube upload)* |
 | `_pdq_duration` | `PT1M40S` |
 | `_pdq_upload_date` | *(the YouTube publish date)* |
@@ -283,7 +283,7 @@ Your customer and order data stays in your own WordPress database, and the plugi
 
 ### Files to copy from the `ch` repo into the media library
 
-`ch/project_asset/content/videos/v1/recordings/`: `V1-shot-1-path.webp`, `V1-shot-2-split.webp`, `V1-shot-3-free-rate.webp`, and the poster `V1-poster.webp` once Yeasir supplies it. The 1200 px `V1-split.gif` is optional: if used, put it after Image 2 with the caption "Demo store, sample data" and show it at full column width. At narrow widths the card labels stop being readable.
+`ch/project_asset/content/videos/v1/recordings/`: `V1-shot-1-path.webp`, `V1-shot-2-split.webp`, `V1-shot-3-free-rate.webp`, and the poster `V1-poster.webp`. The 1200 px `V1-split.gif` is optional: if used, put it after Image 2 with the caption "Demo store, sample data" and show it at full column width. At narrow widths the card labels stop being readable.
 
 ---
 
