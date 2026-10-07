@@ -1,7 +1,7 @@
 # PureDevs — Section D Guide: Landing Pages and Site
 
-**Version:** v1.4 · **Date:** 24 Sep 2026 · **Owner:** Yeasir
-**Supersedes:** v1.1 and v1.0
+**Version:** v1.5 · **Date:** 7 Oct 2026 · **Owner:** Yeasir
+**Supersedes:** v1.4 and earlier
 **Companion to:** `PureDevs_Ad_Launch_Prerequisites_Checklist_v1.1.md` (items D1–D5)
 **Reconciled with:** `PureDevs_Video_Topic_Filter_v4.1.md` (20 Sep), the Proof-Led strategy, and the 3.1.2 Feature Reference (§D do-not-claim).
 **Your total time in D:** about 2 hours approving copy. Recording time is counted in section E.
@@ -106,7 +106,7 @@ document.addEventListener('click', function (e) {
 | H2 | And the customers behind the orders |
 | Body | A customer list you can filter and save as segments, and a profile for every customer with order history and notes. |
 | H2 | Your data stays where your store is |
-| Body | Everything is stored in your own WordPress database. There is no external service, no account and no API key. It works with WordPress's personal-data export and erase tools. |
+| Body | Everything is stored in your own WordPress database. There is no account and no API key, and the plugin makes no outbound requests of its own; licensing and updates run through Freemius, with an opt-in you can skip. Customer notes work with WordPress's personal-data export and erase tools. |
 | H2 | What it does not do |
 | Body | It observes and reports. It does not send marketing emails, create coupons or run automations, and it never changes your orders or products. You decide what to do with what you see. |
 | H2 | Free and Pro |
@@ -202,7 +202,7 @@ GA4 already logs outbound clicks. Watch wordpress.org clicks from this page as a
 | Title | Returning Customer Revenue in WooCommerce \| PureDevs | Where Your Store Data Goes \| PureDevs Customer History | Zero-Result Searches in WooCommerce \| PureDevs |
 | Answer in two lines | Open Customer History → Dashboard → Revenue Analytics. "Revenue by Customer Type" shows New Customers, Returning Customers and Guest Orders, each with revenue and order count for the dates you pick. | It stays in your own WordPress database. The plugin records searches, views, add-to-carts and orders on your server and makes no outbound requests of its own. There is no account and no API key. | On the free version: Customer History → Search Analytics → Zero-Result Searches. On Pro: Statistics → Zero-Result Searches. The table lists each term that returned no products, how many times it was searched, and when. |
 | What this lets you decide | Whether your next hour goes to existing buyers or first-time buyers, and whether to encourage accounts at checkout. | Whether customer analytics has to mean handing customer data to a third party. | What to stock, rename or add a synonym for. |
-| Must state | WooCommerce lets you filter the orders report by new or returning customers; this puts new, returning and guest side by side. Completed and processing orders only. Figures can lag up to 30 minutes. | Licensing and updates run through Freemius, with an opt-in prompt you can skip. IP addresses and emails are stored, so never "anonymised". Works with WordPress's personal-data export and erase tools. | Counts start the day you install 3.1.2. Your own admin searches are not recorded. Report only: it does not redirect or suggest. Search-plugin coverage per FAQ 6. |
+| Must state | WooCommerce lets you filter the orders report by new or returning customers; this puts new, returning and guest side by side. Completed and processing orders only. Figures can lag up to 30 minutes. | Licensing and updates run through Freemius, with an opt-in prompt you can skip. IP addresses and emails are stored, so never "anonymised". Customer notes work with WordPress's export and erase tools; tracked visit rows are not part of them yet. The weekly digest email to you is on by default; switch it off in Settings. | Counts start the day you install 3.1.2. Your own admin searches are not recorded. Report only: it does not redirect or suggest. Search-plugin coverage per FAQ 6. |
 | Tier note | Pro screen. The free Revenue page shows Repeat Purchase Rate, for registered customers only. | Free. | **Free:** up to 20 terms, most recent 90 days. Pro: full history, sortable, searchable. |
 
 Meta descriptions:
@@ -303,6 +303,7 @@ The DEV is the bottleneck, so the **VA assembles the pages** and the DEV only bu
 - **A7 settled:** no 100-customer cap. It is removed from D0, the D1 table, the pricing meta and the pricing bullets. The 3.1.2 Feature Reference still describes the cap and quotes its banner text, so the DEV should confirm on a free install with more than 100 customers, and the Reference needs a correction note.
 
 ## Changelog
+- **v1.5 — 7 Oct 2026.** D4 `no_saas` (V8) "Must state": the export/erase line is narrowed to customer notes, and the default-on weekly digest is stated (V8 Demo Brief v1.1 §11; code read of the free 3.1.2 build). D1 "Your data stays where your store is" (V1's page): "no external service" and the unqualified export/erase line replaced — Freemius named, export/erase limited to customer notes (V8 Claim Audit finding 5).
 - **v1.4 — 24 Sep 2026.** Question pages move to the approved `/questions/<slug>/` pattern; V1 uses the approved slug. No other change.
 - **v1.3 — 21 Sep 2026.** Decision A7: no 100-customer cap on the free version. Removed from rule D0.3, the D1 Free/Pro table, the pricing meta description and pricing bullet 6. Nothing else changed.
 - **v1.2 — 21 Sep 2026.** Reconciled with Video Topic Filter v4.1 and the fact that nothing is recorded. D1 hero and /pricing slot back to `returning_revenue` (V1); D2 hero `no_saas` (V8); fallbacks are now still images, not other videos. D1 sub and tiles blend customer revenue with search and funnel. D4 rebuilt in ship order (first three: V1, V8, V13), `guest_share` retired, pages added for V8 and V7. Week plan rebuilt around scripting, recording and editing V1 by Fri 25 Sep. F2 hand-off corrected: the strategy's RSAs stand.

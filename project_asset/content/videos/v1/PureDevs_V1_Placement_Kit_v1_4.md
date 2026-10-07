@@ -1,6 +1,6 @@
 # V1 Placement Kit — How much of my WooCommerce revenue comes from returning customers?
 
-**Version 1.3 · 6 Oct 2026** · Demo Video Prompt Pack v3, FILE 5 · supersedes v1.2
+**Version 1.4 · 7 Oct 2026** · Demo Video Prompt Pack v3, FILE 5 · supersedes v1.3
 From `PureDevs_V1_Script_v1_2.md`, `PureDevs_V1_Demo_Brief_v1_2.md` and `PureDevs_V1_Recording_Brief_v1_4.md`, filled from the final master.
 **Final master:** `recordings/pd v1 final edit -14LUFS.mp4` — **1:40** (99.8 s), 2560 × 1440, −14.0 LUFS. Step-6 audit: **PASS** (6 Oct 2026).
 **Question page URL (approved):** https://puredevs.com/questions/woocommerce-new-vs-returning-customers/
@@ -110,7 +110,7 @@ Beat 1 + the answer frame + the beat-4 decision + the end card. Beat 2 is skippe
 - **Does it only count orders placed after I install it?**
   No. It reads your existing WooCommerce orders, so earlier orders are included once Pro is active.
 - **Does my data leave my site, or slow my store down?**
-  It's self-hosted: nothing leaves your server, and it works with WordPress's personal-data export and erase tools. The only outside contact is Freemius, for licensing and its optional opt-in. The report runs in your WordPress admin and caches its results for 30 minutes. On your storefront the plugin records activity server-side, with no JavaScript tracker.
+  It's self-hosted: your customer and order data stays in your own WordPress database, and the plugin makes no outbound requests of its own. The only outside contact is Freemius, for licensing and its optional opt-in. The weekly digest email to you is on by default; switch it off in Customer History → Settings. Customer notes work with WordPress's personal-data export and erase tools; tracked visit rows are not part of them yet. The report runs in your WordPress admin and caches its results for 30 minutes. On your storefront the plugin records activity server-side, with no JavaScript tracker.
 
 **VideoObject JSON-LD** (alongside the planned SoftwareApplication JSON-LD):
 
@@ -208,7 +208,7 @@ The existing copy matches this page, so no new headlines or descriptions.
 |---|---|---|
 | Headline, pin to position 1 | New vs Returning Revenue | 24 / 30 |
 | Headline | PureDevs Customer History | 25 / 30 |
-| Headline | Your Data Stays On Your Site | 28 / 30 |
+| Headline (replaces "Your Data Stays On Your Site": the default-on digest email makes that absolute untrue; V8 Claim Audit finding 4) | Data Stays In Your Database | 27 / 30 |
 | Headline, unlocked (Q4: 30 days, no card) | Start Your Free Trial | 21 / 30 |
 | Headline (final length 1:40 — under 2:00, so it holds) | Watch The 2-Minute Demo | 23 / 30 |
 | Description | You decide what to do. The plugin shows you where the money comes from. | 71 / 90 |
@@ -249,6 +249,7 @@ The existing copy matches this page, so no new headlines or descriptions.
 
 ## Changelog
 
+- **v1.4 — 7 Oct 2026.** §2 FAQ 5: "nothing leaves your server" and the unqualified export/erase line replaced — export/erase covers customer notes only, the weekly digest is on by default (V8 Claim Audit finding 5; same wording as the developer spec v1.1). §8: headline "Your Data Stays On Your Site" → "Data Stays In Your Database" (finding 4).
 - **v1.3 — 6 Oct 2026.** Assets made from the recordings: the three screenshots, two GIFs (1200 px recommended for legibility) and the 23.5 s cut; §1 and §7 say where they are.
 - **v1.2 — 6 Oct 2026.** Filled from the final master (`pd v1 final edit -14LUFS.mp4`, 1:40, step-6 audit PASS): new §0 with the length, JSON-LD duration, upload file, thumbnail source, YouTube chapters (replacing Script v1.2 §B's placeholders) and the beat starts; §1 cut re-timed to the master (about 24 s, option A resolved, the tool's end card); `[LENGTH]` → 1:40 in §3 and §6; shot list sources the raw clips; shot 3's alt text made build-neutral; honest sentence re-checked (WooCommerce 11.1.2); "2-minute" copy confirmed.
 - **v1.1 — 21 Sep 2026.** Q1 answers applied: FAQ rewritten; account qualifier and guest reason in the walkthrough; option B corrected. Q4 applied: button microcopy, headline 10 unlocked, Trial 5 → Variant A. Audit findings 1, 3, 4 and 5 applied; homepage hero → V8. Timecodes follow Script v1.2 (planned 1:46).

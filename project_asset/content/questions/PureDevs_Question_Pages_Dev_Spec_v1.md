@@ -1,7 +1,7 @@
 # Question pages on puredevs.com — developer spec
 
-**Version 1.0 · 6 Oct 2026** · for the developer of the `puredevs-site` theme
-**Builds:** Section D4 of `PureDevs_Section_D_Landing_Pages_Guide_v1.4.md` (question pages: "DEV template, VA fills")
+**Version 1.1 · 7 Oct 2026** · for the developer of the `puredevs-site` theme
+**Builds:** Section D4 of `PureDevs_Section_D_Landing_Pages_Guide_v1.5.md` (question pages: "DEV template, VA fills")
 **First page:** `/questions/woocommerce-new-vs-returning-customers/` — its full content is in **Appendix A**.
 **Where the source material lives:** the `ch` repo (`/Applications/MAMP/htdocs/ch`), not the website repo. Every file this spec names is under `ch/project_asset/content/videos/v1/recordings/` unless it says otherwise.
 
@@ -274,7 +274,7 @@ Q: Does it only count orders placed after I install it?
 No. It reads your existing WooCommerce orders, so earlier orders are included once Pro is active.
 
 Q: Does my data leave my site, or slow my store down?
-Your customer and order data stays in your own WordPress database, and the plugin works with WordPress's personal-data export and erase tools. Licensing and updates run through Freemius, which asks for your permission first. The report runs in your WordPress admin and caches its results for 30 minutes. On your storefront the plugin records activity server-side, with no JavaScript tracker.
+Your customer and order data stays in your own WordPress database; the plugin makes no outbound requests of its own. Licensing and updates run through Freemius, which asks for your permission first. The weekly digest email to you is on by default; switch it off in Customer History → Settings. Customer notes work with WordPress's personal-data export and erase tools; tracked visit rows are not part of them yet. The report runs in your WordPress admin and caches its results for 30 minutes. On your storefront the plugin records activity server-side, with no JavaScript tracker.
 ```
 
 ### Trial button (both places)
@@ -289,4 +289,5 @@ Your customer and order data stays in your own WordPress database, and the plugi
 
 ## Changelog
 
+- **v1.1 — 7 Oct 2026.** V1 FAQ "Does my data leave my site…": the export/erase line is limited to customer notes (tracked visit rows are not covered), the default-on weekly digest is stated, and "no outbound requests of its own" added (code read of the 3.1.2 builds; V8 Claim Audit finding 5). If the page is already built, update that one answer.
 - **v1.0 — 6 Oct 2026.** First version: `question` CPT, fields, template, video slot, trial button, SEO/schema, seed script, and the V1 page content.

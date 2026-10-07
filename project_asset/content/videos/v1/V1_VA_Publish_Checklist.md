@@ -1,7 +1,7 @@
 # V1 — publish checklist for the VA
 
 **Video:** "How much of my WooCommerce revenue comes from returning customers?" · 1:40 · Pro
-**Version 1.0 · 6 Oct 2026** · from `PureDevs_V1_Placement_Kit_v1_3.md` and `PureDevs_V1_Script_v1_2.md`
+**Version 1.0 · 6 Oct 2026** · from `PureDevs_V1_Placement_Kit_v1_4.md` and `PureDevs_V1_Script_v1_2.md`
 **Who:** the VA does everything below unless a step says **Yeasir** or **Developer**. Tick each box as you go and send Yeasir the "Report back" list at the end.
 
 ---
@@ -106,7 +106,7 @@ In each listing's media section:
 ## 5. Google Ads — **Yeasir** (or whoever runs the ads)
 
 - [ ] In ad group AG2 (Questions), set the final URL of `[woocommerce new vs returning customers]` and `[woocommerce returning customer report]` to the question page.
-- [ ] The headlines and descriptions are already written in Placement Kit v1.3 §8. "Watch The 2-Minute Demo" is fine: the video is 1:40.
+- [ ] The headlines and descriptions are already written in Placement Kit v1.4 §8. "Watch The 2-Minute Demo" is fine: the video is 1:40.
 
 ## 6. Emails — **wait for Yeasir**
 

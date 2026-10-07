@@ -12,7 +12,7 @@
 | `PureDevs_Ad_Launch_Prerequisites_Checklist_v1.3.md` | The full item list. Reference only; dates here override it |
 | `PureDevs_Section_B_Tracking_Consent_Guide_v1.2.md` | Ads account, GTM, GA4, consent banner, events, Search Console, Clarity |
 | `PureDevs_Section_C_Freemius_Checkout_Guide_v1.2.md` | Freemius checks, overlay checkout code, trial button, webhook audit |
-| `PureDevs_Section_D_Landing_Pages_Guide_v1.4.md` | Block kit, page copy for D1, D2, pricing, question pages, schema |
+| `PureDevs_Section_D_Landing_Pages_Guide_v1.5.md` | Block kit, page copy for D1, D2, pricing, question pages, schema |
 | `PureDevs_Section_F_Google_Ads_Build_Guide_v1.md` | Campaign settings, keywords, negatives, ad copy, assets, audiences |
 | `PureDevs_Section_G_Brevo_Guide_v1.1.md` + `PureDevs_Lifecycle_Emails_v1.4.md` | Deliverability, automations, test procedure; the seven emails |
 | `PureDevs_Section_H_Capterra_G2_Guide_v1.md` | Listing copy, form answers, screenshots, review plan |
