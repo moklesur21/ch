@@ -1,0 +1,12 @@
+{
+  "image": "answer-frame-crop.png",
+  "scale": 2,
+  "rects": {
+    "#pd-search-analytics .pd-woo-panel tbody tr": {
+      "x": 63,
+      "y": 444,
+      "w": 3374,
+      "h": 80
+    }
+  }
+}

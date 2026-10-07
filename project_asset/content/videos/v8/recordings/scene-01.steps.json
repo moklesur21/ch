@@ -1,0 +1,18 @@
+{
+  "scene": "scene-01",
+  "seconds": 12.002,
+  "viewport": {
+    "width": 1920,
+    "height": 1080,
+    "scale": 2
+  },
+  "events": [
+    {
+      "i": 0,
+      "do": "hold",
+      "start": 0,
+      "end": 12.002,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    }
+  ]
+}

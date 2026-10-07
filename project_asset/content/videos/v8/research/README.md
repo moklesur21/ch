@@ -13,3 +13,5 @@
 
 2. Save each answer here as-is, one file per source, named with the date: `gemini-2026-10-07.md`, `perplexity-2026-10-07.md`.
 3. Tell Claude "V8 research is in". Claude then writes the Demo Brief and the Script (gate A: you approve them).
+
+**Done 7 Oct 2026:** `gemini-2026-10-07.md`, `perplexity-2026-10-07.md` → `../PureDevs_V8_Demo_Brief_v1_0.md`, `../PureDevs_V8_Script_v1_0.md`.

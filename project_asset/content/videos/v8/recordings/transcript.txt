@@ -1,0 +1,17 @@
+Where does your store data go when you install this plugin?
+
+Here's the whole install, in one take. Plugins, Add Plugin. Search. Install. Activate.
+
+There's one prompt: an optional opt-in from Freemius, our licensing provider. We skip it.
+
+No account. No API key. No setup wizard. The dashboard is already reading the store's own orders — and it's self-hosted: what it records stays in your own WordPress database.
+
+Now a shopper — not logged in — searches the store for "hoodie", and opens two products.
+
+Back in wp-admin: Customer History, Search Analytics. There's "hoodie". And there are the two products they opened. Your own admin browsing isn't recorded — this came from the shopper.
+
+Even the plugin's own usage counters stay here. Tools, Site Health, Info: "This information stays on your server."
+
+So here is the decision this gives you. Whether customer analytics has to mean sending your customer data to someone else's servers. With a plugin like this, it doesn't — no SaaS account, no API key, and the data sits in the same database as your orders.
+
+Everything you just saw is the free version. Free shows the last 90 days; Pro shows your full history. Install it free — the link is below.

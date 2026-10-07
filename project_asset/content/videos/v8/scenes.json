@@ -1,0 +1,578 @@
+{
+  "video": "v8",
+  "title": "Where does my store data go when I install this?",
+  "source": "PureDevs_V8_Script_v1_2.md (gate A passed 7 Oct 2026) · PureDevs_V8_Demo_Brief_v1_1.md §2. Recorded on the throw-away store ch-v8 (scripts/v8-site.sh), never on ch. Order matters: scene-02 (the one take) → 03 (logged-out shopper) → 04 → 05 → 01 (answer frame, made from what 02–04 created). A retake of 02 needs `scripts/v8-site.sh reset` first.",
+  "base": "http://localhost/ch-v8",
+  "wpPath": "/Applications/MAMP/htdocs/ch-v8",
+  "preflight": [
+    "scripts/v8-site.sh",
+    "check"
+  ],
+  "user": "shot@example.invalid",
+  "viewport": {
+    "width": 1920,
+    "height": 1080,
+    "scale": 2
+  },
+  "allowNotices": [
+    "Heads up: your own administrator activity",
+    "haven't ordered in over 30 days"
+  ],
+  "ready": {
+    "wp-home": [
+      "no-spinner",
+      "no-notice",
+      "no-error"
+    ],
+    "pd-dashboard": [
+      "no-spinner",
+      "no-notice",
+      "text:Top Customers",
+      "text:Latest Orders"
+    ],
+    "storefront": [
+      "no-spinner",
+      "text:The gear you"
+    ],
+    "search-analytics": [
+      "no-spinner",
+      "no-notice",
+      "text:Top Keyword Searches",
+      "text:hoodie",
+      "text:The Northline Hoodie",
+      "text:Full-Zip Hoodie"
+    ],
+    "site-health-info": [
+      "no-notice",
+      "text:PureDevs Customer History"
+    ]
+  },
+  "stills": {
+    "answer-frame": {
+      "scene": "scene-01",
+      "kind": "viewport"
+    },
+    "answer-frame-crop": {
+      "scene": "scene-01",
+      "kind": "clip",
+      "selector": "#pd-search-analytics",
+      "pad": 16,
+      "measure": [
+        "#pd-search-analytics .pd-woo-panel tbody tr"
+      ]
+    }
+  },
+  "endCard": {
+    "image": "recordings/answer-frame-crop.png",
+    "trimX": 0,
+    "highlight": "#pd-search-analytics .pd-woo-panel tbody tr",
+    "title": "PureDevs Customer History",
+    "cta": "Install free · WordPress.org",
+    "label": "Demo store",
+    "size": [
+      1920,
+      1080
+    ],
+    "seconds": 5
+  },
+  "scenes": [
+    {
+      "id": "scene-02",
+      "beat": "2",
+      "url": "/wp-admin/",
+      "ready": "wp-home",
+      "preflight": true,
+      "setup": [
+        {
+          "do": "park",
+          "where": "menu-gap"
+        }
+      ],
+      "steps": [
+        {
+          "do": "timer-start"
+        },
+        {
+          "do": "hold",
+          "s": 1.2
+        },
+        {
+          "do": "move",
+          "to": "#menu-plugins > a",
+          "at": "center",
+          "dx": -20,
+          "s": 1.2
+        },
+        {
+          "do": "hold",
+          "s": 0.4
+        },
+        {
+          "do": "click",
+          "nav": true
+        },
+        {
+          "do": "hold",
+          "s": 1.5
+        },
+        {
+          "do": "move",
+          "to": "#menu-plugins .wp-submenu a[href='plugin-install.php']",
+          "at": "center",
+          "dx": -20,
+          "s": 1.0
+        },
+        {
+          "do": "hold",
+          "s": 0.4
+        },
+        {
+          "do": "click",
+          "nav": true
+        },
+        {
+          "do": "wait-for",
+          "sel": "#search-plugins",
+          "timeout": 30
+        },
+        {
+          "do": "hold",
+          "s": 0.6
+        },
+        {
+          "do": "move",
+          "to": "#search-plugins",
+          "at": "center",
+          "s": 1.0
+        },
+        {
+          "do": "click"
+        },
+        {
+          "do": "type",
+          "text": "PureDevs Customer History",
+          "delay": 90
+        },
+        {
+          "do": "wait-for",
+          "sel": ".plugin-card-puredevs-customer-history-for-woocommerce .install-now",
+          "timeout": 45
+        },
+        {
+          "do": "hold",
+          "s": 1.0
+        },
+        {
+          "do": "move",
+          "to": ".plugin-card-puredevs-customer-history-for-woocommerce .install-now",
+          "at": "center",
+          "s": 1.2
+        },
+        {
+          "do": "hold",
+          "s": 0.4
+        },
+        {
+          "do": "click"
+        },
+        {
+          "do": "wait-for",
+          "sel": ".plugin-card-puredevs-customer-history-for-woocommerce a.activate-now",
+          "timeout": 120
+        },
+        {
+          "do": "hold",
+          "s": 0.8
+        },
+        {
+          "do": "click",
+          "nav": true,
+          "timeout": 60
+        },
+        {
+          "do": "wait-for",
+          "sel": "#skip_activation",
+          "timeout": 30
+        },
+        {
+          "do": "note",
+          "label": "Opt-in screen heading",
+          "sel": "#fs_connect h2"
+        },
+        {
+          "do": "move",
+          "to": "#fs_connect h2",
+          "at": "right",
+          "dx": 40,
+          "s": 1.2
+        },
+        {
+          "do": "hold",
+          "s": 3.0
+        },
+        {
+          "do": "move",
+          "to": "#skip_activation",
+          "at": "center",
+          "s": 1.2
+        },
+        {
+          "do": "hold",
+          "s": 0.6
+        },
+        {
+          "do": "click",
+          "nav": true
+        },
+        {
+          "do": "wait-ready",
+          "ready": "pd-dashboard"
+        },
+        {
+          "do": "note",
+          "label": "Landed on after Skip",
+          "sel": "#pd-customer-history h1"
+        },
+        {
+          "do": "hold",
+          "s": 1.2
+        },
+        {
+          "do": "move",
+          "to": "heading:Latest Orders",
+          "at": "below",
+          "s": 1.4
+        },
+        {
+          "do": "hold",
+          "s": 9
+        },
+        {
+          "do": "timer-stop"
+        },
+        {
+          "do": "hold",
+          "s": 1
+        }
+      ],
+      "note": "The one take, timer on screen: Plugins (the list, without the plugin) → Add Plugin → search → Install Now (real wp.org download) → Activate → Freemius opt-in (hold) → Skip → Customer History Dashboard with the store's own orders. Never Allow & Continue."
+    },
+    {
+      "id": "scene-03",
+      "beat": "3",
+      "context": "visitor",
+      "url": "/",
+      "ready": "storefront",
+      "setup": [
+        {
+          "do": "move-xy",
+          "x": 1500,
+          "y": 620,
+          "s": 0
+        }
+      ],
+      "steps": [
+        {
+          "do": "hold",
+          "s": 2
+        },
+        {
+          "do": "move",
+          "to": "header .wp-block-search__input",
+          "at": "center",
+          "s": 1.2
+        },
+        {
+          "do": "click"
+        },
+        {
+          "do": "type",
+          "text": "hoodie",
+          "delay": 140
+        },
+        {
+          "do": "hold",
+          "s": 0.5
+        },
+        {
+          "do": "press",
+          "key": "Enter",
+          "nav": true
+        },
+        {
+          "do": "hold",
+          "s": 2
+        },
+        {
+          "do": "scroll-to",
+          "to": "text:The Northline Hoodie",
+          "offset": 760,
+          "s": 1.5
+        },
+        {
+          "do": "hold",
+          "s": 0.8
+        },
+        {
+          "do": "move",
+          "to": "text:The Northline Hoodie",
+          "at": "center",
+          "s": 1.2
+        },
+        {
+          "do": "hold",
+          "s": 0.4
+        },
+        {
+          "do": "click",
+          "nav": true
+        },
+        {
+          "do": "hold",
+          "s": 3
+        },
+        {
+          "do": "move",
+          "to": "a[href$='/product-category/hoodies/']",
+          "at": "center",
+          "s": 1.2
+        },
+        {
+          "do": "hold",
+          "s": 0.4
+        },
+        {
+          "do": "click",
+          "nav": true
+        },
+        {
+          "do": "hold",
+          "s": 1.5
+        },
+        {
+          "do": "scroll-to",
+          "to": "text:Full-Zip Hoodie",
+          "offset": 760,
+          "s": 1.2
+        },
+        {
+          "do": "hold",
+          "s": 0.6
+        },
+        {
+          "do": "move",
+          "to": "text:Full-Zip Hoodie",
+          "at": "center",
+          "s": 1.2
+        },
+        {
+          "do": "hold",
+          "s": 0.4
+        },
+        {
+          "do": "click",
+          "nav": true
+        },
+        {
+          "do": "hold",
+          "s": 3
+        }
+      ],
+      "note": "A separate logged-out browser (admins are never recorded on Free): header search \"hoodie\" → results → The Northline Hoodie → breadcrumb \"Hoodies\" → Full-Zip Hoodie. Not the Back button: the plugin's PHP session sends no-cache headers, so Back reloads the results and records the search a second time. Editor adds the \"Logged-out visitor\" lower third."
+    },
+    {
+      "id": "scene-04",
+      "beat": "3",
+      "url": "/wp-admin/",
+      "ready": "wp-home",
+      "setup": [
+        {
+          "do": "park",
+          "where": "menu-gap"
+        }
+      ],
+      "steps": [
+        {
+          "do": "hold",
+          "s": 1.5
+        },
+        {
+          "do": "move",
+          "to": "#toplevel_page_pd-woo-dashboard > a",
+          "at": "center",
+          "dx": -20,
+          "s": 1.2
+        },
+        {
+          "do": "hold",
+          "s": 0.8
+        },
+        {
+          "do": "move",
+          "to": "#toplevel_page_pd-woo-dashboard .wp-submenu a[href$='pd-woo-search-analytics']",
+          "at": "center",
+          "s": 0.9
+        },
+        {
+          "do": "hold",
+          "s": 0.4
+        },
+        {
+          "do": "click",
+          "nav": true
+        },
+        {
+          "do": "wait-ready",
+          "ready": "search-analytics"
+        },
+        {
+          "do": "note",
+          "label": "Top Keyword Searches, first keyword",
+          "sel": "#pd-search-analytics .pd-woo-panel tbody td"
+        },
+        {
+          "do": "hold",
+          "s": 1.5
+        },
+        {
+          "do": "move",
+          "to": "#pd-search-analytics .pd-woo-panel tbody td",
+          "at": "text-right",
+          "s": 1.4
+        },
+        {
+          "do": "hold",
+          "s": 5
+        },
+        {
+          "do": "scroll-to",
+          "to": "heading:Most Viewed Products",
+          "offset": 260,
+          "s": 1.5
+        },
+        {
+          "do": "move",
+          "to": "text:The Northline Hoodie",
+          "at": "text-right",
+          "s": 1.4
+        },
+        {
+          "do": "hold",
+          "s": 5
+        },
+        {
+          "do": "scroll-to",
+          "to": "#pd-search-analytics",
+          "offset": 120,
+          "s": 1.5
+        },
+        {
+          "do": "move",
+          "to": "text:Heads up: your own administrator activity",
+          "at": "below",
+          "s": 1.2,
+          "dy": -4
+        },
+        {
+          "do": "hold",
+          "s": 4
+        }
+      ],
+      "note": "Customer History → Search Analytics (flyout from the WordPress home screen — never via the plugin Dashboard, whose widgets cache for 30 minutes): \"hoodie\" in Top Keyword Searches / Last Searches, the two products in Most Viewed Products, then the Heads-up notice. Zero-Result Searches is on the page but never the subject."
+    },
+    {
+      "id": "scene-05",
+      "beat": "3",
+      "url": "/wp-admin/site-health.php?tab=debug",
+      "ready": "site-health-info",
+      "setup": [
+        {
+          "do": "move-xy",
+          "x": 90,
+          "y": 330,
+          "s": 0
+        }
+      ],
+      "steps": [
+        {
+          "do": "hold",
+          "s": 1.5
+        },
+        {
+          "do": "move",
+          "to": "#menu-tools > a",
+          "at": "center",
+          "dx": -20,
+          "s": 1.0
+        },
+        {
+          "do": "hold",
+          "s": 1
+        },
+        {
+          "do": "scroll-to",
+          "to": "#health-check-section-pdwchs_customer_history",
+          "offset": 420,
+          "s": 2
+        },
+        {
+          "do": "move",
+          "to": "#health-check-section-pdwchs_customer_history",
+          "at": "center",
+          "s": 1.4
+        },
+        {
+          "do": "hold",
+          "s": 0.4
+        },
+        {
+          "do": "click"
+        },
+        {
+          "do": "wait-for",
+          "sel": "#health-check-accordion-block-pdwchs_customer_history",
+          "timeout": 10
+        },
+        {
+          "do": "note",
+          "label": "Site Health section (text)",
+          "sel": "#health-check-accordion-block-pdwchs_customer_history"
+        },
+        {
+          "do": "hold",
+          "s": 0.8
+        },
+        {
+          "do": "move",
+          "to": "#health-check-accordion-block-pdwchs_customer_history",
+          "at": "right",
+          "s": 1.2
+        },
+        {
+          "do": "hold",
+          "s": 6
+        }
+      ],
+      "note": "Tools → Site Health → Info → \"PureDevs Customer History\": \"…This information stays on your server.\" and the four fields (First free-tier limit reached must read \"None reached yet\"). Cursor starts above Tools (never crosses Export / Erase Personal Data in the expanded Tools menu)."
+    },
+    {
+      "id": "scene-01",
+      "beat": "1",
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics",
+      "ready": "search-analytics",
+      "setup": [
+        {
+          "do": "park",
+          "where": "menu-gap"
+        }
+      ],
+      "steps": [
+        {
+          "do": "hold",
+          "s": 12
+        }
+      ],
+      "note": "Answer frame (beats 1, 4 and 5 hold on it; also the poster and end-card source): Search Analytics with the shopper's search and the two products. Recorded last, because scenes 02–04 make its data."
+    }
+  ]
+}

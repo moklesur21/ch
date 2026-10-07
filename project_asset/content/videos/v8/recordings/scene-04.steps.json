@@ -1,0 +1,186 @@
+{
+  "scene": "scene-04",
+  "seconds": 29.775,
+  "viewport": {
+    "width": 1920,
+    "height": 1080,
+    "scale": 2
+  },
+  "events": [
+    {
+      "i": 0,
+      "do": "hold",
+      "start": 0,
+      "end": 1.501,
+      "url": "/wp-admin/"
+    },
+    {
+      "i": 1,
+      "do": "move",
+      "target": "#toplevel_page_pd-woo-dashboard > a",
+      "start": 1.501,
+      "rect": {
+        "x": 0,
+        "y": 408,
+        "w": 160,
+        "h": 34
+      },
+      "end": 2.74,
+      "url": "/wp-admin/"
+    },
+    {
+      "i": 2,
+      "do": "hold",
+      "start": 2.74,
+      "end": 3.542,
+      "url": "/wp-admin/"
+    },
+    {
+      "i": 3,
+      "do": "move",
+      "target": "#toplevel_page_pd-woo-dashboard .wp-submenu a[href$='pd-woo-search-analytics']",
+      "start": 3.542,
+      "rect": {
+        "x": 165,
+        "y": 555,
+        "w": 160,
+        "h": 28
+      },
+      "end": 4.474,
+      "url": "/wp-admin/"
+    },
+    {
+      "i": 4,
+      "do": "hold",
+      "start": 4.474,
+      "end": 4.874,
+      "url": "/wp-admin/"
+    },
+    {
+      "i": 5,
+      "do": "click",
+      "start": 4.875,
+      "end": 6.505,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    },
+    {
+      "i": 6,
+      "do": "wait-ready",
+      "start": 6.514,
+      "end": 7.138,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    },
+    {
+      "i": 7,
+      "do": "note",
+      "target": "#pd-search-analytics .pd-woo-panel tbody td",
+      "start": 7.139,
+      "rect": {
+        "x": 198,
+        "y": 311,
+        "w": 844,
+        "h": 40
+      },
+      "end": 7.14,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    },
+    {
+      "i": 8,
+      "do": "hold",
+      "start": 7.14,
+      "end": 8.641,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    },
+    {
+      "i": 9,
+      "do": "move",
+      "target": "#pd-search-analytics .pd-woo-panel tbody td",
+      "start": 8.641,
+      "rect": {
+        "x": 198,
+        "y": 311,
+        "w": 844,
+        "h": 40
+      },
+      "end": 10.073,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    },
+    {
+      "i": 10,
+      "do": "hold",
+      "start": 10.073,
+      "end": 15.074,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    },
+    {
+      "i": 11,
+      "do": "scroll-to",
+      "target": "heading:Most Viewed Products",
+      "start": 15.075,
+      "rect": {
+        "x": 197,
+        "y": 696,
+        "w": 1672,
+        "h": 18
+      },
+      "end": 16.597,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    },
+    {
+      "i": 12,
+      "do": "move",
+      "target": "text:The Northline Hoodie",
+      "start": 16.597,
+      "rect": {
+        "x": 208,
+        "y": 788,
+        "w": 128,
+        "h": 15
+      },
+      "end": 18.023,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    },
+    {
+      "i": 13,
+      "do": "hold",
+      "start": 18.023,
+      "end": 23.024,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    },
+    {
+      "i": 14,
+      "do": "scroll-to",
+      "target": "#pd-search-analytics",
+      "start": 23.024,
+      "rect": {
+        "x": 182,
+        "y": 105,
+        "w": 1718,
+        "h": 765
+      },
+      "end": 24.544,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    },
+    {
+      "i": 15,
+      "do": "move",
+      "target": "text:Heads up: your own administrator activity",
+      "start": 24.544,
+      "rect": {
+        "x": 198,
+        "y": 173,
+        "w": 1690,
+        "h": 20
+      },
+      "end": 25.772,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    },
+    {
+      "i": 16,
+      "do": "hold",
+      "start": 25.772,
+      "end": 29.774,
+      "url": "/wp-admin/admin.php?page=pd-woo-search-analytics"
+    }
+  ]
+}

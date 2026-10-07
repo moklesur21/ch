@@ -1,0 +1,354 @@
+{
+  "scene": "scene-02",
+  "seconds": 68.136,
+  "viewport": {
+    "width": 1920,
+    "height": 1080,
+    "scale": 2
+  },
+  "events": [
+    {
+      "i": 0,
+      "do": "timer-start",
+      "start": 0,
+      "end": 0.002,
+      "url": "/wp-admin/"
+    },
+    {
+      "i": 1,
+      "do": "hold",
+      "start": 0.002,
+      "end": 1.202,
+      "url": "/wp-admin/"
+    },
+    {
+      "i": 2,
+      "do": "move",
+      "target": "#menu-plugins > a",
+      "start": 1.203,
+      "rect": {
+        "x": 0,
+        "y": 522,
+        "w": 160,
+        "h": 34
+      },
+      "end": 2.457,
+      "url": "/wp-admin/"
+    },
+    {
+      "i": 3,
+      "do": "hold",
+      "start": 2.457,
+      "end": 2.858,
+      "url": "/wp-admin/"
+    },
+    {
+      "i": 4,
+      "do": "click",
+      "start": 2.858,
+      "end": 4.457,
+      "url": "/wp-admin/plugins.php"
+    },
+    {
+      "i": 5,
+      "do": "hold",
+      "start": 4.458,
+      "end": 5.959,
+      "url": "/wp-admin/plugins.php"
+    },
+    {
+      "i": 6,
+      "do": "move",
+      "target": "#menu-plugins .wp-submenu a[href='plugin-install.php']",
+      "start": 5.96,
+      "rect": {
+        "x": 0,
+        "y": 522,
+        "w": 160,
+        "h": 28
+      },
+      "end": 6.983,
+      "url": "/wp-admin/plugins.php"
+    },
+    {
+      "i": 7,
+      "do": "hold",
+      "start": 6.984,
+      "end": 7.384,
+      "url": "/wp-admin/plugins.php"
+    },
+    {
+      "i": 8,
+      "do": "click",
+      "start": 7.384,
+      "end": 11.609,
+      "url": "/wp-admin/plugin-install.php"
+    },
+    {
+      "i": 9,
+      "do": "wait-for",
+      "target": "#search-plugins",
+      "start": 11.613,
+      "rect": {
+        "x": 1510,
+        "y": 142,
+        "w": 280,
+        "h": 32
+      },
+      "end": 11.643,
+      "url": "/wp-admin/plugin-install.php"
+    },
+    {
+      "i": 10,
+      "do": "hold",
+      "start": 11.661,
+      "end": 12.261,
+      "url": "/wp-admin/plugin-install.php"
+    },
+    {
+      "i": 11,
+      "do": "move",
+      "target": "#search-plugins",
+      "start": 12.261,
+      "rect": {
+        "x": 1510,
+        "y": 142,
+        "w": 280,
+        "h": 32
+      },
+      "end": 13.354,
+      "url": "/wp-admin/plugin-install.php"
+    },
+    {
+      "i": 12,
+      "do": "click",
+      "start": 13.354,
+      "end": 13.454,
+      "url": "/wp-admin/plugin-install.php"
+    },
+    {
+      "i": 13,
+      "do": "type",
+      "start": 13.454,
+      "end": 15.865,
+      "url": "/wp-admin/plugin-install.php"
+    },
+    {
+      "i": 14,
+      "do": "wait-for",
+      "target": ".plugin-card-puredevs-customer-history-for-woocommerce .install-now",
+      "start": 15.865,
+      "end": 20.171,
+      "rect": {
+        "x": 629,
+        "y": 267,
+        "w": 94,
+        "h": 32
+      },
+      "url": "/wp-admin/plugin-install.php?s=PureDevs%2520Customer%2520History&tab=search&type=term"
+    },
+    {
+      "i": 15,
+      "do": "hold",
+      "start": 20.175,
+      "end": 21.176,
+      "url": "/wp-admin/plugin-install.php?s=PureDevs%2520Customer%2520History&tab=search&type=term"
+    },
+    {
+      "i": 16,
+      "do": "move",
+      "target": ".plugin-card-puredevs-customer-history-for-woocommerce .install-now",
+      "start": 21.176,
+      "rect": {
+        "x": 629,
+        "y": 267,
+        "w": 94,
+        "h": 32
+      },
+      "end": 22.417,
+      "url": "/wp-admin/plugin-install.php?s=PureDevs%2520Customer%2520History&tab=search&type=term"
+    },
+    {
+      "i": 17,
+      "do": "hold",
+      "start": 22.417,
+      "end": 22.817,
+      "url": "/wp-admin/plugin-install.php?s=PureDevs%2520Customer%2520History&tab=search&type=term"
+    },
+    {
+      "i": 18,
+      "do": "click",
+      "start": 22.817,
+      "end": 22.9,
+      "url": "/wp-admin/plugin-install.php?s=PureDevs%2520Customer%2520History&tab=search&type=term"
+    },
+    {
+      "i": 19,
+      "do": "wait-for",
+      "target": ".plugin-card-puredevs-customer-history-for-woocommerce a.activate-now",
+      "start": 22.9,
+      "end": 34.609,
+      "rect": {
+        "x": 646,
+        "y": 267,
+        "w": 77,
+        "h": 32
+      },
+      "url": "/wp-admin/plugin-install.php?s=PureDevs%2520Customer%2520History&tab=search&type=term"
+    },
+    {
+      "i": 20,
+      "do": "hold",
+      "start": 34.61,
+      "end": 35.412,
+      "url": "/wp-admin/plugin-install.php?s=PureDevs%2520Customer%2520History&tab=search&type=term"
+    },
+    {
+      "i": 21,
+      "do": "click",
+      "start": 35.412,
+      "end": 42.51,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 22,
+      "do": "wait-for",
+      "target": "#skip_activation",
+      "start": 42.512,
+      "rect": {
+        "x": 1218,
+        "y": 379,
+        "w": 54,
+        "h": 40
+      },
+      "end": 42.533,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 23,
+      "do": "note",
+      "target": "#fs_connect h2",
+      "start": 42.536,
+      "rect": {
+        "x": 828,
+        "y": 179,
+        "w": 444,
+        "h": 25
+      },
+      "end": 42.539,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 24,
+      "do": "move",
+      "target": "#fs_connect h2",
+      "start": 42.539,
+      "rect": {
+        "x": 828,
+        "y": 179,
+        "w": 444,
+        "h": 25
+      },
+      "end": 43.766,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 25,
+      "do": "hold",
+      "start": 43.766,
+      "end": 46.768,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 26,
+      "do": "move",
+      "target": "#skip_activation",
+      "start": 46.768,
+      "rect": {
+        "x": 1218,
+        "y": 379,
+        "w": 54,
+        "h": 40
+      },
+      "end": 47.997,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 27,
+      "do": "hold",
+      "start": 47.997,
+      "end": 48.598,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 28,
+      "do": "click",
+      "start": 48.598,
+      "end": 54.871,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 29,
+      "do": "wait-ready",
+      "start": 54.881,
+      "end": 55.495,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 30,
+      "do": "note",
+      "target": "#pd-customer-history h1",
+      "start": 55.496,
+      "rect": {
+        "x": 182,
+        "y": 87,
+        "w": 1718,
+        "h": 43
+      },
+      "end": 55.498,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 31,
+      "do": "hold",
+      "start": 55.498,
+      "end": 56.699,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 32,
+      "do": "move",
+      "target": "heading:Latest Orders",
+      "start": 56.7,
+      "rect": {
+        "x": 1039,
+        "y": 288,
+        "w": 143,
+        "h": 20
+      },
+      "end": 58.132,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 33,
+      "do": "hold",
+      "start": 58.132,
+      "end": 67.133,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 34,
+      "do": "timer-stop",
+      "start": 67.133,
+      "end": 67.134,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    },
+    {
+      "i": 35,
+      "do": "hold",
+      "start": 67.134,
+      "end": 68.136,
+      "url": "/wp-admin/admin.php?page=pd-woo-dashboard"
+    }
+  ]
+}

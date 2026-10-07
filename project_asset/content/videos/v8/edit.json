@@ -1,0 +1,193 @@
+{
+  "video": "v8",
+  "note": "Edit list for render-edit.mjs. Times are SOURCE seconds in the recorder's clips (recordings/<scene>.steps.json has every step's time); zoom rects are CSS px of the 1920×1080 page. Segment lengths are estimates until the voice exists — then each segment is re-timed to its chunks and the voice is laid in ('audio'). The one take (V8_b2) is never cut and stays full frame while the install runs (the clock is in the recording); only its waits are sped up, with the speed badge on screen. Once the Customer History Dashboard has loaded (source 54.9 s) the take is complete, and the picture zooms onto Latest Orders, which keeps the upsell banner out of frame (Demo Brief Q3).",
+  "size": [1920, 1080],
+  "fps": 30,
+  "labels": {
+    "demo-store": {
+      "text": "Demo store · sample data",
+      "style": "pill",
+      "at": "bottom-left"
+    },
+    "product": {
+      "text": "PureDevs Customer History",
+      "style": "lower-third",
+      "at": "lower-third"
+    },
+    "visitor": {
+      "text": "Logged-out visitor",
+      "style": "lower-third",
+      "at": "lower-third"
+    }
+  },
+  "segments": [
+    {
+      "id": "V8_b1",
+      "chunks": ["V8_b1"],
+      "still": "recordings/answer-frame.png",
+      "duration": 5.02,
+      "zoom": [
+        [0, 170, 70, 1730]
+      ],
+      "labels": [
+        ["product", 0, 4.9, "lower-third-right"],
+        ["demo-store", 0, null]
+      ],
+      "audio": [
+        ["recordings/voice/V8_b1.wav", 0.25, 0.0, 4.229]
+      ]
+    },
+    {
+      "id": "V8_b2",
+      "chunks": ["V8_b2a", "V8_b2b", "V8_b2c"],
+      "source": "scene-02",
+      "ranges": [
+        [0, 2.858, 1],
+        [2.858, 7.384, 1.5],
+        [7.384, 11.61, 3],
+        [11.61, 13.454, 1.5],
+        [13.454, 15.87, 1],
+        [15.87, 20.17, 3],
+        [20.17, 22.817, 1.5],
+        [22.817, 34.61, 3],
+        [34.61, 35.412, 1],
+        [35.412, 42.512, 3],
+        [42.512, 48.598, 1],
+        [48.598, 54.881, 3],
+        [54.881, 68.1, 1]
+      ],
+      "labels": [
+        ["demo-store", 0, null]
+      ],
+      "zoom": [
+        [0, 0, 0, 1920],
+        [56.2, 0, 0, 1920],
+        [57.6, 980, 250, 900]
+      ],
+      "audio": [
+        ["recordings/voice/V8_b2a.wav", 0.2, 0.0, 2.672],
+        ["recordings/voice/V8_b2a.wav", 2.758, 3.065, 3.79],
+        ["recordings/voice/V8_b2a.wav", 5.775, 4.028, 4.828],
+        ["recordings/voice/V8_b2a.wav", 8.413, 5.145, 5.809],
+        ["recordings/voice/V8_b2a.wav", 14.027, 6.078, 6.783],
+        ["recordings/voice/V8_b2a.wav", 18.76, 7.067, 7.801],
+        ["recordings/voice/V8_b2b.wav", 21.21, 0.0, 6.88],
+        ["recordings/voice/V8_b2c.wav", 28.24, 0.0, 13.691]
+      ]
+    },
+    {
+      "id": "V8_b3a",
+      "chunks": ["V8_b3a"],
+      "source": "scene-03",
+      "badge": false,
+      "ranges": [
+        [0, 6.36, 1],
+        [6.36, 30.08, 5]
+      ],
+      "zoom": [
+        [0, 0, 0, 1920],
+        [1.8, 0, 0, 1920],
+        [2.9, 800, 0, 1000],
+        [4.7, 800, 0, 1000],
+        [5.8, 0, 0, 1920]
+      ],
+      "labels": [
+        ["visitor", 0.3, null],
+        ["demo-store", 0, null]
+      ],
+      "audio": [
+        ["recordings/voice/V8_b3a.wav", 0.1, 0.0, 6.348]
+      ]
+    },
+    {
+      "id": "V8_b3b",
+      "chunks": ["V8_b3b"],
+      "source": "scene-04",
+      "badge": false,
+      "ranges": [
+        [0, 7.14, 1.5],
+        [7.14, 15.07, 2.5],
+        [15.07, 23.02, 2.5],
+        [23.02, 24.5, 2],
+        [24.5, 29.4, 1]
+      ],
+      "zoom": [
+        [0, 0, 0, 1920],
+        [7.0, 0, 0, 1920],
+        [8.4, 182, 150, 1100],
+        [15.1, 182, 150, 1100],
+        [16.6, 182, 420, 1100],
+        [23.0, 182, 420, 1100],
+        [24.5, 182, 100, 1250]
+      ],
+      "labels": [
+        ["demo-store", 0, null]
+      ],
+      "audio": [
+        ["recordings/voice/V8_b3b.wav", 0.1, 0.0, 4.898],
+        ["recordings/voice/V8_b3b.wav", 5.46, 5.135, 6.086],
+        ["recordings/voice/V8_b3b.wav", 8.543, 6.522, 8.423],
+        ["recordings/voice/V8_b3b.wav", 11.896, 8.721, 13.029]
+      ]
+    },
+    {
+      "id": "V8_b3c",
+      "chunks": ["V8_b3c"],
+      "source": "scene-05",
+      "badge": false,
+      "ranges": [
+        [0, 11.0, 1]
+      ],
+      "zoom": [
+        [0, 0, 0, 1920],
+        [7.3, 0, 0, 1920],
+        [8.3, 560, 540, 960]
+      ],
+      "labels": [
+        ["demo-store", 0, null]
+      ],
+      "audio": [
+        ["recordings/voice/V8_b3c.wav", 0.0, 0.0, 2.919],
+        ["recordings/voice/V8_b3c.wav", 3.038, 3.394, 5.679],
+        ["recordings/voice/V8_b3c.wav", 7.474, 6.059, 8.328]
+      ],
+      "captionsTop": true
+    },
+    {
+      "id": "V8_b4",
+      "chunks": ["V8_b4"],
+      "still": "recordings/answer-frame.png",
+      "duration": 18.1,
+      "zoom": [
+        [0, 182, 150, 1100],
+        [18.1, 170, 70, 1730]
+      ],
+      "labels": [
+        ["demo-store", 0, null]
+      ],
+      "audio": [
+        ["recordings/voice/V8_b4.wav", 0.3, 0.0, 17.198]
+      ]
+    },
+    {
+      "id": "V8_b5",
+      "chunks": ["V8_b5"],
+      "still": "recordings/answer-frame.png",
+      "duration": 7.6,
+      "zoom": [
+        [0, 170, 70, 1730]
+      ],
+      "labels": [
+        ["demo-store", 0, null]
+      ],
+      "endCard": {
+        "file": "recordings/end-card.mp4",
+        "xfade": 0.5
+      },
+      "audio": [
+        ["recordings/voice/V8_b5.wav", 0.3, 0.0, 9.522]
+      ]
+    }
+  ],
+  "voice": "Conformed by conform-voice.py: picture fitted to the voice; each phrase starts on its moment (V8_b2: \"Plugins,\" on the Plugins click … \"We skip it.\" on the Skip click). audio entries are [file, start in the segment, in, out] — a piece of the take, trimmed in its pauses."
+}

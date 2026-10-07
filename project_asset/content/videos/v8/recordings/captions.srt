@@ -1,0 +1,108 @@
+1
+00:00:00,250 --> 00:00:04,579
+Where does <b>your store data</b> go when you install this plugin?
+
+2
+00:00:05,220 --> 00:00:07,792
+Here's the whole install, in <b>one take</b>.
+
+3
+00:00:07,878 --> 00:00:11,645
+Plugins, Add Plugin.
+
+4
+00:00:13,533 --> 00:00:14,597
+Search.
+
+5
+00:00:19,147 --> 00:00:20,252
+Install.
+
+6
+00:00:23,880 --> 00:00:25,014
+Activate.
+
+7
+00:00:26,230 --> 00:00:31,542
+There's one prompt: an <b>optional</b> opt-in from Freemius, our licensing provider.
+
+8
+00:00:32,333 --> 00:00:33,210
+We <b>skip it</b>.
+
+9
+00:00:33,260 --> 00:00:37,968
+<b>No account. No API key.</b> No setup wizard.
+
+10
+00:00:38,573 --> 00:00:41,700
+The dashboard is already reading the store's own orders —
+
+11
+00:00:41,988 --> 00:00:47,051
+and it's self-hosted: what it records stays in <b>your own WordPress database</b>.
+
+12
+00:00:47,746 --> 00:00:52,200
+Now a shopper — <b>not logged in</b> — searches the store for <b>"hoodie"</b>,
+
+13
+00:00:52,490 --> 00:00:54,494
+and opens two products.
+
+14
+00:00:58,850 --> 00:01:03,648
+Back in wp-admin: Customer History, Search Analytics.
+
+15
+00:01:04,310 --> 00:01:05,861
+There's <b>"hoodie"</b>.
+
+16
+00:01:07,393 --> 00:01:09,394
+And there are the two products they opened.
+
+17
+00:01:10,746 --> 00:01:15,154
+Your own admin browsing isn't recorded — <b>this came from the shopper</b>.
+
+18
+00:01:15,502 --> 00:01:18,321
+Even the plugin's own usage counters stay here.
+
+19
+00:01:18,640 --> 00:01:21,025
+Tools, Site Health, Info:
+
+20
+00:01:23,076 --> 00:01:25,545
+"This information <b>stays on your server</b>."
+
+21
+00:01:26,802 --> 00:01:29,346
+So here is <b>the decision</b> this gives you.
+
+22
+00:01:30,023 --> 00:01:35,056
+Whether customer analytics has to mean sending your customer data to someone else's servers.
+
+23
+00:01:35,643 --> 00:01:40,218
+With a plugin like this, it doesn't — no SaaS account, no API key,
+
+24
+00:01:40,529 --> 00:01:44,200
+and the data sits in the <b>same database as your orders</b>.
+
+25
+00:01:44,902 --> 00:01:47,455
+Everything you just saw is the <b>free version</b>.
+
+26
+00:01:48,021 --> 00:01:51,969
+Free shows the last 90 days; Pro shows your full history.
+
+27
+00:01:52,502 --> 00:01:55,124
+<b>Install it free</b> — the link is below.
+

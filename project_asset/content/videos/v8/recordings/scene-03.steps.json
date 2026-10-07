@@ -1,0 +1,214 @@
+{
+  "scene": "scene-03",
+  "seconds": 30.081,
+  "viewport": {
+    "width": 1920,
+    "height": 1080,
+    "scale": 2
+  },
+  "events": [
+    {
+      "i": 0,
+      "do": "hold",
+      "start": 0,
+      "end": 2.001,
+      "url": "/"
+    },
+    {
+      "i": 1,
+      "do": "move",
+      "target": "header .wp-block-search__input",
+      "start": 2.001,
+      "rect": {
+        "x": 1247,
+        "y": 78,
+        "w": 203,
+        "h": 49
+      },
+      "end": 3.232,
+      "url": "/"
+    },
+    {
+      "i": 2,
+      "do": "click",
+      "start": 3.232,
+      "end": 3.311,
+      "url": "/"
+    },
+    {
+      "i": 3,
+      "do": "type",
+      "start": 3.311,
+      "end": 4.171,
+      "url": "/"
+    },
+    {
+      "i": 4,
+      "do": "hold",
+      "start": 4.171,
+      "end": 4.673,
+      "url": "/"
+    },
+    {
+      "i": 5,
+      "do": "press",
+      "start": 4.673,
+      "end": 6.36,
+      "url": "/?s=hoodie&post_type=product"
+    },
+    {
+      "i": 6,
+      "do": "hold",
+      "start": 6.36,
+      "end": 8.36,
+      "url": "/?s=hoodie&post_type=product"
+    },
+    {
+      "i": 7,
+      "do": "scroll-to",
+      "target": "text:The Northline Hoodie",
+      "start": 8.36,
+      "rect": {
+        "x": 447,
+        "y": 1376,
+        "w": 158,
+        "h": 22
+      },
+      "end": 9.868,
+      "url": "/?s=hoodie&post_type=product"
+    },
+    {
+      "i": 8,
+      "do": "hold",
+      "start": 9.868,
+      "end": 10.669,
+      "url": "/?s=hoodie&post_type=product"
+    },
+    {
+      "i": 9,
+      "do": "move",
+      "target": "text:The Northline Hoodie",
+      "start": 10.669,
+      "rect": {
+        "x": 447,
+        "y": 760,
+        "w": 158,
+        "h": 22
+      },
+      "end": 11.899,
+      "url": "/?s=hoodie&post_type=product"
+    },
+    {
+      "i": 10,
+      "do": "hold",
+      "start": 11.899,
+      "end": 12.302,
+      "url": "/?s=hoodie&post_type=product"
+    },
+    {
+      "i": 11,
+      "do": "click",
+      "start": 12.302,
+      "end": 14.653,
+      "url": "/product/hoodie/"
+    },
+    {
+      "i": 12,
+      "do": "hold",
+      "start": 14.655,
+      "end": 17.656,
+      "url": "/product/hoodie/"
+    },
+    {
+      "i": 13,
+      "do": "move",
+      "target": "a[href$='/product-category/hoodies/']",
+      "start": 17.656,
+      "rect": {
+        "x": 371,
+        "y": 173,
+        "w": 51,
+        "h": 17
+      },
+      "end": 18.882,
+      "url": "/product/hoodie/"
+    },
+    {
+      "i": 14,
+      "do": "hold",
+      "start": 18.882,
+      "end": 19.283,
+      "url": "/product/hoodie/"
+    },
+    {
+      "i": 15,
+      "do": "click",
+      "start": 19.284,
+      "end": 20.64,
+      "url": "/product-category/hoodies/"
+    },
+    {
+      "i": 16,
+      "do": "hold",
+      "start": 20.643,
+      "end": 22.145,
+      "url": "/product-category/hoodies/"
+    },
+    {
+      "i": 17,
+      "do": "scroll-to",
+      "target": "text:Full-Zip Hoodie",
+      "start": 22.145,
+      "rect": {
+        "x": 470,
+        "y": 793,
+        "w": 114,
+        "h": 22
+      },
+      "end": 23.367,
+      "url": "/product-category/hoodies/"
+    },
+    {
+      "i": 18,
+      "do": "hold",
+      "start": 23.367,
+      "end": 23.97,
+      "url": "/product-category/hoodies/"
+    },
+    {
+      "i": 19,
+      "do": "move",
+      "target": "text:Full-Zip Hoodie",
+      "start": 23.97,
+      "rect": {
+        "x": 470,
+        "y": 760,
+        "w": 114,
+        "h": 22
+      },
+      "end": 25.2,
+      "url": "/product-category/hoodies/"
+    },
+    {
+      "i": 20,
+      "do": "hold",
+      "start": 25.2,
+      "end": 25.602,
+      "url": "/product-category/hoodies/"
+    },
+    {
+      "i": 21,
+      "do": "click",
+      "start": 25.602,
+      "end": 27.071,
+      "url": "/product/hoodie-with-zipper/"
+    },
+    {
+      "i": 22,
+      "do": "hold",
+      "start": 27.081,
+      "end": 30.081,
+      "url": "/product/hoodie-with-zipper/"
+    }
+  ]
+}

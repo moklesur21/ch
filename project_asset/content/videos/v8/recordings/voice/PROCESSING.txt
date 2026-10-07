@@ -1,0 +1,1 @@
+agate=threshold=0.005:ratio=3:range=0.1:attack=5:release=150,acompressor=threshold=-26dB:ratio=2.5:attack=8:release=150:knee=6,volume=20dB,alimiter=limit=0.79:attack=3:release=60:level=false
