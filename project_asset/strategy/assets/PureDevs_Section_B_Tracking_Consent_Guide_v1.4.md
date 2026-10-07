@@ -1,9 +1,9 @@
 # PureDevs — Section B Guide: Tracking and Consent
 
-**Version:** v1.3 · **Date:** 1 Oct 2026 · **Owner:** Yeasir
-**Companion to:** `PureDevs_Ad_Launch_Prerequisites_Checklist_v1.md` (items B1–B5)
+**Version:** v1.4 · **Date:** 1 Oct 2026 · **Owner:** Yeasir
+**Companion to:** `PureDevs_Ad_Launch_Prerequisites_Checklist_v1.md` (items B1–B5) · `PureDevs_Privacy_Policy_v1.md` (page text for B3)
 **Your total time in B:** about 1.5 hours. Everything else is DEV or VA.
-**Note:** Google renames menus often. If a label is not where this guide says, use the search box inside that product. Plugin labels can also shift between versions.
+**Note:** Google renames menus often. If a label is not where this guide says, use the search box inside that product. B3 matches the labels in GDPR Cookie Compliance **v5.1.0**; they can shift in later versions.
 
 ---
 
@@ -48,7 +48,7 @@
 3. Admin → Data collection and modification → Data retention → **14 months**.
 
 **DEV — install and configure**
-4. Load GTM through the GDPR Cookie Compliance plugin (B3 steps 1–3), **not** the theme. If GTM snippets are already in the `puredevs-site` theme, remove them. Do **not** also install gtag.js or Site Kit (double counting). Purge cache.
+4. Load GTM through the GDPR Cookie Compliance plugin (B3 step 3), **not** the theme. If GTM snippets are already in the `puredevs-site` theme, remove them. Do **not** also install gtag.js or Site Kit (double counting). Purge cache.
 5. In GTM: new tag → **Google tag** → Tag ID = `G-XXXXXXX` → trigger Initialization – All Pages.
 6. Internal-traffic flag (no IP lists):
    - Variable: 1st-party cookie `pd_internal`.
@@ -66,40 +66,47 @@
 
 ## B3. Consent banner + privacy policy — DEV 1.5 h, Y 20 min · due Fri 25 Sep
 
-**Decision (v1.3):** free **GDPR Cookie Compliance** plugin by Moove Agency, installed in WordPress. Tracking is **on by default** for every visitor. The banner offers Reject, and Reject really switches tracking off. No region rules, no VPN tests.
+**Decision (v1.4):** free **GDPR Cookie Compliance** plugin by Moove Agency (already installed, v5.1.0). Tracking is **on by default** for every visitor. GTM loads through the plugin's **Standard implementation**, tied to one cookie category. When a visitor clicks **Reject**, the plugin stops GTM from loading, so GA4, Google Ads and Clarity all stop. No region rules, no consent settings inside GTM, no VPN tests.
 
-**Known risk, accepted:** UK and EEA visitors are tracked before they consent. That does not meet UK/EEA cookie rules, and Google can limit remarketing and personalised ads for that traffic. Revisit once the business is earning: the premium add-on (£59/year) adds Geo-location, which shows an opt-in banner to UK/EEA visitors only.
+**Known risk, accepted:** UK and EEA visitors are tracked before they consent, and no consent signals are sent to Google. That does not meet UK/EEA cookie rules, and Google can limit remarketing and personalised ads for that traffic. Revisit once the business is earning: buy the premium add-on (£59/year; its Geo-location shows the banner to UK/EEA visitors only) and switch to the plugin's **GTM – Consent Mode v2** row.
 
-**DEV — plugin setup**
-1. WP Admin → Plugins → Add New → search "GDPR Cookie Compliance" (by Moove Agency) → Install → Activate. Do not install CookieYes or any other consent plugin.
-2. GDPR Cookie Compliance → cookie categories:
-   - Strictly Necessary: always on.
-   - 3rd Party Cookies (analytics): ON · default **Enabled**.
-   - Additional Cookies (ads): ON · default **Enabled**.
-3. GDPR Cookie Compliance → Integrations:
-   - **Google Tag Manager** → `GTM-XXXXXXX`. The plugin now loads GTM. Remove any GTM snippet from the theme so it does not load twice.
-   - **Google Consent Mode v2** → ON. This is what makes Reject actually stop tracking. If asked to map categories: `analytics_storage` → 3rd Party · `ad_storage`, `ad_user_data`, `ad_personalization` → Additional.
-   - Microsoft Clarity integration → leave **OFF**. Clarity runs from GTM (B5).
-4. Banner: small box, bottom-left, so it never covers the video or the CTA · buttons Accept, Reject, Settings · suggested text: "We use cookies for analytics and ads. You can switch them off at any time." · Privacy Policy link ON.
-5. Add a **Cookie settings** link in the footer pointing to `/#gdpr_cookie_modal`, so visitors can change their choice after the banner closes.
-6. Do not add YouTube or any other script to the plugin's script boxes. Everything runs through GTM.
+**DEV — Cookie Categories** (GDPR Cookie Compliance → Cookie Categories)
+1. **Necessary** tab: Turn **ON** · Default status **Always enabled**. It is set to Disabled today, so fix this first. The tab text can stay as it is.
+2. **Analytics** tab:
+   - Turn **ON** · Default status **Enabled**.
+   - Tab Title: `Analytics and advertising`
+   - Tab Content: `We use Google Analytics, Google Ads and Microsoft Clarity to see how visitors use this site, which pages, videos and ads lead to trials and purchases, and to show PureDevs ads to people who have visited. Switch this off to stop all of them.`
+3. **Marketing**, **Performance** and **Preference** tabs: Turn **OFF**. Visitors then see only two toggles, and none that do nothing.
+4. Leave the "Paste your codes and snippets" boxes **empty** in every tab. Everything runs through GTM. Save each tab.
 
-**DEV — GTM**
-7. GTM → Admin → Container settings → enable **consent overview**. Google tag and GA4 tags use built-in consent checks. For Clarity (B5) add a required check on `analytics_storage`.
+**DEV — Integrations** (GDPR Cookie Compliance → Integrations)
+5. **Google Tag Manager — Standard implementation:** Enabled · Tracking ID `GTM-XXXXXXX` · Cookie Category **Analytics**.
+6. Leave every other row **Disabled**:
+   - **Google Analytics 4** and **Google Ads**: both load through GTM, so enabling them here double-counts.
+   - **Google Tag Manager — Consent Mode v2**: only one GTM row may be on. This one is for the premium upgrade later.
+   - **Meta Pixel**, **Microsoft Advertising (UET)** and **Microsoft Clarity**: not used here. Clarity runs from GTM (B5).
+7. Remove any hard-coded GTM snippet from the theme. Purge cache.
 
-**DEV — cookie list for the policy** (the free plugin has no scanner)
-8. Open the site, accept, then DevTools → Application → Cookies → list every cookie with name, provider, purpose and expiry. Expect at least: `_ga`, `_ga_*` (GA4) · `_gcl_au` (Google Ads) · `_clck`, `_clsk` (Clarity) · the plugin's own consent cookie.
+**DEV — Settings** (GDPR Cookie Compliance → Settings)
+8. **Branding:** already done (colour `#0C4DA2`, PureDevs logo, rounded corners, theme font). No change.
+9. **Cookie Banner:** small box, bottom-left, so it never covers the video or the CTA · show **Accept**, **Reject** and **Settings** (switch the Reject button on; it is missing today) · banner text: `We use cookies for analytics and ads. You can switch them off at any time.`
+10. **Privacy Overview:** replace the plugin's default text with:
+    `This website uses cookies. Analytics and advertising cookies are on by default and help us see which pages, videos and ads lead to trials and purchases. You can switch them off below at any time. Our Privacy Policy explains the details.`
+11. **Cookie Policy:** link to `https://puredevs.com/privacy-policy/`.
+12. **Floating Button:** leave **OFF**. The footer link in step 15 does the same job without floating over the video or the CTA.
+
+**DEV — cookie list check** (the free plugin has no scanner)
+13. Open the site in a fresh incognito window, then DevTools → Application → Cookies. Compare what you see with the cookie list in `PureDevs_Privacy_Policy_v1.md` (`moove_gdpr_popup`, `_ga`, `_ga_*`, `_gcl_au`, `_clck`, `_clsk`). Tell Y about any extra cookie or different name, so the policy can be corrected before it goes live.
 
 **Privacy policy**
-9. WP Admin → Settings → Privacy → create or select the Privacy Policy page.
-10. It must name: GA4 · Google Ads (conversion tracking and remarketing) · YouTube embeds · Clarity · Brevo (email) · Freemius (checkout and payment) · the cookie list from step 8 · that analytics and ad cookies are on by default and how to switch them off (the Cookie settings link) · contact email · how to request access or deletion.
-11. Add **Privacy Policy**, **Terms** and **Cookie settings** links to the footer (none are there today), and one line under every Playbook form linking to the policy.
-12. Y reads and approves the text.
+14. WP Admin → Settings → Privacy → confirm the Privacy Policy page is `/privacy-policy/`. Replace its content with the text in `PureDevs_Privacy_Policy_v1.md`, after working through that file's "Before publishing" list.
+15. Footer: add **Terms** and **Cookie settings** (`/#gdpr_cookie_modal`) next to the existing Privacy link, and one line under every Playbook form linking to the policy.
+16. Y reads and approves the text.
 
 **Test** (incognito window, no VPN needed)
-- New visitor, no click: GTM Preview → Consent tab shows `analytics_storage` and `ad_storage` **Granted** · GA4 DebugView shows `page_view`.
-- Click **Reject**: Consent tab shows **Denied** · `_ga` cookies are removed or stop updating (DevTools → Cookies).
-- Footer **Cookie settings** reopens the panel.
+- New visitor, no click: GTM Preview connects and the Google tag fires · GA4 DebugView shows `page_view`.
+- Click **Reject**, then reload: DevTools → Network shows no `gtm.js` request · GTM Preview no longer connects.
+- Footer **Cookie settings** reopens the panel, which shows only **Necessary** and **Analytics and advertising**.
 - Without clicking the banner: the demo video plays and the checkout opens.
 
 **Done when:** all four tests pass and the Privacy Policy, Terms and Cookie settings links are in the footer.
@@ -160,8 +167,8 @@ dataLayer.push({ event: 'video_play', video_id: 'zero_result_searches', page_typ
 
 **Clarity**
 4. clarity.microsoft.com → new project `puredevs.com` → copy the project ID.
-5. GTM → new tag from the gallery: **Microsoft Clarity – Official** → project ID → trigger All Pages → Consent settings → require `analytics_storage`.
-6. Confirm Clarity is named in the privacy policy (B3 step 10).
+5. GTM → new tag from the gallery: **Microsoft Clarity – Official** → project ID → trigger All Pages → Consent settings → **No additional consent required**. The cookie plugin already stops GTM from loading when a visitor rejects, and a consent check here could stop Clarity firing because no consent signals are sent.
+6. Confirm Clarity is named in the privacy policy (`PureDevs_Privacy_Policy_v1.md`, Analytics section).
 
 **Done when:** domain verified, sitemap accepted, builder sheet shared, Clarity recording a test visit.
 
@@ -171,14 +178,15 @@ dataLayer.push({ event: 'video_play', video_id: 'zero_result_searches', page_typ
 
 - [ ] Ads account active, payment accepted, auto-tagging on
 - [ ] GA4 receives `page_view`; internal filter Active
-- [ ] Tracking Granted by default; Reject sets Denied
+- [ ] Tracking on by default; Reject stops GTM from loading
 - [ ] Video plays and checkout opens without clicking the banner
 - [ ] Test `trial_start` reaches GA4 DebugView
 - [ ] `trial_start` Primary and `purchase` Secondary exist in Google Ads
-- [ ] Privacy Policy, Terms and Cookie settings linked in the footer
+- [ ] Privacy Policy page replaced with `PureDevs_Privacy_Policy_v1.md`; Privacy Policy, Terms and Cookie settings linked in the footer
 - [ ] GTM container published only after every box above is ticked
 
 ## Changelog
+- **v1.4 — 1 Oct 2026.** B3 rewritten to match the plugin's real screens (v5.1.0). Categories are Necessary / Analytics / Marketing / Performance / Preference: Necessary set to Always enabled, Analytics renamed "Analytics and advertising" and enabled by default, the other three turned off. GTM now loads through the **Standard implementation** row (category Analytics), so Reject stops GTM loading; the Consent Mode v2 row, GA4, Google Ads and Clarity rows stay off. Added the Settings tabs (Cookie Banner with Reject, Privacy Overview text, Cookie Policy link, Floating Button off). GTM consent overview step removed. Privacy policy steps now point to `PureDevs_Privacy_Policy_v1.md`. B5: Clarity tag needs no additional consent check. Tests and sign-off updated to match.
 - **v1.3 — 1 Oct 2026.** B3 rewritten: CookieYes replaced by the free GDPR Cookie Compliance plugin. Tracking is on by default with a working Reject; no region rules. UK/EEA risk accepted, to revisit with the premium Geo-location add-on once the business is earning. DEV time in B3 drops from 3 h to 1.5 h. B2 step 4: GTM now loads through the plugin, not the theme. B0 and sign-off updated to match.
 - **v1.2 — 20 Sep 2026.** B4: `video_id` now carries the video's name instead of a V-number, after Video Topic Filter v4 renumbered the list. Nothing else changed.
 - **v1.1 — 19 Sep 2026.** B0 and B1 rewritten: new Google Ads account under yeasir@puredevs.com instead of reusing the old login, which holds only a Closed account and an unfinished setup. pervej86@gmail.com becomes backup Admin.
