@@ -1,0 +1,15 @@
+based on this
+project_asset/strategy/PureDevs_Video_Docs/claude.txt
+we are planning to create a complete demo video for
+V8: Where does my store data go when I install this?
+from this doc
+project_asset/strategy/PureDevs_Video_Docs/PureDevs_Video_Topic_Filter_v4.2.md
+
+also see the attached resources here
+project_asset/content/videos/v8
+
+similar to v1, all output would be stated in v8 folder
+
+so before you do this
+I think we need to create a new wordpress install, database etc to first setup the demo website and then only we can record it
+what is your suggestion for producing V8
