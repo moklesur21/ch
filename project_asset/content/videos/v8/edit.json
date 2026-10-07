@@ -25,7 +25,7 @@
       "id": "V8_b1",
       "chunks": ["V8_b1"],
       "still": "recordings/answer-frame.png",
-      "duration": 5.02,
+      "duration": 4.71,
       "zoom": [
         [0, 170, 70, 1730]
       ],
@@ -34,7 +34,7 @@
         ["demo-store", 0, null]
       ],
       "audio": [
-        ["recordings/voice/V8_b1.wav", 0.25, 0.0, 4.229]
+        ["recordings/voice/V8_b1.wav", 0.25, 0.0, 4.206]
       ]
     },
     {
@@ -65,14 +65,14 @@
         [57.6, 980, 250, 900]
       ],
       "audio": [
-        ["recordings/voice/V8_b2a.wav", 0.2, 0.0, 2.672],
-        ["recordings/voice/V8_b2a.wav", 2.758, 3.065, 3.79],
-        ["recordings/voice/V8_b2a.wav", 5.775, 4.028, 4.828],
-        ["recordings/voice/V8_b2a.wav", 8.413, 5.145, 5.809],
-        ["recordings/voice/V8_b2a.wav", 14.027, 6.078, 6.783],
-        ["recordings/voice/V8_b2a.wav", 18.76, 7.067, 7.801],
-        ["recordings/voice/V8_b2b.wav", 21.21, 0.0, 6.88],
-        ["recordings/voice/V8_b2c.wav", 28.24, 0.0, 13.691]
+        ["recordings/voice/V8_b2a.wav", 0.2, 0.0, 2.602],
+        ["recordings/voice/V8_b2a.wav", 2.758, 2.98, 3.698],
+        ["recordings/voice/V8_b2a.wav", 5.775, 3.923, 4.727],
+        ["recordings/voice/V8_b2a.wav", 8.413, 5.067, 5.665],
+        ["recordings/voice/V8_b2a.wav", 14.027, 5.889, 6.569],
+        ["recordings/voice/V8_b2a.wav", 18.76, 6.834, 7.556],
+        ["recordings/voice/V8_b2b.wav", 21.642, 0.0, 6.312],
+        ["recordings/voice/V8_b2c.wav", 28.104, 0.0, 13.949]
       ]
     },
     {
@@ -96,7 +96,7 @@
         ["demo-store", 0, null]
       ],
       "audio": [
-        ["recordings/voice/V8_b3a.wav", 0.1, 0.0, 6.348]
+        ["recordings/voice/V8_b3a.wav", 0.1, 0.0, 6.113]
       ]
     },
     {
@@ -124,10 +124,10 @@
         ["demo-store", 0, null]
       ],
       "audio": [
-        ["recordings/voice/V8_b3b.wav", 0.1, 0.0, 4.898],
-        ["recordings/voice/V8_b3b.wav", 5.46, 5.135, 6.086],
-        ["recordings/voice/V8_b3b.wav", 8.543, 6.522, 8.423],
-        ["recordings/voice/V8_b3b.wav", 11.896, 8.721, 13.029]
+        ["recordings/voice/V8_b3b.wav", 0.1, 0.0, 4.688],
+        ["recordings/voice/V8_b3b.wav", 5.46, 5.092, 5.975],
+        ["recordings/voice/V8_b3b.wav", 8.543, 6.318, 8.35],
+        ["recordings/voice/V8_b3b.wav", 11.896, 8.631, 12.959]
       ]
     },
     {
@@ -147,9 +147,9 @@
         ["demo-store", 0, null]
       ],
       "audio": [
-        ["recordings/voice/V8_b3c.wav", 0.0, 0.0, 2.919],
-        ["recordings/voice/V8_b3c.wav", 3.038, 3.394, 5.679],
-        ["recordings/voice/V8_b3c.wav", 7.474, 6.059, 8.328]
+        ["recordings/voice/V8_b3c.wav", 0.0, 0.0, 2.86],
+        ["recordings/voice/V8_b3c.wav", 3.038, 3.311, 5.665],
+        ["recordings/voice/V8_b3c.wav", 7.474, 6.104, 8.299]
       ],
       "captionsTop": true
     },
@@ -157,23 +157,23 @@
       "id": "V8_b4",
       "chunks": ["V8_b4"],
       "still": "recordings/answer-frame.png",
-      "duration": 18.1,
+      "duration": 18.14,
       "zoom": [
         [0, 182, 150, 1100],
-        [18.1, 170, 70, 1730]
+        [18.14, 170, 70, 1730]
       ],
       "labels": [
         ["demo-store", 0, null]
       ],
       "audio": [
-        ["recordings/voice/V8_b4.wav", 0.3, 0.0, 17.198]
+        ["recordings/voice/V8_b4.wav", 0.3, 0.0, 17.241]
       ]
     },
     {
       "id": "V8_b5",
       "chunks": ["V8_b5"],
       "still": "recordings/answer-frame.png",
-      "duration": 7.6,
+      "duration": 7.36,
       "zoom": [
         [0, 170, 70, 1730]
       ],
@@ -185,9 +185,24 @@
         "xfade": 0.5
       },
       "audio": [
-        ["recordings/voice/V8_b5.wav", 0.3, 0.0, 9.522]
+        ["recordings/voice/V8_b5.wav", 0.3, 0.0, 9.404]
       ]
     }
   ],
+  "sound": {
+    "note": "Shared audio library (marketing/tooling/audio-lib.mjs; files outside the repo): one music bed under the master, ducked under the voice; a click on every recorded click and soft typing under every typed stretch. Owner decision 7 Oct 2026.",
+    "music": "music/calm-minimal-01",
+    "clicks": ["sfx/click-01", "sfx/click-02", "sfx/click-03"],
+    "typing": "sfx/typing-01"
+  },
+  "cut": {
+    "note": "The 20–30 s cut (Placement Kit §1): beat 1, the whole decision, the end card. Taken from the master, captions and all. Piece times are each segment's own seconds; a negative 'from' counts back from the segment's end.",
+    "pieces": [
+      ["V8_b1", 0, 5.0],
+      ["V8_b4", 0, null],
+      ["V8_b5", -4.5, null]
+    ],
+    "xfade": [0.3, 0.4]
+  },
   "voice": "Conformed by conform-voice.py: picture fitted to the voice; each phrase starts on its moment (V8_b2: \"Plugins,\" on the Plugins click … \"We skip it.\" on the Skip click). audio entries are [file, start in the segment, in, out] — a piece of the take, trimmed in its pauses."
 }

@@ -11,29 +11,39 @@ Inputs:
                                −14 LUFS, true peak ≤ −1.4 dBTP, pauses kept at about −64 dB. Same timeline as the mp3s.
   recordings/scene-NN.steps.json  the recorder's step log: when each click happened in the clip
 
-Phrases are found from the pauses (silencedetect on the originals). A re-generated chunk with the same
-words splits the same way; if a split count changes, this script stops and says which chunk.
+Phrases are the PHRASES below (the voice script's words, split where a piece or a caption starts). Their edges
+come from the pauses; which pause is which boundary comes from voice-gen.mjs's word times
+(marketing/tooling/voice_phrases.py), so a take that breathes mid-phrase still splits right. A web-UI take (no
+word times) must split on its pauses alone; if it can't, this script stops and says which chunk.
 """
-import json, re, subprocess, sys, os
+import json, re, sys, os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 os.chdir(HERE)
+sys.path.insert(0, os.path.join(HERE, '../../../marketing/tooling'))
+from voice_phrases import phrase_spans, words
 
-def speech(chunk, noise='-38dB', d=0.18):
-    """Speech intervals [(start, end)] of audio/<chunk>.mp3, from its pauses."""
-    f = f'audio/{chunk}.mp3'
-    out = subprocess.run(['ffmpeg', '-hide_banner', '-i', f, '-af', f'silencedetect=noise={noise}:d={d}', '-f', 'null', '-'],
-                         capture_output=True, text=True).stderr
-    dur = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f],
-                               capture_output=True, text=True).stdout)
-    st = [float(x) for x in re.findall(r'silence_start: ([0-9.]+)', out)]
-    en = [float(x) for x in re.findall(r'silence_end: ([0-9.]+)', out)]
-    spans, t = [], 0.0
-    for a, b in zip(st, en + [dur] * (len(st) - len(en))):
-        if a - t > 0.05: spans.append((round(t, 3), round(a, 3)))
-        t = b
-    if dur - t > 0.05: spans.append((round(t, 3), round(dur, 3)))
-    return spans, dur
+# The voice script's words per chunk, split into the phrases the pieces and captions below index (0, 1, …).
+PHRASES = {
+    'b1': ['Where does your store data...', 'go when you install this plugin?'],
+    'b2a': ["Here's the whole install,", 'in one take...', 'Plugins,', 'Add Plugin.', 'Search.', 'Install.', 'Activate.'],
+    'b2b': ["There's one prompt:", 'an optional opt-in from Freemius, our licensing provider...', 'We skip it.'],
+    'b2c': ['No account.', 'No API key.', 'No setup wizard...', "The dashboard is already reading the store's own orders —",
+            "and it's self-hosted:", 'what it records stays in your own WordPress database.'],
+    'b3a': ['Now a shopper —', 'not logged in —', 'searches the store for "hoodie",', 'and opens two products.'],
+    'b3b': ['Back in wp-admin:', 'Customer History, Search Analytics...', 'There\'s "hoodie".', 'And there are the two products they opened.',
+            "Your own admin browsing isn't recorded —", 'this came from...', 'the shopper.'],
+    'b3c': ["Even the plugin's own usage counters stay here.", 'Tools,', 'Site Health,', 'Info:', '"This information stays on your server."'],
+    'b4': ['So here is the decision this gives you...', "Whether customer analytics has to mean sending your customer data to someone else's servers.",
+           "With a plugin like this, it doesn't —", 'no SaaS account,', 'no API key,', 'and the data sits in...', 'the same database as your orders.'],
+    'b5': ['Everything you just saw is the free version.', 'Free shows the last 90 days;', 'Pro shows your full history...',
+           'Install it free —', 'the link is below.'],
+}
+script = open('recordings/voice-over-elevenlabs.md').read()
+for c, ph in PHRASES.items():                       # the phrases must be the voice script's chunk, word for word
+    m = re.search(r'^## V8_' + c + r'\b[^\n]*\n+```[^\n]*\n([\s\S]*?)\n```', script, re.M)
+    if not m or words(m.group(1)) != words(' '.join(ph)):
+        sys.exit(f'{c}: PHRASES no longer match the voice script — update them')
 
 def mapper(ranges):
     segs, o = [], 0.0
@@ -52,11 +62,7 @@ def at(scene, do, nth=0, target=None):
     ev = [e for e in steps[scene] if e['do'] == do and (target is None or target in e.get('target', ''))]
     return ev[nth]['start']
 
-S = {c: speech(c) for c in ('b1', 'b2a', 'b2b', 'b2c', 'b3a', 'b3b', 'b3c', 'b4', 'b5')}
-expect = {'b1': 2, 'b2a': 7, 'b2b': 3, 'b2c': 6, 'b3a': 4, 'b3b': 7, 'b3c': 5, 'b4': 7, 'b5': 5}
-for c, n in expect.items():
-    if len(S[c][0]) != n:
-        sys.exit(f'{c}: expected {n} phrases, found {len(S[c][0])} {S[c][0]} — check the take or adjust this script')
+S = {c: phrase_spans(HERE, c, ph) for c, ph in PHRASES.items()}
 
 PAD = 0.1                          # silence kept around a trimmed piece
 VO = lambda c: f'recordings/voice/V8_{c}.wav'

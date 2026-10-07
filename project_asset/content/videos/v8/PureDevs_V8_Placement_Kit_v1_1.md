@@ -1,7 +1,9 @@
 # V8 Placement Kit — Where does my store data go when I install this?
 
-**Version 1.0 · 7 Oct 2026** · Demo Video Prompt Pack v3, FILE 5
-From `PureDevs_V8_Script_v1_2.md`, `PureDevs_V8_Demo_Brief_v1_1.md` and `PureDevs_V8_Recording_Brief_v1_2.md`, filled from the final master.
+**Version 1.1 · 7 Oct 2026** · Demo Video Prompt Pack v3, FILE 5
+From `PureDevs_V8_Script_v1_2.md`, `PureDevs_V8_Demo_Brief_v1_1.md` and `PureDevs_V8_Recording_Brief_v1_3.md`, filled from the final master.
+
+> **Gate D open (7 Oct night):** the times and loudness below are the web-UI-voice master's (now `V8_reference_master_webui.mp4`). If Yeasir picks the API-voice master (1:56.3, music and clicks), §0, the chapters and the cut table are re-filled from it before upload.
 **Final master:** `recordings/edit/V8_reference_master.mp4`:
 - **1:57** (116.8 s), 1920 × 1080, 30 fps, H.264;
 - −14.0 LUFS, peaks −4.6 dBTP;
@@ -24,7 +26,7 @@ Step-6 audit: **PASS** with two copy fixes applied (`PureDevs_V8_Claim_Audit_v1_
 |---|---|
 | Length | **1:57** (filled in §3) |
 | JSON-LD `duration` | `PT1M57S` |
-| Upload file | `recordings/edit/V8_reference_master.mp4`, or the VA's CapCut rebuild (`docs/capcut-va-guide.md`, V8 section) |
+| Upload file | the master Yeasir approves at gate D: `recordings/edit/V8_reference_master.mp4` (API voice, music, clicks) or `V8_reference_master_webui.mp4` |
 | Thumbnail | `recordings/V8-poster.png`: 1280 × 720, 65 KB. Source `poster.html`: the question, the "hoodie" row outlined, the two products, "PureDevs Customer History", "Demo store" |
 | Page poster | `recordings/V8-poster.webp`, 24 KB (hand-off §4: under 80 KB) |
 | Transcript | `recordings/transcript.txt`: the 200 spoken words, cleaned (hand-off §4) |
@@ -250,4 +252,5 @@ AG3's keywords land on the V8 page (`[metorik alternative]`, `[metrilo alternati
 
 ## Changelog
 
+- **v1.1 — 7 Oct 2026.** Upload file: the gate-D master, no CapCut rebuild (the CapCut guide was removed); note that the times are the web-UI master's until gate D.
 - **v1.0 — 7 Oct 2026.** First Placement Kit, from the final master (1:57): the 27 s cut, the poster, three screenshots, the GIF and the transcript made; question page, email line (Welcome 1), readme FAQ text, ad match with two copy replacements.

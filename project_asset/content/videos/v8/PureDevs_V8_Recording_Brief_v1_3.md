@@ -1,12 +1,13 @@
 # V8 Recording & Edit Brief — Where does my store data go when I install this?
 
-**Version 1.2 · 7 Oct 2026** · Demo Video Prompt Pack v3, FILE 4 · supersedes v1.1
-From `PureDevs_V8_Script_v1_2.md` and `PureDevs_V8_Demo_Brief_v1_1.md`. The scene recorder (`project_asset/docs/video-production.md` §5) plays `scenes.json` in this folder on the throw-away store **ch-v8** (`http://localhost/ch-v8`), never on `ch`. The narration is generated with ElevenLabs from `recordings/voice-over-elevenlabs.md`. **The edit is done here too** (owner, 7 Oct): `render-edit.mjs` turns the clips into finished 1080p picture segments from `edit.json`, and the VA only stitches them with the voice and captions in CapCut (`project_asset/docs/capcut-va-guide.md`).
+**Version 1.3 · 7 Oct 2026** · Demo Video Prompt Pack v3, FILE 4 · supersedes v1.2
+From `PureDevs_V8_Script_v1_2.md` and `PureDevs_V8_Demo_Brief_v1_1.md`. The scene recorder (`project_asset/docs/video-production.md` §5) plays `scenes.json` in this folder on the throw-away store **ch-v8** (`http://localhost/ch-v8`), never on `ch`. The narration is generated with ElevenLabs from `recordings/voice-over-elevenlabs.md`. **The whole video is made here** (owner, 7 Oct): the voice through the ElevenLabs API (`voice-gen.mjs`), the edit, captions, music bed and click sounds by `render-edit.mjs` from `edit.json` (`project_asset/docs/video-pipeline-guide.md`). The VA only uploads the approved master.
 
 > **STATUS: EDITED WITH VOICE, 7 Oct 2026.** Seven segments in `recordings/edit/`, each carrying its voice; `V8_reference_master.mp4` = all of them joined with the captions burned in.
 > - **Length:** 1:56.8, 1080p30.
 > - **Loudness:** −14.0 LUFS, peaks −4.6 dBTP.
-> - **Next:** Yeasir reviews the reference master. Then the VA uploads it, or rebuilds it in CapCut (`project_asset/docs/capcut-va-guide.md`, V8 section). Then the Placement Kit and the FILE 6 audit.
+> - **API pilot, 7 Oct night:** re-voiced through the API (one take per chunk, all word-perfect), music bed, clicks and typing added: `V8_reference_master.mp4` 1:56.3 (−14.4 LUFS) and `V8_cut_27s.mp4` 26.7 s, both QC PASS. The web-UI-voice version is kept as `V8_reference_master_webui.mp4` / `V8_cut_27s_webui.mp4`.
+> - **Next:** gate D — Yeasir picks a version. Then the Placement Kit timecodes and the FILE 6 audit on that master, then the VA uploads it.
 ---
 
 ## For Yeasir — the VA can skip this part
@@ -109,11 +110,7 @@ node project_asset/marketing/tooling/render-edit.mjs --video v8 --master
 
 ## For the VA
 
-`project_asset/docs/capcut-va-guide.md`, V8 section:
-- **Option A:** `V8_reference_master.mp4` as it is, after Yeasir's review.
-- **Option B:** rebuild in CapCut from the seven clips (the voice is inside them) and `recordings/captions.srt`.
-
-Either way, the §5 checks plus the V8 checks. Send back the master, the 20–30 s cut, and the final length.
+Nothing to edit. Upload the master Yeasir approves at gate D (`recordings/edit/V8_reference_master.mp4`, or the `_webui` version if he picks that one) with the texts from `PureDevs_V8_Script_v1_2.md` §B, per the Placement Kit.
 
 **Poster and thumbnail:** built from `recordings/answer-frame-crop.png` to Script v1.2 §C (Claude can render it from `poster.html`, as for V1).
 
@@ -146,6 +143,7 @@ Either way, the §5 checks plus the V8 checks. Send back the master, the 20–30
 
 ## Changelog
 
+- **v1.3 — 7 Oct 2026.** No CapCut step (the CapCut guide was removed): the VA only uploads. Status: the API-voice pilot with music and clicks, awaiting gate D.
 - **v1.2 — 7 Oct 2026.** Voice conformed: one loudness chain for all chunks (−14 LUFS, quiet pauses kept); phrases placed on their clicks by `conform-voice.py`; captions re-timed and burned into `V8_reference_master.mp4` (1:56.8); the title moved clear of the captions; Site Health captions at the top. Sanity rows 13, 15, 16.
 - **v1.1 — 7 Oct 2026.** Real take recorded (owner: the "Tested up to" warning does not block). The edit moves here: `render-edit.mjs` + `edit.json` make finished segments, and the VA stitches in CapCut (`capcut-va-guide.md`). Speeds up to 3× with a badge; Dashboard zoom after the take; scene-05 re-shot so the cursor avoids Export / Erase Personal Data.
 - **v1.0 — 7 Oct 2026.** First Recording Brief for V8, written from rehearsal 3 on ch-v8 (WordPress 7.1.3, free build 3.1.2 from wp.org).
