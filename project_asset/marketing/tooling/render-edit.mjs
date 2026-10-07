@@ -1,11 +1,13 @@
 /**
- * Edit renderer for the demo videos: turns the recorder's clips into finished, 1080p picture segments
- * (one per narration chunk or group of chunks), so the editor only stitches them and lays the voice.
+ * Edit renderer for the demo videos: turns the recorder's clips into the finished video — 1080p segments (one
+ * per narration chunk or group of chunks) with picture, labels, voice and UI sounds, then the master and the cut.
  *
  *   node render-edit.mjs --video v8                 # every segment + picture.mp4 (all segments, stitched)
  *   node render-edit.mjs --video v8 --only V8_b2    # one segment
  *   node render-edit.mjs --video v8 --master        # also <VIDEO>_reference_master.mp4: every segment joined (re-encoded,
  *                                                   # no drift), captions from recordings/captions.srt burned in
+ *   node render-edit.mjs --video v8 --cut           # only the 20–30 s cut, from the existing master (edit.json "cut")
+ *   node render-edit.mjs --video v8 --master --cut  # both; each is checked by qc-video.mjs (loudness fixed in place)
  *
  * Reads ../../content/videos/<video>/edit.json. Per segment:
  *   "source"   a recorder clip id (scene-02) — or "still": an image path, with "duration"
@@ -20,6 +22,17 @@
  *   "captionsTop" true → this segment's burned-in captions sit at the top (when its subject is at the bottom)
  *   "audio"    [[file, outStart, inStart?, inEnd?], …] optional — voice (or a piece of a voice file, trimmed
  *              to inStart–inEnd) placed at output seconds. Mixed, upmixed to stereo, AAC 192k
+ * The "cut" block (top level) is the short cut, taken from the finished master (captions and all):
+ *   "pieces"   [[segmentId, from, to|null], …] in that segment's own seconds; a negative "from" counts back from
+ *              the segment's end (["V8_b5", -4.5, null] = its last 4.5 s, the end card)
+ *   "xfade"    [s, …] the crossfade at each join, picture and voice together
+ * → <VIDEO>_cut_<N>s.mp4.
+ * The "sound" block (top level, optional) adds the shared audio library (audio-lib.mjs, outside the repo):
+ *   "music"    a library id ("music/calm-minimal-01"): one bed under the whole master, faded in and out, ducked
+ *              under the voice; level and ducking from audio-lib.json "mix"
+ *   "clicks"   library ids, used in turn: a click on every click in the recorder's <scene>.steps.json
+ *   "typing"   a library id, looped under every "type" step
+ *   Times follow the speed ranges; a segment with "sfx": false gets no clicks or typing.
  * Labels are drawn once as transparent PNGs with the installed Chrome (playwright-core), so they use the
  * system font. Output: ../../content/videos/<video>/recordings/edit/ (video files are gitignored).
  * Needs: ffmpeg 7+, Google Chrome.
@@ -28,6 +41,8 @@ import { chromium } from 'playwright-core';
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { qc } from './qc-video.mjs';
+import { LIBCFG, assetFile, manifest } from './audio-lib.mjs';
 
 const here = path.dirname(new URL(import.meta.url).pathname);
 const ROOT = path.resolve(here, '../../..');
@@ -36,6 +51,8 @@ const opt = (n, d = null) => { const i = args.indexOf(n); return i >= 0 ? args[i
 const VIDEO = opt('--video', 'v8');
 const ONLY = opt('--only') ? opt('--only').split(',') : null;
 const MASTER = args.includes('--master');
+const CUT = args.includes('--cut');
+const EDIT = !CUT || MASTER;                        // --cut alone re-cuts the existing master
 const vdir = path.join(ROOT, 'project_asset/content/videos', VIDEO);
 const edit = JSON.parse(fs.readFileSync(path.join(vdir, 'edit.json'), 'utf8'));
 const REC = path.join(vdir, 'recordings');
@@ -43,6 +60,13 @@ const OUT = path.join(REC, 'edit');
 const LDIR = path.join(OUT, 'labels');
 fs.mkdirSync(LDIR, { recursive: true });
 const [W, H] = edit.size || [1920, 1080];
+const SOUND = edit.sound || null;
+const MIX = LIBCFG.mix;
+const lib = (id) => {
+  const f = assetFile(id), a = manifest().assets[id];
+  if (!fs.existsSync(f) || !a) throw new Error(`audio library: ${id} missing — node audio-lib.mjs --make ${id}`);
+  return { file: f, lufs: a.lufs };
+};
 const FPS = edit.fps || 30;
 const log = (...a) => console.log(...a);
 const r3 = (n) => Math.round(n * 1000) / 1000;
@@ -193,13 +217,35 @@ function renderSegment(s, labels) {
     aIn.push({ idx: inputs.filter(x => x === '-i').length, at, a0, a1 });
     inputs.push('-i', f);
   }
+  // UI sounds from the shared library: a click on every recorded click, typing under every typed stretch
+  const fx = [];
+  if (SOUND && s.source && s.sfx !== false) {
+    const steps = path.join(REC, `${s.source}.steps.json`);
+    const inside = (t) => m.segs.some(g => t >= g.a && t <= g.b);
+    let k = 0;
+    for (const e of fs.existsSync(steps) ? JSON.parse(fs.readFileSync(steps, 'utf8')).events : []) {
+      if (e.do === 'click' && SOUND.clicks?.length && inside(e.start)) {
+        fx.push({ file: lib(SOUND.clicks[k++ % SOUND.clicks.length]).file, at: m.f(e.start), gain: MIX.click_peak_db + 1 });   // clicks peak at −1 dBFS
+      }
+      if (e.do === 'type' && SOUND.typing && inside(e.start) && m.f(e.end) - m.f(e.start) > 0.15) {
+        const t = lib(SOUND.typing);
+        fx.push({ file: t.file, at: m.f(e.start), len: m.f(e.end) - m.f(e.start), gain: MIX.typing_lufs - t.lufs });
+      }
+    }
+  }
+  for (const x of fx) { x.idx = inputs.filter(v => v === '-i').length; inputs.push(...(x.len ? ['-stream_loop', '-1'] : []), '-i', x.file); }
   const maps = ['-map', '[vout]'];
-  if (aIn.length) {
+  if (aIn.length || fx.length) {
     aIn.forEach((a, i) => {
       const trim = a.a0 !== undefined ? `atrim=start=${a.a0}:end=${a.a1},asetpts=PTS-STARTPTS,` : '';
       fc.push(`[${a.idx}:a]${trim}aresample=48000,adelay=${Math.round(a.at * 1000)}:all=1[a${i}]`);
     });
-    fc.push(`${aIn.map((_, i) => `[a${i}]`).join('')}amix=inputs=${aIn.length}:normalize=0,pan=stereo|c0=0.7071*c0|c1=0.7071*c0,apad,atrim=duration=${r3(total)}[aout]`);
+    fx.forEach((x, i) => {
+      const shape = x.len ? `atrim=0:${r3(x.len)},asetpts=PTS-STARTPTS,afade=t=in:d=0.04,afade=t=out:st=${r3(Math.max(0, x.len - 0.08))}:d=0.08,` : '';
+      fc.push(`[${x.idx}:a]${shape}aresample=48000,aformat=channel_layouts=mono,volume=${r3(x.gain)}dB,adelay=${Math.round(x.at * 1000)}:all=1[x${i}]`);
+    });
+    const ins = [...aIn.map((_, i) => `[a${i}]`), ...fx.map((_, i) => `[x${i}]`)];
+    fc.push(`${ins.join('')}amix=inputs=${ins.length}:normalize=0,pan=stereo|c0=0.7071*c0|c1=0.7071*c0,apad,atrim=duration=${r3(total)}[aout]`);
     maps.push('-map', '[aout]', '-c:a', 'aac', '-b:a', '192k');
   }
   const script = path.join(OUT, `${s.id}.filter.txt`);
@@ -211,22 +257,24 @@ function renderSegment(s, labels) {
 }
 
 // ── main ───────────────────────────────────────────────────────────────────────────────────────
-const labels = await drawLabels();
-const done = [];
-for (const s of edit.segments) {
-  if (ONLY && !ONLY.includes(s.id)) continue;
-  const t0 = Date.now();
-  const r = renderSegment(s, labels);
-  log(`✓ ${s.id}.mp4  ${r.seconds} s  ${r.size}  (${((Date.now() - t0) / 1000).toFixed(0)} s to render)`);
-  done.push(r);
-}
-fs.writeFileSync(path.join(OUT, 'segments.json'), JSON.stringify(done, null, 2) + '\n');
-if (!ONLY) {
-  const list = path.join(OUT, 'concat.txt');
-  fs.writeFileSync(list, edit.segments.map(s => `file '${s.id}.mp4'`).join('\n') + '\n');
-  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', '-movflags', '+faststart', path.join(OUT, 'picture.mp4')], { stdio: 'inherit' });
-  const total = done.reduce((a, r) => a + r.seconds, 0);
-  log(`✓ picture.mp4  ${r3(total)} s (all segments, stitched)`);
+if (EDIT) {
+  const labels = await drawLabels();
+  const done = [];
+  for (const s of edit.segments) {
+    if (ONLY && !ONLY.includes(s.id)) continue;
+    const t0 = Date.now();
+    const r = renderSegment(s, labels);
+    log(`✓ ${s.id}.mp4  ${r.seconds} s  ${r.size}  (${((Date.now() - t0) / 1000).toFixed(0)} s to render)`);
+    done.push(r);
+  }
+  fs.writeFileSync(path.join(OUT, 'segments.json'), JSON.stringify(done, null, 2) + '\n');
+  if (!ONLY) {
+    const list = path.join(OUT, 'concat.txt');
+    fs.writeFileSync(list, edit.segments.map(s => `file '${s.id}.mp4'`).join('\n') + '\n');
+    execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', '-movflags', '+faststart', path.join(OUT, 'picture.mp4')], { stdio: 'inherit' });
+    const total = done.reduce((a, r) => a + r.seconds, 0);
+    log(`✓ picture.mp4  ${r3(total)} s (all segments, stitched)`);
+  }
 }
 
 // ── reference master: joined + captions burned in ─────────────────────────────────────────────────
@@ -261,10 +309,51 @@ ${ev.join('\n')}
 `);
   const ins = edit.segments.flatMap(s => ['-i', path.join(OUT, `${s.id}.mp4`)]);
   const n = edit.segments.length;
-  const fc = `${edit.segments.map((_, i) => `[${i}:v][${i}:a]`).join('')}concat=n=${n}:v=1:a=1[v][a];[v]subtitles=captions.ass[vs]`;
+  let fc = `${edit.segments.map((_, i) => `[${i}:v][${i}:a]`).join('')}concat=n=${n}:v=1:a=1[v][a];[v]subtitles=captions.ass[vs]`;
+  let aOut = '[a]';
+  if (SOUND?.music) {                                   // one bed under the whole master, ducked under the voice
+    const mu = lib(SOUND.music);
+    ins.push('-stream_loop', '-1', '-i', mu.file);
+    fc += `;[a]asplit=2[av][key];[${n}:a]aresample=48000,aformat=channel_layouts=stereo,atrim=0:${r3(t)},asetpts=PTS-STARTPTS,` +
+      `volume=${r3(MIX.music_lufs - mu.lufs)}dB,afade=t=in:d=${MIX.music_fade_in},afade=t=out:st=${r3(t - MIX.music_fade_out)}:d=${MIX.music_fade_out}[mu];` +
+      `[mu][key]${MIX.duck}[mud];[av][mud]amix=inputs=2:normalize=0:duration=first[am]`;
+    aOut = '[am]';
+  }
   const master = path.join(OUT, `${VIDEO.toUpperCase()}_reference_master.mp4`);
-  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', ...ins, '-filter_complex', fc, '-map', '[vs]', '-map', '[a]', '-c:v', 'libx264', '-preset', 'medium', '-crf', '17',
-    '-pix_fmt', 'yuv420p', '-r', String(FPS), '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-movflags', '+faststart', master], { stdio: 'inherit', cwd: OUT });
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', ...ins, '-filter_complex', fc, '-map', '[vs]', '-map', aOut, '-c:v', 'libx264', '-preset', 'medium', '-crf', '17',
+    '-pix_fmt', 'yuv420p', '-r', String(FPS), '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-movflags', '+faststart', '-f', 'mp4', master + '.tmp'], { stdio: 'inherit', cwd: OUT });
+  fs.renameSync(master + '.tmp', master);                       // a failed render never truncates the last good master
   log(`✓ ${path.basename(master)}  ${r3(probe(master).d)} s`);
+  if (!qc(master, { fix: true, inPlace: true }).pass) process.exitCode = 1;
+}
+
+// ── the 20–30 s cut: pieces of the master, crossfaded ────────────────────────────────────────────
+if (CUT) {
+  if (!edit.cut) throw new Error('edit.json has no "cut" block');
+  const master = path.join(OUT, `${VIDEO.toUpperCase()}_reference_master.mp4`);
+  if (!fs.existsSync(master)) throw new Error(`${path.basename(master)} missing — render it first with --master`);
+  const start = {}; let t = 0;
+  for (const s of edit.segments) { const d = probe(path.join(OUT, `${s.id}.mp4`)).d; start[s.id] = [t, d]; t += d; }
+  const pieces = edit.cut.pieces.map(([id, from, to]) => {
+    if (!start[id]) throw new Error(`cut: no segment ${id}`);
+    const [s0, d] = start[id];
+    const a = s0 + (from < 0 ? d + from : from), b = s0 + (to === null || to === undefined ? d : Math.min(to, d));
+    return { a: r3(a), len: r3(b - a) };
+  });
+  const xf = edit.cut.xfade || [];
+  const fc = pieces.map((p, i) => `[${i}:v]settb=AVTB,setpts=PTS-STARTPTS,fps=${FPS},format=yuv420p[v${i}];[${i}:a]asetpts=PTS-STARTPTS[a${i}]`);
+  let len = pieces[0].len, v = 'v0', a = 'a0';
+  for (let i = 1; i < pieces.length; i++) {
+    const d = xf[i - 1] ?? 0.3;
+    fc.push(`[${v}][v${i}]xfade=transition=fade:duration=${d}:offset=${r3(len - d)}[vx${i}]`, `[${a}][a${i}]acrossfade=d=${d}[ax${i}]`);
+    v = `vx${i}`; a = `ax${i}`; len = len + pieces[i].len - d;
+  }
+  const out = path.join(OUT, `${VIDEO.toUpperCase()}_cut_${Math.round(len)}s.mp4`);
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', ...pieces.flatMap(p => ['-ss', String(p.a), '-t', String(p.len), '-i', master]),
+    '-filter_complex', fc.join(';'), '-map', `[${v}]`, '-map', `[${a}]`, '-c:v', 'libx264', '-preset', 'medium', '-crf', '17', '-pix_fmt', 'yuv420p',
+    '-r', String(FPS), '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-movflags', '+faststart', '-f', 'mp4', out + '.tmp'], { stdio: 'inherit' });
+  fs.renameSync(out + '.tmp', out);
+  log(`✓ ${path.basename(out)}  ${r3(probe(out).d)} s  (${pieces.map(p => `${p.a}–${r3(p.a + p.len)}`).join(' + ')} of the master)`);
+  if (!qc(out, { cut: true, fix: true, inPlace: true }).pass) process.exitCode = 1;
 }
 

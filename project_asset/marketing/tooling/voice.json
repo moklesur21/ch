@@ -1,0 +1,23 @@
+{
+  "note": "Locked voice choices for voice-gen.mjs (every chunk of every video). No secrets: the API key lives in the macOS Keychain (service 'elevenlabs-api') or ELEVENLABS_API_KEY. voice_id, voice_name and voice_settings are filled by 'node voice-gen.mjs --setup' from the account (the clone and its saved settings); change a setting only to fix a problem, never mid-video (ElevenLabs guide §2.2). takes: one per chunk (owner decision 7 Oct 2026); retries: extra takes made only when a take fails the word check (a word missing, added or changed, or a clipped ending), never for taste. Eleven v4 has only Stability and Similarity. processing is the one shared loudness chain from content/videos/v8/recordings/voice/PROCESSING.txt, split into pre / gain / post so --process can trim the gain to the loudness target.",
+  "voice_id": "WtNDtptM8xXyadpKyK8M",
+  "voice_name": "Yeasir Voice Quick",
+  "tts_model_id": "eleven_v4",
+  "stt_model_id": "scribe_v2",
+  "output_format": "mp3_44100_128",
+  "voice_settings": {
+    "stability": 0.5,
+    "similarity_boost": 0.75
+  },
+  "takes": 1,
+  "retries": 2,
+  "min_accuracy": 0.98,
+  "keyterms": ["WooCommerce", "PureDevs", "Customer History", "Freemius", "wp-admin", "WordPress", "SaaS", "Northline"],
+  "processing": {
+    "pre": "agate=threshold=0.005:ratio=3:range=0.1:attack=5:release=150,acompressor=threshold=-26dB:ratio=2.5:attack=8:release=150:knee=6",
+    "gain_db": 20,
+    "post": "alimiter=limit=0.79:attack=3:release=60:level=false",
+    "target_lufs": -14,
+    "tolerance_lu": 0.3
+  }
+}

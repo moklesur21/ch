@@ -104,7 +104,10 @@ unmaintained: never sync from it or edit it.
   Pack v3). Per-video docs, scene files and recordings live in
   `project_asset/content/videos/vN/` (video/audio files are gitignored). The
   workflow — who does what, gates, the recorder, status per video — is
-  `project_asset/docs/video-production.md`. The old V2–V4 coverage report was
+  `project_asset/docs/video-production.md`; the step-by-step how-to (voice via
+  the ElevenLabs API, edit, music bed and clicks from the shared library at
+  `~/Music/PureDevs-Audio-Library`, QC, reuse for a new product) is
+  `project_asset/docs/video-pipeline-guide.md`. The old V2–V4 coverage report was
   removed on 2026-07-30 with the superseded docs; read it from git history:
   `git show a5a0bb4^:project_asset/docs/v2-v4-coverage-report.md`.
 - Storefront branding: the shop is styled as **Northline Supply Co.** (apparel)

@@ -1,0 +1,24 @@
+{
+  "note": "The shared audio library: one music bed and a few UI sounds, made once with ElevenLabs (Music, Sound Effects) and reused by every video and every project. The files live OUTSIDE this repo, in 'library' (or $PUREDEVS_AUDIO_LIB), with library.json (prompts, seeds, loudness, licence) and a README beside them. A video opts in with a 'sound' block in its edit.json; 'mix' sets the levels render-edit.mjs uses (the voice sits at -14 LUFS).",
+  "library": "~/Music/PureDevs-Audio-Library",
+  "assets": {
+    "music/calm-minimal-01": {
+      "kind": "music",
+      "prompt": "Calm, minimal instrumental background music for a software product demo video. Soft warm electric piano and gentle synth pads with sparse, light plucked notes. Slow steady pulse around 80 BPM. No drums, no percussion, no vocals, no build-ups or drops. Even dynamics from start to end, unobtrusive, modern, clean and quietly optimistic, made to sit under a voice-over.",
+      "length_s": 150,
+      "model_id": "music_v2_5"
+    },
+    "sfx/click-01": { "kind": "sfx", "prompt": "A single soft click of a computer mouse button, recorded close-up, dry, quiet room, no reverb, nothing else.", "duration_s": 0.6, "prompt_influence": 0.7, "seed": 11, "shape": "click" },
+    "sfx/click-02": { "kind": "sfx", "prompt": "A single soft click of a computer mouse button, recorded close-up, dry, quiet room, no reverb, nothing else.", "duration_s": 0.6, "prompt_influence": 0.7, "seed": 12, "shape": "click" },
+    "sfx/click-03": { "kind": "sfx", "prompt": "A single soft click of a computer mouse button, recorded close-up, dry, quiet room, no reverb, nothing else.", "duration_s": 0.6, "prompt_influence": 0.7, "seed": 13, "shape": "click" },
+    "sfx/typing-01": { "kind": "sfx", "prompt": "Soft typing on a quiet laptop keyboard at a steady, relaxed pace, recorded close-up, dry, no reverb, no mouse clicks, no voice.", "duration_s": 6, "prompt_influence": 0.6, "loop": true, "seed": 21, "shape": "bed" }
+  },
+  "mix": {
+    "music_lufs": -30,
+    "music_fade_in": 1.5,
+    "music_fade_out": 3,
+    "duck": "sidechaincompress=threshold=0.05:ratio=2.5:attack=80:release=1000",
+    "click_peak_db": -20,
+    "typing_lufs": -36
+  }
+}

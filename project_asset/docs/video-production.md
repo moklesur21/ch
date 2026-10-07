@@ -24,10 +24,11 @@ and §5 (the recorder) with what actually worked on V1.
 | The research prompt (FILE 1, paste-ready, with a FIELD BLOCK per video) | `project_asset/strategy/PureDevs_Video_Docs/gemini.txt` |
 | What the product does, Free / Pro, exact UI wording, ⛔ / ⚑ notes | `project_asset/marketing/MARKETING-BRIEF-3.1.2.md` (+ `-PDF-INDEX.md`) — and, in this repo, the installed plugin code itself |
 | Format, placements, exclusions, ad rules | `project_asset/marketing/PureDevs_Proof_Marketing_Ad_Strategy_v1.md` |
-| The voice: ElevenLabs clone of Yeasir's own voice — plan, model, locked settings, voice log, script conversion, chunking, listening check, file naming, editing to the audio, re-renders, YouTube disclosure | `project_asset/strategy/PureDevs_Video_Docs/PureDevs_ElevenLabs_v4_Voice_Script_Guide_v1_1.md` (owner decision 28 Sep 2026; applies to every video; earlier docs call it `…_Voiceover_Workflow_v1_1.md`) |
+| The voice: ElevenLabs clone of Yeasir's own voice — plan, model, locked settings, voice log, script conversion, chunking, listening check, file naming, editing to the audio, re-renders, YouTube disclosure | `project_asset/strategy/PureDevs_Video_Docs/PureDevs_ElevenLabs_v4_Voice_Script_Guide_v1_1.md` (owner decision 28 Sep 2026; applies to every video; earlier docs call it `…_Voiceover_Workflow_v1_1.md`). Since 7 Oct the voice is made through the API: the locked choices live in `project_asset/marketing/tooling/voice.json` (step 5) |
 | Launch dates | `project_asset/strategy/assets/PureDevs_Execution_List_v1.md` — ad launch Tue 6 Oct 2026. The Topic Filter's §6 week plan still shows the older dates |
 | Demo data: refresh, verify, seeder | `scripts/demo-refresh.sh` · `wp-content/plugins/pdwchs-demo-tools/` · `project_asset/demo/DEMO-STORE-RUNBOOK.md` |
 | Browser tooling: login, tier override, Chrome via playwright-core | `project_asset/marketing/tooling/` and its `README.md` |
+| How steps 4–7 are done, command by command — voice (ElevenLabs API), edit, music and clicks, QC, review fixes — and how to reuse it for a new product | `project_asset/docs/video-pipeline-guide.md` |
 
 `claude.txt` is kept only for running the pack outside this repo.
 **Owner rules (Pack U2) beat every file:** no spoken figures · a freshness
@@ -44,18 +45,21 @@ project_asset/content/videos/vN/
   research/                            step 1 — Gemini / Perplexity output, one file per source (Yeasir saves it)
   PureDevs_VN_Demo_Brief_vX_Y.md       step 2 — FILE 2
   PureDevs_VN_Script_vX_Y.md           step 2 — FILE 3: script + YouTube package + poster spec
-  PureDevs_VN_Recording_Brief_vX_Y.md  step 4 — FILE 4: the scene table is the spec for scenes.json; §C–§E are for the editor
+  PureDevs_VN_Recording_Brief_vX_Y.md  step 4 — FILE 4: the scene table is the spec for scenes.json; §C–§E are the edit notes
   PureDevs_VN_Placement_Kit_vX_Y.md    step 6 — FILE 5
   scenes.json                          step 4 — the scene file the recorder plays (tracked, so any clip can be re-made)
-  recordings/                          step 4 output — goes to the editor via Drive or similar, never via git
+  edit.json                            step 5 — the edit list render-edit.mjs plays: segments, speed ranges, zooms, labels, voice, the cut
+  audio/                               step 5 — voice-gen.mjs: takes/<chunk>-tN.mp3, takes.json (seeds, word checks, picks), <chunk>.mp3 = the pick
+  recordings/                          step 4 output — media stays on this Mac, never in git
     scene-01.mp4 … scene-NN.mp4        video and audio files are gitignored (*.mp4 *.mov *.webm *.mkv *.wav *.mp3 *.m4a)
     answer-frame.png · answer-frame-crop.png · poster.png
     delivery-note.md                   which card / bar / row is biggest, when recorded, anything skipped — never an amount
     voice-over.md                      the CAPTION script: the approved words with every [A]/[B] option resolved, correct spelling
-    voice-over-elevenlabs.md           the VOICE script for ElevenLabs: same words, [PAUSE] → break tags, one chunk per beat
+    voice-over-elevenlabs.md           the VOICE script for ElevenLabs: same words, [PAUSE] → ellipsis, [thoughtful] per chunk, one chunk per beat
     captions.srt                       draft burned-in captions with the emphasis words marked
     end-card.png · end-card.mp4        step 4 — from make-end-card.mjs and the endCard block in scenes.json
-    voice/                             step 5 — the generated narration, one file per chunk (V1_b1.wav …); audio is gitignored
+    voice/                             step 5 — voice-gen.mjs --process: the picks after one loudness chain (V8_b1.wav …); audio is gitignored
+    edit/                              step 5 — render-edit.mjs: segments, VN_reference_master.mp4, VN_cut_NNs.mp4
 ```
 
 Rules: file names follow the V1 pattern (`PureDevs_V1_Script_v1_2.md`); every
@@ -72,7 +76,7 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
 | 2 | Demo Brief, then Script + YouTube package + poster spec | Claude | Topic Filter row · Brief entries · research · plugin code · freshness checks made today | Demo Brief, Script | **A — Yeasir approves the script.** Nothing is recorded before this |
 | 3 | Demo data | Claude | the row's demo prerequisites + the script's stop-and-report conditions | `verify` checks for this video, seeder fixes if needed, a green `demo-refresh.sh` | verify: 0 FAIL |
 | 4 | Recording brief, scene file, recording, the two scripts | Claude | approved script, green data | Recording Brief, `scenes.json`, `recordings/*` incl. `voice-over.md` (caption script) and `voice-over-elevenlabs.md` (voice script) | **B — scene-01, the answer frame, goes to Yeasir first** as the quality check, before the rest is recorded |
-| 5 | Voice (ElevenLabs) and edit | Yeasir + editor | the voice script, the voice log; then `recordings/` + `voice/`, Recording Brief §D–§E, poster spec | `recordings/voice/*.wav`, then the 1080p master + the 20–30 s cut | — |
+| 5 | Voice (ElevenLabs API) and edit | Claude | the voice script, `voice.json`; then `recordings/`, `edit.json`, Recording Brief §D–§E, poster spec | `audio/` takes → `recordings/voice/*.wav`, then the 1080p master + the 20–30 s cut, both QC PASS | **D — Yeasir watches the master and the cut**; every note has a fixed fix (step 5) |
 | 6 | Placement kit and final audit | Claude | the final export | Placement Kit; FILE 6 audit → **PASS / FIX FIRST** | **C — PASS before anything is published** |
 
 ### Step 1 — Research (Yeasir)
@@ -156,7 +160,7 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
 
 - Write the Recording Brief per FILE 4. Its scene table is the spec for
   `scenes.json`; its `[DEV SETUP]` list is Claude's to do; its §C–§E
-  (recording rules, edit notes, delivery) are for the editor. Screenshots come
+  (recording rules, edit notes, delivery) drive `edit.json`. Screenshots come
   from the local store (the capture script or the recorder's own stills), not
   from the PDF.
 - `scenes.json`: one entry per scene — build (`pro` / `free`), start URL,
@@ -165,7 +169,7 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
   spinner, an error, "No data", an update badge or an admin notice, matching
   the brief's stop-and-report list.
 - Record scene-01 first → gate B. Then all scenes. Then:
-  - `delivery-note.md` — the editor's note as FILE 4 §E asks, written from what
+  - `delivery-note.md` — the delivery note FILE 4 §E asks for, written from what
     the page showed (which card is biggest, where guest sits, date and time,
     anything skipped). Which box, never the amount.
   - `voice-over.md` — the **caption script**: the approved script with the
@@ -173,14 +177,17 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
     spelling, the emphasis words listed. Captions, the question-page
     walkthrough and the YouTube transcript come from it.
   - `voice-over-elevenlabs.md` — the **voice script**, built from the caption
-    script by the ElevenLabs workflow's §2 rules: the same words, word for
-    word; `[PAUSE]` → `<break time="0.7s" />` (`1.0s` before the decision or
-    CTA line); one chunk per beat, beat 3 and any beat over about 60 words or
-    3 breaks split; respellings from the voice log go here only, never into
-    captions; no figures, no URLs, no trial terms. It ends with the chunk
-    plan (`V1_b1` …) and a word-for-word check against the caption script.
+    script by the ElevenLabs guide's Part 1 rules: the same words, word for
+    word; `[thoughtful]` at the start of every chunk; `[PAUSE]` → an ellipsis
+    (Eleven v4 has no break tags); about three reveal pauses per video, one
+    per chunk at most; one chunk per beat, any beat over about 60 words
+    split; pronunciation fallbacks in their own table (Term | Chunk | Replace
+    with), never in captions; no figures, no URLs, no trial terms. Each chunk
+    is a `## VN_bX — …` heading with the text in a code block — the form
+    `voice-gen.mjs` reads. It ends with the chunk plan and a word-for-word
+    check against the caption script.
   - `captions.srt` — draft captions with the emphasis words marked, timed to
-    the script's beat slots; the editor re-times them to the audio.
+    the script's beat slots; step 5 re-times them to the voice (the conform script).
 - Free scenes are recorded on the free build activated in place of Pro (both
   are installed side by side, one active at a time: `scripts/wpc plugin
   deactivate … && scripts/wpc plugin activate …`), with every trial notice
@@ -191,31 +198,83 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
   admin browsing is never recorded, and they come before any plugin page in
   the same scene (Free reads cache 30 minutes).
 
-### Step 5 — Voice (ElevenLabs) and edit (Yeasir + editor)
+### Step 5 — Voice and edit (Claude; gate D is Yeasir's)
 
-- The narration is generated, not recorded: an ElevenLabs Instant Voice Clone
-  of Yeasir's own voice (owner decision 28 Sep 2026; pronunciation test
-  passed), Eleven Multilingual v2, the settings locked in the workflow's voice
-  log. Yeasir pastes `voice-over-elevenlabs.md` one chunk at a time, in order,
-  in one session, listens to every chunk on headphones, and keeps the best
-  take — workflow §3–§4. Audio is made **after** the recording and **before**
-  the picture edit: the script's timings were estimates, the real audio sets
-  the cut.
-- Files: `recordings/voice/V1_b1.wav …` (WAV if the plan offers it, else the
-  highest MP3; `_t2` for a replacement take) plus a short note: date and
-  "voice log unchanged". Audio is gitignored.
-- The editor receives `recordings/` and `voice/` (Drive or similar, never the
-  git repo), the Recording Brief and the Script's §C poster spec. Audio first,
-  then the picture is cut to it: holds never below 5 s on a card, chart or
-  table, the answer frame ≥ 8 s; captions from `voice-over.md` /
-  `captions.srt`, never from the voice script; the voice track normalised once
-  (about −14 LUFS integrated, peaks ≤ −1 dBTP); the master within 60–120 s
-  (tell Yeasir if it passes 2:00 — the "2-minute demo" ad lines depend on it).
-- Master at 1080p; the 20–30 s cut per Placement Kit §1 from the same chunks;
-  poster 1280 × 720, under 2 MB.
-- A later change re-renders only the affected chunk with the same voice ID and
-  settings and re-checks the length (workflow §7). No YouTube AI disclosure is
-  needed for an own-voice clone (workflow §8).
+Owner decision 7 Oct 2026: the voice and the edit are made here. Nothing goes
+to a VA; the only thing that leaves the Mac is the voice script's text, sent to
+ElevenLabs exactly as the web UI sent it. Yeasir watches the result.
+
+- **The voice** is the ElevenLabs Instant Voice Clone of Yeasir's own voice
+  (owner decision 28 Sep 2026; pronunciation test passed), Eleven v4, made
+  through the API by `project_asset/marketing/tooling/voice-gen.mjs`. The
+  locked choices — voice, model, Stability, Similarity, takes per chunk, the
+  loudness chain — are in `marketing/tooling/voice.json`. The API key lives
+  in the macOS Keychain only (service `elevenlabs-api`); Claude never sees
+  it. One-time setup (Yeasir): in ElevenLabs create a key restricted to
+  Text to Speech, Speech to Text, Voices (read) and Models (read), with a
+  monthly credit cap, and store it with
+  `security add-generic-password -a "$USER" -s elevenlabs-api -w` (it asks
+  for the key, so it stays out of shell history). Then `node voice-gen.mjs
+  --setup` finds the clone and the model and fills `voice.json`.
+- `node voice-gen.mjs --video vN --dry` shows the characters a run will
+  spend; `node voice-gen.mjs --video vN` makes one take per chunk (owner
+  decision 7 Oct 2026; a fixed seed, so any take can be made again; joined
+  to the previous chunk's take, so the read flows) and transcribes it — the
+  machine version of the guide's §2.5 listening check for words, clipped
+  endings and stray sounds. Only a take that fails it (a word missing, added
+  or changed, or a clipped ending) gets up to two more. Tone is judged at
+  gate D: the video is always finished first, and anything still flagged is
+  listed for Yeasir with the master. Everything is logged in
+  `audio/takes.json`.
+- `node voice-gen.mjs --video vN --process` runs one loudness chain over all
+  the picks joined (gain trimmed to −14 LUFS) and splits them back into
+  `recordings/voice/VN_<chunk>.wav` — the same files the V8 hand process made,
+  bit for bit. Audio is made **after** the recording and **before** the
+  picture edit: the real audio sets the cut.
+- **The edit:** the video's `edit.json`, and — where phrases must land on
+  clicks — a per-video conform script that fits the picture to the voice and
+  re-times `captions.srt` (V8: `conform-voice.py`). Conform scripts find
+  their phrases with `marketing/tooling/voice_phrases.py`: cuts land in the
+  take's pauses, and the take's speech-to-text word times decide which pause
+  is which phrase boundary, so a take that breathes mid-phrase still fits.
+- **Sound (owner decision 7 Oct 2026):** one calm, minimal music bed under
+  every master, and a soft mouse click on every recorded click plus quiet
+  typing under every typed stretch — nothing else (no whooshes, pops or
+  dings). They come from the shared audio library
+  (`~/Music/PureDevs-Audio-Library`, outside the repo so other projects can
+  use it; made by `marketing/tooling/audio-lib.mjs` with ElevenLabs Music and
+  Sound Effects, definitions and mix levels in `audio-lib.json`, prompts and
+  licence in the library's `library.json` / `README.md`). A video opts in
+  with the `"sound"` block of its `edit.json`. The bed sits about 23 dB under
+  the voice while it speaks and about 17 dB under in the pauses (ducked by
+  the voice, faded in and out); clicks follow the recorder's step times
+  through the speed ranges. Licence: ElevenLabs paid plans allow online
+  commercial use (ads, YouTube, product demos), not film, TV, radio or games;
+  no attribution. Then `node
+  render-edit.mjs --video vN --master --cut`: the 1080p master with captions
+  burned in, and the 20–30 s cut from the `"cut"` block. Each is checked by
+  `qc-video.mjs` (1920 × 1080, 30 fps, H.264, AAC 48 kHz, −14 ±0.5 LUFS, true
+  peak ≤ −1 dBTP, 60–120 s / 20–30 s); off loudness is fixed with the picture
+  stream-copied untouched.
+- Rules unchanged: holds never below 5 s on a card, chart or table, the
+  answer frame ≥ 8 s; captions from `voice-over.md` / `captions.srt`, never
+  from the voice script; the master within 60–120 s (tell Yeasir if
+  it passes 2:00 — the "2-minute demo" ad lines depend on it). Poster
+  1280 × 720, under 2 MB. No YouTube AI disclosure is needed for an own-voice
+  clone (guide §8).
+- **Gate D — Yeasir watches the master and the cut** and writes notes in
+  plain words. Each kind of note has one fix, then a re-render (minutes):
+
+| Note | Fix |
+|---|---|
+| A chunk sounds wrong (flat, rushed, odd stress) | `voice-gen --redo <chunk>` (a new take; the old ones are kept and can come back with `--pick <chunk>=tN`), then `--process`, the conform step, `render-edit --master --cut` |
+| A name is mispronounced | add the fallback to the voice script's pronunciation table → `voice-gen --fix <chunk>`; once it works, into the guide's §2.6 |
+| The voice sounds unlike Yeasir, or uneven between chunks | `voice.json` Stability / Similarity (guide §2.2), then every chunk again |
+| A word should change | the script (gate A): caption script and voice script together |
+| Timing, a hold, a zoom, a label | `edit.json` or the conform script |
+| Music too loud / quiet, or not this track | `audio-lib.json` `mix` (levels, ducking) for every video, or a new library track (`audio-lib.mjs --make`) named in `edit.json` `"sound"` |
+| A click or typing sound where it shouldn't be | `"sfx": false` on that segment, or the levels in `audio-lib.json` |
+| A caption | the conform script that writes `captions.srt` |
 
 ### Step 6 — Placement kit and final audit (Claude)
 
@@ -319,9 +378,10 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
   name, one CTA, the "Demo Store" label — to `recordings/end-card.png` and a
   4 s H.264 `end-card.mp4` at the master's size. The CTA follows the tier:
   Pro-answered → "Start the trial · puredevs.com/pricing"; free-answered →
-  install free (V8, V13). The editor places it after the last line with a
-  short dissolve and ends the lower-third / "Demo Store" overlays where it
-  starts (the card carries both); hold it ~2 s past the last word.
+  install free (V8, V13). `render-edit.mjs` appends it to the last segment
+  with a short crossfade (`edit.json` `endCard`); the lower-third / "Demo
+  Store" overlays end where it starts (the card carries both); hold it ~2 s
+  past the last word.
 - `[DEV SETUP]` done for V1 on 28 Sep: WordPress 7.1.2, WooCommerce 11.1.2
   and every plugin and theme updated (no update bubbles); WooCommerce
   post-update notices cleared; the WooPayments incentive badge on the
@@ -355,8 +415,9 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
   clock), smooth zooms (zoompan on the 4K clips), labels drawn with Chrome, the
   end card with a crossfade, and the voice when its files exist. Times come
   from the recorder's `<scene>.steps.json`, which logs every step's time and
-  target rect. The VA then only stitches in CapCut
-  (`project_asset/docs/capcut-va-guide.md`).
+  target rect. Since 7 Oct it also builds the 20–30 s cut (`--cut`) and
+  checks both files with `qc-video.mjs`; with `voice-gen.mjs` (step 5) the
+  whole video is finished here. No outside editor is used.
 - Not the recorder's job: anything that signs in to or accepts something on an
   outside service — the Freemius opt-in prompt in V8, starting the trial in
   V16. Those steps are Yeasir's, on camera, or are filmed on the local builds
@@ -368,12 +429,15 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
 
 ---
 
-## 6. Hand-off to the editor
+## 6. Hand-off
 
-One folder per video (`recordings/`), shared outside git: the scene clips, the
-answer-frame stills, `delivery-note.md`, `voice-over.md`, `captions.srt`, plus
-the Recording Brief (§C–§E) and the poster spec. The editor records nothing and
-sets up nothing; a wrong clip is re-made by re-running its scene.
+- **To Yeasir (gate D):** `recordings/edit/VN_reference_master.mp4` and
+  `VN_cut_NNs.mp4`, with the QC lines and any flagged chunk.
+- **To the VA, after gate D and the audit:** the approved master, the cut,
+  the poster and the Placement Kit, for publishing (`vN/VN_VA_Publish_Checklist.md`).
+  Shared outside git.
+- A wrong clip is re-made by re-running its scene; nothing is edited by
+  hand outside the repo.
 
 ---
 
@@ -381,9 +445,10 @@ sets up nothing; a wrong clip is re-made by re-running its scene.
 
 - Sign in to, or accept anything on, an outside service (Freemius opt-in,
   trial start, WordPress.org, YouTube).
-- Generate the audio: ElevenLabs holds Yeasir's account and voice clone.
-  Claude prepares and checks the two scripts; Yeasir generates and listens.
-- Judge the voice's delivery — only the words, timing, captions and claims.
+- See or store the ElevenLabs API key: it stays in the Keychain, and
+  `voice-gen.mjs` reads it at run time.
+- Judge the voice's tone by ear: the takes are checked by machine for words,
+  clipped endings and stray sounds; how it sounds is Yeasir's call at gate D.
 - Touch the live site or its data.
 
 ---
@@ -393,7 +458,7 @@ sets up nothing; a wrong clip is re-made by re-running its scene.
 | Video | Week (§6) | 1 Research | 2 Brief + Script | 3 Data verified | 4 Recorded | 5 Edited | 6 Kit + audit |
 |---|---|---|---|---|---|---|---|
 | V1 returning revenue (PRO) | 1 | used 21 Sep; not archived in `research/` — Demo Brief §12 carries the checks | Brief v1.2 + Script v1.2, approved 21 Sep | **done 28 Sep**: verifier re-scoped to v4.2 (`v1_*`, `v4_funnel`, `dash_*` warn-only); seeder gives 8 potentials a second in-window order so the free Repeat Purchase Rate card is not 0 %; `demo-refresh.sh` → 31 pass / 0 fail | **done 28 Sep**: gate B passed on scene-01; all eight clips recorded (3840 × 2160, 2:33 of footage), stills, `delivery-note.md` (option A / C), `voice-over.md`, `voice-over-elevenlabs.md` (8 chunks, 239 words), `captions.srt`; Recording Brief v1.4 | audio chunks in `recordings/audio/` (29 Sep); `V1_master.mp4` delivered 6 Oct (1:40, 2560 × 1440 HEVC) | **audit 6 Oct: PASS** on `pd v1 final edit -14LUFS.mp4` (1:40): captions fixed, end card in, audio normalised by Claude to −14.0 LUFS / −2.3 dBTP with the picture stream copied untouched (the editor's export was −11.1 LUFS / +0.2 dBTP). Beat-5 free-version shot left wide: owner's call. Honest sentence re-checked: WooCommerce 11.1.2 still latest. **Placement Kit v1.3 done 6 Oct** (1:40, chapters; screenshots, GIFs and the 23.5 s cut made). Hand-offs: `v1/V1_VA_Publish_Checklist.md` (VA) and `content/questions/PureDevs_Question_Pages_Dev_Spec_v1.md` (website developer: `question` CPT + V1 page content). Thumbnail `V1-poster.png` + page poster `V1-poster.webp` made 6 Oct (source `v1/poster.html`). Left: upload, then the YouTube ID / thumbnail URL / upload date in the JSON-LD |
-| V8 data location (FREE) | 1 | done: `v8/research/gemini-2026-10-07.md`, `perplexity-2026-10-07.md` | **Brief v1.1 + Script v1.2**, gate A passed 7 Oct. Owner rules: no export/erase claim; always the latest WordPress (7.1.3); the recorder clicks Skip; the readme's "Tested up to" does not block. Dev hand-off `v8/V8_Dev_Requests.md`; D4 fix in Section D guide v1.5 | throw-away store `ch-v8` (`scripts/v8-site.sh`), WordPress 7.1.3, check 0 FAIL / 1 warn. Product search added to the Northline header | **recorded 7 Oct** (real take after 3 rehearsals); Recording Brief v1.2 | **edited here, with voice, 7 Oct**: one loudness chain (−14 LUFS) → `conform-voice.py` → `render-edit.mjs --master` → `V8_reference_master.mp4` (1:57, captions burned in). VA: upload or rebuild per `docs/capcut-va-guide.md` | **Placement Kit v1.0 + audit 7 Oct: PASS** (`v8/PureDevs_V8_Claim_Audit_v1_0.md`): 27 s cut, poster PNG/WebP, 3 screenshots, GIF, transcript made; YouTube description fixed (WordPress.org link on line 2); AG3 copy swap to apply in Google Ads. Left: upload, then the YouTube ID / thumbnail URL / upload date in the JSON-LD |
+| V8 data location (FREE) | 1 | done: `v8/research/gemini-2026-10-07.md`, `perplexity-2026-10-07.md` | **Brief v1.1 + Script v1.2**, gate A passed 7 Oct. Owner rules: no export/erase claim; always the latest WordPress (7.1.3); the recorder clicks Skip; the readme's "Tested up to" does not block. Dev hand-off `v8/V8_Dev_Requests.md`; D4 fix in Section D guide v1.5 | throw-away store `ch-v8` (`scripts/v8-site.sh`), WordPress 7.1.3, check 0 FAIL / 1 warn. Product search added to the Northline header | **recorded 7 Oct** (real take after 3 rehearsals); Recording Brief v1.3 | **edited here, with voice, 7 Oct**: one loudness chain (−14 LUFS) → `conform-voice.py` → `render-edit.mjs --master` → `V8_reference_master.mp4` (1:57, captions burned in). **API pilot, 7 Oct night:** re-voiced with `voice-gen.mjs` (9 chunks, one take each, all word-perfect), music bed + clicks + typing, `V8_reference_master.mp4` 1:56 and `V8_cut_27s.mp4` 26.7 s, both QC PASS; the web-UI version kept as `…_webui.mp4` (takes in `audio-webui/`, `recordings/voice-webui/`). **Gate D open:** Yeasir picks a version; if the API one, the Placement Kit timecodes and the audit are re-run on it | **Placement Kit v1.0 + audit 7 Oct: PASS** (`v8/PureDevs_V8_Claim_Audit_v1_0.md`): 27 s cut, poster PNG/WebP, 3 screenshots, GIF, transcript made; YouTube description fixed (WordPress.org link on line 2); AG3 copy swap to apply in Google Ads. Left: upload, then the YouTube ID / thumbnail URL / upload date in the JSON-LD |
 | V13 zero-result searches (FREE) | 2 | — | — | zero-result rows missing from the seeder; record on the free build | — | — | — |
 | V4 funnel (PRO) | 3 | — | — | — | — | — | — |
 | V16 Free → Pro | 4 | none, by design | — | the trial start is a manual step | — | — | — |
@@ -410,13 +475,22 @@ V1 was due Fri 25 Sep (Topic Filter §6); the ad launch is Tue 6 Oct 2026.
 ```bash
 scripts/demo-refresh.sh                    # fresh data anchored today + verify + verdict
 scripts/wpc pdwchs-demo verify --report    # verify only
-cd project_asset/marketing/tooling && node record-scenes.mjs --video v1 --only scene-01   # planned, see §5
+cd project_asset/marketing/tooling && node record-scenes.mjs --video v1 --only scene-01   # see §5
+node voice-gen.mjs --video v8 --dry          # what a voice run will spend
+node voice-gen.mjs --video v8                # a take per chunk → word check (audio/)
+node voice-gen.mjs --video v8 --process      # recordings/voice/*.wav
+node render-edit.mjs --video v8 --master --cut   # master + cut (music, clicks), both QC-checked
+node audio-lib.mjs                           # the shared music / UI-sound library: what exists; --make all
+node qc-video.mjs <file.mp4> [--cut] [--fix]     # any delivery against the spec
 ```
 
 ---
 
 ## Changelog
 
+- **7 Oct 2026 (late night)** — The CapCut VA guide is removed: no outside editor; the VA only uploads. V8 Recording Brief v1.3, Placement Kit v1.1.
+- **7 Oct 2026 (night)** — Sound: a shared audio library outside the repo (`audio-lib.mjs`: ElevenLabs Music bed, mouse clicks, typing), mixed by `render-edit.mjs` from the `"sound"` block; `voice_phrases.py` for conform scripts. V8 re-voiced through the API (pilot for gate D).
+- **7 Oct 2026 (evening)** — Step 5 moves to Claude (owner decision): `voice-gen.mjs` (ElevenLabs API, one take per chunk, checked by speech-to-text, retried only on a failed check), `voice.json`, `qc-video.mjs`, `render-edit.mjs --cut`; gate D (Yeasir watches the master and the cut); the VA publishes only. Stale lines fixed: Eleven v4 (not Multilingual v2), ellipses (not break tags).
 - **7 Oct 2026 (later)** — V8 recorded; the edit renderer (`render-edit.mjs`), the step log and the CapCut VA guide added (§5).
 - **7 Oct 2026** — V8: the `ch-v8` throw-away store and `scripts/v8-site.sh` (§3 step 3), status row; ElevenLabs file name corrected in §1. `ch` updated to WordPress 7.1.3; owner rule: videos always run the latest WordPress.
 - **28 Sep 2026** — first version, from the V1 kick-off session.

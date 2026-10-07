@@ -20,6 +20,14 @@ screens show different customers and numbers than the committed ones.
 | `build-index.mjs` | Regenerates `../screenshots/INDEX.md`. |
 | `record-scenes.mjs` | Demo-video scene recorder: plays `content/videos/<vN>/scenes.json` on the local store and writes the clips, stills and delivery note to `<vN>/recordings/`. See `project_asset/docs/video-production.md` §5. |
 | `make-end-card.mjs` | Demo-video end card: `node make-end-card.mjs --video v8` renders the `endCard` block of that video's `scenes.json` (answer-frame crop, optional outline, product name, one CTA, "Demo Store") to `recordings/end-card.png` + a 4 s `end-card.mp4`. |
+| `voice-gen.mjs` + `voice.json` | Demo-video voice through the ElevenLabs API (Yeasir's own-voice clone, Eleven v4): `node voice-gen.mjs --setup` once, then `--video v8 [--dry]` (one take per chunk, transcribed and checked word for word against `recordings/voice-over-elevenlabs.md`; up to two retries only on a failed check → `audio/<chunk>.mp3`), `--redo` / `--pick` / `--fix <chunk>`, and `--process` (one loudness chain → `recordings/voice/*.wav`). Locked choices in `voice.json`; the API key only in the macOS Keychain (service `elevenlabs-api`). |
+| `render-edit.mjs` | Demo-video edit renderer: plays `content/videos/<vN>/edit.json` (speed ranges, zooms, labels, voice, end card, and the `"sound"` block: music bed, clicks, typing from the shared library) into 1080p segments, `--master` (joined, captions burned in) and `--cut` (the 20–30 s cut). Both outputs go through `qc-video.mjs`. |
+| `audio-lib.mjs` + `audio-lib.json` | The shared audio library, kept **outside the repo** (`~/Music/PureDevs-Audio-Library`, or `$PUREDEVS_AUDIO_LIB`) so other projects can use it: a music bed (ElevenLabs Music) and UI sounds (mouse clicks, typing; ElevenLabs Sound Effects). `node audio-lib.mjs` lists, `--make all` makes what's missing; prompts, seeds, loudness and licence go to the library's `library.json` and `README.md`. `audio-lib.json` also holds the mix levels `render-edit.mjs` uses. |
+| `voice_phrases.py` | For the per-video conform scripts (`content/videos/vN/conform-voice.py`): each phrase's start and end in a voice take — cuts in the pauses, phrase boundaries from voice-gen's speech-to-text word times. |
+| `qc-video.mjs` | Delivery check for any video file: 1920 × 1080, 30 fps, H.264, AAC 48 kHz, −14 ±0.5 LUFS, true peak ≤ −1 dBTP, length (`--cut` for 20–30 s). `--fix` repairs only the loudness, picture stream-copied. |
+
+The demo-video tools (`record-scenes`, `make-end-card`, `voice-gen`, `audio-lib`, `render-edit`, `qc-video`,
+`voice_phrases.py`) are explained step by step in `project_asset/docs/video-pipeline-guide.md`.
 
 ## Steps on `ch` (macOS + MAMP)
 

@@ -19,8 +19,8 @@
  *   }
  *
  * Renders the card with the installed Google Chrome (headless, no browser download) and encodes the
- * clip with ffmpeg (H.264, 30 fps). The editor puts the clip after the last line, with a short dissolve,
- * and ends the lower-third / "Demo Store" overlay tracks where the card starts (the card carries both).
+ * clip with ffmpeg (H.264, 30 fps). render-edit.mjs appends it to the last segment with a short crossfade
+ * (edit.json "endCard"); the lower-third / "Demo Store" overlays end where the card starts (it carries both).
  */
 import fs from 'node:fs';
 import os from 'node:os';
