@@ -24,7 +24,7 @@ and §5 (the recorder) with what actually worked on V1.
 | The research prompt (FILE 1, paste-ready, with a FIELD BLOCK per video) | `project_asset/strategy/PureDevs_Video_Docs/gemini.txt` |
 | What the product does, Free / Pro, exact UI wording, ⛔ / ⚑ notes | `project_asset/marketing/MARKETING-BRIEF-3.1.2.md` (+ `-PDF-INDEX.md`) — and, in this repo, the installed plugin code itself |
 | Format, placements, exclusions, ad rules | `project_asset/marketing/PureDevs_Proof_Marketing_Ad_Strategy_v1.md` |
-| The voice: ElevenLabs clone of Yeasir's own voice — plan, model, locked settings, voice log, script conversion, chunking, listening check, file naming, editing to the audio, re-renders, YouTube disclosure | `project_asset/strategy/PureDevs_Video_Docs/PureDevs_ElevenLabs_Voiceover_Workflow_v1_1.md` (owner decision 28 Sep 2026; applies to every video) |
+| The voice: ElevenLabs clone of Yeasir's own voice — plan, model, locked settings, voice log, script conversion, chunking, listening check, file naming, editing to the audio, re-renders, YouTube disclosure | `project_asset/strategy/PureDevs_Video_Docs/PureDevs_ElevenLabs_v4_Voice_Script_Guide_v1_1.md` (owner decision 28 Sep 2026; applies to every video; earlier docs call it `…_Voiceover_Workflow_v1_1.md`) |
 | Launch dates | `project_asset/strategy/assets/PureDevs_Execution_List_v1.md` — ad launch Tue 6 Oct 2026. The Topic Filter's §6 week plan still shows the older dates |
 | Demo data: refresh, verify, seeder | `scripts/demo-refresh.sh` · `wp-content/plugins/pdwchs-demo-tools/` · `project_asset/demo/DEMO-STORE-RUNBOOK.md` |
 | Browser tooling: login, tier override, Chrome via playwright-core | `project_asset/marketing/tooling/` and its `README.md` |
@@ -122,6 +122,20 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
   (`scripts/live-refresh.sh`): after any seeder or verifier change here,
   upload the same plugin version to ch.puredevs.com before the next live
   refresh, or the live verdict will differ.
+- **V8 is the exception: it records on its own throw-away store,** `ch-v8`
+  (`/Applications/MAMP/htdocs/ch-v8`, outside the repo, DB `ch_v8`), because
+  its beat 2 is a one-take real install from WordPress.org and `ch` already
+  has the plugin and a Freemius registration. `scripts/v8-site.sh` builds it
+  (`create`: WordPress and WooCommerce copied from `ch`, the Northline store
+  from `wp pdwchs-demo seed --woo-only` + `setup-storefront`, demo-tools then
+  removed), snapshots the pre-install state, and `reset` restores it before
+  every take; `update` brings WordPress, plugins and themes to the latest
+  release and re-snapshots (owner rule, 7 Oct 2026: the video always shows
+  the latest WordPress, whatever the plugin readme says). `scripts/v8-site.sh
+  check` replaces `demo-refresh.sh` for V8:
+  pre-install state, versions, update bubbles, and the wp.org card
+  ("Tested up to" must cover the site's WordPress, or the card says
+  "Untested"). Delete the site with `destroy --yes` once V8 is published.
 - Timing: widgets cache up to 30 minutes, so finish seeding at least 30 minutes
   before recording. Record on the day you refresh (`demo-refresh.sh --help`
   covers pinned anchors and retakes).
@@ -324,6 +338,25 @@ file. The recorder itself lives in `project_asset/marketing/tooling/` (§5).
   WooCommerce Setup); Email Log's widget is hidden through the plugin's own
   `email-log-core[hide_dashboard_widget]` setting. Re-check with `--probe`
   before every session.
+- **Added for V8 (7 Oct 2026), all opt-in from `scenes.json`, V1 unchanged
+  (its `--probe` re-checked):** `wpPath` (WP-CLI targets another site, e.g.
+  ch-v8) · `preflight` (a command run before scenes marked `"preflight":
+  true`; V8 runs `scripts/v8-site.sh check`) · `allowNotices` · per-scene
+  `"context": "visitor"` (a separate logged-out browser, for storefront
+  activity) · steps `type`, `press`, `goto`, `back`, `wait-for`, `scroll-to`,
+  `timer-start` / `timer-stop` (an mm:ss clock bottom-right that survives page
+  loads — the one-take proof) and `note` (a text fact for the delivery note) ·
+  ready checks `text:…` / `no-text:…` · `--rehearsal` (carries on past a failed
+  preflight and writes to `recordings/rehearsal/`) · a generic `--probe` that
+  screenshots each `--only` scene's start page.
+- **The edit can be done here too (V8, 7 Oct 2026):** `render-edit.mjs --video vN`
+  reads `content/videos/vN/edit.json` and renders finished 1080p segments into
+  `recordings/edit/`: speed ranges (with a speed badge where the clip carries a
+  clock), smooth zooms (zoompan on the 4K clips), labels drawn with Chrome, the
+  end card with a crossfade, and the voice when its files exist. Times come
+  from the recorder's `<scene>.steps.json`, which logs every step's time and
+  target rect. The VA then only stitches in CapCut
+  (`project_asset/docs/capcut-va-guide.md`).
 - Not the recorder's job: anything that signs in to or accepts something on an
   outside service — the Freemius opt-in prompt in V8, starting the trial in
   V16. Those steps are Yeasir's, on camera, or are filmed on the local builds
@@ -360,7 +393,7 @@ sets up nothing; a wrong clip is re-made by re-running its scene.
 | Video | Week (§6) | 1 Research | 2 Brief + Script | 3 Data verified | 4 Recorded | 5 Edited | 6 Kit + audit |
 |---|---|---|---|---|---|---|---|
 | V1 returning revenue (PRO) | 1 | used 21 Sep; not archived in `research/` — Demo Brief §12 carries the checks | Brief v1.2 + Script v1.2, approved 21 Sep | **done 28 Sep**: verifier re-scoped to v4.2 (`v1_*`, `v4_funnel`, `dash_*` warn-only); seeder gives 8 potentials a second in-window order so the free Repeat Purchase Rate card is not 0 %; `demo-refresh.sh` → 31 pass / 0 fail | **done 28 Sep**: gate B passed on scene-01; all eight clips recorded (3840 × 2160, 2:33 of footage), stills, `delivery-note.md` (option A / C), `voice-over.md`, `voice-over-elevenlabs.md` (8 chunks, 239 words), `captions.srt`; Recording Brief v1.4 | audio chunks in `recordings/audio/` (29 Sep); `V1_master.mp4` delivered 6 Oct (1:40, 2560 × 1440 HEVC) | **audit 6 Oct: PASS** on `pd v1 final edit -14LUFS.mp4` (1:40): captions fixed, end card in, audio normalised by Claude to −14.0 LUFS / −2.3 dBTP with the picture stream copied untouched (the editor's export was −11.1 LUFS / +0.2 dBTP). Beat-5 free-version shot left wide: owner's call. Honest sentence re-checked: WooCommerce 11.1.2 still latest. **Placement Kit v1.3 done 6 Oct** (1:40, chapters; screenshots, GIFs and the 23.5 s cut made). Hand-offs: `v1/V1_VA_Publish_Checklist.md` (VA) and `content/questions/PureDevs_Question_Pages_Dev_Spec_v1.md` (website developer: `question` CPT + V1 page content). Thumbnail `V1-poster.png` + page poster `V1-poster.webp` made 6 Oct (source `v1/poster.html`). Left: upload, then the YouTube ID / thumbnail URL / upload date in the JSON-LD |
-| V8 data location (FREE) | 1 | — | — | needs a site state without the plugin, for the one-take install | — | — | — |
+| V8 data location (FREE) | 1 | done: `v8/research/gemini-2026-10-07.md`, `perplexity-2026-10-07.md` | **Brief v1.1 + Script v1.2**, gate A passed 7 Oct. Owner rules: no export/erase claim; always the latest WordPress (7.1.3); the recorder clicks Skip; the readme's "Tested up to" does not block. Dev hand-off `v8/V8_Dev_Requests.md`; D4 fix in Section D guide v1.5 | throw-away store `ch-v8` (`scripts/v8-site.sh`), WordPress 7.1.3, check 0 FAIL / 1 warn. Product search added to the Northline header | **recorded 7 Oct** (real take after 3 rehearsals); Recording Brief v1.2 | **edited here, with voice, 7 Oct**: one loudness chain (−14 LUFS) → `conform-voice.py` → `render-edit.mjs --master` → `V8_reference_master.mp4` (1:57, captions burned in). VA: upload or rebuild per `docs/capcut-va-guide.md` | **Placement Kit v1.0 + audit 7 Oct: PASS** (`v8/PureDevs_V8_Claim_Audit_v1_0.md`): 27 s cut, poster PNG/WebP, 3 screenshots, GIF, transcript made; YouTube description fixed (WordPress.org link on line 2); AG3 copy swap to apply in Google Ads. Left: upload, then the YouTube ID / thumbnail URL / upload date in the JSON-LD |
 | V13 zero-result searches (FREE) | 2 | — | — | zero-result rows missing from the seeder; record on the free build | — | — | — |
 | V4 funnel (PRO) | 3 | — | — | — | — | — | — |
 | V16 Free → Pro | 4 | none, by design | — | the trial start is a manual step | — | — | — |
@@ -384,4 +417,6 @@ cd project_asset/marketing/tooling && node record-scenes.mjs --video v1 --only s
 
 ## Changelog
 
+- **7 Oct 2026 (later)** — V8 recorded; the edit renderer (`render-edit.mjs`), the step log and the CapCut VA guide added (§5).
+- **7 Oct 2026** — V8: the `ch-v8` throw-away store and `scripts/v8-site.sh` (§3 step 3), status row; ElevenLabs file name corrected in §1. `ch` updated to WordPress 7.1.3; owner rule: videos always run the latest WordPress.
 - **28 Sep 2026** — first version, from the V1 kick-off session.

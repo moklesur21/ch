@@ -74,6 +74,12 @@ unmaintained: never sync from it or edit it.
   FD_SETSIZE), so the plugin dashboard's parallel AJAX shows "—".
 - Both builds are installed side by side; activate one at a time — free for the
   realistic upgrade-flow demo, pro for Pro features (pro is active as of 2026-09-26).
+- V8 throw-away store: `/Applications/MAMP/htdocs/ch-v8` (outside the repo, DB
+  `ch_v8`, `http://localhost/ch-v8`) — the Northline store with the PureDevs
+  plugin never installed, for V8's one-take wp.org install. Built, reset to its
+  pre-install snapshot and checked only with `scripts/v8-site.sh`
+  (`create | update | reset | check | snapshot | wp … | destroy --yes`); delete it
+  once V8 is published. Videos always run the latest WordPress (`update`).
 - Auto-login helper (mu-plugin): `http://localhost/ch/?local_login=1&user_email=<email>`
   — gated to `WP_ENVIRONMENT_TYPE=local` and disabled when `PDWCHS_DEMO_LOCKDOWN`
   is defined. Never deploy this file to the live VPS — nor the screenshot

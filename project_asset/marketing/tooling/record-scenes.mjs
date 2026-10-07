@@ -5,6 +5,16 @@
  *   node record-scenes.mjs --video v1 --only scene-01   # one or more scenes (comma-separated)
  *   node record-scenes.mjs --video v1                   # every scene + stills + delivery-note.md
  *   options: --fps 30  --crf 16  --keep-frames  --force (record even when the readiness audit fails)
+ *            --rehearsal (run a scene's preflight but carry on when it fails; write to recordings/rehearsal/)
+ *
+ * Per video, scenes.json may also set (all optional; V1 uses none of them):
+ *   "wpPath"     the WordPress root WP-CLI targets (default: the ch site) — e.g. V8's throw-away ch-v8 store
+ *   "preflight"  a command, relative to the ch root, run before any scene marked "preflight": true
+ *                (V8: ["scripts/v8-site.sh", "check"]); a failure skips the scene unless --force / --rehearsal
+ *   "allowNotices"  notice texts the readiness audit accepts (substring match)
+ * and per scene: "context": "visitor" (a separate logged-out browser) · "preflight": true.
+ * Steps beyond V1's: type, press, goto, back, wait-for, scroll-to, timer-start / timer-stop (an on-screen mm:ss
+ * clock that survives page loads, for one-take scenes), note (a text fact for the delivery note).
  *
  * Plays ../../content/videos/<video>/scenes.json against the local ch store: logs in through the
  * local auto-login helper (no password), switches the active build (pro / free) with WP-CLI when a
@@ -35,15 +45,17 @@ const ONLY  = opt('--only') ? opt('--only').split(',') : null;
 const PROBE = has('--probe');
 const FORCE = has('--force');
 const KEEP  = has('--keep-frames');
+const REHEARSAL = has('--rehearsal');
 const FPS   = Number(opt('--fps', 30));
 const CRF   = Number(opt('--crf', 16));
 
 const vdir  = path.join(ROOT, 'project_asset/content/videos', VIDEO);
 const plan  = JSON.parse(fs.readFileSync(path.join(vdir, 'scenes.json'), 'utf8'));
-const OUT   = path.join(vdir, 'recordings');
+const OUT   = path.join(vdir, 'recordings', REHEARSAL ? 'rehearsal' : '');
 fs.mkdirSync(OUT, { recursive: true });
 
 const BASE   = plan.base || 'http://localhost/ch';
+const WPPATH = plan.wpPath || ROOT;
 const VP     = Object.assign({ width: 1920, height: 1080, scale: 2 }, plan.viewport || {});
 const BUILDS = { pro: 'puredevs-customer-history-for-woocommerce-pro', free: 'puredevs-customer-history-for-woocommerce' };
 
@@ -54,7 +66,7 @@ const now   = () => performance.now() / 1000;
 // ── site side (WP-CLI through MAMP's PHP, deprecation noise silenced) ────────────────────────
 function wp(...a) {
   // WP-CLI re-enables display_errors, so PHP 8.2 deprecation lines reach stdout: drop them.
-  const out = execFileSync(PHP, ['-d', 'error_reporting=0', '-d', 'display_errors=0', `-d`, `mysqli.default_socket=${SOCK}`, WP, ...a, `--path=${ROOT}`], { encoding: 'utf8' });
+  const out = execFileSync(PHP, ['-d', 'error_reporting=0', '-d', 'display_errors=0', `-d`, `mysqli.default_socket=${SOCK}`, WP, ...a, `--path=${WPPATH}`], { encoding: 'utf8' });
   return out.split('\n').filter(l => !/^(PHP +)?(Deprecated|Warning|Notice):/.test(l)).join('\n').trim();
 }
 function activeBuild() {
@@ -94,6 +106,24 @@ const INIT = `
       requestAnimationFrame(step);
     });
     document.addEventListener('mousemove', e => s.set(e.clientX, e.clientY), true);
+    // One-take clock: started by the timer-start step, kept in sessionStorage so it survives page loads.
+    s.timer = () => {
+      let t0 = 0; try { t0 = Number(sessionStorage.getItem('__rec_timer_t0') || 0); } catch (e) {}
+      let t = document.getElementById('__rec_timer');
+      clearInterval(s.timerIv);
+      if (!t0) { if (t) t.remove(); return; }
+      if (!t) {
+        t = document.createElement('div');
+        t.id = '__rec_timer';
+        t.style.cssText = 'position:fixed;right:28px;bottom:84px;z-index:2147483646;pointer-events:none;display:flex;align-items:center;gap:10px;padding:10px 18px 10px 14px;border-radius:12px;background:rgba(17,17,17,.84);color:#fff;font:600 26px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums;box-shadow:0 4px 18px rgba(0,0,0,.25)';
+        t.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffc107" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2.5h5"/></svg><span id="__rec_timer_v">0:00</span>';
+        document.body.appendChild(t);
+      }
+      const v = document.getElementById('__rec_timer_v');
+      const tick = () => { const sec = Math.max(0, Math.floor((Date.now() - t0) / 1000)); v.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); };
+      tick(); s.timerIv = setInterval(tick, 200);
+    };
+    s.timer();
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', install); else install();
 })();`;
@@ -117,17 +147,24 @@ const RESOLVER = `window.__resolve = (sel) => {
 };`;
 
 // ── readiness audit: what must be true before a scene is recorded ────────────────────────────
-const AUDIT = `(checks) => {
+const AUDIT = `(input) => {
+  const checks = Array.isArray(input) ? input : (input.checks || []);
+  const allow  = Array.isArray(input) ? [] : (input.allow || []);
   const vis = el => { if (!el) return false; const r = el.getBoundingClientRect(); const cs = getComputedStyle(el); return r.width > 0 && r.height > 0 && cs.display !== 'none' && cs.visibility !== 'hidden'; };
   const norm = s => (s || '').replace(/\\s+/g, ' ').trim();
   const problems = [];
   const spinners = [...document.querySelectorAll('.spinner.is-active, .pdwchs-revenue-loading')].filter(vis);
   if (checks.includes('no-spinner') && spinners.length) problems.push(spinners.length + ' spinner(s) still visible');
   if (checks.includes('no-notice')) {
-    const notices = [...document.querySelectorAll('#wpbody-content .notice, #wpbody-content .updated, #wpbody-content .error, .update-nag, .woocommerce-message, .fs-notice, .welcome-panel')].filter(vis).map(n => norm(n.innerText).slice(0, 90));
+    const notices = [...document.querySelectorAll('#wpbody-content .notice, #wpbody-content .updated, #wpbody-content .error, .update-nag, .woocommerce-message, .fs-notice, .welcome-panel')].filter(vis).map(n => norm(n.innerText)).filter(t => !allow.some(a => t.includes(a))).map(t => t.slice(0, 90));
     if (notices.length) problems.push('notice(s) on screen: ' + JSON.stringify(notices));
     const bubbles = [...document.querySelectorAll('#wp-admin-bar-updates, #adminmenu .update-plugins, #adminmenu .awaiting-mod')].filter(vis).map(b => norm(b.textContent));
     if (bubbles.length) problems.push('update / count bubble(s): ' + JSON.stringify(bubbles));
+  }
+  for (const c of checks) {                                   // generic page-text checks: "text:…" must show, "no-text:…" must not
+    const body = norm(document.body.innerText);
+    if (c.startsWith('text:') && !body.includes(c.slice(5))) problems.push('text not found: ' + c.slice(5));
+    if (c.startsWith('no-text:') && body.includes(c.slice(8))) problems.push('page shows "' + c.slice(8) + '"');
   }
   if (checks.includes('no-error')) {
     const txt = norm(document.body.innerText);
@@ -155,11 +192,24 @@ const AUDIT = `(checks) => {
 
 // ── browser ───────────────────────────────────────────────────────────────────────────────────
 const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--hide-scrollbars', '--force-device-scale-factor=' + VP.scale] });
-const ctx = await browser.newContext({ viewport: { width: VP.width, height: VP.height }, deviceScaleFactor: VP.scale, colorScheme: 'light', reducedMotion: 'no-preference' });
+const CTX_OPTS = { viewport: { width: VP.width, height: VP.height }, deviceScaleFactor: VP.scale, colorScheme: 'light', reducedMotion: 'no-preference' };
+let ctx = await browser.newContext(CTX_OPTS);
 await ctx.addInitScript(INIT);
-const page = await ctx.newPage();
+let page = await ctx.newPage();
 page.setDefaultTimeout(30000);
 const cur = { x: -300, y: -300 };
+// "admin" is the logged-in browser; "visitor" (and any other name) is a separate, logged-out one.
+const contexts = { admin: { ctx, page } };
+async function useContext(name = 'admin') {
+  if (!contexts[name]) {
+    const c = await browser.newContext(CTX_OPTS);
+    await c.addInitScript(INIT);
+    const p = await c.newPage();
+    p.setDefaultTimeout(30000);
+    contexts[name] = { ctx: c, page: p };
+  }
+  if (contexts[name].page !== page) { ({ ctx, page } = contexts[name]); cur.x = -300; cur.y = -300; }
+}
 
 async function login(user) {
   await page.goto(`${BASE}/?local_login=1&user_email=${encodeURIComponent(user)}`, { waitUntil: 'domcontentloaded' });
@@ -240,7 +290,7 @@ async function waitReady(checks, timeoutMs = 90000) {
   while (Date.now() - t0 < timeoutMs) {
     try {
       await page.evaluate(RESOLVER);
-      problems = await page.evaluate(new Function('return ' + AUDIT)(), checks);
+      problems = await page.evaluate(new Function('return ' + AUDIT)(), { checks, allow: plan.allowNotices || [] });
     } catch (e) {
       if (/Execution context was destroyed|navigation/i.test(e.message)) { await sleep(300); continue; }   // a document is still loading
       throw e;
@@ -252,7 +302,7 @@ async function waitReady(checks, timeoutMs = 90000) {
   }
   await sleep(600);
   await page.evaluate(RESOLVER);
-  problems = await page.evaluate(new Function('return ' + AUDIT)(), checks);
+  problems = await page.evaluate(new Function('return ' + AUDIT)(), { checks, allow: plan.allowNotices || [] });
   return { ok: !problems.length, problems, waitedMs: Date.now() - t0 };
 }
 async function splitValues() {
@@ -264,7 +314,10 @@ async function splitValues() {
     return out;
   });
 }
-const state = { biggestSelector: null, facts: null };
+const state = { biggestSelector: null, facts: null, notes: [] };
+// While a clip records, every step is logged with its start/end (seconds into the clip) and, for steps
+// aimed at an element, that element's rect in CSS px at the time: <scene>.steps.json, for the edit.
+const stepLog = { t0: null, events: [] };
 // The A/B and C/D facts come from the three cards, so only a populated dashboard can set them.
 async function ensureFacts() {
   if (state.facts) return state.facts;
@@ -296,19 +349,29 @@ async function record(sceneId, run) {
   const cdp = await ctx.newCDPSession(page);
   const frames = [];
   let n = 0;
+  let live = true;
   cdp.on('Page.screencastFrame', async ({ data, metadata, sessionId }) => {
-    const file = path.join(fdir, `f${String(n++).padStart(6, '0')}.jpg`);
-    fs.writeFileSync(file, Buffer.from(data, 'base64'));
-    frames.push({ file, t: metadata.timestamp, at: now() });
+    if (live) {
+      const file = path.join(fdir, `f${String(n++).padStart(6, '0')}.jpg`);
+      try { fs.writeFileSync(file, Buffer.from(data, 'base64')); frames.push({ file, t: metadata.timestamp, at: now() }); } catch (e) { /* folder already removed */ }
+    }
     cdp.send('Page.screencastFrameAck', { sessionId }).catch(() => {});
   });
   await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 93, maxWidth: VP.width * VP.scale, maxHeight: VP.height * VP.scale, everyNthFrame: 1 });
   const t0 = now();
-  await run();
-  const tEnd = now();
-  await cdp.send('Page.stopScreencast').catch(() => {});
-  await sleep(200);
-  await cdp.detach().catch(() => {});
+  let tEnd = t0;
+  stepLog.t0 = t0; stepLog.events = [];
+  try {
+    await run();
+  } finally {                                                 // a failed step must not leave the screencast running
+    tEnd = now();
+    live = false;
+    await cdp.send('Page.stopScreencast').catch(() => {});
+    await sleep(200);
+    await cdp.detach().catch(() => {});
+    fs.writeFileSync(path.join(OUT, `${sceneId}.steps.json`), JSON.stringify({ scene: sceneId, seconds: +(tEnd - t0).toFixed(3), viewport: VP, events: stepLog.events }, null, 2) + '\n');
+    stepLog.t0 = null;
+  }
   if (!frames.length) throw new Error(`${sceneId}: the screencast produced no frames`);
 
   // concat list with per-frame durations (from Chrome's own timestamps; the last frame runs to the end)
@@ -333,20 +396,56 @@ async function record(sceneId, run) {
 // ── step interpreter ──────────────────────────────────────────────────────────────────────────
 async function runSteps(steps) {
   for (const st of steps) {
+    const ev = stepLog.t0 !== null ? { i: stepLog.events.length, do: st.do, ...(st.to || st.sel ? { target: st.to || st.sel } : {}), start: +(now() - stepLog.t0).toFixed(3) } : null;
+    if (ev && (st.to || st.sel)) { try { const r = await rect(st.to || st.sel); ev.rect = { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.w), h: Math.round(r.h) }; } catch { /* not on the page yet (wait-for) */ } }
     if (st.do === 'hold')        { await sleep(st.s * 1000); }
-    else if (st.do === 'move')   { const r = await rect(st.to); const p = pointFor(r, st.at, st.dx || 0, st.dy || 0); await moveTo(p.x, p.y, st.s ?? 1.2); }
+    else if (st.do === 'move')   {
+      const r = await rect(st.to); const p = pointFor(r, st.at, st.dx || 0, st.dy || 0);
+      if (p.x < 0 || p.y < 0 || p.x > VP.width || p.y > VP.height) throw new Error(`move target off screen: ${st.to} at (${p.x}, ${p.y}) — add a scroll-to step first`);
+      await moveTo(p.x, p.y, st.s ?? 1.2);
+    }
     else if (st.do === 'move-xy'){ await moveTo(st.x, st.y, st.s ?? 1.2); }
     else if (st.do === 'park')   { const p = await parkPoint(st.where); await moveTo(p.x, p.y, st.s ?? 0); }
     else if (st.do === 'click')  {
       await page.evaluate(() => window.__rec && window.__rec.pulse());
       const press = async () => { await page.mouse.down(); await sleep(70); await page.mouse.up(); };
-      if (st.nav) { await Promise.all([page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 30000 }), press()]); }   // the click loads a new document
+      if (st.nav) { await Promise.all([page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: (st.timeout ?? 30) * 1000 }), press()]); await prep().catch(() => {}); }   // the click loads a new document (redirects included)
       else { await press(); }
     }
+    else if (st.do === 'type')   { await page.keyboard.type(st.text, { delay: st.delay ?? 110 }); }
+    else if (st.do === 'press')  {
+      if (st.nav) { await Promise.all([page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: (st.timeout ?? 30) * 1000 }), page.keyboard.press(st.key)]); await prep().catch(() => {}); }
+      else { await page.keyboard.press(st.key); }
+    }
+    else if (st.do === 'back')   { await page.goBack({ waitUntil: 'domcontentloaded' }); await page.waitForLoadState('load').catch(() => {}); await prep(); }
+    else if (st.do === 'goto')   { await page.goto(BASE + sub(st.url), { waitUntil: 'domcontentloaded' }); await page.waitForLoadState('load').catch(() => {}); await prep(); }
+    else if (st.do === 'wait-for') {                          // until the element exists and is visible (an AJAX install, a redirect chain…)
+      const t0 = Date.now(), limit = (st.timeout ?? 60) * 1000;
+      for (;;) {
+        try {
+          await page.evaluate(RESOLVER);
+          const ok = await page.evaluate((s) => { const el = window.__resolve(s); if (!el) return false; const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0; }, sub(st.sel));
+          if (ok) break;
+        } catch (e) { if (!/Execution context was destroyed|navigation/i.test(e.message)) throw e; }
+        if (Date.now() - t0 > limit) throw new Error(`wait-for timed out after ${st.timeout ?? 60} s: ${st.sel}`);
+        await sleep(250);
+      }
+      await prep();
+    }
+    else if (st.do === 'scroll-to') { const r = await rect(st.to); const y = Math.max(0, Math.round(r.docY - (st.offset ?? 140))); await page.evaluate(([y, ms]) => window.__rec.scrollTo(y, ms), [y, (st.s ?? 1.5) * 1000]); }
+    else if (st.do === 'timer-start') { await page.evaluate(() => { sessionStorage.setItem('__rec_timer_t0', String(Date.now())); window.__rec && window.__rec.timer(); }); }
+    else if (st.do === 'timer-stop')  { await page.evaluate(() => { sessionStorage.removeItem('__rec_timer_t0'); window.__rec && window.__rec.timer(); }); }
+    else if (st.do === 'note')   { await page.evaluate(RESOLVER); const t = await page.evaluate((s) => { const el = window.__resolve(s); return el ? el.innerText.split(/\n+/).map(t => t.replace(/\s+/g, ' ').trim()).filter(Boolean).join(' · ') : null; }, sub(st.sel)); state.notes.push([st.label, t ?? `(not found: ${st.sel})`]); }
     else if (st.do === 'home')   { const y = await homeY(); await page.evaluate((y) => window.scrollTo(0, y), y); await sleep(250); }
     else if (st.do === 'scroll-home') { const y = await homeY(); await page.evaluate(([y, ms]) => window.__rec.scrollTo(y, ms), [y, (st.s ?? 4) * 1000]); }
     else if (st.do === 'wait-ready') { const r = await waitReady(plan.ready[st.ready] || st.checks || []); await prep(); if (!r.ok) throw new Error('not ready after the click: ' + r.problems.join('; ')); await ensureFacts(); }
     else throw new Error(`unknown step: ${JSON.stringify(st)}`);
+    if (ev) {
+      ev.end = +(now() - stepLog.t0).toFixed(3);
+      if (st.do === 'wait-for' || st.do === 'wait-ready' || (st.do === 'click' && st.nav)) { try { const r = await rect(st.sel || st.to || 'body'); if (st.sel) ev.rect = { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.w), h: Math.round(r.h) }; } catch { } }
+      ev.url = page.url().replace(BASE, '');
+      stepLog.events.push(ev);
+    }
   }
 }
 
@@ -361,7 +460,20 @@ try {
   const who = await login(plan.user);
   log(`logged in as "${who}" (${plan.user}); site ${siteInfo()}; build ${currentBuild}`);
 
-  if (PROBE) {
+  if (PROBE && !plan.home) {
+    // Generic probe (videos without V1's home-position geometry): each selected scene's start page —
+    // readiness audit and a screenshot, no steps. Without --only, the first scene only.
+    const PDIR = path.join(os.tmpdir(), 'pdwchs-probe'); fs.mkdirSync(PDIR, { recursive: true });
+    for (const s of (ONLY ? scenes : scenes.slice(0, 1))) {
+      await useContext(s.context || 'admin');
+      const t0 = Date.now();
+      await page.goto(BASE + sub(s.url), { waitUntil: 'domcontentloaded' });
+      const ready = await waitReady(plan.ready[s.ready] || []);
+      const shot = path.join(PDIR, `probe-${s.id}.png`);
+      await page.screenshot({ path: shot });
+      log(JSON.stringify({ scene: s.id, context: s.context || 'admin', url: s.url, loadMs: Date.now() - t0, ready, screenshot: shot }, null, 2));
+    }
+  } else if (PROBE) {
     const s = scenes[0];
     if (s.build && s.build !== currentBuild) { switchBuild(s.build); currentBuild = s.build; }
     const t0 = Date.now();
@@ -393,18 +505,34 @@ try {
       log(`\n▶ ${s.id}  (${s.note || ''})`);
       try {
         if (s.build && s.build !== currentBuild) { switchBuild(s.build); currentBuild = s.build; }
+        if (s.preflight && plan.preflight) {
+          const [cmd, ...cargs] = plan.preflight;
+          let pf = { ok: true, out: '' };
+          try { pf.out = execFileSync(path.join(ROOT, cmd), cargs, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); }
+          catch (e) { pf = { ok: false, out: `${e.stdout || ''}${e.stderr || ''}` }; }
+          const fails = pf.out.split('\n').filter(l => /^FAIL|Error:/.test(l));
+          if (!pf.ok) {
+            log(`  preflight FAILED (${plan.preflight.join(' ')}):\n    ${fails.join('\n    ')}`);
+            if (!REHEARSAL && !FORCE) { results.push({ id: s.id, ok: false, error: 'preflight failed: ' + fails.join('; ') }); log('  STOP — not recorded (--rehearsal or --force to override)'); continue; }
+            log(`  ${REHEARSAL ? 'rehearsal' : '--force'}: recording anyway`);
+          } else log('  preflight PASS');
+        }
+        await useContext(s.context || 'admin');
         await page.goto(BASE + sub(s.url), { waitUntil: 'domcontentloaded' });
         const ready = await waitReady(plan.ready[s.ready] || []);
         await prep();
         log(`  ready in ${ready.waitedMs} ms${ready.ok ? '' : ' — PROBLEMS: ' + ready.problems.join('; ')}`);
         if (!ready.ok && !FORCE) { results.push({ id: s.id, ok: false, error: ready.problems.join('; ') }); log(`  STOP — not recorded (use --force to override)`); continue; }
         await ensureFacts();
+        const notes0 = state.notes.length;
         if (s.setup) { cur.x = -300; await runSteps(s.setup); await sleep(400); }
         const home = s.setup?.some(x => x.do === 'home') ? await homeReport() : null;
         if (home) log(`  home: ${JSON.stringify(home)}`);
         const r = await record(s.id, () => runSteps(s.steps));
+        await page.evaluate(() => { try { sessionStorage.removeItem('__rec_timer_t0'); window.__rec && window.__rec.timer(); } catch (e) {} }).catch(() => {});
         log(`  ✓ ${path.basename(r.mp4)}  ${r.seconds} s, ${r.frames} screencast frames → ${r.probe}`);
         results.push({ id: s.id, ok: true, ...r });
+        if (state.notes.length > notes0) fs.writeFileSync(path.join(OUT, `${s.id}.notes.json`), JSON.stringify(state.notes.slice(notes0), null, 2) + '\n');
         // stills from the answer-frame scene
         for (const [name, spec] of Object.entries(plan.stills || {})) {
           if (spec.scene !== s.id) continue;
@@ -448,6 +576,23 @@ try {
         return `| ${s.id} | ${Number(dur).toFixed(1)} s | ${w}×${h}, recorded ${when} UTC |`;
       });
       const note = `# ${VIDEO.toUpperCase()} delivery note\n\nRecorded by \`record-scenes.mjs\` on the local store (last run ${startedAt.toISOString().replace('T', ' ').slice(0, 16)} UTC) — site ${siteInfo()}; frame 1920 × 1080 CSS px at 2× (3840 × 2160), ${FPS} fps, H.264 CRF ${CRF}.\n\n1. **Which box shows the largest amount:** ${f.biggestLabel} → script option ${f.option}.\n2. **Where the Guest Orders box sits:** ${f.guest} → option ${f.guestOption}.\n3. **Margin:** the largest card is ${f.margin}× the next one.\n4. **Clips:**\n\n| Clip | Length | Source |\n|---|---|---|\n${rows.join('\n')}\n\nNo amounts in this note by rule; the answer-frame stills carry what the screen showed.\n`;
+      fs.writeFileSync(path.join(OUT, 'delivery-note.md'), note);
+      log(`\n✓ delivery-note.md`);
+    } else if (!plan.home) {
+      // Generic note (no V1 card facts): what the page showed, as text — never amounts — and the clip table.
+      const failed = Object.fromEntries(results.filter(r => !r.ok).map(r => [r.id, r.error]));
+      const rows = plan.scenes.map(s => {
+        const mp4 = path.join(OUT, `${s.id}.mp4`);
+        if (failed[s.id]) return `| ${s.id} | — | NOT RECORDED: ${failed[s.id]} |`;
+        if (!fs.existsSync(mp4)) return `| ${s.id} | — | missing |`;
+        const [w, h, dur] = execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height,duration', '-of', 'csv=p=0', mp4], { encoding: 'utf8' }).trim().split(',');
+        const when = fs.statSync(mp4).mtime.toISOString().replace('T', ' ').slice(0, 16);
+        return `| ${s.id} | ${Number(dur).toFixed(1)} s | ${w}×${h}, recorded ${when} UTC |`;
+      });
+      // facts from every scene's sidecar (so a partial re-run keeps the other scenes' facts)
+      const all = plan.scenes.flatMap(s => { const f = path.join(OUT, `${s.id}.notes.json`); return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')).map(([k, v]) => [`${k} (${s.id})`, v]) : []; });
+      const facts = all.map(([k, v], i) => `${i + 1}. **${k}:** ${v}`).join('\n');
+      const note = `# ${VIDEO.toUpperCase()} delivery note${REHEARSAL ? ' — REHEARSAL, not for the editor' : ''}\n\nRecorded by \`record-scenes.mjs\` on ${BASE} (last run ${startedAt.toISOString().replace('T', ' ').slice(0, 16)} UTC) — site ${siteInfo()}; frame 1920 × 1080 CSS px at 2× (3840 × 2160), ${FPS} fps, H.264 CRF ${CRF}.\n\n**What the screens showed** (text only; no amounts by rule):\n\n${facts || '(no notes)'}\n\n**Clips:**\n\n| Clip | Length | Source |\n|---|---|---|\n${rows.join('\n')}\n`;
       fs.writeFileSync(path.join(OUT, 'delivery-note.md'), note);
       log(`\n✓ delivery-note.md`);
     } else {

@@ -163,7 +163,7 @@ class PDWCHS_Demo_Runner {
 		$anchor   = ! empty( $args['anchor'] ) ? $args['anchor'] : null;
 		$rng_seed = ! empty( $args['rng_seed'] ) ? (int) $args['rng_seed'] : null;
 
-		if ( 'seed' === $mode && PDWCHS_Demo_Ledger::exists() ) {
+		if ( in_array( $mode, array( 'seed', 'seed-woo' ), true ) && PDWCHS_Demo_Ledger::exists() ) {
 			return new WP_Error( 'pdwchs_demo_seeded', 'A seeded dataset already exists — use refresh (or teardown first).' );
 		}
 		if ( in_array( $mode, array( 'teardown', 'recalc' ), true ) && ! PDWCHS_Demo_Ledger::exists() ) {
@@ -212,7 +212,11 @@ class PDWCHS_Demo_Runner {
 		for ( $i = 0; $i < $order_batches; $i++ ) {
 			$seed[] = 's_orders:' . $i;
 		}
-		$seed = array_merge( $seed, array( 's_refunds', 's_as_drain', 's_sessions', 's_carts' ) );
+		$seed = array_merge( $seed, array( 's_refunds', 's_as_drain' ) );
+		// WooCommerce data only (catalog, customers, orders, refunds): for a
+		// store the product has never been installed on (V8's install video).
+		$seed_woo = $seed;
+		$seed     = array_merge( $seed, array( 's_sessions', 's_carts' ) );
 
 		$recalc = array( 'r_store_avg', 'r_rfm', 'r_health', 'r_lifecycle', 'r_behavior', 'r_churn', 'f_lifecycle', 'f_health', 'r_alerts', 'r_finalize' );
 
@@ -221,6 +225,8 @@ class PDWCHS_Demo_Runner {
 				return array_merge( $teardown, $seed, $recalc, array( 'v_verify' ) );
 			case 'seed':
 				return array_merge( $seed, $recalc, array( 'v_verify' ) );
+			case 'seed-woo':
+				return $seed_woo;
 			case 'teardown':
 				return $teardown ? $teardown : new WP_Error( 'pdwchs_demo_no_ledger', 'Nothing to tear down.' );
 			case 'recalc':

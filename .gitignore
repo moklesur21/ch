@@ -61,3 +61,7 @@ node_modules/
 *.wav
 *.mp3
 *.m4a
+
+# --- Recorder rehearsals (scene-recorder --rehearsal): never committed ---
+/project_asset/content/videos/*/recordings/rehearsal/
+/project_asset/content/videos/*/recordings/edit/

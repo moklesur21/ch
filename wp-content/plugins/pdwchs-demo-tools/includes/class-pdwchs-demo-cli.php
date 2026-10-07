@@ -28,8 +28,22 @@ class PDWCHS_Demo_CLI {
 	 * [--anchor=<Y-m-d>]  Pin day-zero (default: today). Pin it for recording continuity.
 	 * [--rng-seed=<int>]  Deterministic RNG seed (default 20260722).
 	 * [--force]           Tear down an existing seeded dataset first.
+	 * [--woo-only]        WooCommerce data only (identity, catalog, customers,
+	 *                     orders, refunds) — no sessions, carts or recalc, so
+	 *                     the product plugin need not be installed. For the V8
+	 *                     install-video store (scripts/v8-site.sh).
 	 */
 	public function seed( $args, $assoc ) {
+		if ( ! empty( $assoc['woo-only'] ) ) {
+			if ( ! empty( $assoc['force'] ) ) {
+				WP_CLI::error( '--woo-only cannot be combined with --force.' );
+			}
+			$this->finish( PDWCHS_Demo_Runner::run_sync( 'seed-woo', array(
+				'anchor'   => isset( $assoc['anchor'] ) ? $assoc['anchor'] : null,
+				'rng_seed' => isset( $assoc['rng-seed'] ) ? $assoc['rng-seed'] : null,
+			), $this->logger() ), 'WooCommerce-only seed' );
+			return;
+		}
 		$mode = ! empty( $assoc['force'] ) && PDWCHS_Demo_Ledger::exists() ? 'refresh' : 'seed';
 		$this->finish( PDWCHS_Demo_Runner::run_sync( $mode, array(
 			'anchor'   => isset( $assoc['anchor'] ) ? $assoc['anchor'] : null,
