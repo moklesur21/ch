@@ -22,7 +22,8 @@
 
 set -euo pipefail
 
-PLUGIN_REPO="${PDWCHS_PLUGIN_REPO:-/Applications/MAMP/htdocs/puredevs-customer-history/wp-content/plugins/puredevs-customer-history-for-woocommerce}"
+# The dev repo's git root is the dev store's WordPress root (since 2026-10-08).
+PLUGIN_REPO="${PDWCHS_PLUGIN_REPO:-/Applications/MAMP/htdocs/puredevs-customer-history}"
 SLUG="puredevs-customer-history-for-woocommerce"
 REF="${1:-release}"
 
@@ -48,17 +49,27 @@ trap cleanup EXIT
 echo "-> worktree $REF ($SHA)"
 git -C "$PLUGIN_REPO" worktree add --quiet --detach "$TMP/src" "$REF"
 
-echo "-> build.sh"
-( cd "$TMP/src" && ./build.sh )
+# Refs from 2026-10-08 on keep build.sh in wp-content/assets/<slug>/ and the code in
+# wp-content/plugins/<slug>/; older refs (the repo was the plugin folder) have both at the root.
+if [ -f "$TMP/src/wp-content/assets/$SLUG/build.sh" ]; then
+  BUILD_DIR="$TMP/src/wp-content/assets/$SLUG"
+  MAIN_FILE="$TMP/src/wp-content/plugins/$SLUG/$SLUG.php"
+else
+  BUILD_DIR="$TMP/src"
+  MAIN_FILE="$TMP/src/$SLUG.php"
+fi
 
-VERSION="$(grep -m1 'Version:' "$TMP/src/$SLUG.php" | sed 's/.*Version:[[:space:]]*//' | tr -d '[:space:]')"
+echo "-> build.sh"
+( cd "$BUILD_DIR" && ./build.sh )
+
+VERSION="$(grep -m1 'Version:' "$MAIN_FILE" | sed 's/.*Version:[[:space:]]*//' | tr -d '[:space:]')"
 
 # rm + mv (not rsync --delete): APFS is case-insensitive, and a case-only
 # rename such as README.txt → readme.txt trips rsync's delete pass.
 install_variant() {  # <zip> <target folder name>
   local zip="$1" target="$2"
   mkdir -p "$TMP/unzip-$target"
-  unzip -q "$TMP/src/dist/$zip" -d "$TMP/unzip-$target"
+  unzip -q "$BUILD_DIR/dist/$zip" -d "$TMP/unzip-$target"
   [ -f "$TMP/unzip-$target/$SLUG/$SLUG.php" ] || die "$zip has no $SLUG/$SLUG.php"
   rm -rf "${PLUGINS:?}/$target"
   mv "$TMP/unzip-$target/$SLUG" "$PLUGINS/$target"
