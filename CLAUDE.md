@@ -33,13 +33,19 @@ backups and `wp-config.php` are all ignored. Tracked:
 The two plugin folders are **build output**, never source. Update them only with
 `scripts/install-plugin.sh [git-ref]` (default `release`): it builds the ref in a
 throw-away worktree of the dev repo
-(`/Applications/MAMP/htdocs/puredevs-customer-history/wp-content/plugins/puredevs-customer-history-for-woocommerce`)
-with its `build.sh`, and swaps in the free and pro builds. Never copy, symlink or
+(`/Applications/MAMP/htdocs/puredevs-customer-history`, git root = its WordPress root since
+2026-10-08) with the plugin's `build.sh`, and swaps in the free and pro builds. Never copy, symlink or
 check out the dev source tree here — the free folder would carry `pro/` and turn
 premium. `project_asset/plugin-build.txt` records the installed version and commit.
 After an install: load wp-admin once, run `scripts/demo-refresh.sh`, commit, and
 upgrade the live site to the same version before the next `live-refresh.sh`
 (parity needs the same plugin version — `project_asset/docs/live-migration.md` §5).
+
+**After a plugin release, run `/release-signal`.** Each release of the dev repo leaves a release
+signal (`wp-content/assets/<slug>/release-signals/<tag>.md` on its `release` branch) that says
+what changed for a store owner. The skill reads it, installs the tagged build (`ch-v<version>`),
+refreshes the demo, and updates the marketing brief and copy. Releases are run by Asad; Yeasir
+hears "<tag> is released" and runs the skill here.
 
 ## Marketing assets
 
